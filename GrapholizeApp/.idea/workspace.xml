@@ -1,23 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="f9c9e85c-b6d3-4a2f-99c7-3350288aea5b" name="Default Changelist" comment="">
-      <change beforePath="$PROJECT_DIR$/.gradle/5.2.1/executionHistory/executionHistory.bin" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/5.2.1/executionHistory/executionHistory.bin" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.gradle/5.2.1/executionHistory/executionHistory.lock" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/5.2.1/executionHistory/executionHistory.lock" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.gradle/5.2.1/fileContent/fileContent.lock" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/5.2.1/fileContent/fileContent.lock" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.gradle/5.2.1/fileHashes/fileHashes.bin" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/5.2.1/fileHashes/fileHashes.bin" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.gradle/5.2.1/fileHashes/fileHashes.lock" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/5.2.1/fileHashes/fileHashes.lock" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.gradle/5.2.1/javaCompile/classAnalysis.bin" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/5.2.1/javaCompile/classAnalysis.bin" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.gradle/5.2.1/javaCompile/javaCompile.lock" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/5.2.1/javaCompile/javaCompile.lock" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.gradle/buildOutputCleanup/buildOutputCleanup.lock" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/buildOutputCleanup/buildOutputCleanup.lock" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/build/classes/java/main/Model/Stroke.class" beforeDir="false" afterPath="$PROJECT_DIR$/build/classes/java/main/Model/Stroke.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/build/classes/java/main/Scenes/HelloFX.class" beforeDir="false" afterPath="$PROJECT_DIR$/build/classes/java/main/Scenes/HelloFX.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/build/classes/java/main/util/PageDataReader.class" beforeDir="false" afterPath="$PROJECT_DIR$/build/classes/java/main/util/PageDataReader.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/Model/Stroke.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/Model/Stroke.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/Scenes/HelloFX.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/Scenes/HelloFX.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/util/PageDataReader.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/util/PageDataReader.java" afterDir="false" />
-    </list>
+    <list default="true" id="f9c9e85c-b6d3-4a2f-99c7-3350288aea5b" name="Default Changelist" comment="" />
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -190,7 +174,7 @@
       <workItem from="1573134495901" duration="23988000" />
       <workItem from="1573306817790" duration="4086000" />
       <workItem from="1573313157203" duration="25000" />
-      <workItem from="1573313238693" duration="1649000" />
+      <workItem from="1573313238693" duration="1941000" />
     </task>
     <servers />
   </component>
