@@ -11,8 +11,11 @@
       <change beforePath="$PROJECT_DIR$/.gradle/5.2.1/javaCompile/javaCompile.lock" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/5.2.1/javaCompile/javaCompile.lock" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.gradle/buildOutputCleanup/buildOutputCleanup.lock" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/buildOutputCleanup/buildOutputCleanup.lock" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/classes/java/main/Model/Stroke.class" beforeDir="false" afterPath="$PROJECT_DIR$/build/classes/java/main/Model/Stroke.class" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/build/classes/java/main/Scenes/HelloFX.class" beforeDir="false" afterPath="$PROJECT_DIR$/build/classes/java/main/Scenes/HelloFX.class" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/build/classes/java/main/util/PageDataReader.class" beforeDir="false" afterPath="$PROJECT_DIR$/build/classes/java/main/util/PageDataReader.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/Model/Stroke.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/Model/Stroke.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/Scenes/HelloFX.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/Scenes/HelloFX.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/util/PageDataReader.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/util/PageDataReader.java" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
@@ -187,6 +190,7 @@
       <workItem from="1573134495901" duration="23988000" />
       <workItem from="1573306817790" duration="4086000" />
       <workItem from="1573313157203" duration="25000" />
+      <workItem from="1573313238693" duration="1649000" />
     </task>
     <servers />
   </component>
@@ -214,13 +218,8 @@
       <breakpoints>
         <line-breakpoint enabled="true" type="java-line">
           <url>file://$PROJECT_DIR$/src/main/java/util/PageDataReader.java</url>
-          <line>114</line>
-          <option name="timeStamp" value="8" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" type="java-line">
-          <url>file://$PROJECT_DIR$/src/main/java/util/PageDataReader.java</url>
-          <line>53</line>
-          <option name="timeStamp" value="12" />
+          <line>81</line>
+          <option name="timeStamp" value="13" />
         </line-breakpoint>
       </breakpoints>
     </breakpoint-manager>

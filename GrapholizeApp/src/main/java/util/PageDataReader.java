@@ -18,20 +18,13 @@ public class PageDataReader {
 
     public static Page ReadPage(String path) throws Exception{
 
-       //ClassLoader cl = new HelloFX().getClass().getClassLoader();
-        //File f = new File(cl.getResource(path).getFile());
         try(FileInputStream stream = new FileInputStream(path)){
             if(IsFileValid(stream)){
-
                 PageMetaData pmd = ReadMetaData(stream);
-
                 Stroke[] strokes = ParseContentBody(pmd.getNumberOfStrokes(), stream);
-
                 return new Page(pmd, strokes);
             }
         }
-
-
         return null;
     }
 

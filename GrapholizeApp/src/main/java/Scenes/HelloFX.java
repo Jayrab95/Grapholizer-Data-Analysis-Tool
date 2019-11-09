@@ -37,10 +37,8 @@ public class HelloFX extends Application {
 
     //Relocate this method after testing.
     private static void loadThatShitBoy() throws Exception{
-        String path = "data/page.data";
-        //TODO: There were some problems when passing the relative path, so I'm just doing it this way right now. Replace this with a file open dialogue later.
-        String pathLoc = "C:\\Users\\jarab\\Documents\\FHNW\\Semester 7\\Projekt\\IP6_Grapholize\\GrapholizeApp\\src\\main\\resources\\data\\page.data";
-        Page p = PageDataReader.ReadPage(pathLoc);
+        String path = "src\\main\\resources\\data\\page.data";
+        Page p = PageDataReader.ReadPage(path);
         System.out.println("Done");
 
     }

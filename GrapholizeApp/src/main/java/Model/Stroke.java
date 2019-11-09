@@ -3,7 +3,7 @@ package Model;
 import java.util.ArrayList;
 import java.util.List;
 
-public class Stroke extends ArrayList<Dot> {
+public class Stroke {
 
     //perhaps, everything in here can be set to final except for the color.
     private int color;
@@ -39,7 +39,7 @@ public class Stroke extends ArrayList<Dot> {
     //Is this needed? Perhaps remove after testing.
     public String ToString()
     {
-        return String.format( "Stroke => sectionId : timeStart : {0}, timeEnd : {1}", timeStart, timeEnd );
+        return String.format( "Stroke => sectionId : timeStart : {0}, timeEnd : {1}, numOfDots: {3}", timeStart, timeEnd, dots.size() );
     }
 
     public long getTimeStart() {
