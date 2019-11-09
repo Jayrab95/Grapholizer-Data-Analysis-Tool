@@ -143,7 +143,8 @@ public class PageDataReader {
 
     private static float ReadFloat(FileInputStream st, byte[] buffer) throws IOException {
         st.read(buffer, 0, 4);
-        return ByteBuffer.wrap(buffer).getFloat();
+        //return ByteBuffer.wrap(buffer).getFloat();
+        return Float.intBitsToFloat(ByteArrayToUIntLSF(buffer));
     }
 
     //TODO extract all methods below to a utility function
@@ -154,6 +155,8 @@ public class PageDataReader {
         int result = 0;
         for(byte i = 0; i < 4; i++) {
             int temp = bytes[i];
+            //Because Java only stores signed bytes, a conversion is necessary.
+            if(temp < 0) temp = temp & 0xFF;
             temp = temp << i*8;
             result += temp;
         }
@@ -164,6 +167,8 @@ public class PageDataReader {
         long result = 0;
         for (byte i = 0; i < 8; i++) {
             long temp = bytes[i];
+            //Because Java only stores signed bytes, a conversion is necessary.
+            if(temp < 0) temp = temp & 0xFF;
             temp = temp << i * 8;
             result += temp;
         }
