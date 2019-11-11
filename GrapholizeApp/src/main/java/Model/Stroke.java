@@ -6,17 +6,20 @@ import java.util.List;
 public class Stroke {
 
     //perhaps, everything in here can be set to final except for the color.
-    private int color;
+    private Color color;
     private final long timeStart;
     private final long timeEnd;
     private final List<Dot> dots;
-
-    //public Stroke(){}
 
     public Stroke (long timeStart, long timeEnd, List<Dot> dots){
         this.timeStart = timeStart;
         this.timeEnd = timeEnd;
         this.dots = dots;
+        color = new Color();
+    }
+    public Stroke (long timeStart, long timeEnd, List<Dot> dots, Color c){
+        this(timeStart, timeEnd, dots);
+        color = new Color();
     }
 
     /*
@@ -50,7 +53,7 @@ public class Stroke {
         return timeEnd;
     }
 
-    public int getColor() {
+    public Color getColor() {
         return color;
     }
 
@@ -60,7 +63,7 @@ public class Stroke {
     }
 
 
-    public void setColor(int color) {
+    public void setColor(Color color) {
         //Only setter in this class. Color can change during runtime.
         this.color = color;
     }

@@ -2,21 +2,34 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="f9c9e85c-b6d3-4a2f-99c7-3350288aea5b" name="Default Changelist" comment="">
+      <change afterPath="$PROJECT_DIR$/src/main/java/Controls/Timeline/TimeLine.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/Controls/TimelineElement/FillerTimeLineElement.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/Controls/TimelineElement/StrokeTimeLineElement.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/Controls/TimelineElement/TimeLineElement.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/Model/Color.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.gradle/5.2.1/executionHistory/executionHistory.bin" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/5.2.1/executionHistory/executionHistory.bin" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.gradle/5.2.1/executionHistory/executionHistory.lock" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/5.2.1/executionHistory/executionHistory.lock" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.gradle/5.2.1/fileContent/fileContent.lock" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/5.2.1/fileContent/fileContent.lock" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.gradle/5.2.1/fileHashes/fileHashes.bin" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/5.2.1/fileHashes/fileHashes.bin" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.gradle/5.2.1/fileHashes/fileHashes.lock" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/5.2.1/fileHashes/fileHashes.lock" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.gradle/5.2.1/javaCompile/classAnalysis.bin" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/5.2.1/javaCompile/classAnalysis.bin" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.gradle/5.2.1/javaCompile/javaCompile.lock" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/5.2.1/javaCompile/javaCompile.lock" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.gradle/buildOutputCleanup/buildOutputCleanup.lock" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/buildOutputCleanup/buildOutputCleanup.lock" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.gradle/buildOutputCleanup/outputFiles.bin" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/buildOutputCleanup/outputFiles.bin" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/classes/java/main/Controls/DataDisplayCanvas.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/classes/java/main/Controls/DetailCanvasView.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/classes/java/main/Model/Dot$DotType.class" beforeDir="false" afterPath="$PROJECT_DIR$/build/classes/java/main/Model/Dot$DotType.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/classes/java/main/Model/Dot.class" beforeDir="false" afterPath="$PROJECT_DIR$/build/classes/java/main/Model/Dot.class" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/build/classes/java/main/Model/Stroke.class" beforeDir="false" afterPath="$PROJECT_DIR$/build/classes/java/main/Model/Stroke.class" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/build/classes/java/main/Scenes/HelloFX.class" beforeDir="false" afterPath="$PROJECT_DIR$/build/classes/java/main/Scenes/HelloFX.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/build/classes/java/main/util/PageDataReader.class" beforeDir="false" afterPath="$PROJECT_DIR$/build/classes/java/main/util/PageDataReader.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/Controls/DataDisplayCanvas.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/Controls/DetailCanvasView.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/Controls/TimeLine.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/Controls/Timeline/BasicStrokeTimeLine.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/Model/Dot.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/Model/Dot.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/Model/Stroke.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/Model/Stroke.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/Scenes/HelloFX.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/Scenes/HelloFX.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/util/PageDataReader.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/util/PageDataReader.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/Scenes/MainScene.fxml" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/views/MainScene.fxml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/Scenes/MainSceneController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/Controllers/MainSceneController.java" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -40,7 +53,29 @@
         </task>
         <projects_view>
           <tree_state>
-            <expand />
+            <expand>
+              <path>
+                <item name="" type="6a2764b6:ExternalProjectsStructure$RootNode" />
+                <item name="GrapholizeAppAID" type="f1a62948:ProjectNode" />
+              </path>
+              <path>
+                <item name="" type="6a2764b6:ExternalProjectsStructure$RootNode" />
+                <item name="GrapholizeAppAID" type="f1a62948:ProjectNode" />
+                <item name="Tasks" type="e4a08cd1:TasksNode" />
+              </path>
+              <path>
+                <item name="" type="6a2764b6:ExternalProjectsStructure$RootNode" />
+                <item name="GrapholizeAppAID" type="f1a62948:ProjectNode" />
+                <item name="Tasks" type="e4a08cd1:TasksNode" />
+                <item name="application" type="c8890929:TasksNode$1" />
+              </path>
+              <path>
+                <item name="" type="6a2764b6:ExternalProjectsStructure$RootNode" />
+                <item name="GrapholizeAppAID" type="f1a62948:ProjectNode" />
+                <item name="Tasks" type="e4a08cd1:TasksNode" />
+                <item name="build" type="c8890929:TasksNode$1" />
+              </path>
+            </expand>
             <select />
           </tree_state>
         </projects_view>
@@ -82,6 +117,12 @@
     <key name="MoveClassesOrPackagesDialog.RECENTS_KEY">
       <recent name="" />
     </key>
+    <key name="CopyClassDialog.RECENTS_KEY">
+      <recent name="Controls" />
+    </key>
+    <key name="MoveFile.RECENT_KEYS">
+      <recent name="C:\Users\jarab\Documents\FHNW\Semester 7\Projekt\IP6_Grapholize\GrapholizeApp\src\main\resources\views" />
+    </key>
   </component>
   <component name="RunDashboard">
     <option name="ruleStates">
@@ -121,6 +162,25 @@
       <method v="2">
         <option name="Make" enabled="true" />
       </method>
+    </configuration>
+    <configuration name="GrapholizeApp [build]" type="GradleRunConfiguration" factoryName="Gradle" temporary="true">
+      <ExternalSystemSettings>
+        <option name="executionName" />
+        <option name="externalProjectPath" value="$PROJECT_DIR$" />
+        <option name="externalSystemIdString" value="GRADLE" />
+        <option name="scriptParameters" />
+        <option name="taskDescriptions">
+          <list />
+        </option>
+        <option name="taskNames">
+          <list>
+            <option value="build" />
+          </list>
+        </option>
+        <option name="vmOptions" />
+      </ExternalSystemSettings>
+      <GradleScriptDebugEnabled>true</GradleScriptDebugEnabled>
+      <method v="2" />
     </configuration>
     <configuration name="GrapholizeApp [run]" type="GradleRunConfiguration" factoryName="Gradle" temporary="true">
       <ExternalSystemSettings>
@@ -169,6 +229,7 @@
     <recent_temporary>
       <list>
         <item itemvalue="Gradle.GrapholizeApp [run]" />
+        <item itemvalue="Gradle.GrapholizeApp [build]" />
         <item itemvalue="Application.HelloFX" />
       </list>
     </recent_temporary>
@@ -191,6 +252,10 @@
       <workItem from="1573306817790" duration="4086000" />
       <workItem from="1573313157203" duration="25000" />
       <workItem from="1573313238693" duration="1649000" />
+      <workItem from="1573387364361" duration="5826000" />
+      <workItem from="1573455050957" duration="3289000" />
+      <workItem from="1573462255470" duration="9000" />
+      <workItem from="1573470515550" duration="12257000" />
     </task>
     <servers />
   </component>
@@ -217,9 +282,9 @@
     <breakpoint-manager>
       <breakpoints>
         <line-breakpoint enabled="true" type="java-line">
-          <url>file://$PROJECT_DIR$/src/main/java/util/PageDataReader.java</url>
-          <line>81</line>
-          <option name="timeStamp" value="13" />
+          <url>file://$PROJECT_DIR$/src/main/java/Controllers/MainSceneController.java</url>
+          <line>39</line>
+          <option name="timeStamp" value="1" />
         </line-breakpoint>
       </breakpoints>
     </breakpoint-manager>

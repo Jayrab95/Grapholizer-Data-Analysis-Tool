@@ -1,5 +1,7 @@
 package Model;
 
+import java.util.Random;
+
 public class Dot {
 
     public enum DotType
@@ -93,6 +95,14 @@ public class Dot {
         return this;
     }
 
+    public float getX() {
+        return x;
+    }
+
+    public float getY() {
+        return y;
+    }
+
     public long getTimeStamp(){
         return timeStamp;
     }
@@ -101,6 +111,5 @@ public class Dot {
     public DotType getDotType() {
         return dotType;
     }
-
 
 }
