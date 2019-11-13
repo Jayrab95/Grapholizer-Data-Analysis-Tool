@@ -96,7 +96,7 @@ public class PageDataReader {
             float x = ReadFloat(st, floatBuffer);
             float y = ReadFloat(st, floatBuffer);
 
-            int force = ReadInteger(st, floatBuffer); //this might be a shitty idea
+            float force = ReadFloat(st, floatBuffer); //this might be a shitty idea
 
             int timeDiff = st.read();
             long dotTimeStamp = totalTime += timeDiff;

@@ -11,20 +11,24 @@
       <change beforePath="$PROJECT_DIR$/.gradle/buildOutputCleanup/buildOutputCleanup.lock" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/buildOutputCleanup/buildOutputCleanup.lock" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/build/classes/java/main/Controllers/MainSceneController.class" beforeDir="false" afterPath="$PROJECT_DIR$/build/classes/java/main/Controllers/MainSceneController.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/classes/java/main/Controls/TimeLine.class" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/build/classes/java/main/Controls/Timeline/BasicStrokeTimeLine.class" beforeDir="false" afterPath="$PROJECT_DIR$/build/classes/java/main/Controls/Timeline/BasicStrokeTimeLine.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/build/classes/java/main/Controls/Timeline/TimeLine.class" beforeDir="false" afterPath="$PROJECT_DIR$/build/classes/java/main/Controls/Timeline/TimeLine.class" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/build/classes/java/main/Controls/TimelineElement/FillerTimeLineElement.class" beforeDir="false" afterPath="$PROJECT_DIR$/build/classes/java/main/Controls/TimelineElement/FillerTimeLineElement.class" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/build/classes/java/main/Controls/TimelineElement/StrokeTimeLineElement.class" beforeDir="false" afterPath="$PROJECT_DIR$/build/classes/java/main/Controls/TimelineElement/StrokeTimeLineElement.class" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/build/classes/java/main/Controls/TimelineElement/TimeLineElement.class" beforeDir="false" afterPath="$PROJECT_DIR$/build/classes/java/main/Controls/TimelineElement/TimeLineElement.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/build/classes/java/main/Scenes/HelloFX.class" beforeDir="false" afterPath="$PROJECT_DIR$/build/classes/java/main/Scenes/HelloFX.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/classes/java/main/Model/Dot.class" beforeDir="false" afterPath="$PROJECT_DIR$/build/classes/java/main/Model/Dot.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/classes/java/main/Model/Stroke.class" beforeDir="false" afterPath="$PROJECT_DIR$/build/classes/java/main/Model/Stroke.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/classes/java/main/Scenes/MainSceneController.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/classes/java/main/util/PageDataReader.class" beforeDir="false" afterPath="$PROJECT_DIR$/build/classes/java/main/util/PageDataReader.class" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/build/resources/main/views/MainScene.fxml" beforeDir="false" afterPath="$PROJECT_DIR$/build/resources/main/views/MainScene.fxml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/Controllers/MainSceneController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/Controllers/MainSceneController.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/Controls/Timeline/BasicStrokeTimeLine.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/Controls/Timeline/BasicStrokeTimeLine.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/Controls/Timeline/TimeLine.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/Controls/Timeline/TimeLine.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/Controls/TimelineElement/FillerTimeLineElement.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/Controls/TimelineElement/FillerTimeLineElement.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/Controls/TimelineElement/StrokeTimeLineElement.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/Controls/TimelineElement/StrokeTimeLineElement.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/Controls/TimelineElement/TimeLineElement.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/Controls/TimelineElement/TimeLineElement.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/Scenes/HelloFX.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/Scenes/HelloFX.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/Model/Dot.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/Model/Dot.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/Model/Stroke.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/Model/Stroke.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/util/PageDataReader.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/util/PageDataReader.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/resources/views/MainScene.fxml" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/views/MainScene.fxml" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
@@ -104,6 +108,7 @@
     <property name="last_opened_file_path" value="C:/Program Files (x86)/Oracle/JavaFX Scene Builder 2.0/JavaFX Scene Builder 2.0.exe" />
     <property name="nodejs_interpreter_path.stuck_in_default_project" value="undefined stuck path" />
     <property name="nodejs_npm_path_reset_for_default_project" value="true" />
+    <property name="nodejs_package_manager_path" value="npm" />
     <property name="project.structure.last.edited" value="Modules" />
     <property name="project.structure.proportion" value="0.15" />
     <property name="project.structure.side.proportion" value="0.2" />
@@ -253,7 +258,7 @@
       <workItem from="1573462255470" duration="9000" />
       <workItem from="1573470515550" duration="17991000" />
       <workItem from="1573539213938" duration="3884000" />
-      <workItem from="1573564202890" duration="3344000" />
+      <workItem from="1573564202890" duration="17667000" />
     </task>
     <servers />
   </component>
@@ -281,21 +286,13 @@
       <breakpoints>
         <line-breakpoint enabled="true" type="java-line">
           <url>file://$PROJECT_DIR$/src/main/java/Controls/Timeline/BasicStrokeTimeLine.java</url>
-          <line>12</line>
+          <line>16</line>
           <option name="timeStamp" value="4" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="java-line">
           <url>file://$PROJECT_DIR$/src/main/java/Scenes/HelloFX.java</url>
           <line>26</line>
           <option name="timeStamp" value="5" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" type="java-line">
-          <url>file://$PROJECT_DIR$/src/main/java/Controllers/MainSceneController.java</url>
-          <line>97</line>
-          <properties>
-            <option name="lambda-ordinal" value="-1" />
-          </properties>
-          <option name="timeStamp" value="11" />
         </line-breakpoint>
       </breakpoints>
     </breakpoint-manager>

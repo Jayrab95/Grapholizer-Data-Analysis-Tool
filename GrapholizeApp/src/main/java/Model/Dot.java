@@ -12,7 +12,7 @@ public class Dot {
     private final int tiltX;
     private final int tiltY;
     private final int twist;
-    private final int force;
+    private final float force;
     //TODO: Perhaps change the color field to actually be a Color object from Java instead of an int.
     private int color = 1;
     private final long timeStamp;
@@ -30,7 +30,7 @@ public class Dot {
      * @param force the force applied to the dot.
      * @param timeStamp the timestamp of the dot
      */
-    public Dot(float x, float y, int force, long timeStamp){
+    public Dot(float x, float y, float force, long timeStamp){
         this.x = x;
         this.y = y;
         this.force = force;
@@ -81,7 +81,7 @@ public class Dot {
     }
 
 
-    public int getForce() {
+    public float getForce() {
         return force;
     }
 

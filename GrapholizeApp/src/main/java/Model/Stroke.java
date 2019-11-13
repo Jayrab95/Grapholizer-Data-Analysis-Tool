@@ -7,6 +7,7 @@ public class Stroke {
 
     //perhaps, everything in here can be set to final except for the color.
     private Color color;
+    private boolean selected;
     private final long timeStart;
     private final long timeEnd;
     private final List<Dot> dots;
@@ -64,8 +65,15 @@ public class Stroke {
 
 
     public void setColor(Color color) {
-        //Only setter in this class. Color can change during runtime.
         this.color = color;
+    }
+
+    public boolean isSelected(){
+        return this.selected;
+    }
+
+    public void setSelected(boolean select){
+        this.selected = select;
     }
 
 }

@@ -11,6 +11,7 @@ import Model.Dot;
 import Model.Page;
 import Model.Stroke;
 import com.sun.javafx.geom.Line2D;
+import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
@@ -32,6 +33,8 @@ public class MainSceneController {
     private ResourceBundle resources;
 
     private Page p;
+    private float scale = 10;
+    private float step = 5;
 
     @FXML
     private ScrollPane scrollPane_TimeLines;
@@ -45,8 +48,8 @@ public class MainSceneController {
     public void initialize() throws Exception{
         System.out.println("aaa");
         p = loadThatShitBoy();
-        canvas_mainCanvas.setWidth(p.getPageMetaData().getPageWidth() * 10);
-        canvas_mainCanvas.setHeight(p.getPageMetaData().getPageHeight() * 10);
+        canvas_mainCanvas.setWidth(p.getPageMetaData().getPageWidth() * scale);
+        canvas_mainCanvas.setHeight(p.getPageMetaData().getPageHeight() * scale);
 
         drawThatSHit();
 
@@ -75,15 +78,62 @@ public class MainSceneController {
     private void drawThatSHit(){
         GraphicsContext gc = canvas_mainCanvas.getGraphicsContext2D();
         for(Stroke s : p.getStrokes()){
-            gc.setStroke(new Color(s.getColor().getR(), s.getColor().getG(), s.getColor().getB(), 1));
+
             for(int i = 0; i < s.getDots().size() - 1; i++){
+
                 Dot d1 = s.getDots().get(i);
                 Dot d2 = s.getDots().get(i + 1);
                 double fAvg = (d1.getForce() + d2.getForce()) / 2;
-                gc.setLineWidth(fAvg / 1000000000);
-                gc.strokeLine(d1.getX() * 10, d1.getY() * 10, d2.getX() * 10, d2.getY() * 10);
+
+                if(s.isSelected()){
+                    //gc.setLineWidth(((fAvg / 1000000000) + 10));
+                    gc.setLineWidth(((fAvg) + 10));
+                    gc.setStroke(Color.AQUAMARINE);
+                    gc.strokeLine(d1.getX() * scale, d1.getY() * scale, d2.getX() * scale, d2.getY() * scale);
+                }
+
+                //gc.setLineWidth(fAvg / 1000000000);
+                gc.setLineWidth(fAvg + 0.5);
+                gc.setStroke(new Color(s.getColor().getR(), s.getColor().getG(), s.getColor().getB(), 1));
+                gc.strokeLine(d1.getX() * scale, d1.getY() * scale, d2.getX() * scale, d2.getY() * scale);
             }
         }
+    }
+
+    public void reDraw(){
+        canvas_mainCanvas.getGraphicsContext2D().clearRect(0, 0, canvas_mainCanvas.getWidth(), canvas_mainCanvas.getHeight());
+        drawThatSHit();
+    }
+
+
+    @FXML
+    protected void handleScaleUpPress(ActionEvent e) {
+        scaleUp(step);
+    }
+
+    @FXML
+    protected void handleScaleDownPress(ActionEvent e) {
+        scaleDown(step);
+    }
+
+    private void scaleUp(float step){
+        if(scale + step < 40){
+            scale += step;
+        }
+        else {scale = 40;}
+        canvas_mainCanvas.setWidth(p.getPageMetaData().getPageWidth() * scale);
+        canvas_mainCanvas.setHeight(p.getPageMetaData().getPageHeight() * scale);
+        reDraw();
+    }
+
+    private void scaleDown(float step){
+        if(scale -step > 1){
+            scale -= step;
+        }
+        else{scale = 1;}
+        canvas_mainCanvas.setWidth(p.getPageMetaData().getPageWidth() * scale);
+        canvas_mainCanvas.setHeight(p.getPageMetaData().getPageHeight() * scale);
+        reDraw();
     }
 
     private void setupTimelineContainer(){
@@ -94,7 +144,7 @@ public class MainSceneController {
 
         timeLineContainer = new VBox();
         timeLineContainer.setSpacing(10);
-        timeLineContainer.getChildren().add(new BasicStrokeTimeLine(Arrays.asList(p.getStrokes()), 50));
+        timeLineContainer.getChildren().add(new BasicStrokeTimeLine(Arrays.asList(p.getStrokes()), 50, this));
         timeLineContainer.getChildren().stream().forEach(ch -> {
             System.out.println(ch.getClass().toString());
         });
