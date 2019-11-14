@@ -1,26 +1,20 @@
 package Controls.TimelineElement;
 
-import Model.Stroke;
-import javafx.event.EventHandler;
-import javafx.geometry.Insets;
+import Model.Entities.Stroke;
+import Observables.ObservableStroke;
 import javafx.scene.Parent;
-import javafx.scene.canvas.GraphicsContext;
-import javafx.scene.input.MouseEvent;
-import javafx.scene.layout.Background;
-import javafx.scene.layout.BackgroundFill;
-import javafx.scene.layout.CornerRadii;
 import javafx.scene.paint.Color;
 
 public class StrokeTimeLineElement extends TimeLineElement {
-    Stroke s;
-    public StrokeTimeLineElement(long tStart, long tEnd, double parentHeight, Parent p, Stroke s) {
+    ObservableStroke s;
+    public StrokeTimeLineElement(double tStart, double tEnd, double parentHeight, Parent p, ObservableStroke s) {
         super(tStart, tEnd, parentHeight, p);
         this.s = s;
         setFill(new Color(s.getColor().getR(), s.getColor().getG(), s.getColor().getB(), 1));
 
     }
 
-    public Stroke getElementStroke(){
+    public ObservableStroke getElementStroke(){
         return this.s;
     }
 

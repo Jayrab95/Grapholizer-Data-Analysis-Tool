@@ -1,17 +1,13 @@
 package util;
 
-import Model.Page;
+import Model.Entities.Page;
 import Model.PageMetaData;
-import Model.Stroke;
-import Model.Dot;
-import Scenes.HelloFX;
+import Model.Entities.Stroke;
+import Model.Entities.Dot;
 
-import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
-import java.nio.ByteBuffer;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 
 public class PageDataReader {

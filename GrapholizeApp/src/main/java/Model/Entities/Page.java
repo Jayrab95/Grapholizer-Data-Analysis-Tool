@@ -1,6 +1,6 @@
-package Model;
+package Model.Entities;
 
-import java.util.List;
+import Model.PageMetaData;
 
 public class Page {
     private final PageMetaData pageMetaData;

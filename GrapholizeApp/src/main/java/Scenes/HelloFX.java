@@ -1,21 +1,10 @@
 package Scenes;
 
-import Model.Page;
-import Model.Stroke;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
-import javafx.scene.control.Label;
-import javafx.scene.layout.StackPane;
 import javafx.stage.Stage;
-import util.PageDataReader;
-
-import java.io.BufferedReader;
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.FileReader;
-import java.util.ArrayList;
 
 public class HelloFX extends Application {
 

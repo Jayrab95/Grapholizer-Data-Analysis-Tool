@@ -1,29 +1,25 @@
 package Controllers;
 
 import java.net.URL;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Random;
-import java.util.ResourceBundle;
+import java.util.*;
 
 import Controls.Timeline.BasicStrokeTimeLine;
-import Model.Dot;
-import Model.Page;
-import Model.Stroke;
-import com.sun.javafx.geom.Line2D;
+import Interfaces.Observable;
+import Interfaces.Observer;
+import Model.Entities.Dot;
+import Model.Entities.Page;
+import Model.Entities.Stroke;
+import Observables.ObservableStroke;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.control.ScrollPane;
-import javafx.scene.control.TextArea;
-import javafx.scene.control.TextField;
-import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
 import util.PageDataReader;
 
-public class MainSceneController {
+public class MainSceneController implements Observer {
 
     // location and resources will be automatically injected by the FXML loader
     @FXML
@@ -33,8 +29,12 @@ public class MainSceneController {
     private ResourceBundle resources;
 
     private Page p;
-    private float scale = 10;
-    private float step = 5;
+    private List<ObservableStroke> observableStrokes;
+    private float canvasScale = 10;
+    private float canvasScalingStep = 5;
+
+    private float timeLineScale = 0.05f;
+    private float timeLineScalingStep = 0.05f;
 
     @FXML
     private ScrollPane scrollPane_TimeLines;
@@ -48,8 +48,9 @@ public class MainSceneController {
     public void initialize() throws Exception{
         System.out.println("aaa");
         p = loadThatShitBoy();
-        canvas_mainCanvas.setWidth(p.getPageMetaData().getPageWidth() * scale);
-        canvas_mainCanvas.setHeight(p.getPageMetaData().getPageHeight() * scale);
+        initObservableStrokes(p.getStrokes());
+        canvas_mainCanvas.setWidth(p.getPageMetaData().getPageWidth() * canvasScale);
+        canvas_mainCanvas.setHeight(p.getPageMetaData().getPageHeight() * canvasScale);
 
         drawThatSHit();
 
@@ -67,6 +68,13 @@ public class MainSceneController {
         return PageDataReader.ReadPage(path);
     }
 
+    private void initObservableStrokes(Stroke[] strokes){
+        observableStrokes = new ArrayList<>();
+        for (Stroke s : strokes){
+            observableStrokes.add(new ObservableStroke(s, this));
+        }
+    }
+
     private Color randomColor(){
         Random rand = new Random();
         float r = rand.nextFloat();
@@ -77,7 +85,7 @@ public class MainSceneController {
 
     private void drawThatSHit(){
         GraphicsContext gc = canvas_mainCanvas.getGraphicsContext2D();
-        for(Stroke s : p.getStrokes()){
+        for(ObservableStroke s : observableStrokes){
 
             for(int i = 0; i < s.getDots().size() - 1; i++){
 
@@ -85,17 +93,18 @@ public class MainSceneController {
                 Dot d2 = s.getDots().get(i + 1);
                 double fAvg = (d1.getForce() + d2.getForce()) / 2;
 
+                //TODO: Make draw stroke specific (Use Decorator pattern for different visual filters
                 if(s.isSelected()){
                     //gc.setLineWidth(((fAvg / 1000000000) + 10));
-                    gc.setLineWidth(((fAvg) + 10));
-                    gc.setStroke(Color.AQUAMARINE);
-                    gc.strokeLine(d1.getX() * scale, d1.getY() * scale, d2.getX() * scale, d2.getY() * scale);
+                    gc.setLineWidth((fAvg) + 2);
+                    gc.setStroke(new Color(0,1, 0, 1));
+                    gc.strokeLine(d1.getX() * canvasScale, d1.getY() * canvasScale, d2.getX() * canvasScale, d2.getY() * canvasScale);
                 }
 
                 //gc.setLineWidth(fAvg / 1000000000);
-                gc.setLineWidth(fAvg + 0.5);
+                gc.setLineWidth((fAvg + 0.5));
                 gc.setStroke(new Color(s.getColor().getR(), s.getColor().getG(), s.getColor().getB(), 1));
-                gc.strokeLine(d1.getX() * scale, d1.getY() * scale, d2.getX() * scale, d2.getY() * scale);
+                gc.strokeLine(d1.getX() * canvasScale, d1.getY() * canvasScale, d2.getX() * canvasScale, d2.getY() * canvasScale);
             }
         }
     }
@@ -108,31 +117,33 @@ public class MainSceneController {
 
     @FXML
     protected void handleScaleUpPress(ActionEvent e) {
-        scaleUp(step);
+        scaleUp(canvasScalingStep);
     }
 
     @FXML
     protected void handleScaleDownPress(ActionEvent e) {
-        scaleDown(step);
+        scaleDown(canvasScalingStep);
     }
 
     private void scaleUp(float step){
-        if(scale + step < 40){
-            scale += step;
+        if(canvasScale + step < 40){
+            canvasScale += step;
         }
-        else {scale = 40;}
-        canvas_mainCanvas.setWidth(p.getPageMetaData().getPageWidth() * scale);
-        canvas_mainCanvas.setHeight(p.getPageMetaData().getPageHeight() * scale);
+        else {
+            canvasScale = 40;}
+        canvas_mainCanvas.setWidth(p.getPageMetaData().getPageWidth() * canvasScale);
+        canvas_mainCanvas.setHeight(p.getPageMetaData().getPageHeight() * canvasScale);
         reDraw();
     }
 
     private void scaleDown(float step){
-        if(scale -step > 1){
-            scale -= step;
+        if(canvasScale -step > 1){
+            canvasScale -= step;
         }
-        else{scale = 1;}
-        canvas_mainCanvas.setWidth(p.getPageMetaData().getPageWidth() * scale);
-        canvas_mainCanvas.setHeight(p.getPageMetaData().getPageHeight() * scale);
+        else{
+            canvasScale = 1;}
+        canvas_mainCanvas.setWidth(p.getPageMetaData().getPageWidth() * canvasScale);
+        canvas_mainCanvas.setHeight(p.getPageMetaData().getPageHeight() * canvasScale);
         reDraw();
     }
 
@@ -144,9 +155,16 @@ public class MainSceneController {
 
         timeLineContainer = new VBox();
         timeLineContainer.setSpacing(10);
-        timeLineContainer.getChildren().add(new BasicStrokeTimeLine(Arrays.asList(p.getStrokes()), 50, this));
+        timeLineContainer.getChildren().add(new BasicStrokeTimeLine(observableStrokes, 50, this));
         timeLineContainer.getChildren().stream().forEach(ch -> {
             System.out.println(ch.getClass().toString());
         });
+    }
+
+    public float getTimeLineScale(){return this.timeLineScale;}
+
+    @Override
+    public void update(Observable sender) {
+        reDraw();
     }
 }

@@ -3,7 +3,8 @@ package Controls.Timeline;
 import Controllers.MainSceneController;
 import Controls.TimelineElement.FillerTimeLineElement;
 import Controls.TimelineElement.StrokeTimeLineElement;
-import Model.Stroke;
+import Model.Entities.Stroke;
+import Observables.ObservableStroke;
 import javafx.event.EventHandler;
 import javafx.scene.input.MouseEvent;
 
@@ -11,9 +12,10 @@ import java.util.List;
 
 public class BasicStrokeTimeLine extends TimeLine {
 
-    private List<Stroke> strokes;
+    private List<ObservableStroke> strokes;
     private MainSceneController c;
-    public BasicStrokeTimeLine(List<Stroke> s, double height, MainSceneController c){
+
+    public BasicStrokeTimeLine(List<ObservableStroke> s, double height, MainSceneController c){
         this.strokes = s;
         long totalDuration = strokes.get(strokes.size()-1).getTimeEnd() - strokes.get(0).getTimeStart();
         this.c = c;
@@ -24,10 +26,10 @@ public class BasicStrokeTimeLine extends TimeLine {
 
     private void initTimeLine(){
         long strokesStart = strokes.get(0).getTimeStart();
-        long lastEnd = 0;
-        for (Stroke s : strokes){
-            long startDelta = s.getTimeStart() - strokesStart;
-            long endDelta = s.getTimeEnd() - strokesStart;
+        double lastEnd = 0;
+        for (ObservableStroke s : strokes){
+            double startDelta = (s.getTimeStart() - strokesStart) * c.getTimeLineScale();
+            double endDelta = (s.getTimeEnd() - strokesStart) * c.getTimeLineScale();
             StrokeTimeLineElement stle = new StrokeTimeLineElement(startDelta,endDelta, getHeight(), this, s);
             stle.setOnMouseClicked(new EventHandler<MouseEvent>()
             {
@@ -44,14 +46,15 @@ public class BasicStrokeTimeLine extends TimeLine {
 
 
 
-    private void timeLineClick(Stroke s){
+    private void timeLineClick(ObservableStroke s){
         if(!s.isSelected()) {
-            for (Stroke st : strokes) {
+            for (ObservableStroke st : strokes) {
+                //TODO: This will cause a separate redraw.
                 st.setSelected(false);
             }
         }
         s.setSelected(!s.isSelected());
-        c.reDraw();
+        //c.reDraw();
         /*
         Highlight the stroke
         => Set selected on stroke element to true.

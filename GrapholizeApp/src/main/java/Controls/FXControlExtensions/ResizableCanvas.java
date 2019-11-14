@@ -1,4 +1,4 @@
-package Controls;
+package Controls.FXControlExtensions;
 
 import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
@@ -6,6 +6,7 @@ import javafx.scene.paint.Color;
 
 /**
  * Source: https://dlsc.com/2014/04/10/javafx-tip-1-resizable-canvas/
+ * Currently: Draws a Cross which resize itself depending on canvas size
  */
 
 public class ResizableCanvas extends Canvas {

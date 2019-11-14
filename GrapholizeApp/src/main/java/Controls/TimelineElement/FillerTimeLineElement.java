@@ -10,7 +10,7 @@ import javafx.scene.paint.Color;
 
 //http://www.java2s.com/Tutorials/Java/JavaFX/0040__JavaFX_Line.htm perhaps worth looking at. Another way to display lines.
 public class FillerTimeLineElement extends TimeLineElement {
-    public FillerTimeLineElement(long tStart, long tEnd, double parentHeight, Parent p) {
+    public FillerTimeLineElement(double tStart, double tEnd, double parentHeight, Parent p) {
         super(tStart, tEnd, parentHeight, p);
         if(this.getWidth() > 0) {
             setFill(Color.WHITESMOKE);

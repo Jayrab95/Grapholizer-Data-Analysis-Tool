@@ -1,6 +1,4 @@
-package Model;
-
-import java.util.Random;
+package Model.Entities;
 
 public class Dot {
 
