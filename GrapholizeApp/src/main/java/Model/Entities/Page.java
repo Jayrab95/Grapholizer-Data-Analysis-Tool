@@ -2,11 +2,13 @@ package Model.Entities;
 
 import Model.PageMetaData;
 
+import java.util.List;
+
 public class Page {
     private final PageMetaData pageMetaData;
-    private final Stroke[] strokes;
+    private final List<Stroke> strokes;
 
-    public Page (PageMetaData pageMetaData, Stroke[] strokes){
+    public Page (PageMetaData pageMetaData, List<Stroke> strokes){
         this.pageMetaData = pageMetaData;
         this.strokes = strokes;
     }
@@ -15,7 +17,7 @@ public class Page {
         return pageMetaData;
     }
 
-    public Stroke[] getStrokes() {
+    public List<Stroke> getStrokes() {
         return strokes;
     }
 }

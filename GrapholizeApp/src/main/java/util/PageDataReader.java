@@ -17,7 +17,7 @@ public class PageDataReader {
         try(FileInputStream stream = new FileInputStream(path)){
             if(IsFileValid(stream)){
                 PageMetaData pmd = ReadMetaData(stream);
-                Stroke[] strokes = ParseContentBody(pmd.getNumberOfStrokes(), stream);
+                List<Stroke> strokes = ParseContentBody(pmd.getNumberOfStrokes(), stream);
                 return new Page(pmd, strokes);
             }
         }
@@ -53,10 +53,12 @@ public class PageDataReader {
 
     }
 
-    private static Stroke[] ParseContentBody(int numOfStrokes, FileInputStream st) throws IOException {
-        Stroke[] strokes = new Stroke[numOfStrokes];
+    private static List<Stroke> ParseContentBody(int numOfStrokes, FileInputStream st) throws IOException {
+        List<Stroke> strokes = new ArrayList<>();
+        //Stroke[] strokes = new Stroke[numOfStrokes];
         for (int i = 0; i < numOfStrokes; i++) {
-            strokes[i] = ReadStroke(st);
+            //strokes[i] = ReadStroke(st);
+            strokes.add(ReadStroke(st));
         }
         return strokes;
     }

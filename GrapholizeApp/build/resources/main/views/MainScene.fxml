@@ -14,13 +14,17 @@
         <items>
           <AnchorPane minHeight="0.0" minWidth="0.0">
                <children>
-                  <ScrollPane layoutY="68.0" prefHeight="622.0" prefWidth="619.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="68.0">
+                  <ScrollPane layoutY="52.0" prefHeight="638.0" prefWidth="619.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="52.0">
                      <content>
                         <Canvas fx:id="canvas_mainCanvas" />
                      </content>
                   </ScrollPane>
-                  <Button fx:id="btn_scaleDown" onAction="#handleScaleDownPress" layoutX="460.0" layoutY="7.0" mnemonicParsing="false" text="Scale down" AnchorPane.rightAnchor="6.0" AnchorPane.topAnchor="7.0" />
-                  <Button fx:id="btn_scaleUp" onAction="#handleScaleUpPress" layoutX="320.0" layoutY="7.0" mnemonicParsing="false" text="Scale up" AnchorPane.rightAnchor="175.0" AnchorPane.topAnchor="7.0" />
+                  <HBox layoutX="306.0" layoutY="-1.0" spacing="5.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                     <children>
+                        <Button fx:id="btn_scaleDown" mnemonicParsing="false" onAction="#handleScaleDownPress" text="Scale down" />
+                        <Button fx:id="btn_scaleUp" mnemonicParsing="false" onAction="#handleScaleUpPress" text="Scale up" />
+                     </children>
+                  </HBox>
                </children>
           </AnchorPane>
           <AnchorPane minHeight="0.0" minWidth="0.0">

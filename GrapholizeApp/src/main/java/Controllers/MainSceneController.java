@@ -3,7 +3,8 @@ package Controllers;
 import java.net.URL;
 import java.util.*;
 
-import Controls.Timeline.BasicStrokeTimeLine;
+import Controls.Timeline.CommentTimeLine;
+import Controls.Timeline.StrokeDurationTimeLine;
 import Interfaces.Observable;
 import Interfaces.Observer;
 import Model.Entities.Dot;
@@ -44,6 +45,8 @@ public class MainSceneController implements Observer {
 
     private VBox timeLineContainer;
 
+    private long totalDuration;
+
     @FXML
     public void initialize() throws Exception{
         System.out.println("aaa");
@@ -56,6 +59,7 @@ public class MainSceneController implements Observer {
 
         setUpTimeLines();
         setupTimelineContainer();
+        totalDuration = p.getStrokes().get(p.getStrokes().size() - 1).getTimeEnd() - p.getStrokes().get(0).getTimeStart();
     }
 
     public MainSceneController(){
@@ -68,7 +72,7 @@ public class MainSceneController implements Observer {
         return PageDataReader.ReadPage(path);
     }
 
-    private void initObservableStrokes(Stroke[] strokes){
+    private void initObservableStrokes(List<Stroke> strokes){
         observableStrokes = new ArrayList<>();
         for (Stroke s : strokes){
             observableStrokes.add(new ObservableStroke(s, this));
@@ -155,10 +159,8 @@ public class MainSceneController implements Observer {
 
         timeLineContainer = new VBox();
         timeLineContainer.setSpacing(10);
-        timeLineContainer.getChildren().add(new BasicStrokeTimeLine(observableStrokes, 50, this));
-        timeLineContainer.getChildren().stream().forEach(ch -> {
-            System.out.println(ch.getClass().toString());
-        });
+        timeLineContainer.getChildren().add(new StrokeDurationTimeLine(observableStrokes, 50, this));
+        timeLineContainer.getChildren().add(new CommentTimeLine("Custom", 50));
     }
 
     public float getTimeLineScale(){return this.timeLineScale;}
