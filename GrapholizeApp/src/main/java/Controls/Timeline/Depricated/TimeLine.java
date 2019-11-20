@@ -1,4 +1,4 @@
-package Controls.Timeline;
+package Controls.Timeline.Depricated;
 
 import Controls.TimelineElement.TimeLineElement;
 import javafx.scene.input.MouseEvent;
@@ -11,6 +11,7 @@ public abstract class TimeLine extends HBox {
     protected String timeLineName;
 
     //Todo: perhaps reference style from a style sheet.
+    //TODO: This sort of styling does not work on canvas. The canvas needs to be set in a container.
     protected String style = "-fx-padding: 10; -fx-border-style: solid inside; -fx-border-width: 2; -fx-border-insets: 5; -fx-border-radius: 5; -fx-border-color: blue;";
 
     protected TimeLine(String timeLineName, double height){

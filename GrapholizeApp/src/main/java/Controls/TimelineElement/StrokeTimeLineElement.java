@@ -11,24 +11,29 @@ public class StrokeTimeLineElement extends TimeLineElement {
     public StrokeTimeLineElement(double tStart, double tEnd, double parentHeight, Color c, ObservableStroke s) {
         super(tStart, tEnd, parentHeight, c);
         this.s = s;
-        setFill(c);
-
     }
+
+
 
     public ObservableStroke getElementStroke(){
         return this.s;
     }
 
+
     @Override
-    protected void handleMouseRelease(MouseEvent event){
-        s.setSelected(!s.isSelected());
-        System.out.println("handleMouseRelease from StrokeTimeLineElement");
+    protected void handleMouseClick(MouseEvent e) {
+        //Todo: instead of overwriting click of parent, the click event is passed over from the timeline itself. Thisway, the entire list can be updated as well.
+        System.out.println("HandleMouseClick in StrokeTimeLineElement");
+        s.toggleSelected();
         /*
-        Highlight the stroke
-        => Set selected on stroke element to true.
-        => Cause a redraw of teh canvas.
-        Perhaps also change the color of the element a bit.
+        if(!s.isSelected()) {
+            for (ObservableStroke st : strokes) {
+                //TODO: This will cause a separate redraw.
+                st.setSelected(false);
+            }
+        }
+        s.setSelected(!s.isSelected());
+
          */
     }
-
 }

@@ -1,7 +1,6 @@
 package Controls.Container;
 
-import Controls.Timeline.TimeLine;
-import Interfaces.Observable;
+import Controls.Timeline.Depricated.TimeLine;
 import Interfaces.Observer;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;

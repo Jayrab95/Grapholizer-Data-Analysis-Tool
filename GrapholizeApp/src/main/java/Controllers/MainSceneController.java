@@ -3,8 +3,10 @@ package Controllers;
 import java.net.URL;
 import java.util.*;
 
-import Controls.Timeline.CommentTimeLine;
-import Controls.Timeline.StrokeDurationTimeLine;
+import Controls.Timeline.Canvas.CommentTimeLineCanvas;
+import Controls.Timeline.Canvas.StrokeDurationTimeLineCanvas;
+import Controls.Timeline.Pane.CommentTimeLinePane;
+import Controls.Timeline.Pane.StrokeDurationTimeLinePane;
 import Interfaces.Observable;
 import Interfaces.Observer;
 import Model.Entities.Dot;
@@ -57,9 +59,10 @@ public class MainSceneController implements Observer {
 
         drawThatSHit();
 
+
+        totalDuration = p.getStrokes().get(p.getStrokes().size() - 1).getTimeEnd() - p.getStrokes().get(0).getTimeStart();
         setUpTimeLines();
         setupTimelineContainer();
-        totalDuration = p.getStrokes().get(p.getStrokes().size() - 1).getTimeEnd() - p.getStrokes().get(0).getTimeStart();
     }
 
     public MainSceneController(){
@@ -156,11 +159,10 @@ public class MainSceneController implements Observer {
     }
 
     private void setUpTimeLines(){
-
         timeLineContainer = new VBox();
         timeLineContainer.setSpacing(10);
-        timeLineContainer.getChildren().add(new StrokeDurationTimeLine(observableStrokes, 50, this));
-        timeLineContainer.getChildren().add(new CommentTimeLine("Custom", 50));
+        timeLineContainer.getChildren().add(new StrokeDurationTimeLinePane("Stroke duration", totalDuration,  50, timeLineScale, observableStrokes));
+        timeLineContainer.getChildren().add(new CommentTimeLinePane("Custom", totalDuration, 50, timeLineScale, Color.ROYALBLUE));
     }
 
     public float getTimeLineScale(){return this.timeLineScale;}

@@ -1,7 +1,7 @@
 package util;
 
 import Model.Entities.Page;
-import Model.PageMetaData;
+import Model.Entities.PageMetaData;
 import Model.Entities.Stroke;
 import Model.Entities.Dot;
 

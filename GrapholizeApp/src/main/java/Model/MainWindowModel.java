@@ -1,6 +1,6 @@
 package Model;
 
-import Model.Entities.Page;
+import Model.Entities.PageMetaData;
 import Model.Entities.Stroke;
 import Observables.ObservableStroke;
 

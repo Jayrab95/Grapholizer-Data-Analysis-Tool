@@ -1,6 +1,5 @@
-package Controls.Timeline;
+package Controls.Timeline.Canvas;
 
-import Controls.TimelineElement.FillerTimeLineElement;
 import Controls.TimelineElement.StrokeTimeLineElement;
 import Model.Entities.Stroke;
 import Observables.ObservableStroke;
@@ -13,24 +12,22 @@ import java.util.List;
 
 public class StrokeDurationTimeLineCanvas extends TimelineCanvas<StrokeTimeLineElement> {
     List<ObservableStroke> strokes;
-    private float timeLineScale = 0.1f;
-
-    //The strokeMenuItem is bound to a new clickEvent everytime a new stroke TL-ELement is rightclicked.
-    private MenuItem strokeMenuItem;
 
 
-    protected StrokeDurationTimeLineCanvas(String timeLineName,double width, double height, List<ObservableStroke> strokes) {
-        super(timeLineName,width, height);
-
+    public StrokeDurationTimeLineCanvas(String timeLineName,double width, double height, double scale, List<ObservableStroke> strokes) {
+        super(timeLineName,width, height, scale);
+        this.strokes = strokes;
+        setUpTimeLine();
     }
 
+    //Wow....https://bugs.openjdk.java.net/browse/JDK-8089835
     //TODO: Timelines need to become observers of which ever class/control saves the timeLineScale.
     private void setUpTimeLine(){
         long strokesStart = strokes.get(0).getTimeStart();
         double lastEnd = 0;
         for (ObservableStroke s : strokes){
-            double startDelta = (s.getTimeStart() - strokesStart) * timeLineScale;
-            double endDelta = (s.getTimeEnd() - strokesStart) * timeLineScale;
+            double startDelta = (s.getTimeStart() - strokesStart) * scale;
+            double endDelta = (s.getTimeEnd() - strokesStart) * scale;
             Color c = new Color(s.getColor().getR(), s.getColor().getG(), s.getColor().getB(), s.getColor().getO());
             StrokeTimeLineElement stle = new StrokeTimeLineElement(startDelta,endDelta, getHeight(), c, s);
             elements.add(stle);
@@ -41,23 +38,34 @@ public class StrokeDurationTimeLineCanvas extends TimelineCanvas<StrokeTimeLineE
 
     @Override
     protected void handleMouseClick(MouseEvent e) {
+        double x = e.getX();
+        double y = e.getY();
         long firstTimeStamp = strokes.get(0).getTimeStart();
-        for (Stroke s : strokes){
-            if(e.getX() > s.getTimeStart() - firstTimeStamp && e.getX() < s.getTimeEnd() - firstTimeStamp){
-                System.out.println("Found first timeStamp");
+        for (ObservableStroke s : strokes){
+            if(e.getX() > (s.getTimeStart() - firstTimeStamp) * scale && e.getX() < (s.getTimeEnd() - firstTimeStamp) * scale){
+                System.out.println("Found Stroke. x = " + x);
+                timeLineClick(s);
             }
         }
     }
 
-    @Override
-    protected void handleMouseDragMove(MouseEvent e) {
-
+    //Replace this with an onclick defined in TimeLIneELement base
+    private void timeLineClick(ObservableStroke s){
+        if(!s.isSelected()) {
+            for (ObservableStroke st : strokes) {
+                //TODO: This will cause a separate redraw.
+                st.setSelected(false);
+            }
+        }
+        s.setSelected(!s.isSelected());
+        /*
+        Highlight the stroke
+        => Set selected on stroke element to true.
+        => Cause a redraw of teh canvas.
+        Perhaps also change the color of the element a bit.
+         */
     }
 
-    @Override
-    protected void handleMouseRelease(MouseEvent e) {
-
-    }
 
     @Override
     protected void InitiateContextMenu() {

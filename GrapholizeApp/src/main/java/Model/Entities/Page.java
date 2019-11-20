@@ -1,7 +1,5 @@
 package Model.Entities;
 
-import Model.PageMetaData;
-
 import java.util.List;
 
 public class Page {

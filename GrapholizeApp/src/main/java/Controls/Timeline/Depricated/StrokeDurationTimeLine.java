@@ -1,12 +1,9 @@
-package Controls.Timeline;
+package Controls.Timeline.Depricated;
 
 import Controllers.MainSceneController;
 import Controls.TimelineElement.FillerTimeLineElement;
 import Controls.TimelineElement.StrokeTimeLineElement;
-import Model.Entities.Stroke;
 import Observables.ObservableStroke;
-import javafx.event.EventHandler;
-import javafx.scene.input.MouseEvent;
 import javafx.scene.paint.Color;
 
 import java.util.List;

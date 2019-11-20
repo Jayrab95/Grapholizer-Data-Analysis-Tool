@@ -16,9 +16,10 @@ public class FillerTimeLineElement extends TimeLineElement {
     }
 
     @Override
-    protected void handleMouseRelease(MouseEvent e) {
-        System.out.println("handleMouseRelease in FillerTimeLineElement (base)");
+    protected void handleMouseClick(MouseEvent e) {
+
     }
+
 
 
 }

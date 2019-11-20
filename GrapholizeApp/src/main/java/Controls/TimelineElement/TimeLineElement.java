@@ -14,7 +14,6 @@ public abstract class TimeLineElement extends Rectangle {
 
     protected double timeStart;
     protected double timeStop;
-    protected Selector s;
     protected Color c;
 
     //Parent not necessary anymore. can be removed from constructor
@@ -22,17 +21,30 @@ public abstract class TimeLineElement extends Rectangle {
         this.timeStart = tStart;
         this.timeStop = tEnd;
         this.c = c;
-        s = new Selector();
 
         setHeight(parentHeight);
         double width = tEnd - tStart;
         setWidth(width);
+        setX(tStart);
+        setY(0);
 
+        setOnMouseClicked(e -> handleMouseClick(e));
 
-        setOnMouseClicked(e -> setInitialMousePosition(e));
-        setOnMouseDragged(e -> doDragSelection(e));
-        setOnMouseReleased(e -> handleMouseRelease(e));
+        if(this.getWidth() > 0) {
+            setFill(c);
+        }
+    }
 
+    public TimeLineElement(Color c, Rectangle r){
+        timeStart = r.getX();
+        timeStop = r.getX() + r.getWidth();
+        setWidth(r.getWidth());
+        setHeight(r.getHeight());
+        setX(timeStart);
+        setY(0);
+        setOnMouseClicked(e -> handleMouseClick(e));
+
+        this.c = c;
         if(this.getWidth() > 0) {
             setFill(c);
         }
@@ -42,13 +54,5 @@ public abstract class TimeLineElement extends Rectangle {
     public double getTimeStop(){return timeStop;}
     public Color getColor(){return c;}
 
-
-    protected void setInitialMousePosition(MouseEvent e){
-        s.setStart(e.getX(), e.getY());
-    }
-    protected void doDragSelection(MouseEvent e){
-        s.setEnd(e.getX(), e.getY());
-        //Draw Selection rectangle
-    }
-    protected abstract void handleMouseRelease(MouseEvent e);
+    protected abstract void handleMouseClick(MouseEvent e);
 }
