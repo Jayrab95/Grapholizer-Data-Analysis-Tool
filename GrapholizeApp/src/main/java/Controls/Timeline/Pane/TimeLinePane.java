@@ -9,10 +9,9 @@ import javafx.scene.layout.Pane;
 import java.util.ArrayList;
 import java.util.List;
 
-public abstract class TimeLinePane<T extends TimeLineElement> extends Pane {
+public abstract class TimeLinePane extends Pane {
 
     protected String timeLineName;
-    //protected List<T> elements;
     protected ContextMenu contextMenu;
     protected double scale;
     //Todo: perhaps reference style from a style sheet.
@@ -22,7 +21,6 @@ public abstract class TimeLinePane<T extends TimeLineElement> extends Pane {
         this.timeLineName = timeLineName;
         this.scale = scale;
         setHeight(height);
-        //setMinHeight(height);
         setPrefHeight(height);
         setWidth(width * scale);
         InitiateTimeLine();
@@ -30,37 +28,14 @@ public abstract class TimeLinePane<T extends TimeLineElement> extends Pane {
     }
 
     private void InitiateTimeLine(){
-        //setOnMouseClicked(e -> handleMouseClick(e));
-        //elements = new ArrayList<>();
         setStyle(style);
-        //draw();
     }
 
-    //protected abstract void handleMouseClick(MouseEvent e);
 
     protected abstract void InitiateContextMenu();
 
-    /*
-    //https://www.geeksforgeeks.org/javafx-canvas-class/
-    protected void draw(){
-        for(T tle : elements){
-            // graphics context
-            GraphicsContext graphics_context = getGraphicsContext2D();
-
-            // set fill for rectangle
-            graphics_context.setFill(tle.getColor());
-            //Adjust coordinates
-            graphics_context.fillRect(tle.getTimeStart(), 0, tle.getTimeStop() - tle.getTimeStart(), getHeight());
-        }
+    public String getTimeLineName(){
+        return timeLineName;
     }
 
-     */
-
-    /*
-    public void add(T elem){
-        elements.add(elem);
-        draw();
-    }
-
-     */
 }

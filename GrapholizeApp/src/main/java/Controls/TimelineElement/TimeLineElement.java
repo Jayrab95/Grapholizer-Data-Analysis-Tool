@@ -1,5 +1,8 @@
 package Controls.TimelineElement;
 
+import Interfaces.Observable;
+import Interfaces.Observer;
+import Observables.ObservableStroke;
 import javafx.scene.Parent;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.input.MouseEvent;
@@ -15,6 +18,7 @@ public abstract class TimeLineElement extends Rectangle {
     protected double timeStart;
     protected double timeStop;
     protected Color c;
+    protected boolean selected = false;
 
     //Parent not necessary anymore. can be removed from constructor
     public TimeLineElement(double tStart, double tEnd, double parentHeight, Color c){
@@ -53,6 +57,18 @@ public abstract class TimeLineElement extends Rectangle {
     public double getTimeStart(){return timeStart;}
     public double getTimeStop(){return timeStop;}
     public Color getColor(){return c;}
+
+    public boolean isSelected(){
+        return this.selected;
+    }
+    public void setSelected(boolean selected){
+        this.selected = selected;
+    }
+    public void toggleSelected(){
+        this.selected = !this.selected;
+    }
+
+
 
     protected abstract void handleMouseClick(MouseEvent e);
 }

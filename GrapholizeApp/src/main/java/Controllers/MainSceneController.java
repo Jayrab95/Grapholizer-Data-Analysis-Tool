@@ -3,6 +3,7 @@ package Controllers;
 import java.net.URL;
 import java.util.*;
 
+import Controls.Container.TimeLineContainer;
 import Controls.Timeline.Canvas.CommentTimeLineCanvas;
 import Controls.Timeline.Canvas.StrokeDurationTimeLineCanvas;
 import Controls.Timeline.Pane.CommentTimeLinePane;
@@ -155,7 +156,12 @@ public class MainSceneController implements Observer {
     }
 
     private void setupTimelineContainer(){
-        scrollPane_TimeLines.setContent(timeLineContainer);
+        //scrollPane_TimeLines.setContent(timeLineContainer);
+        TimeLineContainer tlc = new TimeLineContainer();
+        tlc.addTimeLine(new StrokeDurationTimeLinePane("Stroke duration", totalDuration,  50, timeLineScale, observableStrokes));
+        tlc.addTimeLine(new CommentTimeLinePane("Custom", totalDuration, 50, timeLineScale, Color.ROYALBLUE));
+        scrollPane_TimeLines.setContent(tlc);
+
     }
 
     private void setUpTimeLines(){

@@ -2,12 +2,15 @@ package Controls.Timeline.Pane;
 
 import Controls.TimelineElement.StrokeTimeLineElement;
 import Observables.ObservableStroke;
+import javafx.scene.control.ContextMenu;
+import javafx.scene.control.MenuItem;
+import javafx.scene.input.MouseButton;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.paint.Color;
 
 import java.util.List;
 
-public class StrokeDurationTimeLinePane extends TimeLinePane<StrokeTimeLineElement> {
+public class StrokeDurationTimeLinePane extends TimeLinePane{
     List<ObservableStroke> strokes;
 
     public StrokeDurationTimeLinePane(String timeLineName, double width, double height, double scale, List<ObservableStroke> strokes) {
@@ -16,50 +19,57 @@ public class StrokeDurationTimeLinePane extends TimeLinePane<StrokeTimeLineEleme
         setUpTimeLine();
     }
 
-    //Wow....https://bugs.openjdk.java.net/browse/JDK-8089835
+
     //TODO: Timelines need to become observers of which ever class/control saves the timeLineScale.
     private void setUpTimeLine(){
         long strokesStart = strokes.get(0).getTimeStart();
         double lastEnd = 0;
         for (ObservableStroke s : strokes){
+            //TODO: The elements need to know about the timeline scale
+            //Elements need to become listeners of whichever class manages the timeline scale.
+            //Their width is updated on scale change.
+            //Time start and Time end should be saved as is in the TLE. The TLE should then applies the scale for the width
             double startDelta = (s.getTimeStart() - strokesStart) * scale;
             double endDelta = (s.getTimeEnd() - strokesStart) * scale;
             Color c = new Color(s.getColor().getR(), s.getColor().getG(), s.getColor().getB(), s.getColor().getO());
+
             StrokeTimeLineElement stle = new StrokeTimeLineElement(startDelta,endDelta, getHeight(), c, s);
+            stle.setOnMouseClicked(e -> timeLineClick(e, s));
+            s.addListener(stle);
             this.getChildren().add(stle);
-            //elements.add(stle);
+
             lastEnd = endDelta;
         }
         setOnMousePressed(e -> handleMouseClick(e));
         //draw();
     }
 
-    //@Override
     protected void handleMouseClick(MouseEvent e) {
+        //The TimelineClick is currently not used.
+        //TODO: Later on, it can be used for context menu actions. (Create new timeline etc)
         System.out.println("handleMouseClick called on StrokeDurationTimeLinePane");
-        /*
-        double x = e.getX();
-        double y = e.getY();
-        long firstTimeStamp = strokes.get(0).getTimeStart();
-        for (ObservableStroke s : strokes){
-            if(e.getX() > (s.getTimeStart() - firstTimeStamp) * scale && e.getX() < (s.getTimeEnd() - firstTimeStamp) * scale){
-                System.out.println("Found Stroke. x = " + x);
-                timeLineClick(s);
-            }
-        }
-
-         */
     }
 
     //Replace this with an onclick defined in TimeLIneELement base
-    private void timeLineClick(ObservableStroke s){
-        if(!s.isSelected()) {
-            for (ObservableStroke st : strokes) {
-                //TODO: This will cause a separate redraw.
-                st.setSelected(false);
+    private void timeLineClick(MouseEvent e, ObservableStroke s){
+        if(e.getButton() == MouseButton.PRIMARY){
+            if(e.isControlDown()){
+                s.toggleSelected();
+            }
+            else {
+                //TODO: Current behavior: If multiple elements are selected and an already selected element is clicked on again, everything is deselected
+                for (ObservableStroke st : strokes) {
+                    //TODO: This will cause a separate redraw.
+                    if(st != s){
+                        st.setSelected(false);
+                    }
+
+                }
+                s.toggleSelected();
             }
         }
-        s.setSelected(!s.isSelected());
+
+
         /*
         Highlight the stroke
         => Set selected on stroke element to true.
@@ -70,6 +80,8 @@ public class StrokeDurationTimeLinePane extends TimeLinePane<StrokeTimeLineEleme
 
     @Override
     protected void InitiateContextMenu() {
-
+        MenuItem menuItem_CreateNewTimeLine = new MenuItem("Create new timeline below");
+        MenuItem menuItem_CreateNewTimeLineOutOfSelected = new MenuItem("Create new timeline out of selected items");
+        contextMenu = new ContextMenu();
     }
 }

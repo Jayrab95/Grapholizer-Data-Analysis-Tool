@@ -17,7 +17,6 @@ public class TimeLineWrapper extends HBox {
     private TimeLineInformation tli;
 
     private class TimeLineInformation extends VBox{
-        private int index;
 
         private Button btn_addNewTimeline;
         private Button btn_moveTimelineUp;
@@ -29,10 +28,9 @@ public class TimeLineWrapper extends HBox {
         private List<Observer> observers;
 
 
-        public TimeLineInformation(String timeLineName, int index){
+        public TimeLineInformation(String timeLineName){
             setUpButtons();
             setUpLabel(timeLineName);
-            this.index = index;
         }
 
         private void setUpButtons(){
