@@ -1,6 +1,7 @@
 package Controls.Timeline.Pane;
 
 import Controls.TimelineElement.StrokeTimeLineElement;
+import Interfaces.Observer;
 import Observables.ObservableStroke;
 import javafx.scene.control.ContextMenu;
 import javafx.scene.control.MenuItem;
@@ -10,7 +11,7 @@ import javafx.scene.paint.Color;
 
 import java.util.List;
 
-public class StrokeDurationTimeLinePane extends TimeLinePane{
+public class StrokeDurationTimeLinePane extends TimeLinePane {
     List<ObservableStroke> strokes;
 
     public StrokeDurationTimeLinePane(String timeLineName, double width, double height, double scale, List<ObservableStroke> strokes) {

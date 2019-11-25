@@ -160,6 +160,7 @@ public class MainSceneController implements Observer {
         //scrollPane_TimeLines.setContent(timeLineContainer);
         TimeLineContainer tlc = new TimeLineContainer(totalDuration, timeLineScale);
         tlc.addTimeLine(new StrokeDurationTimeLinePane("Stroke duration", totalDuration,  50, timeLineScale, observableStrokes));
+        tlc.addTimeLine(new StrokeDurationTimeLinePane("Stroke duration 2", totalDuration,  50, timeLineScale, observableStrokes));
         tlc.addTimeLine(new CommentTimeLinePane("Custom", totalDuration, 50, timeLineScale, Color.ROYALBLUE));
         scrollPane_TimeLines.setContent(tlc);
     }

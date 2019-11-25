@@ -10,6 +10,8 @@ import Interfaces.Observable;
 import Interfaces.Observer;
 import javafx.event.ActionEvent;
 import javafx.scene.control.*;
+import javafx.scene.input.MouseButton;
+import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
@@ -18,6 +20,7 @@ import javafx.util.Callback;
 
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collector;
 import java.util.stream.Collectors;
 
 //https://stackoverflow.com/questions/17761415/how-to-change-order-of-children-in-javafx for children swapping
@@ -40,6 +43,8 @@ public class TimeLineContainer extends HBox implements Observer {
 
     private Button btn_CreateNewTimeLine;
 
+    private TimeLinePane selectedTimeLine;
+
     //TODO: The container should read/update the length and scale of the timeline (determined by the strokes) from a model class
     public TimeLineContainer(double length, double scale){
         this.length = length;
@@ -61,7 +66,8 @@ public class TimeLineContainer extends HBox implements Observer {
     public void createNewCustomTimeLine(String name, Color c, Optional<List<TimeLineElement>> tleList){
         //Currently: Since the StrokeTimeLine is always available, take the width of this element
         //TODO: Think of better solution. Perhaps the TimeLineContainer class can manage the total width?
-        CommentTimeLinePane ctlp = new CommentTimeLinePane(name, length, 50, scale,  c);
+        //Creation of timeline
+        TimeLinePane ctlp = new CommentTimeLinePane(name, length, 50, scale, c);
         if(tleList.isPresent()){
             for(TimeLineElement tle : tleList.get()){
                 CommentTimeLineElement ctle = new CommentTimeLineElement(c, tle);
@@ -78,10 +84,10 @@ public class TimeLineContainer extends HBox implements Observer {
     public void addTimeLine(TimeLinePane tl){
         vbox_timeLineInfoContainer.getChildren().remove(btn_CreateNewTimeLine);
 
-        /*
-        vbox_timeLineInfoContainer.getChildren().add(new TimeLineInformation(tl));
-        vbox_timeLines.getChildren().add(tl);
-         */
+        //TODO: This is a pretty bad solution. Before this is called, there isn't really a context menu for the timeline.
+        InitiateContextMenu(tl);
+        tl.setOnMouseClicked(event -> handleTimeLineClick(event, tl));
+
         vbox_timeLineInfoContainer.getChildren().add(new TimeLineWrapper(tl, new TimeLineInformation(tl)));
         vbox_timeLineInfoContainer.getChildren().add(btn_CreateNewTimeLine);
     }
@@ -91,41 +97,85 @@ public class TimeLineContainer extends HBox implements Observer {
         vbox_timeLineInfoContainer.getChildren().remove(source);
     }
 
+    //region Getters
     public VBox getTimeLines(){
         return vbox_timeLines;
     }
     public VBox getTimeLineInfos(){
         return vbox_timeLineInfoContainer;
     }
-    
-    protected void InitiateContextMenu() {
+    //endregion
+
+    /**
+     * Initiates a new ContextMenu with two default commands: "Create new Timeline" and "Create new Timeline out of selected items.
+     * The context menu is passed down to each timeline Pane and its children, where new commands are added.
+     * @param t
+     * @return
+     */
+    protected void InitiateContextMenu(TimeLinePane t) {
+        //TODO: Add Move up/Move down functionality
         MenuItem menuItem_CreateNewTimeLine = new MenuItem("Create new timeline below");
+        menuItem_CreateNewTimeLine.setOnAction(event -> handleCreateNewTimeLineClick());
+
         MenuItem menuItem_CreateNewTimeLineOutOfSelected = new MenuItem("Create new timeline out of selected items");
-        //contextMenu = new ContextMenu(menuItem_CreateNewTimeLine, menuItem_CreateNewTimeLineOutOfSelected);
+        menuItem_CreateNewTimeLineOutOfSelected.setOnAction(event -> handleCreateNewTimeLineOutOfSelectedClick(t));
+
+        t.getContextMenu().getItems().addAll(menuItem_CreateNewTimeLine, menuItem_CreateNewTimeLineOutOfSelected);
+
+        //return  new ContextMenu(menuItem_CreateNewTimeLine, menuItem_CreateNewTimeLineOutOfSelected);
+    }
+    //TODO: Add functionality that allows for timeline creation below an existing timeline.
+
+    /**
+     * Handler-method for a mouse click event on a TimeLinePane. The event is assigned this method in addTimeLine().
+     * It Primarily handles left clicks on a timeline (selection)
+     * @param e
+     * @param timeLine
+     */
+    private void handleTimeLineClick(MouseEvent e, TimeLinePane timeLine){
+        System.out.println("handleTimeLineClick called from TimeLineContainer");
+        //If a new timeline is clicked => Deselect all items from other timelines
+        if(e.getButton().equals(MouseButton.PRIMARY) && timeLine != selectedTimeLine){
+            if(selectedTimeLine != null){
+                selectedTimeLine.getChildren().stream()
+                        .map(node -> (TimeLineElement)node)
+                        .forEach(tle -> tle.setSelected(false));
+            }
+            selectedTimeLine = timeLine;
+        }
     }
 
-    //TODO: Add functionality that allows for timeline creation below an existing timeline.
+    /**
+     * Handles a click event on buttons/menuitems that create new Timelines
+     */
     private void handleCreateNewTimeLineClick(){
-        Optional<String> timeLineName = lole();
-        //Optional<String> timeLineName = openTimeLineCreationDialog();
+        Optional<String> timeLineName = openTimeLineCreationDialog();
         if(timeLineName.isPresent()){
             createNewCustomTimeLine(timeLineName.get(), Color.BROWN, Optional.empty());
         }
     }
 
-    //https://code.makery.ch/blog/javafx-dialogs-official/
-    //TODO: Check if name is unique
-    private Optional<String> openTimeLineCreationDialog(){
-        TextInputDialog dialog = new TextInputDialog("Timeline tag");
-        dialog.setTitle("Create a new timeline");
-        dialog.setHeaderText("Create a new timeline by adding a timeline tag. (The tag must be unique for this project.)");
-        dialog.setContentText("Timeline tag:");
 
-        return dialog.showAndWait();
+    /**
+     * Handles a click event on buttons/menuitems that create new Timelines with selected items
+     */
+    private void handleCreateNewTimeLineOutOfSelectedClick(TimeLinePane tl){
+        Optional<String> newTimeLineName = openTimeLineCreationDialog();
+        if(newTimeLineName.isPresent()){
+            List<TimeLineElement> tles = tl.getChildren().stream()
+                    .map(node -> (TimeLineElement)node)//TODO: Maybe there's a better solution? (Should there be a separate List with the TLE in the timeline?)
+                    .filter(tle -> ((TimeLineElement)tle).isSelected())
+                    .collect(Collectors.toList());
+            createNewCustomTimeLine(newTimeLineName.get(), Color.BROWN, Optional.of(tles));
+        }
     }
+    //TODO: Let user choose from colors!
 
+    //region CreateNewTimeLineDialogue
+    //https://code.makery.ch/blog/javafx-dialogs-official/
     //https://examples.javacodegeeks.com/desktop-java/javafx/dialog-javafx/javafx-dialog-example/
-    private Optional<String> lole(){
+    //https://docs.oracle.com/javase/8/javafx/api/javafx/scene/control/Dialog.html#resultConverterProperty--
+    private Optional<String> openTimeLineCreationDialog(){
 
         Dialog<String> dialog = new Dialog<>();
         dialog.setTitle("Create new TimeLine");
@@ -194,7 +244,7 @@ public class TimeLineContainer extends HBox implements Observer {
     }
     private boolean stringUnique(String s){
         List<String> timelineTags = vbox_timeLineInfoContainer.getChildren().stream()
-                .filter(elem -> elem.getClass() == TimeLineWrapper.class)
+                .filter(elem -> elem.getClass() == TimeLineWrapper.class) //TODO: Maybe there is a better solution?
                 .map(tlwrapper -> ((TimeLineWrapper)tlwrapper).getTimeLinePane().getTimeLineName())
                 .collect(Collectors.toList()
         );
@@ -208,11 +258,14 @@ public class TimeLineContainer extends HBox implements Observer {
         alert.setContentText(message);
         alert.showAndWait();
     }
+    //endregion
 
     @Override
     public void update(Observable sender) {
 
     }
+
+    //region private classes
 
     private class TimeLineInformation extends VBox {
         private TimeLinePane tl;
@@ -273,4 +326,6 @@ public class TimeLineContainer extends HBox implements Observer {
         TimeLinePane getTimeLinePane(){return tl;}
         TimeLineInformation getTimelineInformation(){return tli;}
     }
+
+    //endregion
 }

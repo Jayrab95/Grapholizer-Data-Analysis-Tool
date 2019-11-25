@@ -2,6 +2,7 @@ package Controls.Timeline.Pane;
 
 import Controls.TimelineElement.CommentTimeLineElement;
 import javafx.geometry.Point2D;
+import javafx.scene.control.ContextMenu;
 import javafx.scene.control.TextInputDialog;
 import javafx.scene.effect.Light;
 import javafx.scene.input.MouseEvent;
@@ -28,11 +29,6 @@ public class CommentTimeLinePane extends TimeLinePane {
         getChildren().add(selection);
     }
 
-    //@Override
-    protected void handleMouseClick(MouseEvent e) {
-        System.out.println("handleMouseClick in CommetTimeLinePane called");
-        //Show comment
-    }
 
     //Source: https://coderanch.com/t/689100/java/rectangle-dragging-image
     //TODO: Check for surrounding comments. the selection can only be done between 2 elements.
