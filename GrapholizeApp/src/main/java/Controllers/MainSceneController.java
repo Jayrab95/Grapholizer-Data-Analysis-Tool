@@ -149,7 +149,8 @@ public class MainSceneController implements Observer {
             canvasScale -= step;
         }
         else{
-            canvasScale = 1;}
+            canvasScale = 1;
+        }
         canvas_mainCanvas.setWidth(p.getPageMetaData().getPageWidth() * canvasScale);
         canvas_mainCanvas.setHeight(p.getPageMetaData().getPageHeight() * canvasScale);
         reDraw();
@@ -161,7 +162,6 @@ public class MainSceneController implements Observer {
         tlc.addTimeLine(new StrokeDurationTimeLinePane("Stroke duration", totalDuration,  50, timeLineScale, observableStrokes));
         tlc.addTimeLine(new CommentTimeLinePane("Custom", totalDuration, 50, timeLineScale, Color.ROYALBLUE));
         scrollPane_TimeLines.setContent(tlc);
-
     }
 
     private void setUpTimeLines(){

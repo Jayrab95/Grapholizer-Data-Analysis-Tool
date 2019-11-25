@@ -78,10 +78,6 @@ public class StrokeDurationTimeLinePane extends TimeLinePane{
          */
     }
 
-    @Override
-    protected void InitiateContextMenu() {
-        MenuItem menuItem_CreateNewTimeLine = new MenuItem("Create new timeline below");
-        MenuItem menuItem_CreateNewTimeLineOutOfSelected = new MenuItem("Create new timeline out of selected items");
-        contextMenu = new ContextMenu();
-    }
+
+
 }

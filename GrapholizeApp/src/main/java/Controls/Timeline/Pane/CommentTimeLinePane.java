@@ -101,8 +101,4 @@ public class CommentTimeLinePane extends TimeLinePane {
         return dialog.showAndWait();
     }
 
-    @Override
-    protected void InitiateContextMenu() {
-
-    }
 }

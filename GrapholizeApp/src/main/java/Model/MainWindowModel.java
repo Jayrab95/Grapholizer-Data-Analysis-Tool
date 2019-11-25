@@ -13,8 +13,6 @@ public class MainWindowModel {
 
     public MainWindowModel(PageMetaData pmd, Stroke[] strokes){
         this.pageMetaData = pmd;
-        
-
     }
 
 }
