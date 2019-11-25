@@ -1,18 +1,24 @@
 package Controls.Container;
 
+import Controls.Timeline.Depricated.CommentTimeLine;
 import Controls.Timeline.Depricated.TimeLine;
 import Controls.Timeline.Pane.CommentTimeLinePane;
 import Controls.Timeline.Pane.TimeLinePane;
 import Controls.TimelineElement.CommentTimeLineElement;
 import Controls.TimelineElement.TimeLineElement;
+import Interfaces.Observable;
 import Interfaces.Observer;
+import javafx.event.ActionEvent;
 import javafx.scene.control.*;
+import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
+import javafx.util.Callback;
 
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 //https://stackoverflow.com/questions/17761415/how-to-change-order-of-children-in-javafx for children swapping
 
@@ -20,7 +26,7 @@ import java.util.Optional;
 into a TimeLineWrapper which contains the visual timeline and Timeline information (name and some control buttons) and then adds it into
 the VBox that has all the timelines.
  */
-public class TimeLineContainer extends HBox {
+public class TimeLineContainer extends HBox implements Observer {
 
     private double scale;
     private double length;
@@ -34,7 +40,10 @@ public class TimeLineContainer extends HBox {
 
     private Button btn_CreateNewTimeLine;
 
-    public TimeLineContainer(){
+    //TODO: The container should read/update the length and scale of the timeline (determined by the strokes) from a model class
+    public TimeLineContainer(double length, double scale){
+        this.length = length;
+        this.scale = scale;
         setup();
     }
 
@@ -97,7 +106,8 @@ public class TimeLineContainer extends HBox {
 
     //TODO: Add functionality that allows for timeline creation below an existing timeline.
     private void handleCreateNewTimeLineClick(){
-        Optional<String> timeLineName = openTimeLineCreationDialog();
+        Optional<String> timeLineName = lole();
+        //Optional<String> timeLineName = openTimeLineCreationDialog();
         if(timeLineName.isPresent()){
             createNewCustomTimeLine(timeLineName.get(), Color.BROWN, Optional.empty());
         }
@@ -110,7 +120,98 @@ public class TimeLineContainer extends HBox {
         dialog.setTitle("Create a new timeline");
         dialog.setHeaderText("Create a new timeline by adding a timeline tag. (The tag must be unique for this project.)");
         dialog.setContentText("Timeline tag:");
+
         return dialog.showAndWait();
+    }
+
+    //https://examples.javacodegeeks.com/desktop-java/javafx/dialog-javafx/javafx-dialog-example/
+    private Optional<String> lole(){
+
+        Dialog<String> dialog = new Dialog<>();
+        dialog.setTitle("Create new TimeLine");
+        dialog.setHeaderText("Create a new timeline by giving it a tag. (The tag must be unique and cannot be empty)");
+        dialog.setResizable(true);
+
+        Label label1 = new Label("Timeline tag (must be unique): ");
+        Label label_Error = new Label();
+        TextField text1 = new TextField();
+
+        GridPane grid = new GridPane();
+        grid.add(label1, 1, 1);
+        grid.add(text1, 2, 1);
+        dialog.getDialogPane().setContent(grid);
+
+
+        ButtonType buttonTypeOk = new ButtonType("Okay", ButtonBar.ButtonData.OK_DONE);
+        ButtonType buttonTypeCancel = new ButtonType("Cancel", ButtonBar.ButtonData.CANCEL_CLOSE);
+
+
+
+        dialog.getDialogPane().getButtonTypes().addAll(buttonTypeOk, buttonTypeCancel);
+
+        final Button okButton = (Button) dialog.getDialogPane().lookupButton(buttonTypeOk);
+
+        okButton.addEventFilter(ActionEvent.ACTION, ae -> {
+            if (!stringIsUniqueAndValid(text1.getText())) {
+                ae.consume(); //not valid
+            }
+        });
+
+        dialog.setResultConverter(b -> {
+            if (b == buttonTypeOk) {
+                return text1.getText();
+            }
+
+            return null;
+        });
+
+        return dialog.showAndWait();
+    }
+
+    //TODO: Define static strings for title etc.
+    private boolean stringIsUniqueAndValid(String s){
+        boolean notEmpty = stringNotEmpty(s);
+        boolean nameUnique = stringUnique(s);
+        if(!notEmpty){
+            openErrorDialogue(
+                    "Timeline creation error",
+                    "Error while creating timeline",
+                    "The timeline name must not be empty.");
+            return false;
+        }
+        else if(!nameUnique){
+            openErrorDialogue(
+                    "Timeline creation error",
+                    "Error while creation timeline",
+                    "The entered timeline tag already exists. Please enter a unique tag.");
+            return false;
+        }
+        return true;
+    }
+
+    private boolean stringNotEmpty(String s){
+        return !s.isBlank();
+    }
+    private boolean stringUnique(String s){
+        List<String> timelineTags = vbox_timeLineInfoContainer.getChildren().stream()
+                .filter(elem -> elem.getClass() == TimeLineWrapper.class)
+                .map(tlwrapper -> ((TimeLineWrapper)tlwrapper).getTimeLinePane().getTimeLineName())
+                .collect(Collectors.toList()
+        );
+        return !timelineTags.contains(s);
+    }
+
+    private void openErrorDialogue(String title, String header, String message){
+        Alert alert = new Alert(Alert.AlertType.ERROR);
+        alert.setTitle(title);
+        alert.setHeaderText(header);
+        alert.setContentText(message);
+        alert.showAndWait();
+    }
+
+    @Override
+    public void update(Observable sender) {
+
     }
 
     private class TimeLineInformation extends VBox {
@@ -160,9 +261,16 @@ public class TimeLineContainer extends HBox {
             getChildren().addAll(lbl_timeLineName, hBox_ButtonsContainer);
         }
     }
+
     private class TimeLineWrapper extends HBox{
+        private final TimeLinePane tl;
+        private final TimeLineInformation tli;
         TimeLineWrapper(TimeLinePane tl, TimeLineInformation tli){
+            this.tl = tl;
+            this.tli = tli;
             getChildren().addAll(tli, tl);
         }
+        TimeLinePane getTimeLinePane(){return tl;}
+        TimeLineInformation getTimelineInformation(){return tli;}
     }
 }

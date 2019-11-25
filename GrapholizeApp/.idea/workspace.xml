@@ -2,9 +2,6 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="f9c9e85c-b6d3-4a2f-99c7-3350288aea5b" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/src/main/java/Controllers/TimeLineInformationController.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/Model/TimeLinesModel.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/resources/fxml/containers/TimeLineInformation.fxml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.gradle/5.2.1/executionHistory/executionHistory.bin" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/5.2.1/executionHistory/executionHistory.bin" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.gradle/5.2.1/executionHistory/executionHistory.lock" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/5.2.1/executionHistory/executionHistory.lock" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.gradle/5.2.1/fileHashes/fileHashes.bin" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/5.2.1/fileHashes/fileHashes.bin" afterDir="false" />
@@ -13,27 +10,12 @@
       <change beforePath="$PROJECT_DIR$/.gradle/5.2.1/javaCompile/javaCompile.lock" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/5.2.1/javaCompile/javaCompile.lock" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.gradle/buildOutputCleanup/buildOutputCleanup.lock" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/buildOutputCleanup/buildOutputCleanup.lock" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/classes/java/main/Controllers/MainSceneController.class" beforeDir="false" afterPath="$PROJECT_DIR$/build/classes/java/main/Controllers/MainSceneController.class" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/build/classes/java/main/Controls/Container/TimeLineContainer$TimeLineInformation.class" beforeDir="false" afterPath="$PROJECT_DIR$/build/classes/java/main/Controls/Container/TimeLineContainer$TimeLineInformation.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/classes/java/main/Controls/Container/TimeLineContainer$TimeLineWrapper.class" beforeDir="false" afterPath="$PROJECT_DIR$/build/classes/java/main/Controls/Container/TimeLineContainer$TimeLineWrapper.class" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/build/classes/java/main/Controls/Container/TimeLineContainer.class" beforeDir="false" afterPath="$PROJECT_DIR$/build/classes/java/main/Controls/Container/TimeLineContainer.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/build/classes/java/main/Controls/Container/TimeLineWrapper$TimeLineInformation.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/build/classes/java/main/Controls/Container/TimeLineWrapper.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/build/classes/java/main/Controls/Timeline/Pane/CommentTimeLinePane.class" beforeDir="false" afterPath="$PROJECT_DIR$/build/classes/java/main/Controls/Timeline/Pane/CommentTimeLinePane.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/build/classes/java/main/Controls/Timeline/Pane/StrokeDurationTimeLinePane.class" beforeDir="false" afterPath="$PROJECT_DIR$/build/classes/java/main/Controls/Timeline/Pane/StrokeDurationTimeLinePane.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/build/classes/java/main/Controls/Timeline/Pane/TimeLinePane.class" beforeDir="false" afterPath="$PROJECT_DIR$/build/classes/java/main/Controls/Timeline/Pane/TimeLinePane.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/build/classes/java/main/Controls/TimelineElement/StrokeTimeLineElement.class" beforeDir="false" afterPath="$PROJECT_DIR$/build/classes/java/main/Controls/TimelineElement/StrokeTimeLineElement.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/build/classes/java/main/Controls/TimelineElement/TimeLineElement.class" beforeDir="false" afterPath="$PROJECT_DIR$/build/classes/java/main/Controls/TimelineElement/TimeLineElement.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/build/classes/java/main/Model/MainWindowModel.class" beforeDir="false" afterPath="$PROJECT_DIR$/build/classes/java/main/Model/MainWindowModel.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/build/classes/java/main/Scenes/HelloFX.class" beforeDir="false" afterPath="$PROJECT_DIR$/build/classes/java/main/Scenes/HelloFX.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/build/resources/main/views/MainScene.fxml" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/Controllers/MainSceneController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/Controllers/MainSceneController.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/Controls/Container/TimeLineContainer.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/Controls/Container/TimeLineContainer.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/Controls/Container/TimeLineWrapper.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/Controls/Timeline/Pane/CommentTimeLinePane.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/Controls/Timeline/Pane/CommentTimeLinePane.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/Controls/Timeline/Pane/StrokeDurationTimeLinePane.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/Controls/Timeline/Pane/StrokeDurationTimeLinePane.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/Controls/Timeline/Pane/TimeLinePane.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/Controls/Timeline/Pane/TimeLinePane.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/Model/MainWindowModel.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/Model/MainWindowModel.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/Scenes/HelloFX.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/Scenes/HelloFX.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/views/MainScene.fxml" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/fxml/views/MainScene.fxml" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -90,8 +72,8 @@
     <option name="RECENT_TEMPLATES">
       <list>
         <option value="Interface" />
-        <option value="FxmlFile" />
         <option value="Class" />
+        <option value="FxmlFile" />
       </list>
     </option>
   </component>
@@ -269,7 +251,7 @@
       <workItem from="1574075885937" duration="9741000" />
       <workItem from="1574162271213" duration="7475000" />
       <workItem from="1574173051195" duration="17159000" />
-      <workItem from="1574260312649" duration="27845000" />
+      <workItem from="1574260312649" duration="37167000" />
     </task>
     <servers />
   </component>
@@ -296,11 +278,6 @@
     <breakpoint-manager>
       <breakpoints>
         <line-breakpoint enabled="true" type="java-line">
-          <url>file://$PROJECT_DIR$/src/main/java/Scenes/HelloFX.java</url>
-          <line>15</line>
-          <option name="timeStamp" value="5" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" type="java-line">
           <url>file://$PROJECT_DIR$/src/main/java/Controls/Timeline/Canvas/StrokeDurationTimeLineCanvas.java</url>
           <line>30</line>
           <option name="timeStamp" value="6" />
@@ -321,9 +298,9 @@
           <option name="timeStamp" value="9" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="java-line">
-          <url>file://$PROJECT_DIR$/src/main/java/Controls/Timeline/Pane/TimeLinePane.java</url>
-          <line>24</line>
-          <option name="timeStamp" value="11" />
+          <url>file://$PROJECT_DIR$/src/main/java/Controls/Container/TimeLineContainer.java</url>
+          <line>63</line>
+          <option name="timeStamp" value="12" />
         </line-breakpoint>
       </breakpoints>
     </breakpoint-manager>
