@@ -1,14 +1,12 @@
 package Controls.Container;
 
-import Controls.Timeline.Depricated.CommentTimeLine;
-import Controls.Timeline.Depricated.TimeLine;
 import Controls.Timeline.Pane.CommentTimeLinePane;
 import Controls.Timeline.Pane.TimeLinePane;
 import Controls.TimelineElement.CommentTimeLineElement;
 import Controls.TimelineElement.TimeLineElement;
-import Interfaces.Observable;
 import Interfaces.Observer;
 import javafx.event.ActionEvent;
+import javafx.scene.Node;
 import javafx.scene.control.*;
 import javafx.scene.input.MouseButton;
 import javafx.scene.input.MouseEvent;
@@ -16,11 +14,9 @@ import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
-import javafx.util.Callback;
 
 import java.util.List;
 import java.util.Optional;
-import java.util.stream.Collector;
 import java.util.stream.Collectors;
 
 //https://stackoverflow.com/questions/17761415/how-to-change-order-of-children-in-javafx for children swapping
@@ -29,7 +25,28 @@ import java.util.stream.Collectors;
 into a TimeLineWrapper which contains the visual timeline and Timeline information (name and some control buttons) and then adds it into
 the VBox that has all the timelines.
  */
-public class TimeLineContainer extends HBox implements Observer {
+public class TimeLineContainer extends HBox {
+
+
+    private final static String TXT_TL_CREATION_TITLE = "Create a new timeline";
+    private final static String TXT_TL_CREATION_HEADER = "Creation of a new timeline";
+    private final static String TXT_TL_CREATION_TEXT = "Create a new timeline by entering a tag. The tag must be unique and cannot be empty.";
+    private final static String TXT_TL_TIMELINETAG_LABEL = "Timeline tag:";
+    private final static String TXT_TL_TAG_DEFAULTVAL = "New Timeline";
+    private final static String TXT_TL_EDIT_TITLE = "Edit timeline";
+    private final static String TXT_TL_EDIT_HEADER = "Editing a timeline";
+    private final static String TXT_TL_EDIT_TEXT = "Change the name of the timeline";
+    private final static String TXT_TL_CREATION_ERROR_TITLE = "Timeline creation error";
+    private final static String TXT_TL_CREATION_ERROR_HEADER = "Error while creating timeline";
+    private final static String TXT_TL_EDIT_ERROR_TITLE = "Timeline edit error";
+    private final static String TXT_TL_EDIT_ERROR_HEADER = "Error while editing timeline";
+    private final static String TXT_TL_ERROR_NAMEEMPTY = "The tag cannot be empty.";
+    private final static String TXT_TL_ERROR_NAME_NOT_UNIQUE = "This tag already exists. Please choose another tag.";
+    private final static String TXT_TL_ERROR_CANNOT_BE_DELETED = "This timeline cannot be deleted. Only custom timelines can be deleted.";
+    private final static String TXT_TL_ERROR_CANNOT_BE_EDITED = "This timeline cannot be edited. Only custom timelines can be edited.";
+    private final static String TXT_TL_DELETE_ERROR_TITLE = "Delete timeline error";
+    private final static String TXT_TL_DELETE_ERROR_HEADER = "Error while deleting timeline";
+
 
     private double scale;
     private double length;
@@ -85,26 +102,51 @@ public class TimeLineContainer extends HBox implements Observer {
         vbox_timeLineInfoContainer.getChildren().remove(btn_CreateNewTimeLine);
 
         //TODO: This is a pretty bad solution. Before this is called, there isn't really a context menu for the timeline.
-        InitiateContextMenu(tl);
+        //GenerateTimelineContextMenu(tl);
         tl.setOnMouseClicked(event -> handleTimeLineClick(event, tl));
+        tl.setOnContextMenuRequested(contextMenuEvent -> GenerateTimelineContextMenu(tl).show(tl, contextMenuEvent.getScreenX(), contextMenuEvent.getScreenY()));
 
         vbox_timeLineInfoContainer.getChildren().add(new TimeLineWrapper(tl, new TimeLineInformation(tl)));
         vbox_timeLineInfoContainer.getChildren().add(btn_CreateNewTimeLine);
     }
 
-    public void removeTimeLine(TimeLineInformation source){
+    public void handleRemoveTimeLineClick(TimeLinePane source){
         //Ask if TL should actually be removed
-        vbox_timeLineInfoContainer.getChildren().remove(source);
+        if(source.getClass() == CommentTimeLinePane.class){
+            if(deleteConfirmation(source.getTimeLineName())){
+                removeTimeLine(source);
+            }
+        }
+        else{
+            openErrorDialogue(TXT_TL_DELETE_ERROR_TITLE, TXT_TL_DELETE_ERROR_HEADER, TXT_TL_ERROR_CANNOT_BE_DELETED);
+        }
     }
 
-    //region Getters
-    public VBox getTimeLines(){
-        return vbox_timeLines;
+    //TODO: Consider binding events to Wrapper and not to timeline...
+    private void removeTimeLine(TimeLinePane tl){
+        for(Node n : vbox_timeLineInfoContainer.getChildren()){
+            if(n.getClass() == TimeLineWrapper.class && ((TimeLineWrapper)n).getTimeLinePane() == tl){
+                vbox_timeLineInfoContainer.getChildren().remove(n);
+                break;
+            }
+        }
     }
-    public VBox getTimeLineInfos(){
-        return vbox_timeLineInfoContainer;
+
+
+    //TODO: maybe move this to a "Dialog creator class"
+    private boolean deleteConfirmation(String tlname){
+        Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
+        alert.setTitle("Delete Timeline");
+        alert.setHeaderText("Delete timeline?");
+        alert.setContentText("Are you sure you want to delete the timeline " + tlname + "? This action cannot be undone.");
+        Optional<ButtonType> option = alert.showAndWait();
+        if(option.isPresent() && option.get() == ButtonType.OK){
+            return true;
+        }
+        return false;
     }
-    //endregion
+
+
 
     /**
      * Initiates a new ContextMenu with two default commands: "Create new Timeline" and "Create new Timeline out of selected items.
@@ -112,7 +154,7 @@ public class TimeLineContainer extends HBox implements Observer {
      * @param t
      * @return
      */
-    protected void InitiateContextMenu(TimeLinePane t) {
+    private ContextMenu GenerateTimelineContextMenu(TimeLinePane t) {
         //TODO: Add Move up/Move down functionality
         MenuItem menuItem_CreateNewTimeLine = new MenuItem("Create new timeline below");
         menuItem_CreateNewTimeLine.setOnAction(event -> handleCreateNewTimeLineClick());
@@ -120,7 +162,17 @@ public class TimeLineContainer extends HBox implements Observer {
         MenuItem menuItem_CreateNewTimeLineOutOfSelected = new MenuItem("Create new timeline out of selected items");
         menuItem_CreateNewTimeLineOutOfSelected.setOnAction(event -> handleCreateNewTimeLineOutOfSelectedClick(t));
 
-        t.getContextMenu().getItems().addAll(menuItem_CreateNewTimeLine, menuItem_CreateNewTimeLineOutOfSelected);
+        MenuItem menuItem_EditTimeLine = new MenuItem("Edit timeline");
+        menuItem_EditTimeLine.setOnAction(event -> System.out.println("Edit to be implemented"));
+
+        MenuItem menuItem_DeleteTimeLine = new MenuItem("Delete timeline");
+        menuItem_DeleteTimeLine.setOnAction(event -> handleRemoveTimeLineClick(t));
+
+        return new ContextMenu(
+                menuItem_CreateNewTimeLine,
+                menuItem_CreateNewTimeLineOutOfSelected,
+                menuItem_EditTimeLine,
+                menuItem_DeleteTimeLine);
 
         //return  new ContextMenu(menuItem_CreateNewTimeLine, menuItem_CreateNewTimeLineOutOfSelected);
     }
@@ -149,18 +201,17 @@ public class TimeLineContainer extends HBox implements Observer {
      * Handles a click event on buttons/menuitems that create new Timelines
      */
     private void handleCreateNewTimeLineClick(){
-        Optional<String> timeLineName = openTimeLineCreationDialog();
+        Optional<String> timeLineName = openTimeLineCreationDialog(TXT_TL_CREATION_TITLE, TXT_TL_CREATION_HEADER, TXT_TL_CREATION_TEXT, TXT_TL_TIMELINETAG_LABEL, TXT_TL_TAG_DEFAULTVAL);
         if(timeLineName.isPresent()){
             createNewCustomTimeLine(timeLineName.get(), Color.BROWN, Optional.empty());
         }
     }
 
-
     /**
      * Handles a click event on buttons/menuitems that create new Timelines with selected items
      */
     private void handleCreateNewTimeLineOutOfSelectedClick(TimeLinePane tl){
-        Optional<String> newTimeLineName = openTimeLineCreationDialog();
+        Optional<String> newTimeLineName = openTimeLineCreationDialog(TXT_TL_CREATION_TITLE, TXT_TL_CREATION_HEADER, TXT_TL_CREATION_TEXT, TXT_TL_TIMELINETAG_LABEL, TXT_TL_TAG_DEFAULTVAL);
         if(newTimeLineName.isPresent()){
             List<TimeLineElement> tles = tl.getChildren().stream()
                     .map(node -> (TimeLineElement)node)//TODO: Maybe there's a better solution? (Should there be a separate List with the TLE in the timeline?)
@@ -171,31 +222,42 @@ public class TimeLineContainer extends HBox implements Observer {
     }
     //TODO: Let user choose from colors!
 
+    private void handleEditTimeLineClick(TimeLinePane tl){
+        if(tl.getClass() == CommentTimeLinePane.class){
+            Optional<String> newTimeLineName = openTimeLineCreationDialog(TXT_TL_EDIT_TITLE, TXT_TL_EDIT_HEADER, TXT_TL_EDIT_TEXT, TXT_TL_TIMELINETAG_LABEL, tl.getTimeLineName());
+            if(newTimeLineName.isPresent()){
+                tl.setTimeLineName(newTimeLineName.get());
+            }
+        }
+        else{
+            openErrorDialogue(TXT_TL_EDIT_ERROR_TITLE, TXT_TL_EDIT_ERROR_HEADER, TXT_TL_ERROR_CANNOT_BE_EDITED);
+        }
+
+    }
+
     //region CreateNewTimeLineDialogue
     //https://code.makery.ch/blog/javafx-dialogs-official/
     //https://examples.javacodegeeks.com/desktop-java/javafx/dialog-javafx/javafx-dialog-example/
     //https://docs.oracle.com/javase/8/javafx/api/javafx/scene/control/Dialog.html#resultConverterProperty--
-    private Optional<String> openTimeLineCreationDialog(){
+    private Optional<String> openTimeLineCreationDialog(String dialogTitle, String dialogHeader, String dialogText, String labelText, String defaultValue){
 
         Dialog<String> dialog = new Dialog<>();
-        dialog.setTitle("Create new TimeLine");
-        dialog.setHeaderText("Create a new timeline by giving it a tag. (The tag must be unique and cannot be empty)");
+        dialog.setTitle(dialogTitle);
+        dialog.setHeaderText(dialogHeader);
+        dialog.setContentText(dialogText);
         dialog.setResizable(true);
 
-        Label label1 = new Label("Timeline tag (must be unique): ");
-        Label label_Error = new Label();
-        TextField text1 = new TextField();
+        Label label1 = new Label(labelText);
+        TextField text1 = new TextField(defaultValue);
+
 
         GridPane grid = new GridPane();
         grid.add(label1, 1, 1);
         grid.add(text1, 2, 1);
         dialog.getDialogPane().setContent(grid);
 
-
         ButtonType buttonTypeOk = new ButtonType("Okay", ButtonBar.ButtonData.OK_DONE);
         ButtonType buttonTypeCancel = new ButtonType("Cancel", ButtonBar.ButtonData.CANCEL_CLOSE);
-
-
 
         dialog.getDialogPane().getButtonTypes().addAll(buttonTypeOk, buttonTypeCancel);
 
@@ -224,16 +286,16 @@ public class TimeLineContainer extends HBox implements Observer {
         boolean nameUnique = stringUnique(s);
         if(!notEmpty){
             openErrorDialogue(
-                    "Timeline creation error",
-                    "Error while creating timeline",
-                    "The timeline name must not be empty.");
+                    TXT_TL_CREATION_ERROR_TITLE,
+                    TXT_TL_CREATION_ERROR_HEADER,
+                    TXT_TL_ERROR_NAMEEMPTY);
             return false;
         }
         else if(!nameUnique){
             openErrorDialogue(
-                    "Timeline creation error",
-                    "Error while creation timeline",
-                    "The entered timeline tag already exists. Please enter a unique tag.");
+                    TXT_TL_CREATION_ERROR_TITLE,
+                    TXT_TL_CREATION_ERROR_HEADER,
+                    TXT_TL_ERROR_NAME_NOT_UNIQUE);
             return false;
         }
         return true;
@@ -260,10 +322,6 @@ public class TimeLineContainer extends HBox implements Observer {
     }
     //endregion
 
-    @Override
-    public void update(Observable sender) {
-
-    }
 
     //region private classes
 
