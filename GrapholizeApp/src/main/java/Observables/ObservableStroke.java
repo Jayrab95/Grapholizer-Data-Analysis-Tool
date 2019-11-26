@@ -5,6 +5,8 @@ import Interfaces.Observer;
 import Model.Entities.Color;
 import Model.Entities.Dot;
 import Model.Entities.Stroke;
+import javafx.beans.property.BooleanProperty;
+import javafx.beans.property.SimpleBooleanProperty;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -18,7 +20,7 @@ public class ObservableStroke extends Stroke implements Observable {
     //Idea: the strokes/Dots implement a method called draw. This way, they can be wrapped with different filters. => DEcorator DesignPattern
     private final List<Observer> observers;
     private final Stroke stroke;
-    private boolean selected = false;
+    private BooleanProperty selected;
     private Color color;
     //endregion
 
@@ -28,6 +30,7 @@ public class ObservableStroke extends Stroke implements Observable {
         this.stroke = s;
         this.color = new Color();
         observers = new ArrayList<>();
+        selected = new SimpleBooleanProperty(false);
     }
 
     public ObservableStroke(Stroke s, Observer o){
@@ -71,19 +74,23 @@ public class ObservableStroke extends Stroke implements Observable {
         this.color = color;
     }
 
+    public BooleanProperty getSelectedBooleanProperty(){
+        return selected;
+    }
+
     public boolean isSelected(){
-        return this.selected;
+        return selected.get();
     }
 
     public void setSelected(boolean select){
-        if(select != this.selected){
-            this.selected = select;
+        if(select != selected.get()){
+            this.selected.set(select);
             notifyListeners();
         }
     }
 
     public void toggleSelected(){
-        this.selected = !this.selected;
+        this.selected.set(!selected.get());
         notifyListeners();
     }
     //endregion

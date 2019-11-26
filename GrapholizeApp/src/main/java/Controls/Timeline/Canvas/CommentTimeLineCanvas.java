@@ -1,6 +1,5 @@
 package Controls.Timeline.Canvas;
 
-import Controls.TimelineElement.CommentTimeLineElement;
 import Controls.TimelineElement.TimeLineElement;
 import javafx.geometry.Point2D;
 import javafx.scene.control.ContextMenu;
@@ -8,14 +7,14 @@ import javafx.scene.input.MouseEvent;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
 
-public class CommentTimeLineCanvas extends TimelineCanvas<CommentTimeLineElement>{
+public class CommentTimeLineCanvas extends TimelineCanvas<TimeLineElement>{
 
     private String tag;
 
     private Point2D mouseStart;
     private double xAnchor;
     private Rectangle selection;
-    private CommentTimeLineElement selectedElement;
+    private TimeLineElement selectedElement;
     private Color timeLineColor;
 
     public CommentTimeLineCanvas(String timeLineName, double width, double height, double scale, Color tlColor) {
@@ -33,7 +32,7 @@ public class CommentTimeLineCanvas extends TimelineCanvas<CommentTimeLineElement
         //Click only does selection of an element.
         double x = e.getX();
         TimeLineElement selected;
-        for(CommentTimeLineElement tle : elements){
+        for(TimeLineElement tle : elements){
             if(x >= tle.getTimeStart() && x <= tle.getTimeStop()){
                 //Element was found at coordinates.
                 selectedElement = tle;

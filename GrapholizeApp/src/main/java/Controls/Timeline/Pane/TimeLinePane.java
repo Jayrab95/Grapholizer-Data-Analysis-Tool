@@ -2,26 +2,27 @@ package Controls.Timeline.Pane;
 
 import Controls.TimelineElement.StrokeTimeLineElement;
 import Controls.TimelineElement.TimeLineElement;
+import javafx.beans.property.SimpleStringProperty;
+import javafx.beans.property.StringProperty;
 import javafx.scene.Node;
 import javafx.scene.control.ContextMenu;
 import javafx.scene.control.MenuItem;
 import javafx.scene.layout.Pane;
+import javafx.scene.paint.Color;
 
 //Idea: make Timeline an interface? This way timeline operations can be called without referencing the actual control.
 public abstract class TimeLinePane extends Pane {
 
-    protected String timeLineName;
+    protected StringProperty timeLineName;
     protected double scale;
-    protected ContextMenu contextMenuTimeLine;
-    protected ContextMenu contextMenuTimeLineElement;
+    protected Color timeLineColor;
     //Todo: perhaps reference style from a style sheet.
     protected String style = "-fx-padding: 10; -fx-border-style: solid inside; -fx-border-width: 2; -fx-border-insets: 5; -fx-border-radius: 5; -fx-border-color: blue; -fx-background-color: grey";
 
-    protected TimeLinePane(String timeLineName, double width, double height, double scale){
-        this.timeLineName = timeLineName;
+    protected TimeLinePane(String timeLineName, double width, double height, double scale, Color c){
+        this.timeLineName = new SimpleStringProperty(timeLineName);
         this.scale = scale;
-        this.contextMenuTimeLine = new ContextMenu();
-        this.contextMenuTimeLineElement = new ContextMenu();
+        this.timeLineColor = c;
 
         setHeight(height);
         setPrefHeight(height);
@@ -37,20 +38,17 @@ public abstract class TimeLinePane extends Pane {
 
 
     public String getTimeLineName(){
-        return timeLineName;
+        return timeLineName.get();
     }
+
+    public StringProperty getTimeLineNameProperty(){return timeLineName;}
 
     public void setTimeLineName(String newName){
-        this.timeLineName = newName;
+        this.timeLineName.setValue(newName);
     }
 
-    public ContextMenu getContextMenuTimeLine(){
-        return this.contextMenuTimeLine;
-    }
-
-    public ContextMenu getContextMenuTimeLineElements(){
-        return this.contextMenuTimeLineElement;
-    }
+    public Color getTimeLineColor(){return timeLineColor;}
+    public void setTimeLineColor(Color c){this.timeLineColor = c;}
 
     public void deselectTimeLine(){
         for(Node n : getChildren()){
@@ -60,6 +58,10 @@ public abstract class TimeLinePane extends Pane {
 
     public void addTimeLineElement(TimeLineElement tle){
         getChildren().add(tle);
+        tle.setOnContextMenuRequested(event -> {
+            getElementSpecificContextMenu(tle).show(this, event.getScreenX(), event.getScreenY());
+            event.consume(); //Consume event so that the context menu of the Timelinepane doesn't also show up.
+        });
         //Assign contextmenu as ContextMenuRequest action
     }
 

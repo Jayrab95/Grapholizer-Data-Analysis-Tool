@@ -1,8 +1,6 @@
 package Controls.Timeline.Pane;
 
-import Controls.TimelineElement.CommentTimeLineElement;
-import javafx.geometry.Point2D;
-import javafx.scene.control.ContextMenu;
+import Controls.TimelineElement.TimeLineElement;
 import javafx.scene.control.TextInputDialog;
 import javafx.scene.effect.Light;
 import javafx.scene.input.MouseEvent;
@@ -13,14 +11,11 @@ import java.util.Optional;
 
 public class CommentTimeLinePane extends TimeLinePane {
 
-    private String comment;
-    private Color color;
     Light.Point anchor;
     Rectangle selection;
 
     public CommentTimeLinePane(String timeLineName, double width, double height, double scale, Color c) {
-        super(timeLineName, width, height, scale);
-        this.color = c;
+        super(timeLineName, width, height, scale, c);
         setOnMousePressed(e-> handleMousePress(e));
         setOnMouseDragged(e-> handleMouseDrag(e));
         setOnMouseReleased(e-> handleMouseRelease(e));
@@ -66,17 +61,14 @@ public class CommentTimeLinePane extends TimeLinePane {
 
     private void handleMouseRelease(MouseEvent e){
         //TODO: Check if width of selection is larger than 0-5
-
-        // Do what you want with selection's properties here
         System.out.printf("X: %.2f, Y: %.2f, Width: %.2f, Height: %.2f%n",
                 selection.getX(), selection.getY(), selection.getWidth(), selection.getHeight());
         if(selection.getWidth() > 0){
             Optional<String> s = openCommentCreationDialogue();
             if(s.isPresent()){
                 System.out.println(s.get());
-                CommentTimeLineElement ctle = new CommentTimeLineElement(color, selection);
-                ctle.setComment(s.get());
-                getChildren().add(ctle);
+                TimeLineElement tle = new TimeLineElement(timeLineColor, selection, s.get());
+                addTimeLineElement(tle);
             }
             else{
                 System.out.println("Comment creation aborted.");

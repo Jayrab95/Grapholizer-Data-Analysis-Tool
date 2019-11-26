@@ -15,7 +15,7 @@ public class StrokeDurationTimeLinePane extends TimeLinePane {
     List<ObservableStroke> strokes;
 
     public StrokeDurationTimeLinePane(String timeLineName, double width, double height, double scale, List<ObservableStroke> strokes) {
-        super(timeLineName,width, height, scale);
+        super(timeLineName,width, height, scale, Color.BLACK);
         this.strokes = strokes;
         setUpTimeLine();
     }
@@ -37,12 +37,11 @@ public class StrokeDurationTimeLinePane extends TimeLinePane {
             StrokeTimeLineElement stle = new StrokeTimeLineElement(startDelta,endDelta, getHeight(), c, s);
             stle.setOnMouseClicked(e -> timeLineClick(e, s));
             s.addListener(stle);
-            this.getChildren().add(stle);
+            addTimeLineElement(stle);
 
             lastEnd = endDelta;
         }
         setOnMousePressed(e -> handleMouseClick(e));
-        //draw();
     }
 
     protected void handleMouseClick(MouseEvent e) {

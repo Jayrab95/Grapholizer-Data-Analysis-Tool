@@ -1,8 +1,9 @@
 package Controls.Container;
 
+import Controls.Timeline.Depricated.StrokeDurationTimeLine;
 import Controls.Timeline.Pane.CommentTimeLinePane;
+import Controls.Timeline.Pane.StrokeDurationTimeLinePane;
 import Controls.Timeline.Pane.TimeLinePane;
-import Controls.TimelineElement.CommentTimeLineElement;
 import Controls.TimelineElement.TimeLineElement;
 import Interfaces.Observer;
 import javafx.event.ActionEvent;
@@ -87,12 +88,8 @@ public class TimeLineContainer extends HBox {
         TimeLinePane ctlp = new CommentTimeLinePane(name, length, 50, scale, c);
         if(tleList.isPresent()){
             for(TimeLineElement tle : tleList.get()){
-                CommentTimeLineElement ctle = new CommentTimeLineElement(c, tle);
-                //TODO: perhaps all TLEs can have a comment? It's just empty on stroke elements
-                if(tle.getClass().equals(CommentTimeLineElement.class)){
-                    ctle.setComment(((CommentTimeLineElement)tle).getComment());
-                }
-                ctlp.getChildren().add(ctle);
+                TimeLineElement ctle = new TimeLineElement(c, tle, tle.getAnnotationText());
+                ctlp.addTimeLineElement(ctle);
             }
         }
         addTimeLine(ctlp);
@@ -101,8 +98,6 @@ public class TimeLineContainer extends HBox {
     public void addTimeLine(TimeLinePane tl){
         vbox_timeLineInfoContainer.getChildren().remove(btn_CreateNewTimeLine);
 
-        //TODO: This is a pretty bad solution. Before this is called, there isn't really a context menu for the timeline.
-        //GenerateTimelineContextMenu(tl);
         tl.setOnMouseClicked(event -> handleTimeLineClick(event, tl));
         tl.setOnContextMenuRequested(contextMenuEvent -> GenerateTimelineContextMenu(tl).show(tl, contextMenuEvent.getScreenX(), contextMenuEvent.getScreenY()));
 
@@ -110,17 +105,7 @@ public class TimeLineContainer extends HBox {
         vbox_timeLineInfoContainer.getChildren().add(btn_CreateNewTimeLine);
     }
 
-    public void handleRemoveTimeLineClick(TimeLinePane source){
-        //Ask if TL should actually be removed
-        if(source.getClass() == CommentTimeLinePane.class){
-            if(deleteConfirmation(source.getTimeLineName())){
-                removeTimeLine(source);
-            }
-        }
-        else{
-            openErrorDialogue(TXT_TL_DELETE_ERROR_TITLE, TXT_TL_DELETE_ERROR_HEADER, TXT_TL_ERROR_CANNOT_BE_DELETED);
-        }
-    }
+
 
     //TODO: Consider binding events to Wrapper and not to timeline...
     private void removeTimeLine(TimeLinePane tl){
@@ -146,7 +131,24 @@ public class TimeLineContainer extends HBox {
         return false;
     }
 
+    private void createCopyAnnotations(TimeLinePane tl, boolean combinedElement){
+        List<TimeLineElement> tles = selectedTimeLine.getChildren().stream()
+                .map(node -> (TimeLineElement)node)
+                .filter(elem -> elem.isSelected())
+                .collect(Collectors.toList());
+        if(!combinedElement){
+            for(TimeLineElement tle : tles){
+                tl.addTimeLineElement(new TimeLineElement(tl.getTimeLineColor(), tle, tle.getAnnotationText()));
+            }
+        }
+        else{
+            TimeLineElement tle = new TimeLineElement(tles.get(0).getTimeStart(), tles.get(tles.size()-1).getTimeStop(), tl.getHeight(), tl.getTimeLineColor(), "Combined annotation");
+            tl.addTimeLineElement(tle);
+            //TODO: What should happen if the newly created comment (or copies in general) overlaps with existing comments?
+            //TODO: For the combined element, use the dialogue to figure out what the comment should be => Checkbox combined? If Checked, enble textbox for new comment
+        }
 
+    }
 
     /**
      * Initiates a new ContextMenu with two default commands: "Create new Timeline" and "Create new Timeline out of selected items.
@@ -156,6 +158,7 @@ public class TimeLineContainer extends HBox {
      */
     private ContextMenu GenerateTimelineContextMenu(TimeLinePane t) {
         //TODO: Add Move up/Move down functionality
+        //TODO: Consider disabling some menuitems
         MenuItem menuItem_CreateNewTimeLine = new MenuItem("Create new timeline below");
         menuItem_CreateNewTimeLine.setOnAction(event -> handleCreateNewTimeLineClick());
 
@@ -163,21 +166,28 @@ public class TimeLineContainer extends HBox {
         menuItem_CreateNewTimeLineOutOfSelected.setOnAction(event -> handleCreateNewTimeLineOutOfSelectedClick(t));
 
         MenuItem menuItem_EditTimeLine = new MenuItem("Edit timeline");
-        menuItem_EditTimeLine.setOnAction(event -> System.out.println("Edit to be implemented"));
+        menuItem_EditTimeLine.setOnAction(event -> handleEditTimeLineClick(t));
 
         MenuItem menuItem_DeleteTimeLine = new MenuItem("Delete timeline");
         menuItem_DeleteTimeLine.setOnAction(event -> handleRemoveTimeLineClick(t));
 
+        MenuItem menuItem_CreateAnnotationOutOfSelected = new MenuItem("Create annotation out of selected elements");
+        menuItem_CreateAnnotationOutOfSelected.setOnAction(event -> handleCreateNewAnnotationOutOfSelectedClick(t));
+        if(selectedTimeLine == null || selectedTimeLine == t || t.getClass() == StrokeDurationTimeLinePane.class){
+            menuItem_CreateAnnotationOutOfSelected.setDisable(true);
+        }
+
         return new ContextMenu(
+                menuItem_CreateAnnotationOutOfSelected,
                 menuItem_CreateNewTimeLine,
                 menuItem_CreateNewTimeLineOutOfSelected,
                 menuItem_EditTimeLine,
                 menuItem_DeleteTimeLine);
-
         //return  new ContextMenu(menuItem_CreateNewTimeLine, menuItem_CreateNewTimeLineOutOfSelected);
     }
     //TODO: Add functionality that allows for timeline creation below an existing timeline.
 
+    //region click handler methods
     /**
      * Handler-method for a mouse click event on a TimeLinePane. The event is assigned this method in addTimeLine().
      * It Primarily handles left clicks on a timeline (selection)
@@ -189,9 +199,7 @@ public class TimeLineContainer extends HBox {
         //If a new timeline is clicked => Deselect all items from other timelines
         if(e.getButton().equals(MouseButton.PRIMARY) && timeLine != selectedTimeLine){
             if(selectedTimeLine != null){
-                selectedTimeLine.getChildren().stream()
-                        .map(node -> (TimeLineElement)node)
-                        .forEach(tle -> tle.setSelected(false));
+                selectedTimeLine.deselectTimeLine();
             }
             selectedTimeLine = timeLine;
         }
@@ -206,7 +214,6 @@ public class TimeLineContainer extends HBox {
             createNewCustomTimeLine(timeLineName.get(), Color.BROWN, Optional.empty());
         }
     }
-
     /**
      * Handles a click event on buttons/menuitems that create new Timelines with selected items
      */
@@ -233,6 +240,62 @@ public class TimeLineContainer extends HBox {
             openErrorDialogue(TXT_TL_EDIT_ERROR_TITLE, TXT_TL_EDIT_ERROR_HEADER, TXT_TL_ERROR_CANNOT_BE_EDITED);
         }
 
+    }
+
+    public void handleRemoveTimeLineClick(TimeLinePane source){
+        //Ask if TL should actually be removed
+        if(source.getClass() == CommentTimeLinePane.class){
+            if(deleteConfirmation(source.getTimeLineName())){
+                removeTimeLine(source);
+            }
+        }
+        else{
+            openErrorDialogue(TXT_TL_DELETE_ERROR_TITLE, TXT_TL_DELETE_ERROR_HEADER, TXT_TL_ERROR_CANNOT_BE_DELETED);
+        }
+    }
+
+    public void handleCreateNewAnnotationOutOfSelectedClick(TimeLinePane source){
+        createCopyAnnotationDialogue(source);
+    }
+    //endregion
+
+    public void createCopyAnnotationDialogue(TimeLinePane tl){
+
+        Dialog dialog = new Dialog<>();
+        dialog.setTitle("dialogTitle");
+        dialog.setHeaderText("dialogHeader");
+        dialog.setContentText("dialogText");
+        dialog.setResizable(true);
+
+        CheckBox cbox_joinedAnnotation = new CheckBox("Combine selected elements into one annotation");
+
+        Label label1 = new Label("labelText");
+        TextField text1 = new TextField("defaultValue");
+        text1.disableProperty().bind(cbox_joinedAnnotation.selectedProperty());
+
+
+        GridPane grid = new GridPane();
+        grid.add(cbox_joinedAnnotation, 1, 1);
+        grid.add(label1, 1, 2);
+        grid.add(text1, 2, 2);
+        dialog.getDialogPane().setContent(grid);
+
+        ButtonType buttonTypeOk = new ButtonType("Okay", ButtonBar.ButtonData.OK_DONE);
+        ButtonType buttonTypeCancel = new ButtonType("Cancel", ButtonBar.ButtonData.CANCEL_CLOSE);
+
+        dialog.getDialogPane().getButtonTypes().addAll(buttonTypeOk, buttonTypeCancel);
+
+        final Button okButton = (Button) dialog.getDialogPane().lookupButton(buttonTypeOk);
+
+        dialog.setResultConverter(b -> {
+            if (b == buttonTypeOk) {
+                createCopyAnnotations(tl, cbox_joinedAnnotation.isSelected());
+            }
+
+            return null;
+        });
+
+        dialog.showAndWait();
     }
 
     //region CreateNewTimeLineDialogue
@@ -362,6 +425,7 @@ public class TimeLineContainer extends HBox {
 
         private void setUpLabel(String txt){
             lbl_timeLineName = new Label(txt);
+            lbl_timeLineName.textProperty().bind(tl.getTimeLineNameProperty());
         }
 
         private void setupTimeLineInformation(){

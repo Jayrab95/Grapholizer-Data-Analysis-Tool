@@ -11,8 +11,9 @@ import javafx.scene.paint.Color;
 public class StrokeTimeLineElement extends TimeLineElement implements Observer {
     ObservableStroke s;
     public StrokeTimeLineElement(double tStart, double tEnd, double parentHeight, Color c, ObservableStroke s) {
-        super(tStart, tEnd, parentHeight, c);
+        super(tStart, tEnd, parentHeight, c, "Stroke");
         this.s = s;
+        s.getSelectedBooleanProperty().bindBidirectional(selected);
     }
 
 
@@ -22,26 +23,11 @@ public class StrokeTimeLineElement extends TimeLineElement implements Observer {
     }
 
 
-    @Override
-    protected void handleMouseClick(MouseEvent e) {
-        //Todo: instead of overwriting click of parent, the click event is passed over from the timeline itself. Thisway, the entire list can be updated as well.
-        System.out.println("HandleMouseClick in StrokeTimeLineElement");
-        s.toggleSelected();
-        /*
-        if(!s.isSelected()) {
-            for (ObservableStroke st : strokes) {
-                //TODO: This will cause a separate redraw.
-                st.setSelected(false);
-            }
-        }
-        s.setSelected(!s.isSelected());
 
-         */
-    }
 
     @Override
     public void update(Observable o){
-        this.selected = ((ObservableStroke) o).isSelected();
+        //this.selected = ((ObservableStroke) o).isSelected();
         //Change Element highlighting
     }
 }

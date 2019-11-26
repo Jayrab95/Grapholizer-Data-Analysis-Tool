@@ -3,6 +3,8 @@ package Controls.TimelineElement;
 import Interfaces.Observable;
 import Interfaces.Observer;
 import Observables.ObservableStroke;
+import javafx.beans.property.BooleanProperty;
+import javafx.beans.property.SimpleBooleanProperty;
 import javafx.scene.Parent;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.input.MouseEvent;
@@ -13,18 +15,22 @@ import javafx.scene.shape.Rectangle;
 import util.Selector;
 
 
-public abstract class TimeLineElement extends Rectangle {
+public class TimeLineElement extends Rectangle {
 
     protected double timeStart;
     protected double timeStop;
     protected Color c;
-    protected boolean selected = false;
+    protected BooleanProperty selected;
+    protected String annotationText;
+    //Reason for having comment in baseclass: When copying annotations, there first needs to be a type check to see if
+    //There's also a comment
 
-    //Parent not necessary anymore. can be removed from constructor
-    public TimeLineElement(double tStart, double tEnd, double parentHeight, Color c){
+    public TimeLineElement(double tStart, double tEnd, double parentHeight, Color c, String annotationText){
         this.timeStart = tStart;
         this.timeStop = tEnd;
-        this.c = c;
+        this.c = c;this.selected = new SimpleBooleanProperty(false);
+        this.annotationText = annotationText;
+
 
         setHeight(parentHeight);
         double width = tEnd - tStart;
@@ -39,7 +45,7 @@ public abstract class TimeLineElement extends Rectangle {
         }
     }
 
-    public TimeLineElement(Color c, Rectangle r){
+    public TimeLineElement(Color c, Rectangle r, String annotationText){
         timeStart = r.getX();
         timeStop = r.getX() + r.getWidth();
         setWidth(r.getWidth());
@@ -49,26 +55,36 @@ public abstract class TimeLineElement extends Rectangle {
         setOnMouseClicked(e -> handleMouseClick(e));
 
         this.c = c;
+        this.annotationText = annotationText;
         if(this.getWidth() > 0) {
             setFill(c);
         }
     }
 
+
     public double getTimeStart(){return timeStart;}
     public double getTimeStop(){return timeStop;}
+    public BooleanProperty getSelectedBooleanProperty(){return this.selected;}
     public Color getColor(){return c;}
+    public String getAnnotationText(){
+        return annotationText;
+    }
 
     public boolean isSelected(){
-        return this.selected;
+        return selected.get();
     }
     public void setSelected(boolean selected){
-        this.selected = selected;
+        this.selected.set(selected);
     }
     public void toggleSelected(){
-        this.selected = !this.selected;
+        this.selected.set(!selected.get());
+    }
+    public void setAnnotationText(String text){
+        this.annotationText = text;
     }
 
-
-
-    protected abstract void handleMouseClick(MouseEvent e);
+    protected void handleMouseClick(MouseEvent e){
+        System.out.println("HandleMouseClick called in TimeLineElement baseclass.");
+        toggleSelected();
+    }
 }
