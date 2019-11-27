@@ -8,10 +8,12 @@ import Controls.Timeline.Canvas.CommentTimeLineCanvas;
 import Controls.Timeline.Canvas.StrokeDurationTimeLineCanvas;
 import Controls.Timeline.Pane.CommentTimeLinePane;
 import Controls.Timeline.Pane.StrokeDurationTimeLinePane;
+import Interfaces.Loader;
 import Interfaces.Observable;
 import Interfaces.Observer;
 import Model.Entities.Dot;
 import Model.Entities.Page;
+import Model.Entities.Participant;
 import Model.Entities.Stroke;
 import Observables.ObservableStroke;
 import javafx.event.ActionEvent;
@@ -21,6 +23,7 @@ import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.control.ScrollPane;
 import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
+import util.JsonLoader;
 import util.PageDataReader;
 
 public class MainSceneController implements Observer {
@@ -59,11 +62,24 @@ public class MainSceneController implements Observer {
         canvas_mainCanvas.setHeight(p.getPageMetaData().getPageHeight() * canvasScale);
 
         drawThatSHit();
-
+        readJson();
 
         totalDuration = p.getStrokes().get(p.getStrokes().size() - 1).getTimeEnd() - p.getStrokes().get(0).getTimeStart();
         setUpTimeLines();
         setupTimelineContainer();
+    }
+
+    private void readJson() {
+        Loader loader = new JsonLoader();
+        try {
+            List<Participant> participants = loader.load("src\\main\\resources\\data\\data.json");
+            for (Participant participant : participants) {
+                System.out.println(participant.toString());
+            }
+        }catch(Exception ex) {
+            System.out.println("File load failed");
+            ex.printStackTrace();
+        }
     }
 
     public MainSceneController(){

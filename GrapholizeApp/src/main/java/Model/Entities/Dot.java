@@ -1,5 +1,7 @@
 package Model.Entities;
 
+import util.Import.CompressedDot;
+
 public class Dot {
 
     public enum DotType
@@ -63,7 +65,34 @@ public class Dot {
         this.y = y;
     }
 
-
+    public Dot (CompressedDot cd, long timeStamp) {
+        this.tiltX = cd.TiltX;
+        this.tiltY = cd.TiltY;
+        this.twist = cd.Twist;
+        this.force = cd.Force;
+        this.timeStamp = timeStamp;
+        switch(cd.DotType) {
+            case 0:
+                this.dotType = DotType.PEN_DOWN;
+                break;
+            case 1:
+                this.dotType = DotType.PEN_MOVE;
+                break;
+            case 2:
+                this.dotType = DotType.PEN_UP;
+                break;
+            case 3:
+                this.dotType = DotType.PEN_HOVER;
+                break;
+            case 4:
+                this.dotType = DotType.PEN_ERROR;
+                break;
+            default:
+                this.dotType = DotType.PEN_ERROR;
+        }
+        this.x = cd.X + cd.Fx * 0.01f;
+        this.y = cd.Y + cd.Fy * 0.01f;
+    }
     public int getTiltX() {
         return tiltX;
     }
