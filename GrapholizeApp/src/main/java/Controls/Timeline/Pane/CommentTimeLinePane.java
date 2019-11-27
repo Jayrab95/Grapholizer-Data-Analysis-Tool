@@ -2,6 +2,7 @@ package Controls.Timeline.Pane;
 
 import Controls.TimelineElement.StrokeTimeLineElement;
 import Controls.TimelineElement.TimeLineElement;
+import javafx.scene.Node;
 import javafx.scene.control.*;
 import javafx.scene.effect.Light;
 import javafx.scene.input.MouseEvent;
@@ -13,8 +14,10 @@ import java.util.Optional;
 
 public class CommentTimeLinePane extends TimeLinePane {
 
-    Light.Point anchor;
-    Rectangle selection;
+    private Light.Point anchor;
+    private Rectangle selection;
+    private double[] dragBounds;
+
 
     public CommentTimeLinePane(String timeLineName, double width, double height, double scale, Color c) {
         super(timeLineName, width, height, scale, c);
@@ -23,9 +26,16 @@ public class CommentTimeLinePane extends TimeLinePane {
         setOnMouseReleased(e-> handleMouseRelease(e));
         this.anchor = new Light.Point();
         selection = new Rectangle();
-        getChildren().add(selection);
+        dragBounds = new double[]{0, getWidth()};
+        //getChildren().add(selection);
     }
 
+    /**
+     * Adds a new TimeLineElement to this TimeLine's children.
+     * In addition to the baseclass's addTimeLineElement, this method also binds the element specific ContextMenu
+     * to the elements via setOnContextMenuRequested.
+     * @param tle The TimeLineElement that should be added.
+     */
     @Override
     public void addTimeLineElement(TimeLineElement tle){
         super.addTimeLineElement(tle);
@@ -36,6 +46,43 @@ public class CommentTimeLinePane extends TimeLinePane {
         });
     }
 
+    /**
+     * Checks if the given TimeLineElement collides with any other Timeline elements in this timeline.
+     * @param tle The TimelineElement which needs to be checked for collision with existing elements.
+     * @return true if the given TimeLineElement tle collides with any other elements and false if there are no collisions.
+     */
+    public boolean collidesWithOtherElements(TimeLineElement tle){
+        return getChildren().stream()
+                .map(node -> (TimeLineElement)node)
+                .filter(element -> element != tle && tle.collidesWith(element))
+                .count() > 0;
+    }
+
+    //TODO: Perhaps think of better solution. Maybe having a linkedlist that manages the TLEs could be better.
+    private void setBounds(double xPosition){
+        double lowerBounds = 0;
+        double upperBounds = getWidth();
+        for(Node n : getChildren()){
+            double nTimeStart = ((TimeLineElement)n).getTimeStart();
+            double nTimeStop = ((TimeLineElement)n).getTimeStop();
+            if(nTimeStop < xPosition && nTimeStop > lowerBounds){
+                lowerBounds = nTimeStop;
+            }
+            if(nTimeStart > xPosition && nTimeStart < upperBounds){
+                upperBounds = nTimeStart;
+            }
+        }
+        dragBounds[0] = lowerBounds;
+        dragBounds[1] = upperBounds;
+    }
+
+    /**
+     * Generates a ContextMenu for a TimeLineElement on demand.
+     * The ContextMenu currently has tow selectable MenuItems: "Edit element" and "delete element".
+     * The ContextMenu is bound to the TimeLineElement via setOnContextMenuRequested during creation (AddTimeLineElement override)
+     * @param tle The TimeLineElement for which the ContextMenu and its operations should be generated.
+     * @return The generated ContextMenu
+     */
     private ContextMenu getElementSpecificContextMenu(TimeLineElement tle){
         MenuItem menuItem_EditTLE = new MenuItem("Edit annotation");
         menuItem_EditTLE.setOnAction(event -> handleEditTimeLineElementClick(tle));
@@ -80,15 +127,18 @@ public class CommentTimeLinePane extends TimeLinePane {
         //If an element was clicked => set Selected Element. The element can now be dragged.
         //Reset selection
         System.out.println("HandleMousePress in CommentTimeLinePane");
+
+        setBounds(event.getX());
+
+        //Prepare selection
+        getChildren().add(selection);
         selection.setWidth(0);
         selection.setHeight(getHeight());
 
         anchor.setX(event.getX());
-        //anchor.setY(event.getY());
         anchor.setY(0);
 
         selection.setX(event.getX());
-        //selection.setY(event.getY());
         selection.setY(0);
 
         selection.setFill(null); // transparent
@@ -98,11 +148,15 @@ public class CommentTimeLinePane extends TimeLinePane {
     }
 
     private void handleMouseDrag(MouseEvent event){
-        selection.setWidth(Math.abs(event.getX() - anchor.getX()));
-        //selection.setHeight(Math.abs(event.getY() - anchor.getY()));
-        selection.setX(Math.min(anchor.getX(), event.getX()));
-        //selection.setY(Math.min(anchor.getY(), event.getY()));
-        selection.setY(0);
+        if(event.getX() > dragBounds[0] && event.getX() < dragBounds[1]){
+            selection.setWidth(Math.abs(event.getX() - anchor.getX()));
+            selection.setX(Math.min(anchor.getX(), event.getX()));
+        }
+        else{ //Out of bounds (Collision with other element or timeline border)
+            double temporaryOutOfboundsPos = (event.getX() < dragBounds[0] ? dragBounds[0] : dragBounds[1]) + 0.1;
+            selection.setWidth(Math.abs(temporaryOutOfboundsPos - anchor.getX()));
+            selection.setX(Math.min(anchor.getX(), temporaryOutOfboundsPos));
+        }
     }
 
     private void handleMouseRelease(MouseEvent e){
@@ -128,6 +182,7 @@ public class CommentTimeLinePane extends TimeLinePane {
         //Reset SelectionRectangle
         selection.setWidth(0);
         selection.setHeight(0);
+        getChildren().remove(selection);
     }
 //endregion
 

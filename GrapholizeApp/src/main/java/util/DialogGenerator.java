@@ -47,4 +47,18 @@ public class DialogGenerator {
         return dialog.showAndWait();
     }
 
+    /**
+     * Opens an Error message box that informs the user of an error.
+     * @param title Message box title
+     * @param header Message box header
+     * @param message The error message displayed to the user.
+     */
+    public static void simpleErrorDialog(String title, String header, String message){
+        Alert alert = new Alert(Alert.AlertType.ERROR);
+        alert.setTitle(title);
+        alert.setHeaderText(header);
+        alert.setContentText(message);
+        alert.showAndWait();
+    }
+
 }

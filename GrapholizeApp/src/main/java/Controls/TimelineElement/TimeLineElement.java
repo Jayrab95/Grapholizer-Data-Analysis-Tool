@@ -72,6 +72,26 @@ public class TimeLineElement extends Rectangle {
         this.annotationText = text;
     }
 
+    public boolean collidesWith(TimeLineElement other){
+        /* Timestart of other lies before timestart of this element, and the timestop lies after the timestart of this element
+         * ___[-------]_ this
+         * [-----]______ other
+         */
+        boolean startCollidesWithOther = other.timeStart <= this.timeStart && other.timeStop >= this.timeStart;
+        /* Timestart of other lies before timestop of this element, and the timestop lies after the timestop of this element
+         * [-------]___ this
+         * ______[----] other
+         */
+        boolean endCollidesWithOther = other.timeStart >= this.timeStop && other.timeStop >= this.timeStop;
+        /* Timestart of other lies after timestart of this element, and the timestop lies before the timestop of this element
+         * ___[--------]__ this
+         * _____[----]____ other
+         */
+        boolean otherIsContainedInThis = other.timeStart >= this.timeStop && other.timeStop <= this.timeStop;
+
+        return startCollidesWithOther || endCollidesWithOther || otherIsContainedInThis;
+    }
+
     protected void handleMouseClick(MouseEvent e){
         System.out.println("HandleMouseClick called in TimeLineElement baseclass.");
         toggleSelected();

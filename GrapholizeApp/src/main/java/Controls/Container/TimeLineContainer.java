@@ -15,6 +15,7 @@ import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
+import util.DialogGenerator;
 
 import java.util.List;
 import java.util.Optional;
@@ -136,17 +137,30 @@ public class TimeLineContainer extends HBox {
                 .map(node -> (TimeLineElement)node)
                 .filter(elem -> elem.isSelected())
                 .collect(Collectors.toList());
-        if(!combinedElement){
-            for(TimeLineElement tle : tles){
-                tl.addTimeLineElement(new TimeLineElement(tl.getTimeLineColor(), tle, tle.getAnnotationText()));
+        boolean newAnnotationsColideWithExisting = tles.stream()
+                .filter(element -> ((CommentTimeLinePane)tl).collidesWithOtherElements(element))
+                .count() > 0;
+        if(!newAnnotationsColideWithExisting){
+            if(!combinedElement){
+                for(TimeLineElement tle : tles){
+                    tl.addTimeLineElement(new TimeLineElement(tl.getTimeLineColor(), tle, tle.getAnnotationText()));
+                }
+            }
+            else{
+                TimeLineElement tle = new TimeLineElement(tles.get(0).getTimeStart(), tles.get(tles.size()-1).getTimeStop(), tl.getHeight(), tl.getTimeLineColor(), "Combined annotation");
+                tl.addTimeLineElement(tle);
+                //TODO: What should happen if the newly created comment (or copies in general) overlaps with existing comments?
+                //TODO: For the combined element, use the dialogue to figure out what the comment should be => Checkbox combined? If Checked, enble textbox for new comment
             }
         }
         else{
-            TimeLineElement tle = new TimeLineElement(tles.get(0).getTimeStart(), tles.get(tles.size()-1).getTimeStop(), tl.getHeight(), tl.getTimeLineColor(), "Combined annotation");
-            tl.addTimeLineElement(tle);
-            //TODO: What should happen if the newly created comment (or copies in general) overlaps with existing comments?
-            //TODO: For the combined element, use the dialogue to figure out what the comment should be => Checkbox combined? If Checked, enble textbox for new comment
+            DialogGenerator.simpleErrorDialog(
+                    "Annotation copy error",
+                    "Error while copying annotations to timeline " + tl.getTimeLineName(),
+                    "One or more of the selected elements collides with other elements on the timeline."
+            );
         }
+
 
     }
 
@@ -237,7 +251,7 @@ public class TimeLineContainer extends HBox {
             }
         }
         else{
-            openErrorDialogue(TXT_TL_EDIT_ERROR_TITLE, TXT_TL_EDIT_ERROR_HEADER, TXT_TL_ERROR_CANNOT_BE_EDITED);
+            DialogGenerator.simpleErrorDialog(TXT_TL_EDIT_ERROR_TITLE, TXT_TL_EDIT_ERROR_HEADER, TXT_TL_ERROR_CANNOT_BE_EDITED);
         }
 
     }
@@ -250,7 +264,7 @@ public class TimeLineContainer extends HBox {
             }
         }
         else{
-            openErrorDialogue(TXT_TL_DELETE_ERROR_TITLE, TXT_TL_DELETE_ERROR_HEADER, TXT_TL_ERROR_CANNOT_BE_DELETED);
+            DialogGenerator.simpleErrorDialog(TXT_TL_DELETE_ERROR_TITLE, TXT_TL_DELETE_ERROR_HEADER, TXT_TL_ERROR_CANNOT_BE_DELETED);
         }
     }
 
@@ -260,18 +274,19 @@ public class TimeLineContainer extends HBox {
     //endregion
 
     public void createCopyAnnotationDialogue(TimeLinePane tl){
-
         Dialog dialog = new Dialog<>();
-        dialog.setTitle("dialogTitle");
-        dialog.setHeaderText("dialogHeader");
-        dialog.setContentText("dialogText");
+        dialog.setTitle("Copy annotations");
+        dialog.setHeaderText("Copying selected annotations");
+        dialog.setContentText(
+                  "The selected annotations will be copied into the timeline " + tl.getTimeLineName() + ".\n"
+                + "You can choose to combine the selected annotations into a single annotation. If so, you may enter a new annotation text."
+        );
         dialog.setResizable(true);
 
         CheckBox cbox_joinedAnnotation = new CheckBox("Combine selected elements into one annotation");
 
-        Label label1 = new Label("labelText");
-        TextField text1 = new TextField("defaultValue");
-        //TODO: Find a fix so that the binding works with disabling
+        Label label1 = new Label("Annotation text: (Only applied if combine option is selected.)");
+        TextField text1 = new TextField("New annotation text.");
         text1.disableProperty().bind(cbox_joinedAnnotation.selectedProperty().not());
 
 
@@ -305,6 +320,10 @@ public class TimeLineContainer extends HBox {
     //https://docs.oracle.com/javase/8/javafx/api/javafx/scene/control/Dialog.html#resultConverterProperty--
     private Optional<String> openTimeLineCreationDialog(String dialogTitle, String dialogHeader, String dialogText, String labelText, String defaultValue){
 
+        /*
+        This dialog is specific to the creation of timelines and contains some more complex logic
+        specific to timelines and the TimelineContainer. Therefore it cannot be moved to DialogGenerator
+         */
         Dialog<String> dialog = new Dialog<>();
         dialog.setTitle(dialogTitle);
         dialog.setHeaderText(dialogHeader);
@@ -349,14 +368,14 @@ public class TimeLineContainer extends HBox {
         boolean notEmpty = stringNotEmpty(s);
         boolean nameUnique = stringUnique(s);
         if(!notEmpty){
-            openErrorDialogue(
+            DialogGenerator.simpleErrorDialog(
                     TXT_TL_CREATION_ERROR_TITLE,
                     TXT_TL_CREATION_ERROR_HEADER,
                     TXT_TL_ERROR_NAMEEMPTY);
             return false;
         }
         else if(!nameUnique){
-            openErrorDialogue(
+            DialogGenerator.simpleErrorDialog(
                     TXT_TL_CREATION_ERROR_TITLE,
                     TXT_TL_CREATION_ERROR_HEADER,
                     TXT_TL_ERROR_NAME_NOT_UNIQUE);
@@ -377,13 +396,6 @@ public class TimeLineContainer extends HBox {
         return !timelineTags.contains(s);
     }
 
-    private void openErrorDialogue(String title, String header, String message){
-        Alert alert = new Alert(Alert.AlertType.ERROR);
-        alert.setTitle(title);
-        alert.setHeaderText(header);
-        alert.setContentText(message);
-        alert.showAndWait();
-    }
     //endregion
 
 
