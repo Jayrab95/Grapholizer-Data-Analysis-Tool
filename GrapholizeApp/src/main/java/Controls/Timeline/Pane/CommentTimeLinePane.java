@@ -1,6 +1,5 @@
 package Controls.Timeline.Pane;
 
-import Controls.TimelineElement.StrokeTimeLineElement;
 import Controls.TimelineElement.TimeLineElement;
 import javafx.scene.Node;
 import javafx.scene.control.*;
@@ -17,15 +16,24 @@ public class CommentTimeLinePane extends TimeLinePane {
     private Light.Point anchor;
     private Rectangle selection;
     private double[] dragBounds;
+    private double mouseDelta;
+
+    private Tooltip tooltip;
+
+    private TimeLineElement debugElement;
+    private double debugX;
+    private double debugY;
 
 
     public CommentTimeLinePane(String timeLineName, double width, double height, double scale, Color c) {
         super(timeLineName, width, height, scale, c);
-        setOnMousePressed(e-> handleMousePress(e));
-        setOnMouseDragged(e-> handleMouseDrag(e));
-        setOnMouseReleased(e-> handleMouseRelease(e));
+        setOnMousePressed(e-> handleTimelineMousePress(e));
+        setOnMouseDragged(e-> handleTimelineMouseDrag(e));
+        setOnMouseReleased(e-> handleTimelineMouseRelease(e));
+        setOnMouseMoved(e -> getToolTip(e));
         this.anchor = new Light.Point();
         selection = new Rectangle();
+        tooltip = new Tooltip();
         dragBounds = new double[]{0, getWidth()};
         //getChildren().add(selection);
     }
@@ -44,6 +52,9 @@ public class CommentTimeLinePane extends TimeLinePane {
             getElementSpecificContextMenu(tle).show(this, event.getScreenX(), event.getScreenY());
             event.consume(); //Consume event so that the context menu of the Timelinepane doesn't also show up.
         });
+        tle.setOnMousePressed(e -> handleTimeLineElementMousePress(e, tle));
+        tle.setOnMouseDragged(e -> handleTimeLineElementMouseDrag(e, tle));
+        tle.setOnMouseReleased(e -> handleTimeLineElementMouseRelease(e, tle));
     }
 
     /**
@@ -66,14 +77,30 @@ public class CommentTimeLinePane extends TimeLinePane {
             double nTimeStart = ((TimeLineElement)n).getTimeStart();
             double nTimeStop = ((TimeLineElement)n).getTimeStop();
             if(nTimeStop < xPosition && nTimeStop > lowerBounds){
+                System.out.println("Lowerbounds before update: " + lowerBounds);
                 lowerBounds = nTimeStop;
+                System.out.println("Updating lowerBounds. nTimeStop = " + nTimeStop + " . xPosition = " + xPosition + ". lowerBounds = " + lowerBounds);
             }
             if(nTimeStart > xPosition && nTimeStart < upperBounds){
+                System.out.println("Upperbounds before update: " + upperBounds);
                 upperBounds = nTimeStart;
+                System.out.println("Updating upperbounds. nTimeStop = " + nTimeStart + " . xPosition = " + xPosition + ". lowerBounds = " + upperBounds);
             }
         }
         dragBounds[0] = lowerBounds;
         dragBounds[1] = upperBounds;
+    }
+
+    //TODO: Behavior is a bit buggy. Perhaps fix the position.
+    private void getToolTip(MouseEvent e){
+        //tooltip.hide();
+        for(Node n : getChildren()){
+            TimeLineElement tle = (TimeLineElement)n;
+            if(e.getX() > tle.getTimeStart() && e.getX() < tle.getTimeStop()){
+                tooltip.setText(tle.getAnnotationText());
+                tooltip.show(this, e.getScreenX() + 5, e.getScreenY() + 5);
+            }
+        }
     }
 
     /**
@@ -96,7 +123,6 @@ public class CommentTimeLinePane extends TimeLinePane {
 
     //region handlerMethods
     private void handleEditTimeLineElementClick(TimeLineElement tle){
-        //OPen dialogue. if successful => Edit.
         Optional<String> newAnnotationText = DialogGenerator.simpleTextInputDialog(
                 tle.getAnnotationText(),
                 "Edit annotation",
@@ -112,8 +138,8 @@ public class CommentTimeLinePane extends TimeLinePane {
         if(DialogGenerator.confirmationDialogue(
                 "Delete annotation",
                 "Delete annotation?",
-                "Are you sure you want to delete the annotation \"" + tle.getAnnotationText() + "\"? This action cannot be undone."
-        )){
+                "Are you sure you want to delete the annotation \"" + tle.getAnnotationText() + "\"? This action cannot be undone."))
+        {
             getChildren().remove(tle);
         }
     }
@@ -122,7 +148,7 @@ public class CommentTimeLinePane extends TimeLinePane {
     //TODO: Check for surrounding comments. the selection can only be done between 2 elements.
     //TODO: Currently, the mousepress of the Timeline overrides the mouseclick of the TLE.
     //Perhaps check if the mouse is currently over an element.
-    private void handleMousePress(MouseEvent event){
+    private void handleTimelineMousePress(MouseEvent event){
         //TODO: Check if a comment was clicked.
         //If an element was clicked => set Selected Element. The element can now be dragged.
         //Reset selection
@@ -147,19 +173,19 @@ public class CommentTimeLinePane extends TimeLinePane {
 
     }
 
-    private void handleMouseDrag(MouseEvent event){
+    private void handleTimelineMouseDrag(MouseEvent event){
         if(event.getX() > dragBounds[0] && event.getX() < dragBounds[1]){
             selection.setWidth(Math.abs(event.getX() - anchor.getX()));
             selection.setX(Math.min(anchor.getX(), event.getX()));
         }
         else{ //Out of bounds (Collision with other element or timeline border)
-            double temporaryOutOfboundsPos = (event.getX() < dragBounds[0] ? dragBounds[0] : dragBounds[1]) + 0.1;
-            selection.setWidth(Math.abs(temporaryOutOfboundsPos - anchor.getX()));
-            selection.setX(Math.min(anchor.getX(), temporaryOutOfboundsPos));
+            double temporaryOutOfBoundsPos = (event.getX() < dragBounds[0] ? dragBounds[0] : dragBounds[1]) + 0.1;
+            selection.setWidth(Math.abs(temporaryOutOfBoundsPos - anchor.getX()));
+            selection.setX(Math.min(anchor.getX(), temporaryOutOfBoundsPos));
         }
     }
 
-    private void handleMouseRelease(MouseEvent e){
+    private void handleTimelineMouseRelease(MouseEvent e){
         //TODO: Check if width of selection is larger than 0-5
         System.out.printf("X: %.2f, Y: %.2f, Width: %.2f, Height: %.2f%n",
                 selection.getX(), selection.getY(), selection.getWidth(), selection.getHeight());
@@ -183,6 +209,49 @@ public class CommentTimeLinePane extends TimeLinePane {
         selection.setWidth(0);
         selection.setHeight(0);
         getChildren().remove(selection);
+    }
+
+
+
+    //Because the TimeLineElement drags are dependant on the bounds which require the entire collection of elements,
+    //the handle functions are also defined on the timeline class.
+
+    private void handleTimeLineElementMousePress(MouseEvent event, TimeLineElement tle){
+        System.out.println("handleTimeLineElementMousePress called. Pressed an element on timeline " + timeLineName);
+
+        mouseDelta = event.getX() - tle.getX();
+        setBounds(event.getX());
+        System.out.println("Bounds: " + dragBounds[0] + "/" + dragBounds[1]);
+        debugElement = tle;
+        debugX = tle.getX();
+        debugY = tle.getY();
+        event.consume();
+    }
+
+
+
+    private void handleTimeLineElementMouseDrag(MouseEvent event, TimeLineElement tle){
+        double newPosition = event.getX() - mouseDelta;
+        if(newPosition > dragBounds[0] && newPosition + tle.getWidth() < dragBounds[1]){
+            tle.setX(newPosition);
+        }
+        else{
+            //Out of bounds (Collision with other element or timeline border)
+            double temporaryOutOfBoundsPos = newPosition < dragBounds[0] ? dragBounds[0] + 0.1 : dragBounds[1] - tle.getWidth() - 0.1;
+            tle.setX(temporaryOutOfBoundsPos);
+        }
+        event.consume();
+    }
+
+    private void handleTimeLineElementMouseRelease(MouseEvent event, TimeLineElement tle){
+        //TODO: Possible extension: Command pattern => Create a new command after mouse release.
+        System.out.println("Old: " + debugX + " / " + debugY);
+        System.out.println("New: " + tle.getX() + " / " + tle.getY());
+        System.out.println("Number of elements: " + getChildren().size());
+        tle.setTimeStart(tle.getX());
+        tle.setTimeStop(tle.getX() + tle.getWidth());
+
+        event.consume();
     }
 //endregion
 

@@ -7,6 +7,7 @@ import javafx.beans.property.BooleanProperty;
 import javafx.beans.property.SimpleBooleanProperty;
 import javafx.scene.Parent;
 import javafx.scene.canvas.Canvas;
+import javafx.scene.control.Tooltip;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
@@ -41,6 +42,7 @@ public class TimeLineElement extends Rectangle {
 
         setOnMouseClicked(e -> handleMouseClick(e));
 
+
         if(this.getWidth() > 0) {
             setFill(c);
         }
@@ -52,7 +54,9 @@ public class TimeLineElement extends Rectangle {
 
 
     public double getTimeStart(){return timeStart;}
+    public void setTimeStart(double start){timeStart = start;}
     public double getTimeStop(){return timeStop;}
+    public void setTimeStop(double stop){timeStop = stop;}
     public BooleanProperty getSelectedBooleanProperty(){return this.selected;}
     public Color getColor(){return c;}
     public String getAnnotationText(){
@@ -70,6 +74,16 @@ public class TimeLineElement extends Rectangle {
     }
     public void setAnnotationText(String text){
         this.annotationText = text;
+    }
+
+    private Tooltip generateToolTip(){
+        Tooltip tt = new Tooltip();
+        tt.setText(
+                  "\"" + annotationText + "\"\n"
+                + "Position: X=" + getX() + "/ Y=" + getY() + "\n"
+                + "Width: " + getWidth()
+        );
+        return tt;
     }
 
     public boolean collidesWith(TimeLineElement other){
