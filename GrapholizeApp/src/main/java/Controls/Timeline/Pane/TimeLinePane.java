@@ -36,7 +36,6 @@ public abstract class TimeLinePane extends Pane {
         //setOnContextMenuRequested(contextMenuEvent -> contextMenuTimeLine.show(this, contextMenuEvent.getScreenX(), contextMenuEvent.getScreenY()));
     }
 
-
     public String getTimeLineName(){
         return timeLineName.get();
     }
@@ -58,17 +57,22 @@ public abstract class TimeLinePane extends Pane {
 
     public void addTimeLineElement(TimeLineElement tle){
         getChildren().add(tle);
+        /*
         tle.setOnContextMenuRequested(event -> {
             getElementSpecificContextMenu(tle).show(this, event.getScreenX(), event.getScreenY());
             event.consume(); //Consume event so that the context menu of the Timelinepane doesn't also show up.
         });
         //Assign contextmenu as ContextMenuRequest action
+         */
     }
+
+    /*
+    This code has been moved to CommentTimeLinePane. However, it could be useful to keep this around for when
+    there are ContextMenu actions that need to be available for ALL timelines.
 
     private ContextMenu getElementSpecificContextMenu(TimeLineElement tle){
         MenuItem menuItem_EditTLE = new MenuItem("Edit annotation");
         menuItem_EditTLE.setOnAction(event -> handleEditTimeLineElementClick(tle));
-
 
         MenuItem menuItem_DeleteTLE = new MenuItem("Delete annotation");
         menuItem_DeleteTLE.setOnAction(event -> handleDeleteTimeLineElementClick(tle));
@@ -88,6 +92,8 @@ public abstract class TimeLinePane extends Pane {
         //Confirmation
         //Delete
     }
+
+     */
 
 
 }

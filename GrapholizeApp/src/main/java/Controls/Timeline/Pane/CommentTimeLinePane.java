@@ -1,11 +1,13 @@
 package Controls.Timeline.Pane;
 
+import Controls.TimelineElement.StrokeTimeLineElement;
 import Controls.TimelineElement.TimeLineElement;
-import javafx.scene.control.TextInputDialog;
+import javafx.scene.control.*;
 import javafx.scene.effect.Light;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
+import util.DialogGenerator;
 
 import java.util.Optional;
 
@@ -24,6 +26,50 @@ public class CommentTimeLinePane extends TimeLinePane {
         getChildren().add(selection);
     }
 
+    @Override
+    public void addTimeLineElement(TimeLineElement tle){
+        super.addTimeLineElement(tle);
+        //Assign contextmenu as ContextMenuRequest action
+        tle.setOnContextMenuRequested(event -> {
+            getElementSpecificContextMenu(tle).show(this, event.getScreenX(), event.getScreenY());
+            event.consume(); //Consume event so that the context menu of the Timelinepane doesn't also show up.
+        });
+    }
+
+    private ContextMenu getElementSpecificContextMenu(TimeLineElement tle){
+        MenuItem menuItem_EditTLE = new MenuItem("Edit annotation");
+        menuItem_EditTLE.setOnAction(event -> handleEditTimeLineElementClick(tle));
+
+
+        MenuItem menuItem_DeleteTLE = new MenuItem("Delete annotation");
+        menuItem_DeleteTLE.setOnAction(event -> handleDeleteTimeLineElementClick(tle));
+
+        return new ContextMenu(menuItem_EditTLE, menuItem_DeleteTLE);
+    }
+
+    //region handlerMethods
+    private void handleEditTimeLineElementClick(TimeLineElement tle){
+        //OPen dialogue. if successful => Edit.
+        Optional<String> newAnnotationText = DialogGenerator.simpleTextInputDialog(
+                tle.getAnnotationText(),
+                "Edit annotation",
+                "Edit the text of your annotation, then click on OK to apply the changes.",
+                tle.getAnnotationText()
+        );
+        if(newAnnotationText.isPresent()){
+            tle.setAnnotationText(newAnnotationText.get());
+        }
+    }
+
+    private void handleDeleteTimeLineElementClick(TimeLineElement tle){
+        if(DialogGenerator.confirmationDialogue(
+                "Delete annotation",
+                "Delete annotation?",
+                "Are you sure you want to delete the annotation \"" + tle.getAnnotationText() + "\"? This action cannot be undone."
+        )){
+            getChildren().remove(tle);
+        }
+    }
 
     //Source: https://coderanch.com/t/689100/java/rectangle-dragging-image
     //TODO: Check for surrounding comments. the selection can only be done between 2 elements.
@@ -64,14 +110,18 @@ public class CommentTimeLinePane extends TimeLinePane {
         System.out.printf("X: %.2f, Y: %.2f, Width: %.2f, Height: %.2f%n",
                 selection.getX(), selection.getY(), selection.getWidth(), selection.getHeight());
         if(selection.getWidth() > 0){
-            Optional<String> s = openCommentCreationDialogue();
+            Optional<String> s = DialogGenerator.simpleTextInputDialog(
+                    "New annotation",
+                    "Create new annotation",
+                    "Enter a text for your annotation. (The annotation text can also be empty).",
+                    "Annotation text");
             if(s.isPresent()){
                 System.out.println(s.get());
                 TimeLineElement tle = new TimeLineElement(timeLineColor, selection, s.get());
                 addTimeLineElement(tle);
             }
             else{
-                System.out.println("Comment creation aborted.");
+                System.out.println("Annotation creation aborted.");
             }
         }
 
@@ -79,14 +129,6 @@ public class CommentTimeLinePane extends TimeLinePane {
         selection.setWidth(0);
         selection.setHeight(0);
     }
-
-    //https://code.makery.ch/blog/javafx-dialogs-official/
-    private Optional<String> openCommentCreationDialogue(){
-        TextInputDialog dialog = new TextInputDialog("Your comment");
-        dialog.setTitle("Create new Comment");
-        dialog.setHeaderText("Enter the next for your new comment.");
-        dialog.setContentText("Comment:");
-        return dialog.showAndWait();
-    }
+//endregion
 
 }

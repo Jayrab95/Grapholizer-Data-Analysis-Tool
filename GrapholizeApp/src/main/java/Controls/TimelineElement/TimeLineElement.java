@@ -28,7 +28,8 @@ public class TimeLineElement extends Rectangle {
     public TimeLineElement(double tStart, double tEnd, double parentHeight, Color c, String annotationText){
         this.timeStart = tStart;
         this.timeStop = tEnd;
-        this.c = c;this.selected = new SimpleBooleanProperty(false);
+        this.c = c;
+        this.selected = new SimpleBooleanProperty(false);
         this.annotationText = annotationText;
 
 
@@ -46,19 +47,7 @@ public class TimeLineElement extends Rectangle {
     }
 
     public TimeLineElement(Color c, Rectangle r, String annotationText){
-        timeStart = r.getX();
-        timeStop = r.getX() + r.getWidth();
-        setWidth(r.getWidth());
-        setHeight(r.getHeight());
-        setX(timeStart);
-        setY(0);
-        setOnMouseClicked(e -> handleMouseClick(e));
-
-        this.c = c;
-        this.annotationText = annotationText;
-        if(this.getWidth() > 0) {
-            setFill(c);
-        }
+        this(r.getX(), r.getX() + r.getWidth(), r.getHeight(), c, annotationText);
     }
 
 

@@ -271,7 +271,8 @@ public class TimeLineContainer extends HBox {
 
         Label label1 = new Label("labelText");
         TextField text1 = new TextField("defaultValue");
-        text1.disableProperty().bind(cbox_joinedAnnotation.selectedProperty());
+        //TODO: Find a fix so that the binding works with disabling
+        text1.disableProperty().bind(cbox_joinedAnnotation.selectedProperty().not());
 
 
         GridPane grid = new GridPane();
@@ -450,4 +451,5 @@ public class TimeLineContainer extends HBox {
     }
 
     //endregion
+
 }
