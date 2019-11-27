@@ -1,7 +1,9 @@
 package Controllers;
 
+import java.io.IOException;
 import java.net.URL;
 import java.util.*;
+import java.util.zip.ZipException;
 
 import Controls.Container.TimeLineContainer;
 import Controls.Timeline.Canvas.CommentTimeLineCanvas;
@@ -25,6 +27,7 @@ import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
 import util.JsonLoader;
 import util.PageDataReader;
+import util.ProjectLoader;
 
 public class MainSceneController implements Observer {
 
@@ -70,13 +73,13 @@ public class MainSceneController implements Observer {
     }
 
     private void readJson() {
-        Loader loader = new JsonLoader();
+        Loader loader = new ProjectLoader();
         try {
-            List<Participant> participants = loader.load("src\\main\\resources\\data\\data.json");
+            List<Participant> participants = loader.load("C:\\Users\\lukat\\Desktop\\Test.zip");
             for (Participant participant : participants) {
                 System.out.println(participant.toString());
             }
-        }catch(Exception ex) {
+        }catch(IOException ex) {
             System.out.println("File load failed");
             ex.printStackTrace();
         }

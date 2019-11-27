@@ -182,7 +182,7 @@
         <option name="executionName" />
         <option name="externalProjectPath" value="$PROJECT_DIR$" />
         <option name="externalSystemIdString" value="GRADLE" />
-        <option name="scriptParameters" />
+        <option name="scriptParameters" value="--stacktrace" />
         <option name="taskDescriptions">
           <list />
         </option>
@@ -261,7 +261,8 @@
       <workItem from="1574757195118" duration="9684000" />
       <workItem from="1574769413898" duration="6818000" />
       <workItem from="1574786023405" duration="1586000" />
-      <workItem from="1574845075257" duration="6559000" />
+      <workItem from="1574845075257" duration="6787000" />
+      <workItem from="1574853628425" duration="15611000" />
     </task>
     <servers />
   </component>
@@ -311,6 +312,11 @@
           <url>file://$PROJECT_DIR$/src/main/java/Controls/Container/TimeLineContainer.java</url>
           <line>116</line>
           <option name="timeStamp" value="10" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/src/main/java/util/ProjectLoader.java</url>
+          <line>17</line>
+          <option name="timeStamp" value="32" />
         </line-breakpoint>
       </breakpoints>
     </breakpoint-manager>

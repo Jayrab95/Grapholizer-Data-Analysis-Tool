@@ -16,7 +16,7 @@ public class Page {
     }
 
     public Page (CompressedPage cp) {
-        //TODO: Lukas Width und Height müssen durch die Book Nummber bestummen werden
+        //TODO: Lukas Width und Height müssen durch die Book Nummber bestimmt werden
         this.pageMetaData = new PageMetaData(0, cp.Number, cp.Book
                 , 63.273216f, 88.582596f
                 , 0,0,0, cp.Strokes.size());
