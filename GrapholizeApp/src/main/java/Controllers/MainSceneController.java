@@ -69,7 +69,8 @@ public class MainSceneController implements Observer {
     @FXML
     public void initialize() throws Exception{
         System.out.println("aaa");
-        p = loadDataFromFiles(new ProjectLoader());
+        //p = loadDataFromFiles(new ProjectLoader());
+        p = loadThatShitBoy().get(0).getPage(0);
         initObservableStrokes(p.getStrokes());
         canvas_mainCanvas.setWidth(p.getPageMetaData().getPageWidth() * canvasScale);
         canvas_mainCanvas.setHeight(p.getPageMetaData().getPageHeight() * canvasScale);
@@ -79,6 +80,12 @@ public class MainSceneController implements Observer {
         totalDuration = p.getStrokes().get(p.getStrokes().size() - 1).getTimeEnd() - p.getStrokes().get(0).getTimeStart();
         setUpTimeLines();
         setupTimelineContainer();
+    }
+
+    //Replace with openFileDialogue after testing.
+    private List<Participant> loadThatShitBoy() throws Exception{
+        String path = "src\\main\\resources\\data\\page.data";
+        return new PageDataReader().load(path);
     }
 
     @FXML
