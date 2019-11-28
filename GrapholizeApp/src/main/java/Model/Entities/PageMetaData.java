@@ -13,7 +13,6 @@ public class PageMetaData {
     private final long createTimeStamp;
 
 
-
     public PageMetaData(int fileVersion, int pageNumber, int noteID
             , float pageWidth, float pageHeight, long createTimeStamp
             , long modifiedTimeStamp, int dirtyBit, int numberOfStrokes) {

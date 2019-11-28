@@ -1,6 +1,9 @@
 package Model.Entities;
 
-import java.util.List;
+import util.Import.CompressedDot;
+import util.Import.CompressedStroke;
+
+import java.util.*;
 
 public class Stroke {
 
@@ -19,6 +22,17 @@ public class Stroke {
         this.timeEnd = s.timeEnd;
         //TODO: Do the dots need to be cloned? Can a copy of the stroke (or observableStroke) simply take the list reference?
         this.dots = s.dots;
+    }
+
+    public Stroke(CompressedStroke cs) {
+        this.timeStart = cs.TimeStart;
+        this.timeEnd = cs.TimeEnd;
+        dots = new LinkedList<>();
+        long accumulator = cs.TimeStart;
+        for (CompressedDot compressedDot : cs.CompressedDots) {
+            accumulator += compressedDot.TimeDiff;
+            dots.add(new Dot(compressedDot, accumulator));
+        }
     }
 
     public long getTimeStart() {

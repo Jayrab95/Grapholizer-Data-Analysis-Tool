@@ -1,7 +1,50 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="f9c9e85c-b6d3-4a2f-99c7-3350288aea5b" name="Default Changelist" comment="" />
+    <list default="true" id="f9c9e85c-b6d3-4a2f-99c7-3350288aea5b" name="Default Changelist" comment="">
+      <change afterPath="$PROJECT_DIR$/build/classes/java/main/Interfaces/Loader.class" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/build/classes/java/main/Model/Entities/Participant.class" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/build/classes/java/main/util/Import/CompressedDot.class" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/build/classes/java/main/util/Import/CompressedPage.class" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/build/classes/java/main/util/Import/CompressedParticipant.class" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/build/classes/java/main/util/Import/CompressedStroke.class" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/build/classes/java/main/util/Import/JsonLoadThread.class" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/build/classes/java/main/util/JsonLoader.class" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/build/classes/java/main/util/ProjectLoader.class" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/build/classes/java/main/util/ZipHelper.class" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/build/resources/main/data/data.json" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/Interfaces/Loader.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/Model/Entities/Participant.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/util/Import/CompressedDot.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/util/Import/CompressedPage.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/util/Import/CompressedParticipant.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/util/Import/CompressedStroke.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/util/Import/JsonLoadThread.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/util/JsonLoader.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/util/ProjectLoader.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/util/ZipHelper.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/resources/data/data.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../.gitignore" beforeDir="false" afterPath="$PROJECT_DIR$/../.gitignore" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/build.gradle" beforeDir="false" afterPath="$PROJECT_DIR$/build.gradle" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/classes/java/main/Controllers/MainSceneController.class" beforeDir="false" afterPath="$PROJECT_DIR$/build/classes/java/main/Controllers/MainSceneController.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/classes/java/main/Model/Entities/Dot$DotType.class" beforeDir="false" afterPath="$PROJECT_DIR$/build/classes/java/main/Model/Entities/Dot$DotType.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/classes/java/main/Model/Entities/Dot.class" beforeDir="false" afterPath="$PROJECT_DIR$/build/classes/java/main/Model/Entities/Dot.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/classes/java/main/Model/Entities/Page.class" beforeDir="false" afterPath="$PROJECT_DIR$/build/classes/java/main/Model/Entities/Page.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/classes/java/main/Model/Entities/PageMetaData.class" beforeDir="false" afterPath="$PROJECT_DIR$/build/classes/java/main/Model/Entities/PageMetaData.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/classes/java/main/Model/Entities/Stroke.class" beforeDir="false" afterPath="$PROJECT_DIR$/build/classes/java/main/Model/Entities/Stroke.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/classes/java/main/util/PageDataReader.class" beforeDir="false" afterPath="$PROJECT_DIR$/build/classes/java/main/util/PageDataReader.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/resources/main/fxml/views/MainScene.fxml" beforeDir="false" afterPath="$PROJECT_DIR$/build/resources/main/fxml/views/MainScene.fxml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/resources/main/fxmlViews/MainScene.fxml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/Controllers/MainSceneController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/Controllers/MainSceneController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/Model/Entities/Dot.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/Model/Entities/Dot.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/Model/Entities/Page.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/Model/Entities/Page.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/Model/Entities/PageMetaData.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/Model/Entities/PageMetaData.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/Model/Entities/Stroke.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/Model/Entities/Stroke.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/util/PageDataReader.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/util/PageDataReader.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/fxml/views/MainScene.fxml" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/fxml/views/MainScene.fxml" afterDir="false" />
+    </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -56,6 +99,7 @@
   <component name="FileTemplateManagerImpl">
     <option name="RECENT_TEMPLATES">
       <list>
+        <option value="FxmlFile" />
         <option value="Interface" />
         <option value="FxmlFile" />
         <option value="Class" />
@@ -77,14 +121,20 @@
     <property name="SHARE_PROJECT_CONFIGURATION_FILES" value="true" />
     <property name="WebServerToolWindowFactoryState" value="false" />
     <property name="aspect.path.notification.shown" value="true" />
-    <property name="last_opened_file_path" value="C:/Program Files (x86)/Oracle/JavaFX Scene Builder 2.0/JavaFX Scene Builder 2.0.exe" />
+    <property name="last_opened_file_path" value="C:/Program Files/SceneBuilder/SceneBuilder.exe" />
+    <property name="node.js.detected.package.eslint" value="true" />
+    <property name="node.js.detected.package.tslint" value="true" />
+    <property name="node.js.path.for.package.eslint" value="project" />
+    <property name="node.js.path.for.package.tslint" value="project" />
+    <property name="node.js.selected.package.eslint" value="(autodetect)" />
+    <property name="node.js.selected.package.tslint" value="(autodetect)" />
     <property name="nodejs_interpreter_path.stuck_in_default_project" value="undefined stuck path" />
     <property name="nodejs_npm_path_reset_for_default_project" value="true" />
     <property name="nodejs_package_manager_path" value="npm" />
     <property name="project.structure.last.edited" value="Project" />
     <property name="project.structure.proportion" value="0.15" />
-    <property name="project.structure.side.proportion" value="0.2" />
-    <property name="settings.editor.selected.configurable" value="project.validation" />
+    <property name="project.structure.side.proportion" value="0.39195403" />
+    <property name="settings.editor.selected.configurable" value="vcs.Git" />
   </component>
   <component name="RecentsManager">
     <key name="MoveClassesOrPackagesDialog.RECENTS_KEY">
@@ -161,7 +211,7 @@
         <option name="executionName" />
         <option name="externalProjectPath" value="$PROJECT_DIR$" />
         <option name="externalSystemIdString" value="GRADLE" />
-        <option name="scriptParameters" />
+        <option name="scriptParameters" value="--stacktrace" />
         <option name="taskDescriptions">
           <list />
         </option>
@@ -307,5 +357,10 @@
         </line-breakpoint>
       </breakpoints>
     </breakpoint-manager>
+    <watches-manager>
+      <configuration name="Remote">
+        <watch expression="s" />
+      </configuration>
+    </watches-manager>
   </component>
 </project>

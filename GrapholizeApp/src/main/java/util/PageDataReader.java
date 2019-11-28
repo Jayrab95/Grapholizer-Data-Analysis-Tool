@@ -1,24 +1,28 @@
 package util;
 
-import Model.Entities.Page;
-import Model.Entities.PageMetaData;
-import Model.Entities.Stroke;
-import Model.Entities.Dot;
+import Interfaces.Loader;
+import Model.Entities.*;
 
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.LinkedList;
 import java.util.List;
 
-public class PageDataReader {
+public class PageDataReader implements Loader {
+    private final String PREFIX_PARTICIPANT_ID = "PAGEDATA";
 
-    public static Page ReadPage(String path) throws Exception{
-
+    public List<Participant> load(String path) throws IOException{
+        List<Participant> result = new LinkedList<>();
         try(FileInputStream stream = new FileInputStream(path)){
             if(IsFileValid(stream)){
                 PageMetaData pmd = ReadMetaData(stream);
                 List<Stroke> strokes = ParseContentBody(pmd.getNumberOfStrokes(), stream);
-                return new Page(pmd, strokes);
+
+                Participant newPart = new Participant(PREFIX_PARTICIPANT_ID + "_" + (Long.toString(pmd.getCreateTimeStamp())));
+                newPart.addPage(new Page(pmd, strokes));
+                result.add(newPart);
+                return result;
             }
         }
         return null;
