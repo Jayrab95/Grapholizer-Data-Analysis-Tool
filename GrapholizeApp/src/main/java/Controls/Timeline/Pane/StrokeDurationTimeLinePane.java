@@ -1,10 +1,7 @@
 package Controls.Timeline.Pane;
 
 import Controls.TimelineElement.StrokeTimeLineElement;
-import Interfaces.Observer;
 import Observables.ObservableStroke;
-import javafx.scene.control.ContextMenu;
-import javafx.scene.control.MenuItem;
 import javafx.scene.input.MouseButton;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.paint.Color;
@@ -36,7 +33,7 @@ public class StrokeDurationTimeLinePane extends TimeLinePane {
 
             StrokeTimeLineElement stle = new StrokeTimeLineElement(startDelta,endDelta, getHeight(), c, s);
             stle.setOnMouseClicked(e -> timeLineClick(e, s));
-            s.addListener(stle);
+            s.addObserver(stle);
             addTimeLineElement(stle);
 
             lastEnd = endDelta;

@@ -1,7 +1,7 @@
 package Interfaces;
 
 public interface Observable {
-    void addListener(Interfaces.Observer obs);
-    void removeListener(Interfaces.Observer obs);
-    void notifyListeners();
+    void addObserver(Interfaces.Observer obs);
+    void removeObserver(Interfaces.Observer obs);
+    void notifyObservers();
 }

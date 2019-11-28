@@ -35,7 +35,7 @@ public class ObservableStroke extends Stroke implements Observable {
 
     public ObservableStroke(Stroke s, Observer o){
         this(s);
-        addListener(o);
+        addObserver(o);
     }
 
     //Not sure if these are necessary yet, but they're nice to have.
@@ -85,31 +85,31 @@ public class ObservableStroke extends Stroke implements Observable {
     public void setSelected(boolean select){
         if(select != selected.get()){
             this.selected.set(select);
-            notifyListeners();
+            notifyObservers();
         }
     }
 
     public void toggleSelected(){
         this.selected.set(!selected.get());
-        notifyListeners();
+        notifyObservers();
     }
     //endregion
 
     //region Observable logic
 
     @Override
-    public void addListener(Observer obs) {
+    public void addObserver(Observer obs) {
         observers.add(obs);
     }
 
     @Override
-    public void removeListener(Observer obs) {
+    public void removeObserver(Observer obs) {
         observers.remove(obs);
     }
 
 
     @Override
-    public void notifyListeners() {
+    public void notifyObservers() {
         for(Observer o : observers){
             o.update(this);
         }
