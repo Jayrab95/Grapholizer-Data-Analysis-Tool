@@ -2,7 +2,15 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="f9c9e85c-b6d3-4a2f-99c7-3350288aea5b" name="Default Changelist" comment="">
-      <change beforePath="$PROJECT_DIR$/src/main/java/Controllers/MainSceneController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/Controllers/MainSceneController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/classes/java/main/Controls/Container/TimeLineContainer.class" beforeDir="false" afterPath="$PROJECT_DIR$/build/classes/java/main/Controls/Container/TimeLineContainer.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/classes/java/main/Controls/Timeline/Pane/PressureTimeLinePane.class" beforeDir="false" afterPath="$PROJECT_DIR$/build/classes/java/main/Controls/Timeline/Pane/PressureTimeLinePane.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/classes/java/main/Controls/Timeline/Pane/TimeLinePane.class" beforeDir="false" afterPath="$PROJECT_DIR$/build/classes/java/main/Controls/Timeline/Pane/TimeLinePane.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/classes/java/main/Model/Entities/Timeline.class" beforeDir="false" afterPath="$PROJECT_DIR$/build/classes/java/main/Model/Entities/Timeline.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/Controls/Container/TimeLineContainer.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/Controls/Container/TimeLineContainer.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/Controls/Timeline/Pane/PressureTimeLinePane.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/Controls/Timeline/Pane/PressureTimeLinePane.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/Controls/Timeline/Pane/TimeLinePane.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/Controls/Timeline/Pane/TimeLinePane.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/Model/Entities/Timeline.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/Model/Entities/Timeline.java" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -300,19 +308,24 @@
           <option name="timeStamp" value="17" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="java-line">
-          <url>file://$PROJECT_DIR$/src/main/java/Controls/Container/TimeLineContainer.java</url>
-          <line>144</line>
-          <option name="timeStamp" value="18" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" type="java-line">
           <url>file://$PROJECT_DIR$/src/main/java/Controls/TimelineElement/TimeLineElementRect.java</url>
           <line>93</line>
           <option name="timeStamp" value="22" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="java-line">
           <url>file://$PROJECT_DIR$/src/main/java/Controls/Timeline/Pane/PressureTimeLinePane.java</url>
-          <line>40</line>
-          <option name="timeStamp" value="25" />
+          <line>52</line>
+          <option name="timeStamp" value="29" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/src/main/java/Controls/Timeline/Pane/PressureTimeLinePane.java</url>
+          <line>65</line>
+          <option name="timeStamp" value="30" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/src/main/java/Controls/Container/TimeLineContainer.java</url>
+          <line>134</line>
+          <option name="timeStamp" value="31" />
         </line-breakpoint>
       </breakpoints>
     </breakpoint-manager>

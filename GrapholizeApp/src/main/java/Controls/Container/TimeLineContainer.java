@@ -131,7 +131,7 @@ public class TimeLineContainer extends HBox {
         return false;
     }
 
-    private void createCopyAnnotations(TimeLinePane tl, boolean combinedElement){
+    private void createCopyAnnotations(TimeLinePane tl, boolean combinedElement, String combinedAnnotationText){
         List<TimeLineElementRect> tles = selectedTimeLine.getChildren().stream()
                 .map(node -> (TimeLineElementRect)node)
                 .filter(elem -> elem.isSelected())
@@ -146,7 +146,7 @@ public class TimeLineContainer extends HBox {
                 }
             }
             else{
-                TimeLineElementRect tle = new TimeLineElementRect(tles.get(0).getTimeStart(), tles.get(tles.size()-1).getTimeStop(), tl.getHeight(), tl.getTimeLineColor(), "Combined annotation");
+                TimeLineElementRect tle = new TimeLineElementRect(tles.get(0).getTimeStart(), tles.get(tles.size()-1).getTimeStop(), tl.getHeight(), tl.getTimeLineColor(), combinedAnnotationText);
                 tl.addTimeLineElement(tle);
                 //TODO: What should happen if the newly created comment (or copies in general) overlaps with existing comments?
                 //TODO: For the combined element, use the dialogue to figure out what the comment should be => Checkbox combined? If Checked, enble textbox for new comment
@@ -305,7 +305,7 @@ public class TimeLineContainer extends HBox {
 
         dialog.setResultConverter(b -> {
             if (b == buttonTypeOk) {
-                createCopyAnnotations(tl, cbox_joinedAnnotation.isSelected());
+                createCopyAnnotations(tl, cbox_joinedAnnotation.isSelected(), text1.getText());
             }
 
             return null;

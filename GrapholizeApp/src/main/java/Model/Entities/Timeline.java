@@ -60,11 +60,16 @@ public class Timeline {
             timeLineElements.add(tle);
         }
         else{
-            for(int i = 0; i < timeLineElements.size(); i++){
+            int i = 0;
+            while(i < timeLineElements.size()){
                 if(tle.getTimeStart() <= timeLineElements.get(i).getTimeStart()){
                     timeLineElements.add(i, tle);
                     break;
                 }
+                i++;
+            }
+            if (i >= timeLineElements.size()){
+                timeLineElements.add(tle);
             }
         }
     }

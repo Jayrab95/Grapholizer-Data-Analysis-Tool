@@ -1,6 +1,7 @@
 package Controls.Timeline.Pane;
 
 import Controls.TimelineElement.TimeLineElementRect;
+import Model.Entities.TimeLineElement;
 import Model.Entities.Timeline;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.property.StringProperty;
@@ -66,6 +67,7 @@ public abstract class TimeLinePane extends Pane {
 
     public void addTimeLineElement(TimeLineElementRect tle){
         getChildren().add(tle);
+        timeline.addTimeLineElementInOrder(new TimeLineElement(tle.getAnnotationText(), tle.getTimeStart(), tle.getTimeStop()));
         //TODO: Add the TimeLineElemet entity to the TimeLine Entity lis
         /*
         tle.setOnContextMenuRequested(event -> {

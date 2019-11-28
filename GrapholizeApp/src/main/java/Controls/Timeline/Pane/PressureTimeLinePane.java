@@ -25,9 +25,10 @@ public class PressureTimeLinePane extends TimeLinePane {
 
     private void draw(){
         List<TimeLineElement> parentTimeLineElements = parentPane.timeline.getTimeLineElements();
+
         if(parentTimeLineElements.size() > 0 && strokes.size() > 0){
-            double lowerBound = parentTimeLineElements.get(0).getTimeStart();
-            double upperBound = parentTimeLineElements.get(parentTimeLineElements.size()-1).getTimeStop();
+            double lowerBound = parentTimeLineElements.get(0).getTimeStart() / scale;
+            double upperBound = parentTimeLineElements.get(parentTimeLineElements.size()-1).getTimeStop() / scale;
 
             //TODO: Warning. Currently the timestamp in the dots  uses the longformat. this needs to be changed once the timstamps start from 0
             //Once this is done, simply remove the -strokesStart in the filter.
@@ -37,20 +38,34 @@ public class PressureTimeLinePane extends TimeLinePane {
                     .flatMap(dots -> dots.stream()
                     .filter(dot -> dot.getTimeStamp() - strokesStart >= lowerBound && dot.getTimeStamp() - strokesStart<= upperBound))
                     .collect(Collectors.toList());
+
+            List<List<Dot>> requiredDots2 = strokes.stream()
+                    .map(observableStroke -> observableStroke.getDots())
+                    .map(dots -> dots.stream()
+                            .filter(dot -> dot.getTimeStamp() - strokesStart >= lowerBound && dot.getTimeStamp() - strokesStart<= upperBound)
+                            .collect(Collectors.toList()))
+                    .collect(Collectors.toList());
+
+
+
+
             //At least 2 dots are required so that a line can be drawn
-            if(requiredDots.size() >=2){
-                for(int i = 0; i < requiredDots.size() - 1; i++){
-                    Dot d1 = requiredDots.get(i);
-                    Dot d2 = requiredDots.get(i + 1);
-                    Line l = new Line(
-                            d1.getTimeStamp() - strokesStart,
-                            d1.getForce() * getHeight(),
-                            d2.getTimeStamp() - strokesStart,
-                            d2.getForce() * getHeight()
-                    );
-                    getChildren().add(l);
+            for(List<Dot> dots : requiredDots2){
+                if(dots.size() >=2){
+                    for(int i = 0; i < requiredDots.size() - 1; i++){
+                        Dot d1 = requiredDots.get(i);
+                        Dot d2 = requiredDots.get(i + 1);
+                        Line l = new Line(
+                                (d1.getTimeStamp() - strokesStart) * scale,
+                                d1.getForce() * getHeight(),
+                                (d2.getTimeStamp() - strokesStart) * scale,
+                                d2.getForce() * getHeight()
+                        );
+                        getChildren().add(l);
+                    }
                 }
             }
+
 
 
         }
