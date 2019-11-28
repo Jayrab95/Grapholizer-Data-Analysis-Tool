@@ -88,10 +88,10 @@ public class Dot {
                 this.dotType = DotType.PEN_ERROR;
                 break;
             default:
-                this.dotType = DotType.PEN_ERROR;
+                this.dotType = DotType.PEN_ERROR; //Maybe another default is ne
         }
-        this.x = cd.X + cd.Fx * 0.01f;
-        this.y = cd.Y + cd.Fy * 0.01f;
+        this.x = cd.X + cd.Fx * 0.1f;
+        this.y = cd.Y + cd.Fy * 0.1f;
     }
     public int getTiltX() {
         return tiltX;

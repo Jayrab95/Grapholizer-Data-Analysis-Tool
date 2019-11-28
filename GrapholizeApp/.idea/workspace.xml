@@ -92,7 +92,7 @@
     <property name="SHARE_PROJECT_CONFIGURATION_FILES" value="true" />
     <property name="WebServerToolWindowFactoryState" value="false" />
     <property name="aspect.path.notification.shown" value="true" />
-    <property name="last_opened_file_path" value="C:/Program Files (x86)/Oracle/JavaFX Scene Builder 2.0/JavaFX Scene Builder 2.0.exe" />
+    <property name="last_opened_file_path" value="C:/Program Files/SceneBuilder/SceneBuilder.exe" />
     <property name="node.js.detected.package.eslint" value="true" />
     <property name="node.js.detected.package.tslint" value="true" />
     <property name="node.js.path.for.package.eslint" value="project" />
@@ -105,7 +105,7 @@
     <property name="project.structure.last.edited" value="Facets" />
     <property name="project.structure.proportion" value="0.15" />
     <property name="project.structure.side.proportion" value="0.39195403" />
-    <property name="settings.editor.selected.configurable" value="reference.projectsettings.compiler.javacompiler" />
+    <property name="settings.editor.selected.configurable" value="vcs.Git" />
   </component>
   <component name="RecentsManager">
     <key name="MoveClassesOrPackagesDialog.RECENTS_KEY">
@@ -263,7 +263,10 @@
       <workItem from="1574786023405" duration="1586000" />
       <workItem from="1574845075257" duration="6787000" />
       <workItem from="1574853628425" duration="15611000" />
-      <workItem from="1574869991552" duration="1597000" />
+      <workItem from="1574869991552" duration="3934000" />
+      <workItem from="1574929425320" duration="8143000" />
+      <workItem from="1574939481775" duration="41000" />
+      <workItem from="1574943686964" duration="97000" />
     </task>
     <servers />
   </component>

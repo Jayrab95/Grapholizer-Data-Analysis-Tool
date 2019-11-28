@@ -1,8 +1,11 @@
 package Controllers;
 
+import java.awt.*;
+import java.io.File;
 import java.io.IOException;
 import java.net.URL;
 import java.util.*;
+import java.util.List;
 import java.util.zip.ZipException;
 
 import Controls.Container.TimeLineContainer;
@@ -20,17 +23,20 @@ import Model.Entities.Stroke;
 import Observables.ObservableStroke;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.scene.Scene;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.control.ScrollPane;
 import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
+import javafx.stage.FileChooser;
+import javafx.stage.Stage;
+import javafx.stage.Window;
 import util.JsonLoader;
 import util.PageDataReader;
 import util.ProjectLoader;
 
 public class MainSceneController implements Observer {
-
     // location and resources will be automatically injected by the FXML loader
     @FXML
     private URL location;
@@ -56,43 +62,62 @@ public class MainSceneController implements Observer {
 
     private long totalDuration;
 
+
+    public MainSceneController(){
+
+    }
+
     @FXML
     public void initialize() throws Exception{
         System.out.println("aaa");
-        p = loadThatShitBoy();
+        p = loadDataFromFiles(new JsonLoader());
         initObservableStrokes(p.getStrokes());
         canvas_mainCanvas.setWidth(p.getPageMetaData().getPageWidth() * canvasScale);
         canvas_mainCanvas.setHeight(p.getPageMetaData().getPageHeight() * canvasScale);
 
         drawThatSHit();
-        readJson();
 
         totalDuration = p.getStrokes().get(p.getStrokes().size() - 1).getTimeEnd() - p.getStrokes().get(0).getTimeStart();
         setUpTimeLines();
         setupTimelineContainer();
     }
 
-    private void readJson() {
-        Loader loader = new ProjectLoader();
-        try {
-            List<Participant> participants = loader.load("C:\\Users\\lukat\\Desktop\\Test.zip");
-            for (Participant participant : participants) {
-                System.out.println(participant.toString());
-            }
-        }catch(IOException ex) {
-            System.out.println("File load failed");
-            ex.printStackTrace();
-        }
+    @FXML
+    private void loadRawJson(){
+        loadDataFromFiles(new JsonLoader());
     }
 
-    public MainSceneController(){
-
+    @FXML
+    private void loadZipedJson() {
+        loadDataFromFiles(new ProjectLoader());
     }
 
+    @FXML
+    private void loadNeoNotesFile() {
+        loadDataFromFiles(new PageDataReader());
+    }
     //Replace with openFileDialogue after testing.
-    private Page loadThatShitBoy() throws Exception{
-        String path = "src\\main\\resources\\data\\page.data";
-        return PageDataReader.ReadPage(path);
+    private Page loadDataFromFiles(Loader loader) {
+        try {
+            FileChooser fileChooser = new FileChooser();
+            fileChooser.setTitle("Open Resource File");
+            fileChooser.getExtensionFilters().add(
+                    new FileChooser.ExtensionFilter("Data Files", "*.json", "*.zip", "*.data")
+            );
+            Stage stage = new Stage();
+            stage.setTitle("My New Stage Title");
+            File sFile = fileChooser.showOpenDialog(stage);
+            if (sFile != null) {
+                String absFilePath = sFile.getAbsolutePath();
+                List<Participant> list = loader.load(absFilePath);
+                return list.get(0).getPage(0);
+            }
+            return null;
+        }catch(IOException ex) {
+            //TODO what to do with the exception?
+            System.out.println("File could not be loaded");
+        }
+        return null;
     }
 
     private void initObservableStrokes(List<Stroke> strokes){
@@ -118,7 +143,8 @@ public class MainSceneController implements Observer {
 
                 Dot d1 = s.getDots().get(i);
                 Dot d2 = s.getDots().get(i + 1);
-                double fAvg = (d1.getForce() + d2.getForce()) / 2;
+                //double fAvg = (d1.getForce() + d2.getForce()) / 2;
+                double fAvg = 5.0d;
 
                 //TODO: Make draw stroke specific (Use Decorator pattern for different visual filters
                 if(s.isSelected()){

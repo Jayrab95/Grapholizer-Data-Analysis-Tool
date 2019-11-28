@@ -10,8 +10,9 @@ public class Participant {
     private String ID;
     private List<Page> pages;
 
-    public Participant() {
-
+    public Participant(String ID) {
+        this.ID = ID;
+        pages = new LinkedList<>();
     }
 
     public Participant(CompressedParticipant cp) {
@@ -21,6 +22,12 @@ public class Participant {
             pages.add(new Page(cpage));
         }
     }
+
+    public void addPage(Page page) {
+        pages.add(page);
+    }
+
+    public Page getPage(int index) { return pages.get(index); }
 
     @Override
     public String toString() {
