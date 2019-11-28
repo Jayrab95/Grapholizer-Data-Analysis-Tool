@@ -106,6 +106,10 @@ public class TimeLineElement extends Rectangle {
         return startCollidesWithOther || endCollidesWithOther || otherIsContainedInThis;
     }
 
+    public boolean timeStampWithinTimeRange(double timeStamp){
+        return timeStart <= timeStamp && timeStop >= timeStamp;
+    }
+
     public void move(double newTimeStart){
         timeStart = newTimeStart;
         timeStop = newTimeStart + getWidth();

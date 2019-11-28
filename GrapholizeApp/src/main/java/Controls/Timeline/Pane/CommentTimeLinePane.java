@@ -132,6 +132,7 @@ public class CommentTimeLinePane extends TimeLinePane {
     }
 
     //region handlerMethods
+    //region TimeLine handlers
     private void handleEditTimeLineElementClick(TimeLineElement tle){
         Optional<String> newAnnotationText = DialogGenerator.simpleTextInputDialog(
                 tle.getAnnotationText(),
@@ -153,7 +154,6 @@ public class CommentTimeLinePane extends TimeLinePane {
             getChildren().remove(tle);
         }
     }
-
 
     //Source: https://coderanch.com/t/689100/java/rectangle-dragging-image
     private void handleTimelineMousePress(MouseEvent event){
@@ -218,9 +218,9 @@ public class CommentTimeLinePane extends TimeLinePane {
         selection.setHeight(0);
         getChildren().remove(selection);
     }
+    //endregion
 
-
-
+    //region TimeLineElement handlers
     //Because the TimeLineElement drags are dependant on the bounds which require the entire collection of elements,
     //the handle functions are also defined on the timeline class.
 
@@ -229,7 +229,6 @@ public class CommentTimeLinePane extends TimeLinePane {
         setBounds(event.getX());
         event.consume();
     }
-
 
     private void handleTimeLineElementMouseDrag(MouseEvent event, TimeLineElement tle){
         double newPosition = event.getX() - mouseDelta;
@@ -260,6 +259,7 @@ public class CommentTimeLinePane extends TimeLinePane {
             handleEditTimeLineElementClick(tle);
         }
     }
-//endregion
+    //endregion
+    //endregion
 
 }
