@@ -223,31 +223,32 @@ public class TimeLineContainer extends HBox {
      * Handles a click event on buttons/menuitems that create new Timelines
      */
     private void handleCreateNewTimeLineClick(){
-        Optional<String> timeLineName = openTimeLineCreationDialog(TXT_TL_CREATION_TITLE, TXT_TL_CREATION_HEADER, TXT_TL_CREATION_TEXT, TXT_TL_TIMELINETAG_LABEL, TXT_TL_TAG_DEFAULTVAL);
-        if(timeLineName.isPresent()){
-            createNewCustomTimeLine(timeLineName.get(), Color.BROWN, Optional.empty());
+        Optional<DialogResult> dialogResult = openTimeLineCreationDialog(TXT_TL_CREATION_TITLE, TXT_TL_CREATION_HEADER, TXT_TL_CREATION_TEXT, TXT_TL_TIMELINETAG_LABEL, TXT_TL_TAG_DEFAULTVAL, Color.CADETBLUE);
+        if(dialogResult.isPresent()){
+            createNewCustomTimeLine(dialogResult.get().timeLinename, dialogResult.get().timeLineColor, Optional.empty());
         }
     }
     /**
      * Handles a click event on buttons/menuitems that create new Timelines with selected items
      */
     private void handleCreateNewTimeLineOutOfSelectedClick(TimeLinePane tl){
-        Optional<String> newTimeLineName = openTimeLineCreationDialog(TXT_TL_CREATION_TITLE, TXT_TL_CREATION_HEADER, TXT_TL_CREATION_TEXT, TXT_TL_TIMELINETAG_LABEL, TXT_TL_TAG_DEFAULTVAL);
-        if(newTimeLineName.isPresent()){
+        Optional<DialogResult> dialogResult = openTimeLineCreationDialog(TXT_TL_CREATION_TITLE, TXT_TL_CREATION_HEADER, TXT_TL_CREATION_TEXT, TXT_TL_TIMELINETAG_LABEL, TXT_TL_TAG_DEFAULTVAL, Color.CADETBLUE);
+        if(dialogResult.isPresent()){
             List<TimeLineElement> tles = tl.getChildren().stream()
                     .map(node -> (TimeLineElement)node)//TODO: Maybe there's a better solution? (Should there be a separate List with the TLE in the timeline?)
                     .filter(tle -> ((TimeLineElement)tle).isSelected())
                     .collect(Collectors.toList());
-            createNewCustomTimeLine(newTimeLineName.get(), Color.BROWN, Optional.of(tles));
+            createNewCustomTimeLine(dialogResult.get().timeLinename, dialogResult.get().timeLineColor, Optional.of(tles));
         }
     }
     //TODO: Let user choose from colors!
 
     private void handleEditTimeLineClick(TimeLinePane tl){
         if(tl.getClass() == CommentTimeLinePane.class){
-            Optional<String> newTimeLineName = openTimeLineCreationDialog(TXT_TL_EDIT_TITLE, TXT_TL_EDIT_HEADER, TXT_TL_EDIT_TEXT, TXT_TL_TIMELINETAG_LABEL, tl.getTimeLineName());
-            if(newTimeLineName.isPresent()){
-                tl.setTimeLineName(newTimeLineName.get());
+            Optional<DialogResult> dialogResult = openTimeLineCreationDialog(TXT_TL_EDIT_TITLE, TXT_TL_EDIT_HEADER, TXT_TL_EDIT_TEXT, TXT_TL_TIMELINETAG_LABEL, tl.getTimeLineName(), tl.getTimeLineColor());
+            if(dialogResult.isPresent()){
+                tl.setTimeLineName(dialogResult.get().timeLinename);
+                tl.setTimeLineColor(dialogResult.get().timeLineColor);
             }
         }
         else{
@@ -318,25 +319,26 @@ public class TimeLineContainer extends HBox {
     //https://code.makery.ch/blog/javafx-dialogs-official/
     //https://examples.javacodegeeks.com/desktop-java/javafx/dialog-javafx/javafx-dialog-example/
     //https://docs.oracle.com/javase/8/javafx/api/javafx/scene/control/Dialog.html#resultConverterProperty--
-    private Optional<String> openTimeLineCreationDialog(String dialogTitle, String dialogHeader, String dialogText, String labelText, String defaultValue){
+    private Optional<DialogResult> openTimeLineCreationDialog(String dialogTitle, String dialogHeader, String dialogText, String labelText, String defaultValue, Color defaultColor){
 
         /*
         This dialog is specific to the creation of timelines and contains some more complex logic
         specific to timelines and the TimelineContainer. Therefore it cannot be moved to DialogGenerator
          */
-        Dialog<String> dialog = new Dialog<>();
+        Dialog<DialogResult> dialog = new Dialog<>();
         dialog.setTitle(dialogTitle);
         dialog.setHeaderText(dialogHeader);
         dialog.setContentText(dialogText);
         dialog.setResizable(true);
 
-        Label label1 = new Label(labelText);
         TextField text1 = new TextField(defaultValue);
-
+        ColorPicker colorPicker = new ColorPicker(defaultColor);
 
         GridPane grid = new GridPane();
-        grid.add(label1, 1, 1);
+        grid.add(new Label(labelText), 1, 1);
         grid.add(text1, 2, 1);
+        grid.add(new Label("Timeline color:"), 1, 2);
+        grid.add(colorPicker,2,2 );
         dialog.getDialogPane().setContent(grid);
 
         ButtonType buttonTypeOk = new ButtonType("Okay", ButtonBar.ButtonData.OK_DONE);
@@ -354,7 +356,7 @@ public class TimeLineContainer extends HBox {
 
         dialog.setResultConverter(b -> {
             if (b == buttonTypeOk) {
-                return text1.getText();
+                return new DialogResult(text1.getText(), colorPicker.getValue());
             }
 
             return null;
@@ -460,6 +462,13 @@ public class TimeLineContainer extends HBox {
         }
         TimeLinePane getTimeLinePane(){return tl;}
         TimeLineInformation getTimelineInformation(){return tli;}
+    }
+
+    private class DialogResult{
+        String timeLinename;
+        Color timeLineColor;
+        public DialogResult(String name, Color color){this.timeLinename = name; this.timeLineColor = color;}
+
     }
 
     //endregion

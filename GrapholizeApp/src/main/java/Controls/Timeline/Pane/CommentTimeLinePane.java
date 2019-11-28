@@ -4,12 +4,16 @@ import Controls.TimelineElement.TimeLineElement;
 import javafx.scene.Node;
 import javafx.scene.control.*;
 import javafx.scene.effect.Light;
+import javafx.scene.input.MouseButton;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
+import javafx.util.Duration;
 import util.DialogGenerator;
 
+import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 public class CommentTimeLinePane extends TimeLinePane {
 
@@ -27,15 +31,17 @@ public class CommentTimeLinePane extends TimeLinePane {
 
     public CommentTimeLinePane(String timeLineName, double width, double height, double scale, Color c) {
         super(timeLineName, width, height, scale, c);
+
+        this.anchor = new Light.Point();
+        selection = new Rectangle();
+        tooltip = new Tooltip();
+        tooltip.setHideDelay(Duration.seconds(1));
+        dragBounds = new double[]{0, getWidth()};
+
         setOnMousePressed(e-> handleTimelineMousePress(e));
         setOnMouseDragged(e-> handleTimelineMouseDrag(e));
         setOnMouseReleased(e-> handleTimelineMouseRelease(e));
         setOnMouseMoved(e -> getToolTip(e));
-        this.anchor = new Light.Point();
-        selection = new Rectangle();
-        tooltip = new Tooltip();
-        dragBounds = new double[]{0, getWidth()};
-        //getChildren().add(selection);
     }
 
     /**
@@ -55,6 +61,7 @@ public class CommentTimeLinePane extends TimeLinePane {
         tle.setOnMousePressed(e -> handleTimeLineElementMousePress(e, tle));
         tle.setOnMouseDragged(e -> handleTimeLineElementMouseDrag(e, tle));
         tle.setOnMouseReleased(e -> handleTimeLineElementMouseRelease(e, tle));
+        tle.setOnMouseClicked(e -> handleTimeLineElementDoubleClick(e,tle));
     }
 
     /**
@@ -63,6 +70,9 @@ public class CommentTimeLinePane extends TimeLinePane {
      * @return true if the given TimeLineElement tle collides with any other elements and false if there are no collisions.
      */
     public boolean collidesWithOtherElements(TimeLineElement tle){
+        List<TimeLineElement> debug = getChildren().stream()
+                .map(node -> (TimeLineElement)node)
+                .filter(element -> element != tle && tle.collidesWith(element)).collect(Collectors.toList());
         return getChildren().stream()
                 .map(node -> (TimeLineElement)node)
                 .filter(element -> element != tle && tle.collidesWith(element))
@@ -98,7 +108,7 @@ public class CommentTimeLinePane extends TimeLinePane {
             TimeLineElement tle = (TimeLineElement)n;
             if(e.getX() > tle.getTimeStart() && e.getX() < tle.getTimeStop()){
                 tooltip.setText(tle.getAnnotationText());
-                tooltip.show(this, e.getScreenX() + 5, e.getScreenY() + 5);
+                tooltip.show(this, e.getScreenX() + 10, e.getScreenY() + 10);
             }
         }
     }
@@ -144,10 +154,8 @@ public class CommentTimeLinePane extends TimeLinePane {
         }
     }
 
+
     //Source: https://coderanch.com/t/689100/java/rectangle-dragging-image
-    //TODO: Check for surrounding comments. the selection can only be done between 2 elements.
-    //TODO: Currently, the mousepress of the Timeline overrides the mouseclick of the TLE.
-    //Perhaps check if the mouse is currently over an element.
     private void handleTimelineMousePress(MouseEvent event){
         //TODO: Check if a comment was clicked.
         //If an element was clicked => set Selected Element. The element can now be dragged.
@@ -217,41 +225,40 @@ public class CommentTimeLinePane extends TimeLinePane {
     //the handle functions are also defined on the timeline class.
 
     private void handleTimeLineElementMousePress(MouseEvent event, TimeLineElement tle){
-        System.out.println("handleTimeLineElementMousePress called. Pressed an element on timeline " + timeLineName);
-
         mouseDelta = event.getX() - tle.getX();
         setBounds(event.getX());
-        System.out.println("Bounds: " + dragBounds[0] + "/" + dragBounds[1]);
-        debugElement = tle;
-        debugX = tle.getX();
-        debugY = tle.getY();
         event.consume();
     }
-
 
 
     private void handleTimeLineElementMouseDrag(MouseEvent event, TimeLineElement tle){
         double newPosition = event.getX() - mouseDelta;
         if(newPosition > dragBounds[0] && newPosition + tle.getWidth() < dragBounds[1]){
-            tle.setX(newPosition);
+            //tle.setX(newPosition);
+            tle.move(newPosition);
         }
         else{
             //Out of bounds (Collision with other element or timeline border)
             double temporaryOutOfBoundsPos = newPosition < dragBounds[0] ? dragBounds[0] + 0.1 : dragBounds[1] - tle.getWidth() - 0.1;
-            tle.setX(temporaryOutOfBoundsPos);
+            //tle.setX(temporaryOutOfBoundsPos);
+            tle.move(temporaryOutOfBoundsPos);
         }
         event.consume();
     }
 
     private void handleTimeLineElementMouseRelease(MouseEvent event, TimeLineElement tle){
-        //TODO: Possible extension: Command pattern => Create a new command after mouse release.
-        System.out.println("Old: " + debugX + " / " + debugY);
-        System.out.println("New: " + tle.getX() + " / " + tle.getY());
-        System.out.println("Number of elements: " + getChildren().size());
+        /*
         tle.setTimeStart(tle.getX());
         tle.setTimeStop(tle.getX() + tle.getWidth());
+         */
 
         event.consume();
+    }
+
+    private void handleTimeLineElementDoubleClick(MouseEvent e, TimeLineElement tle){
+        if(e.getButton().equals(MouseButton.PRIMARY) && e.getClickCount() == 2){
+            handleEditTimeLineElementClick(tle);
+        }
     }
 //endregion
 

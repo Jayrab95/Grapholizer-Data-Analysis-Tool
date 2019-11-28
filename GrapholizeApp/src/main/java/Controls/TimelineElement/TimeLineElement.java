@@ -96,7 +96,7 @@ public class TimeLineElement extends Rectangle {
          * [-------]___ this
          * ______[----] other
          */
-        boolean endCollidesWithOther = other.timeStart >= this.timeStop && other.timeStop >= this.timeStop;
+        boolean endCollidesWithOther = other.timeStart <= this.timeStop && other.timeStop >= this.timeStop;
         /* Timestart of other lies after timestart of this element, and the timestop lies before the timestop of this element
          * ___[--------]__ this
          * _____[----]____ other
@@ -104,6 +104,12 @@ public class TimeLineElement extends Rectangle {
         boolean otherIsContainedInThis = other.timeStart >= this.timeStop && other.timeStop <= this.timeStop;
 
         return startCollidesWithOther || endCollidesWithOther || otherIsContainedInThis;
+    }
+
+    public void move(double newTimeStart){
+        timeStart = newTimeStart;
+        timeStop = newTimeStart + getWidth();
+        setX(newTimeStart);
     }
 
     protected void handleMouseClick(MouseEvent e){

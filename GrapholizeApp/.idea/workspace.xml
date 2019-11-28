@@ -2,16 +2,8 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="f9c9e85c-b6d3-4a2f-99c7-3350288aea5b" name="Default Changelist" comment="">
-      <change beforePath="$PROJECT_DIR$/.gradle/5.2.1/executionHistory/executionHistory.bin" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/5.2.1/executionHistory/executionHistory.bin" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.gradle/5.2.1/executionHistory/executionHistory.lock" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/5.2.1/executionHistory/executionHistory.lock" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.gradle/5.2.1/fileHashes/fileHashes.bin" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/5.2.1/fileHashes/fileHashes.bin" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.gradle/5.2.1/fileHashes/fileHashes.lock" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/5.2.1/fileHashes/fileHashes.lock" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.gradle/5.2.1/javaCompile/classAnalysis.bin" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/5.2.1/javaCompile/classAnalysis.bin" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.gradle/5.2.1/javaCompile/javaCompile.lock" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/5.2.1/javaCompile/javaCompile.lock" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.gradle/buildOutputCleanup/buildOutputCleanup.lock" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/buildOutputCleanup/buildOutputCleanup.lock" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/build/classes/java/main/Controls/Timeline/Pane/CommentTimeLinePane.class" beforeDir="false" afterPath="$PROJECT_DIR$/build/classes/java/main/Controls/Timeline/Pane/CommentTimeLinePane.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/build/classes/java/main/Controls/TimelineElement/TimeLineElement.class" beforeDir="false" afterPath="$PROJECT_DIR$/build/classes/java/main/Controls/TimelineElement/TimeLineElement.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/Controls/Container/TimeLineContainer.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/Controls/Container/TimeLineContainer.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/Controls/Timeline/Pane/CommentTimeLinePane.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/Controls/Timeline/Pane/CommentTimeLinePane.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/Controls/TimelineElement/TimeLineElement.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/Controls/TimelineElement/TimeLineElement.java" afterDir="false" />
     </list>
@@ -251,6 +243,7 @@
       <workItem from="1574173051195" duration="17159000" />
       <workItem from="1574260312649" duration="48628000" />
       <workItem from="1574757195118" duration="9684000" />
+      <workItem from="1574930041066" duration="4460000" />
     </task>
     <servers />
   </component>
@@ -298,8 +291,23 @@
         </line-breakpoint>
         <line-breakpoint enabled="true" type="java-line">
           <url>file://$PROJECT_DIR$/src/main/java/Controls/Container/TimeLineContainer.java</url>
-          <line>215</line>
-          <option name="timeStamp" value="16" />
+          <line>150</line>
+          <option name="timeStamp" value="17" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/src/main/java/Controls/Container/TimeLineContainer.java</url>
+          <line>145</line>
+          <option name="timeStamp" value="18" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/src/main/java/Controls/Timeline/Pane/CommentTimeLinePane.java</url>
+          <line>75</line>
+          <option name="timeStamp" value="21" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/src/main/java/Controls/TimelineElement/TimeLineElement.java</url>
+          <line>93</line>
+          <option name="timeStamp" value="22" />
         </line-breakpoint>
       </breakpoints>
     </breakpoint-manager>
