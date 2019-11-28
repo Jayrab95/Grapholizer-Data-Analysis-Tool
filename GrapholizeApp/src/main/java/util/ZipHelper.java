@@ -15,8 +15,8 @@ public class ZipHelper {
     private ZipFile zipFile;
     private ZipParameters parameters;
     private Path tempDirPath;
-    private Path pathData;
-    private Path pathTimelines;
+    private Path pathTempData;
+    private Path pathTempTimelines;
 
     public ZipHelper(String filePath){
         parameters = new ZipParameters();
@@ -30,19 +30,21 @@ public class ZipHelper {
         zipFile.extractFile(DATA_FILE_NAME, absPathTempDir);
         zipFile.extractFile(TIMELINE_FILE_NAME, absPathTempDir);
 
-        pathData = Path.of(absPathTempDir, File.separator, DATA_FILE_NAME);
-        pathTimelines = Path.of(absPathTempDir, File.separator, TIMELINE_FILE_NAME);
+        pathTempData = Path.of(absPathTempDir, File.separator, DATA_FILE_NAME);
+        pathTempTimelines = Path.of(absPathTempDir, File.separator, TIMELINE_FILE_NAME);
     }
-
+    /*
+    Cleans up the temporary files created by init(). Should always be called after using ZipHelper
+     */
     public void cleanUp() throws IOException {
-        Files.delete(pathData);
-        Files.delete(pathTimelines);
+        Files.delete(pathTempData);
+        Files.delete(pathTempTimelines);
         Files.delete(tempDirPath);
     }
 
-/*    public void replaceFile(File file) throws ZipException {
-        remove(file.getName());
-        add(file);
+    public void saveTimelines() throws ZipException {
+        remove(TIMELINE_FILE_NAME);
+        add(new File(String.valueOf(pathTempTimelines)));
     }
 
     public void remove(String fileName) throws ZipException{
@@ -51,22 +53,22 @@ public class ZipHelper {
 
     public void add(File file) throws ZipException{
         zipFile.addFile(file , parameters);
-    }*/
-
-    public Path getPathData() {
-        return pathData;
     }
 
-    public void setPathData(Path pathData) {
-        this.pathData = pathData;
+    public Path getPathTempData() {
+        return pathTempData;
     }
 
-    public Path getPathTimelines() {
-        return pathTimelines;
+    public void setPathTempData(Path pathTempData) {
+        this.pathTempData = pathTempData;
     }
 
-    public void setPathTimelines(Path pathTimelines) {
-        this.pathTimelines = pathTimelines;
+    public Path getPathTempTimelines() {
+        return pathTempTimelines;
+    }
+
+    public void setPathTempTimelines(Path pathTempTimelines) {
+        this.pathTempTimelines = pathTempTimelines;
     }
 
 }

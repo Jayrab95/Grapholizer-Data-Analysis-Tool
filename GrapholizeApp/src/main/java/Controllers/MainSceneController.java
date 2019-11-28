@@ -68,8 +68,8 @@ public class MainSceneController implements Observer {
 
     @FXML
     public void initialize() throws Exception{
-        System.out.println("aaa");
-        p = loadDataFromFiles(new ProjectLoader());
+        //System.out.println("aaa");
+        p = loadDataFromFiles(new JsonLoader());
         initObservableStrokes(p.getStrokes());
         canvas_mainCanvas.setWidth(p.getPageMetaData().getPageWidth() * canvasScale);
         canvas_mainCanvas.setHeight(p.getPageMetaData().getPageHeight() * canvasScale);
@@ -96,6 +96,15 @@ public class MainSceneController implements Observer {
         loadDataFromFiles(new PageDataReader());
     }
 
+    @FXML
+    private void saveProject() {
+
+    }
+
+    @FXML
+    private void saveProjectTo() {
+
+    }
     //Replace with openFileDialogue after testing.
     private Page loadDataFromFiles(Loader loader) {
         try {
@@ -105,11 +114,12 @@ public class MainSceneController implements Observer {
                     new FileChooser.ExtensionFilter("Data Files", "*.json", "*.zip", "*.data")
             );
             Stage stage = new Stage();
-            stage.setTitle("My New Stage Title");
+            stage.setTitle("Load File");
             File sFile = fileChooser.showOpenDialog(stage);
             if (sFile != null) {
                 String absFilePath = sFile.getAbsolutePath();
                 List<Participant> list = loader.load(absFilePath);
+                list.forEach(p -> System.out.println("Participant:: " + p.toString()));
                 return list.get(0).getPage(0);
             }
             return null;

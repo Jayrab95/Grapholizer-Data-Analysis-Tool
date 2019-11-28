@@ -14,7 +14,7 @@ public class ProjectLoader implements Loader {
         try{
             zipHelper.init();
             Loader jsonLoader = new JsonLoader();
-            String name = zipHelper.getPathData().toString();
+            String name = zipHelper.getPathTempData().toString();
             return jsonLoader.load(name);
         } catch(ZipException exp) {
             exp.printStackTrace();
