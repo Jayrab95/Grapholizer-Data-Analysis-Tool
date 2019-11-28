@@ -1,6 +1,6 @@
 package Controls.Timeline.Pane;
 
-import Controls.TimelineElement.StrokeTimeLineElement;
+import Controls.TimelineElement.StrokeTimeLineElementRect;
 import Observables.ObservableStroke;
 import javafx.scene.input.MouseButton;
 import javafx.scene.input.MouseEvent;
@@ -21,7 +21,6 @@ public class StrokeDurationTimeLinePane extends TimeLinePane {
     //TODO: Timelines need to become observers of which ever class/control saves the timeLineScale.
     private void setUpTimeLine(){
         long strokesStart = strokes.get(0).getTimeStart();
-        double lastEnd = 0;
         for (ObservableStroke s : strokes){
             //TODO: The elements need to know about the timeline scale
             //Elements need to become listeners of whichever class manages the timeline scale.
@@ -31,12 +30,10 @@ public class StrokeDurationTimeLinePane extends TimeLinePane {
             double endDelta = (s.getTimeEnd() - strokesStart) * scale;
             Color c = new Color(s.getColor().getR(), s.getColor().getG(), s.getColor().getB(), s.getColor().getO());
 
-            StrokeTimeLineElement stle = new StrokeTimeLineElement(startDelta,endDelta, getHeight(), c, s);
+            StrokeTimeLineElementRect stle = new StrokeTimeLineElementRect(startDelta,endDelta, getHeight(), c, s);
             stle.setOnMouseClicked(e -> timeLineClick(e, s));
             s.addObserver(stle);
             addTimeLineElement(stle);
-
-            lastEnd = endDelta;
         }
         setOnMousePressed(e -> handleMouseClick(e));
     }

@@ -1,18 +1,18 @@
 package Controls.Timeline.Pane;
 
-import Controls.TimelineElement.StrokeTimeLineElement;
-import Controls.TimelineElement.TimeLineElement;
+import Controls.TimelineElement.TimeLineElementRect;
+import Model.Entities.Timeline;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.property.StringProperty;
 import javafx.scene.Node;
-import javafx.scene.control.ContextMenu;
-import javafx.scene.control.MenuItem;
 import javafx.scene.layout.Pane;
 import javafx.scene.paint.Color;
+import util.ColorConverter;
 
 //Idea: make Timeline an interface? This way timeline operations can be called without referencing the actual control.
 public abstract class TimeLinePane extends Pane {
 
+    protected Timeline timeline;
     protected StringProperty timeLineName;
     protected double scale;
     protected Color timeLineColor;
@@ -23,6 +23,8 @@ public abstract class TimeLinePane extends Pane {
         this.timeLineName = new SimpleStringProperty(timeLineName);
         this.scale = scale;
         this.timeLineColor = c;
+
+        this.timeline = new Timeline(timeLineName, ColorConverter.convertJavaFXColorToModelColor(c));
 
         setHeight(height);
         setPrefHeight(height);
@@ -44,19 +46,27 @@ public abstract class TimeLinePane extends Pane {
 
     public void setTimeLineName(String newName){
         this.timeLineName.setValue(newName);
+        this.timeline.setTimeLineName(newName);
     }
 
     public Color getTimeLineColor(){return timeLineColor;}
-    public void setTimeLineColor(Color c){this.timeLineColor = c;}
+    public void setTimeLineColor(Color c){
+
+        this.timeLineColor = c;
+        this.timeline.setTimeLineColor(ColorConverter.convertJavaFXColorToModelColor(c));
+    }
+
+    public Timeline getTimeline(){return this.timeline;}
 
     public void deselectTimeLine(){
         for(Node n : getChildren()){
-            ((TimeLineElement)n).setSelected(false);
+            ((TimeLineElementRect)n).setSelected(false);
         }
     }
 
-    public void addTimeLineElement(TimeLineElement tle){
+    public void addTimeLineElement(TimeLineElementRect tle){
         getChildren().add(tle);
+        //TODO: Add the TimeLineElemet entity to the TimeLine Entity lis
         /*
         tle.setOnContextMenuRequested(event -> {
             getElementSpecificContextMenu(tle).show(this, event.getScreenX(), event.getScreenY());

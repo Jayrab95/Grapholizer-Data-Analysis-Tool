@@ -4,9 +4,8 @@ import java.net.URL;
 import java.util.*;
 
 import Controls.Container.TimeLineContainer;
-import Controls.Timeline.Canvas.CommentTimeLineCanvas;
-import Controls.Timeline.Canvas.StrokeDurationTimeLineCanvas;
 import Controls.Timeline.Pane.CommentTimeLinePane;
+import Controls.Timeline.Pane.PressureTimeLinePane;
 import Controls.Timeline.Pane.StrokeDurationTimeLinePane;
 import Interfaces.Observable;
 import Interfaces.Observer;
@@ -159,9 +158,11 @@ public class MainSceneController implements Observer {
     private void setupTimelineContainer(){
         //scrollPane_TimeLines.setContent(timeLineContainer);
         TimeLineContainer tlc = new TimeLineContainer(totalDuration, timeLineScale);
-        tlc.addTimeLine(new StrokeDurationTimeLinePane("Stroke duration", totalDuration,  50, timeLineScale, observableStrokes));
+        StrokeDurationTimeLinePane s = new StrokeDurationTimeLinePane("Stroke duration", totalDuration,  50, timeLineScale, observableStrokes);
+        tlc.addTimeLine(s);
         tlc.addTimeLine(new StrokeDurationTimeLinePane("Stroke duration 2", totalDuration,  50, timeLineScale, observableStrokes));
         tlc.addTimeLine(new CommentTimeLinePane("Custom", totalDuration, 50, timeLineScale, Color.ROYALBLUE));
+        tlc.addTimeLine(new PressureTimeLinePane("pressure", totalDuration, 50, timeLineScale, Color.PINK, observableStrokes, s));
         scrollPane_TimeLines.setContent(tlc);
     }
 

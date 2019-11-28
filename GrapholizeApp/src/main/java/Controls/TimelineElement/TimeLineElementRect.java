@@ -1,37 +1,33 @@
 package Controls.TimelineElement;
 
-import Interfaces.Observable;
-import Interfaces.Observer;
-import Observables.ObservableStroke;
+import Model.Entities.TimeLineElement;
 import javafx.beans.property.BooleanProperty;
 import javafx.beans.property.SimpleBooleanProperty;
-import javafx.scene.Parent;
-import javafx.scene.canvas.Canvas;
 import javafx.scene.control.Tooltip;
 import javafx.scene.input.MouseEvent;
-import javafx.scene.layout.Pane;
-import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
-import util.Selector;
 
 
-public class TimeLineElement extends Rectangle {
+public class TimeLineElementRect extends Rectangle {
 
     protected double timeStart;
     protected double timeStop;
-    protected Color c;
+    protected Color color;
     protected BooleanProperty selected;
     protected String annotationText;
+    protected TimeLineElement timeLineElement;
     //Reason for having comment in baseclass: When copying annotations, there first needs to be a type check to see if
     //There's also a comment
 
-    public TimeLineElement(double tStart, double tEnd, double parentHeight, Color c, String annotationText){
+    public TimeLineElementRect(double tStart, double tEnd, double parentHeight, Color c, String annotationText){
         this.timeStart = tStart;
         this.timeStop = tEnd;
-        this.c = c;
+        this.color = c;
         this.selected = new SimpleBooleanProperty(false);
         this.annotationText = annotationText;
+
+        this.timeLineElement = new TimeLineElement(annotationText, timeStart, timeStop);
 
 
         setHeight(parentHeight);
@@ -48,21 +44,38 @@ public class TimeLineElement extends Rectangle {
         }
     }
 
-    public TimeLineElement(Color c, Rectangle r, String annotationText){
+    public TimeLineElementRect(Color c, Rectangle r, String annotationText){
         this(r.getX(), r.getX() + r.getWidth(), r.getHeight(), c, annotationText);
     }
 
-
+    //TODO: Consider moving these fields solely to the Model timelineElement
     public double getTimeStart(){return timeStart;}
-    public void setTimeStart(double start){timeStart = start;}
+
+    public void setTimeStart(double start){
+        timeStart = start;
+        timeLineElement.setTimeStart(start);
+    }
     public double getTimeStop(){return timeStop;}
-    public void setTimeStop(double stop){timeStop = stop;}
-    public BooleanProperty getSelectedBooleanProperty(){return this.selected;}
-    public Color getColor(){return c;}
+
+    public void setTimeStop(double stop){
+        timeStop = stop;
+        timeLineElement.setTimeStop(stop);
+    }
+
+    public Color getColor(){return color;}
+    public void setColor(Color c){this.color = c;}
+
     public String getAnnotationText(){
         return annotationText;
     }
+    public void setAnnotationText(String text){
+        this.annotationText = text;
+        this.timeLineElement.setAnnotationText(text);
+    }
 
+    public TimeLineElement getTimeLineElement(){return this.timeLineElement;}
+
+    public BooleanProperty getSelectedBooleanProperty(){return this.selected;}
     public boolean isSelected(){
         return selected.get();
     }
@@ -72,21 +85,9 @@ public class TimeLineElement extends Rectangle {
     public void toggleSelected(){
         this.selected.set(!selected.get());
     }
-    public void setAnnotationText(String text){
-        this.annotationText = text;
-    }
 
-    private Tooltip generateToolTip(){
-        Tooltip tt = new Tooltip();
-        tt.setText(
-                  "\"" + annotationText + "\"\n"
-                + "Position: X=" + getX() + "/ Y=" + getY() + "\n"
-                + "Width: " + getWidth()
-        );
-        return tt;
-    }
-
-    public boolean collidesWith(TimeLineElement other){
+    //TODO: Consider moving these to Entity class?
+    public boolean collidesWith(TimeLineElementRect other){
         /* Timestart of other lies before timestart of this element, and the timestop lies after the timestart of this element
          * ___[-------]_ this
          * [-----]______ other
@@ -111,13 +112,12 @@ public class TimeLineElement extends Rectangle {
     }
 
     public void move(double newTimeStart){
-        timeStart = newTimeStart;
-        timeStop = newTimeStart + getWidth();
+        setTimeStart(newTimeStart);
+        setTimeStop(newTimeStart + getWidth());
         setX(newTimeStart);
     }
 
     protected void handleMouseClick(MouseEvent e){
-        System.out.println("HandleMouseClick called in TimeLineElement baseclass.");
         toggleSelected();
     }
 }

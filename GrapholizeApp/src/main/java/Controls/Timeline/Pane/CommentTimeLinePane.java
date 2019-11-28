@@ -1,6 +1,6 @@
 package Controls.Timeline.Pane;
 
-import Controls.TimelineElement.TimeLineElement;
+import Controls.TimelineElement.TimeLineElementRect;
 import javafx.scene.Node;
 import javafx.scene.control.*;
 import javafx.scene.effect.Light;
@@ -24,7 +24,7 @@ public class CommentTimeLinePane extends TimeLinePane {
 
     private Tooltip tooltip;
 
-    private TimeLineElement debugElement;
+    private TimeLineElementRect debugElement;
     private double debugX;
     private double debugY;
 
@@ -51,7 +51,7 @@ public class CommentTimeLinePane extends TimeLinePane {
      * @param tle The TimeLineElement that should be added.
      */
     @Override
-    public void addTimeLineElement(TimeLineElement tle){
+    public void addTimeLineElement(TimeLineElementRect tle){
         super.addTimeLineElement(tle);
         //Assign contextmenu as ContextMenuRequest action
         tle.setOnContextMenuRequested(event -> {
@@ -69,12 +69,12 @@ public class CommentTimeLinePane extends TimeLinePane {
      * @param tle The TimelineElement which needs to be checked for collision with existing elements.
      * @return true if the given TimeLineElement tle collides with any other elements and false if there are no collisions.
      */
-    public boolean collidesWithOtherElements(TimeLineElement tle){
-        List<TimeLineElement> debug = getChildren().stream()
-                .map(node -> (TimeLineElement)node)
+    public boolean collidesWithOtherElements(TimeLineElementRect tle){
+        List<TimeLineElementRect> debug = getChildren().stream()
+                .map(node -> (TimeLineElementRect)node)
                 .filter(element -> element != tle && tle.collidesWith(element)).collect(Collectors.toList());
         return getChildren().stream()
-                .map(node -> (TimeLineElement)node)
+                .map(node -> (TimeLineElementRect)node)
                 .filter(element -> element != tle && tle.collidesWith(element))
                 .count() > 0;
     }
@@ -84,8 +84,8 @@ public class CommentTimeLinePane extends TimeLinePane {
         double lowerBounds = 0;
         double upperBounds = getWidth();
         for(Node n : getChildren()){
-            double nTimeStart = ((TimeLineElement)n).getTimeStart();
-            double nTimeStop = ((TimeLineElement)n).getTimeStop();
+            double nTimeStart = ((TimeLineElementRect)n).getTimeStart();
+            double nTimeStop = ((TimeLineElementRect)n).getTimeStop();
             if(nTimeStop < xPosition && nTimeStop > lowerBounds){
                 System.out.println("Lowerbounds before update: " + lowerBounds);
                 lowerBounds = nTimeStop;
@@ -105,7 +105,7 @@ public class CommentTimeLinePane extends TimeLinePane {
     private void getToolTip(MouseEvent e){
         //tooltip.hide();
         for(Node n : getChildren()){
-            TimeLineElement tle = (TimeLineElement)n;
+            TimeLineElementRect tle = (TimeLineElementRect)n;
             if(e.getX() > tle.getTimeStart() && e.getX() < tle.getTimeStop()){
                 tooltip.setText(tle.getAnnotationText());
                 tooltip.show(this, e.getScreenX() + 10, e.getScreenY() + 10);
@@ -120,7 +120,7 @@ public class CommentTimeLinePane extends TimeLinePane {
      * @param tle The TimeLineElement for which the ContextMenu and its operations should be generated.
      * @return The generated ContextMenu
      */
-    private ContextMenu getElementSpecificContextMenu(TimeLineElement tle){
+    private ContextMenu getElementSpecificContextMenu(TimeLineElementRect tle){
         MenuItem menuItem_EditTLE = new MenuItem("Edit annotation");
         menuItem_EditTLE.setOnAction(event -> handleEditTimeLineElementClick(tle));
 
@@ -133,7 +133,7 @@ public class CommentTimeLinePane extends TimeLinePane {
 
     //region handlerMethods
     //region TimeLine handlers
-    private void handleEditTimeLineElementClick(TimeLineElement tle){
+    private void handleEditTimeLineElementClick(TimeLineElementRect tle){
         Optional<String> newAnnotationText = DialogGenerator.simpleTextInputDialog(
                 tle.getAnnotationText(),
                 "Edit annotation",
@@ -145,7 +145,7 @@ public class CommentTimeLinePane extends TimeLinePane {
         }
     }
 
-    private void handleDeleteTimeLineElementClick(TimeLineElement tle){
+    private void handleDeleteTimeLineElementClick(TimeLineElementRect tle){
         if(DialogGenerator.confirmationDialogue(
                 "Delete annotation",
                 "Delete annotation?",
@@ -205,7 +205,7 @@ public class CommentTimeLinePane extends TimeLinePane {
                     "Annotation text");
             if(s.isPresent()){
                 System.out.println(s.get());
-                TimeLineElement tle = new TimeLineElement(timeLineColor, selection, s.get());
+                TimeLineElementRect tle = new TimeLineElementRect(timeLineColor, selection, s.get());
                 addTimeLineElement(tle);
             }
             else{
@@ -224,13 +224,13 @@ public class CommentTimeLinePane extends TimeLinePane {
     //Because the TimeLineElement drags are dependant on the bounds which require the entire collection of elements,
     //the handle functions are also defined on the timeline class.
 
-    private void handleTimeLineElementMousePress(MouseEvent event, TimeLineElement tle){
+    private void handleTimeLineElementMousePress(MouseEvent event, TimeLineElementRect tle){
         mouseDelta = event.getX() - tle.getX();
         setBounds(event.getX());
         event.consume();
     }
 
-    private void handleTimeLineElementMouseDrag(MouseEvent event, TimeLineElement tle){
+    private void handleTimeLineElementMouseDrag(MouseEvent event, TimeLineElementRect tle){
         double newPosition = event.getX() - mouseDelta;
         if(newPosition > dragBounds[0] && newPosition + tle.getWidth() < dragBounds[1]){
             //tle.setX(newPosition);
@@ -245,7 +245,7 @@ public class CommentTimeLinePane extends TimeLinePane {
         event.consume();
     }
 
-    private void handleTimeLineElementMouseRelease(MouseEvent event, TimeLineElement tle){
+    private void handleTimeLineElementMouseRelease(MouseEvent event, TimeLineElementRect tle){
         /*
         tle.setTimeStart(tle.getX());
         tle.setTimeStop(tle.getX() + tle.getWidth());
@@ -254,7 +254,7 @@ public class CommentTimeLinePane extends TimeLinePane {
         event.consume();
     }
 
-    private void handleTimeLineElementDoubleClick(MouseEvent e, TimeLineElement tle){
+    private void handleTimeLineElementDoubleClick(MouseEvent e, TimeLineElementRect tle){
         if(e.getButton().equals(MouseButton.PRIMARY) && e.getClickCount() == 2){
             handleEditTimeLineElementClick(tle);
         }

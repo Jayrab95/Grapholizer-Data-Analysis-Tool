@@ -1,10 +1,9 @@
 package Controls.Container;
 
-import Controls.Timeline.Depricated.StrokeDurationTimeLine;
 import Controls.Timeline.Pane.CommentTimeLinePane;
 import Controls.Timeline.Pane.StrokeDurationTimeLinePane;
 import Controls.Timeline.Pane.TimeLinePane;
-import Controls.TimelineElement.TimeLineElement;
+import Controls.TimelineElement.TimeLineElementRect;
 import Interfaces.Observer;
 import javafx.event.ActionEvent;
 import javafx.scene.Node;
@@ -82,14 +81,14 @@ public class TimeLineContainer extends HBox {
         getChildren().addAll(vbox_timeLineInfoContainer, vbox_timeLines);
     }
 
-    public void createNewCustomTimeLine(String name, Color c, Optional<List<TimeLineElement>> tleList){
+    public void createNewCustomTimeLine(String name, Color c, Optional<List<TimeLineElementRect>> tleList){
         //Currently: Since the StrokeTimeLine is always available, take the width of this element
         //TODO: Think of better solution. Perhaps the TimeLineContainer class can manage the total width?
         //Creation of timeline
         TimeLinePane ctlp = new CommentTimeLinePane(name, length, 50, scale, c);
         if(tleList.isPresent()){
-            for(TimeLineElement tle : tleList.get()){
-                TimeLineElement ctle = new TimeLineElement(c, tle, tle.getAnnotationText());
+            for(TimeLineElementRect tle : tleList.get()){
+                TimeLineElementRect ctle = new TimeLineElementRect(c, tle, tle.getAnnotationText());
                 ctlp.addTimeLineElement(ctle);
             }
         }
@@ -133,8 +132,8 @@ public class TimeLineContainer extends HBox {
     }
 
     private void createCopyAnnotations(TimeLinePane tl, boolean combinedElement){
-        List<TimeLineElement> tles = selectedTimeLine.getChildren().stream()
-                .map(node -> (TimeLineElement)node)
+        List<TimeLineElementRect> tles = selectedTimeLine.getChildren().stream()
+                .map(node -> (TimeLineElementRect)node)
                 .filter(elem -> elem.isSelected())
                 .collect(Collectors.toList());
         boolean newAnnotationsColideWithExisting = tles.stream()
@@ -142,12 +141,12 @@ public class TimeLineContainer extends HBox {
                 .count() > 0;
         if(!newAnnotationsColideWithExisting){
             if(!combinedElement){
-                for(TimeLineElement tle : tles){
-                    tl.addTimeLineElement(new TimeLineElement(tl.getTimeLineColor(), tle, tle.getAnnotationText()));
+                for(TimeLineElementRect tle : tles){
+                    tl.addTimeLineElement(new TimeLineElementRect(tl.getTimeLineColor(), tle, tle.getAnnotationText()));
                 }
             }
             else{
-                TimeLineElement tle = new TimeLineElement(tles.get(0).getTimeStart(), tles.get(tles.size()-1).getTimeStop(), tl.getHeight(), tl.getTimeLineColor(), "Combined annotation");
+                TimeLineElementRect tle = new TimeLineElementRect(tles.get(0).getTimeStart(), tles.get(tles.size()-1).getTimeStop(), tl.getHeight(), tl.getTimeLineColor(), "Combined annotation");
                 tl.addTimeLineElement(tle);
                 //TODO: What should happen if the newly created comment (or copies in general) overlaps with existing comments?
                 //TODO: For the combined element, use the dialogue to figure out what the comment should be => Checkbox combined? If Checked, enble textbox for new comment
@@ -234,9 +233,9 @@ public class TimeLineContainer extends HBox {
     private void handleCreateNewTimeLineOutOfSelectedClick(TimeLinePane tl){
         Optional<DialogResult> dialogResult = openTimeLineCreationDialog(TXT_TL_CREATION_TITLE, TXT_TL_CREATION_HEADER, TXT_TL_CREATION_TEXT, TXT_TL_TIMELINETAG_LABEL, TXT_TL_TAG_DEFAULTVAL, Color.CADETBLUE);
         if(dialogResult.isPresent()){
-            List<TimeLineElement> tles = tl.getChildren().stream()
-                    .map(node -> (TimeLineElement)node)//TODO: Maybe there's a better solution? (Should there be a separate List with the TLE in the timeline?)
-                    .filter(tle -> ((TimeLineElement)tle).isSelected())
+            List<TimeLineElementRect> tles = tl.getChildren().stream()
+                    .map(node -> (TimeLineElementRect)node)//TODO: Maybe there's a better solution? (Should there be a separate List with the TLE in the timeline?)
+                    .filter(tle -> ((TimeLineElementRect)tle).isSelected())
                     .collect(Collectors.toList());
             createNewCustomTimeLine(dialogResult.get().timeLinename, dialogResult.get().timeLineColor, Optional.of(tles));
         }

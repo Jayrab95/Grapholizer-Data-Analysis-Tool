@@ -4,10 +4,10 @@ import java.util.Random;
 
 public class Color {
 
-    private float r;
-    private float g;
-    private float b;
-    private float o;
+    private double r;
+    private double g;
+    private double b;
+    private double o;
 
     public Color(){
         Random rand = new Random();
@@ -16,14 +16,14 @@ public class Color {
         b = rand.nextFloat();
         o = 1;
     }
-    public Color(float r, float g, float b, float o){
+    public Color(double r, double g, double b, double o){
         this.r = r;
         this.g = g;
         this.b = b;
         this.o = o;
     }
 
-    public float getR() {
+    public double getR() {
         return r;
     }
 
@@ -32,7 +32,7 @@ public class Color {
         return this;
     }
 
-    public float getG() {
+    public double getG() {
         return g;
     }
 
@@ -41,7 +41,7 @@ public class Color {
         return this;
     }
 
-    public float getB() {
+    public double getB() {
         return b;
     }
 
@@ -50,7 +50,7 @@ public class Color {
         return this;
     }
 
-    public float getO() {
+    public double getO() {
         return o;
     }
 

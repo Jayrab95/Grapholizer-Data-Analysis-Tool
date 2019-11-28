@@ -2,12 +2,55 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="f9c9e85c-b6d3-4a2f-99c7-3350288aea5b" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/src/main/java/Model/Entities/TimeLineElement.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/Model/Entities/Timeline.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/build/classes/java/main/Model/Entities/TimeLineElement.class" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/build/classes/java/main/Model/Entities/Timeline.class" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/util/ColorConverter.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.gradle/5.2.1/executionHistory/executionHistory.bin" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/5.2.1/executionHistory/executionHistory.bin" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.gradle/5.2.1/executionHistory/executionHistory.lock" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/5.2.1/executionHistory/executionHistory.lock" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.gradle/5.2.1/fileContent/fileContent.lock" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/5.2.1/fileContent/fileContent.lock" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.gradle/5.2.1/fileHashes/fileHashes.bin" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/5.2.1/fileHashes/fileHashes.bin" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.gradle/5.2.1/fileHashes/fileHashes.lock" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/5.2.1/fileHashes/fileHashes.lock" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.gradle/5.2.1/javaCompile/classAnalysis.bin" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/5.2.1/javaCompile/classAnalysis.bin" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.gradle/5.2.1/javaCompile/javaCompile.lock" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/5.2.1/javaCompile/javaCompile.lock" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.gradle/buildOutputCleanup/buildOutputCleanup.lock" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/buildOutputCleanup/buildOutputCleanup.lock" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/classes/java/main/Controllers/MainSceneController.class" beforeDir="false" afterPath="$PROJECT_DIR$/build/classes/java/main/Controllers/MainSceneController.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/classes/java/main/Controls/Container/TimeLineContainer$DialogResult.class" beforeDir="false" afterPath="$PROJECT_DIR$/build/classes/java/main/Controls/Container/TimeLineContainer$DialogResult.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/classes/java/main/Controls/Container/TimeLineContainer$TimeLineInformation.class" beforeDir="false" afterPath="$PROJECT_DIR$/build/classes/java/main/Controls/Container/TimeLineContainer$TimeLineInformation.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/classes/java/main/Controls/Container/TimeLineContainer$TimeLineWrapper.class" beforeDir="false" afterPath="$PROJECT_DIR$/build/classes/java/main/Controls/Container/TimeLineContainer$TimeLineWrapper.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/classes/java/main/Controls/Container/TimeLineContainer.class" beforeDir="false" afterPath="$PROJECT_DIR$/build/classes/java/main/Controls/Container/TimeLineContainer.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/classes/java/main/Controls/Timeline/Canvas/CommentTimeLineCanvas.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/classes/java/main/Controls/Timeline/Canvas/StrokeDurationTimeLineCanvas.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/classes/java/main/Controls/Timeline/Canvas/TimelineCanvas.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/classes/java/main/Controls/Timeline/Depricated/CommentTimeLine.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/classes/java/main/Controls/Timeline/Depricated/StrokeDurationTimeLine.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/classes/java/main/Controls/Timeline/Depricated/TimeLine.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/classes/java/main/Controls/Timeline/Pane/CommentTimeLinePane.class" beforeDir="false" afterPath="$PROJECT_DIR$/build/classes/java/main/Controls/Timeline/Pane/CommentTimeLinePane.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/classes/java/main/Controls/Timeline/Pane/PressureTimeLinePane.class" beforeDir="false" afterPath="$PROJECT_DIR$/build/classes/java/main/Controls/Timeline/Pane/PressureTimeLinePane.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/classes/java/main/Controls/Timeline/Pane/StrokeDurationTimeLinePane.class" beforeDir="false" afterPath="$PROJECT_DIR$/build/classes/java/main/Controls/Timeline/Pane/StrokeDurationTimeLinePane.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/classes/java/main/Controls/Timeline/Pane/TimeLinePane.class" beforeDir="false" afterPath="$PROJECT_DIR$/build/classes/java/main/Controls/Timeline/Pane/TimeLinePane.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/classes/java/main/Controls/TimelineElement/FillerTimeLineElement.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/classes/java/main/Controls/TimelineElement/StrokeTimeLineElement.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/classes/java/main/Controls/TimelineElement/TimeLineElement.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/classes/java/main/Interfaces/Observable.class" beforeDir="false" afterPath="$PROJECT_DIR$/build/classes/java/main/Interfaces/Observable.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/classes/java/main/Model/Entities/Color.class" beforeDir="false" afterPath="$PROJECT_DIR$/build/classes/java/main/Model/Entities/Color.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/classes/java/main/Observables/ObservableStroke.class" beforeDir="false" afterPath="$PROJECT_DIR$/build/classes/java/main/Observables/ObservableStroke.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/Controllers/MainSceneController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/Controllers/MainSceneController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/Controls/Container/TimeLineContainer.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/Controls/Container/TimeLineContainer.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/Controls/Timeline/Canvas/CommentTimeLineCanvas.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/Controls/Timeline/Canvas/StrokeDurationTimeLineCanvas.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/Controls/Timeline/Canvas/TimelineCanvas.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/Controls/Timeline/Depricated/CommentTimeLine.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/Controls/Timeline/Depricated/StrokeDurationTimeLine.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/Controls/Timeline/Depricated/TimeLine.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/Controls/Timeline/Pane/CommentTimeLinePane.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/Controls/Timeline/Pane/CommentTimeLinePane.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/Controls/Timeline/Pane/PressureTimeLinePane.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/Controls/Timeline/Pane/PressureTimeLinePane.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/Controls/Timeline/Pane/StrokeDurationTimeLinePane.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/Controls/Timeline/Pane/StrokeDurationTimeLinePane.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/Interfaces/Observable.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/Interfaces/Observable.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/Observables/ObservableStroke.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/Observables/ObservableStroke.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/Controls/Timeline/Pane/TimeLinePane.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/Controls/Timeline/Pane/TimeLinePane.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/Controls/TimelineElement/FillerTimeLineElement.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/Controls/TimelineElement/StrokeTimeLineElement.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/Controls/TimelineElement/StrokeTimeLineElementRect.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/Controls/TimelineElement/TimeLineElement.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/Controls/TimelineElement/TimeLineElementRect.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/Model/Entities/Color.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/Model/Entities/Color.java" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -246,7 +289,7 @@
       <workItem from="1574260312649" duration="48628000" />
       <workItem from="1574757195118" duration="9684000" />
       <workItem from="1574930041066" duration="14121000" />
-      <workItem from="1574946122404" duration="2288000" />
+      <workItem from="1574946122404" duration="8091000" />
     </task>
     <servers />
   </component>
@@ -294,23 +337,23 @@
         </line-breakpoint>
         <line-breakpoint enabled="true" type="java-line">
           <url>file://$PROJECT_DIR$/src/main/java/Controls/Container/TimeLineContainer.java</url>
-          <line>150</line>
+          <line>149</line>
           <option name="timeStamp" value="17" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="java-line">
           <url>file://$PROJECT_DIR$/src/main/java/Controls/Container/TimeLineContainer.java</url>
-          <line>145</line>
+          <line>144</line>
           <option name="timeStamp" value="18" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="java-line">
-          <url>file://$PROJECT_DIR$/src/main/java/Controls/TimelineElement/TimeLineElement.java</url>
+          <url>file://$PROJECT_DIR$/src/main/java/Controls/TimelineElement/TimeLineElementRect.java</url>
           <line>93</line>
           <option name="timeStamp" value="22" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="java-line">
-          <url>file://$PROJECT_DIR$/src/main/java/util/PageDataReader.java</url>
-          <line>96</line>
-          <option name="timeStamp" value="24" />
+          <url>file://$PROJECT_DIR$/src/main/java/Controls/Timeline/Pane/PressureTimeLinePane.java</url>
+          <line>40</line>
+          <option name="timeStamp" value="25" />
         </line-breakpoint>
       </breakpoints>
     </breakpoint-manager>
