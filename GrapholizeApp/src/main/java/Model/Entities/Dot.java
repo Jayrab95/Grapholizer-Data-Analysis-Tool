@@ -90,8 +90,8 @@ public class Dot {
             default:
                 this.dotType = DotType.PEN_ERROR; //Maybe another default is ne
         }
-        this.x = cd.X + cd.Fx * 0.1f;
-        this.y = cd.Y + cd.Fy * 0.1f;
+        this.x = cd.X + cd.Fx * 0.01f;
+        this.y = cd.Y + cd.Fy * 0.01f;
     }
     public int getTiltX() {
         return tiltX;

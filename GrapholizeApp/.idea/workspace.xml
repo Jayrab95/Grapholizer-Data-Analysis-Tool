@@ -267,6 +267,7 @@
       <workItem from="1574929425320" duration="8143000" />
       <workItem from="1574939481775" duration="41000" />
       <workItem from="1574943686964" duration="97000" />
+      <workItem from="1574949304961" duration="2311000" />
     </task>
     <servers />
   </component>
@@ -322,7 +323,17 @@
           <line>17</line>
           <option name="timeStamp" value="32" />
         </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/src/main/java/Controllers/MainSceneController.java</url>
+          <line>158</line>
+          <option name="timeStamp" value="33" />
+        </line-breakpoint>
       </breakpoints>
     </breakpoint-manager>
+    <watches-manager>
+      <configuration name="Remote">
+        <watch expression="s" />
+      </configuration>
+    </watches-manager>
   </component>
 </project>

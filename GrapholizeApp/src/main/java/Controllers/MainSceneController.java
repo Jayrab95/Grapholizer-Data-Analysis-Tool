@@ -70,7 +70,7 @@ public class MainSceneController implements Observer {
     @FXML
     public void initialize() throws Exception{
         System.out.println("aaa");
-        p = loadDataFromFiles(new JsonLoader());
+        p = loadDataFromFiles(new ProjectLoader());
         initObservableStrokes(p.getStrokes());
         canvas_mainCanvas.setWidth(p.getPageMetaData().getPageWidth() * canvasScale);
         canvas_mainCanvas.setHeight(p.getPageMetaData().getPageHeight() * canvasScale);
@@ -96,6 +96,7 @@ public class MainSceneController implements Observer {
     private void loadNeoNotesFile() {
         loadDataFromFiles(new PageDataReader());
     }
+
     //Replace with openFileDialogue after testing.
     private Page loadDataFromFiles(Loader loader) {
         try {
@@ -143,9 +144,7 @@ public class MainSceneController implements Observer {
 
                 Dot d1 = s.getDots().get(i);
                 Dot d2 = s.getDots().get(i + 1);
-                //double fAvg = (d1.getForce() + d2.getForce()) / 2;
-                double fAvg = 5.0d;
-
+                double fAvg = (d1.getForce() + d2.getForce()) / 2;
                 //TODO: Make draw stroke specific (Use Decorator pattern for different visual filters
                 if(s.isSelected()){
                     //gc.setLineWidth(((fAvg / 1000000000) + 10));

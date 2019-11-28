@@ -15,7 +15,7 @@ public class CompressedDot {
 
     public int Twist;
 
-    public int Force;
+    public float Force;
 
     public int DotType;
     /*
