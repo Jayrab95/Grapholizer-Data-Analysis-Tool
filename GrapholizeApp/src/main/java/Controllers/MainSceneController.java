@@ -13,10 +13,7 @@ import Controls.Timeline.Pane.StrokeDurationTimeLinePane;
 import Interfaces.Loader;
 import Interfaces.Observable;
 import Interfaces.Observer;
-import Model.Entities.Dot;
-import Model.Entities.Page;
-import Model.Entities.Participant;
-import Model.Entities.Stroke;
+import Model.Entities.*;
 import Observables.ObservableStroke;
 import com.google.gson.internal.bind.util.ISO8601Utils;
 import javafx.event.ActionEvent;
@@ -42,11 +39,8 @@ public class MainSceneController implements Observer {
     private ResourceBundle resources;
 
     /* Internal State Of Application */
-    private HashMap<String,Participant> participantDataMap;
-    private Participant current_participant;
-    private Page current_page;
+    Session _session;
     private List<ObservableStroke> observableStrokes;
-    ZipHelper zHelper;
     private float canvasScale = 10;
     private float canvasScalingStep = 5;
 
@@ -71,6 +65,7 @@ public class MainSceneController implements Observer {
     @FXML
     public void initialize() throws Exception{
         System.out.println("aaa");
+        Page current_page = _session.getCurrent_page();
         current_page = loadDataFromFiles(new ProjectLoader());
         initObservableStrokes(current_page.getStrokes());
         canvas_mainCanvas.setWidth(current_page.getPageMetaData().getPageWidth() * canvasScale);
@@ -91,7 +86,7 @@ public class MainSceneController implements Observer {
     @FXML
     private void loadProjectZip() {
         ProjectLoader pLoader = new ProjectLoader();
-        zHelper = pLoader.getZipHelper();
+        _session.setZ_Helper(pLoader.getZipHelper());
         loadDataFromFiles(pLoader);
     }
 
@@ -122,10 +117,10 @@ public class MainSceneController implements Observer {
             File sFile = fileChooser.showOpenDialog(stage);
             if (sFile != null) {
                 String absFilePath = sFile.getAbsolutePath();
-                participantDataMap  = loader.load(absFilePath);
+                _session.setParticipantDataMap(loader.load(absFilePath));
                 //TODO Sess set participants
-                String key = participantDataMap.keySet().iterator().next();
-                return participantDataMap.get(key).getPage(0);
+                String key = _session.getParticipantDataMap().keySet().iterator().next();
+                return _session.getParticipantDataMap().get(key).getPage(0);
             }
             return null;
         }catch(IOException ex) {
@@ -200,6 +195,7 @@ public class MainSceneController implements Observer {
         }
         else {
             canvasScale = 40;}
+        Page current_page = _session.getCurrent_page();
         canvas_mainCanvas.setWidth(current_page.getPageMetaData().getPageWidth() * canvasScale);
         canvas_mainCanvas.setHeight(current_page.getPageMetaData().getPageHeight() * canvasScale);
         reDraw();
@@ -212,6 +208,7 @@ public class MainSceneController implements Observer {
         else{
             canvasScale = 1;
         }
+        Page current_page = _session.getCurrent_page();
         canvas_mainCanvas.setWidth(current_page.getPageMetaData().getPageWidth() * canvasScale);
         canvas_mainCanvas.setHeight(current_page.getPageMetaData().getPageHeight() * canvasScale);
         reDraw();
