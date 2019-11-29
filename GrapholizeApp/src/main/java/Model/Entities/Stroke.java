@@ -51,13 +51,12 @@ public class Stroke {
 
     public List<Dot> getDotsWithinTimeRange(double start, double end){
         return dots.stream()
-                .filter(dot -> dot.getTimeStamp() - this.timeStart >= start && dot.getTimeStamp()-this.timeStart <= end)
+                .filter(dot -> dot.getTimeStamp() >= start && dot.getTimeStamp() <= end)
                 .collect(Collectors.toList());
     }
 
-    //TODO: Wait for uniform timestamps that start with 0
     public boolean isWithinTimeRange(double start, double end){
-        return false;
+        return this.timeStart >= start && this.timeEnd <= end;
     }
 
 

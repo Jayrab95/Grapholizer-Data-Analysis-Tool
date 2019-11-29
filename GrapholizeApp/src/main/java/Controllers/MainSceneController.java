@@ -216,7 +216,7 @@ public class MainSceneController implements Observer {
         tlc.addTimeLine(s);
         tlc.addTimeLine(new StrokeDurationTimeLinePane("Stroke duration 2", totalDuration,  50, timeLineScale, observableStrokes));
         tlc.addTimeLine(new CommentTimeLinePane("Custom", totalDuration, 50, timeLineScale, Color.ROYALBLUE));
-        tlc.addTimeLine(new PressureTimeLinePane("pressure", totalDuration, 50, timeLineScale, Color.PINK, observableStrokes, s));
+        tlc.addTimeLine(new PressureTimeLinePane("pressure", totalDuration, 50, timeLineScale, Color.PINK, s, observableStrokes));
         scrollPane_TimeLines.setContent(tlc);
     }
 
