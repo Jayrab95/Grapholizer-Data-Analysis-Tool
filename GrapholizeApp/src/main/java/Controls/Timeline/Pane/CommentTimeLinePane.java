@@ -1,6 +1,7 @@
 package Controls.Timeline.Pane;
 
 import Controls.TimelineElement.TimeLineElementRect;
+import Model.Entities.TimeLineElement;
 import javafx.scene.Node;
 import javafx.scene.control.*;
 import javafx.scene.effect.Light;
@@ -79,7 +80,12 @@ public class CommentTimeLinePane extends TimeLinePane {
                 .count() > 0;
     }
 
-    //TODO: Perhaps think of better solution. Maybe having a linkedlist that manages the TLEs could be better.
+    //TODO: Perhaps change the calculation of lower and upperBounds so that it uses the model TimeLineElements.
+
+    /**
+     * Sets the bounds for the drag function.
+     * @param xPosition Current xPosition on MousePress.
+     */
     private void setBounds(double xPosition){
         double lowerBounds = 0;
         double upperBounds = getWidth();
@@ -99,6 +105,7 @@ public class CommentTimeLinePane extends TimeLinePane {
         }
         dragBounds[0] = lowerBounds;
         dragBounds[1] = upperBounds;
+
     }
 
     //TODO: Behavior is a bit buggy. Perhaps fix the position.

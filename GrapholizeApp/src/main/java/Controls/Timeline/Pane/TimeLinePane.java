@@ -1,7 +1,10 @@
 package Controls.Timeline.Pane;
 
 import Controls.TimelineElement.TimeLineElementRect;
+import Model.Entities.TimeLineElement;
 import Model.Entities.Timeline;
+import Model.StrokesModel;
+import Model.TimeLinesModel;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.property.StringProperty;
 import javafx.scene.Node;
@@ -10,7 +13,10 @@ import javafx.scene.paint.Color;
 import util.ColorConverter;
 
 //Idea: make Timeline an interface? This way timeline operations can be called without referencing the actual control.
+//TODO: Separate TimeLinePane into view and controller.
 public abstract class TimeLinePane extends Pane {
+
+    protected TimeLinesModel timeLinesModel;
 
     protected Timeline timeline;
     protected StringProperty timeLineName;
@@ -66,6 +72,7 @@ public abstract class TimeLinePane extends Pane {
 
     public void addTimeLineElement(TimeLineElementRect tle){
         getChildren().add(tle);
+        timeline.addTimeLineElementInOrder(new TimeLineElement(tle.getAnnotationText(), tle.getTimeStart() / scale, tle.getTimeStop() / scale));
         //TODO: Add the TimeLineElemet entity to the TimeLine Entity lis
         /*
         tle.setOnContextMenuRequested(event -> {

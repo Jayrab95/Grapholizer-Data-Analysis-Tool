@@ -67,7 +67,8 @@ public class MainSceneController implements Observer {
         System.out.println("aaa");
         ProjectLoader loader = new ProjectLoader();
         _session = new Session();
-        _session.setCurrent_page(loadDataFromFiles(loader));
+        //TODO replace funtion when no longer needed
+        _session.setCurrent_page(loadThatShitBoy());
         _session.setZ_Helper(loader.getZipHelper());
         Page current_page = _session.getCurrent_page();
         initObservableStrokes(current_page.getStrokes());
@@ -79,6 +80,14 @@ public class MainSceneController implements Observer {
         totalDuration = current_page.getStrokes().get(current_page.getStrokes().size() - 1).getTimeEnd() - current_page.getStrokes().get(0).getTimeStart();
         setUpTimeLines();
         setupTimelineContainer();
+    }
+
+    //Replace with openFileDialogue after testing.
+    private Page loadThatShitBoy() throws Exception{
+        String path = "src\\main\\resources\\data\\page.data";
+        _session.setParticipantDataMap(new PageDataReader().load(path));
+        String key = _session.getParticipantDataMap().keySet().iterator().next();
+        return _session.getParticipantDataMap().get(key).getPage(0);
     }
 
     @FXML
@@ -223,7 +232,7 @@ public class MainSceneController implements Observer {
         tlc.addTimeLine(s);
         tlc.addTimeLine(new StrokeDurationTimeLinePane("Stroke duration 2", totalDuration,  50, timeLineScale, observableStrokes));
         tlc.addTimeLine(new CommentTimeLinePane("Custom", totalDuration, 50, timeLineScale, Color.ROYALBLUE));
-        tlc.addTimeLine(new PressureTimeLinePane("pressure", totalDuration, 50, timeLineScale, Color.PINK, observableStrokes, s));
+        tlc.addTimeLine(new PressureTimeLinePane("pressure", totalDuration, 50, timeLineScale, Color.PINK, s, observableStrokes));
         scrollPane_TimeLines.setContent(tlc);
     }
 

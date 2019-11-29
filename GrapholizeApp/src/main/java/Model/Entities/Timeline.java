@@ -9,7 +9,7 @@ import java.util.List;
 public class Timeline {
     private String timeLineName;
     private Color timeLineColor;
-    private List<TimeLineElement> timeLineElements;
+    private LinkedList<TimeLineElement> timeLineElements;
 
     public Timeline(String timeLineName, Color timeLineColor){
         this.timeLineName = timeLineName;
@@ -47,7 +47,7 @@ public class Timeline {
      * "addTimeLineElementInOrder" or "removeTimeLineElement".
      * @return
      */
-    public List<TimeLineElement> getTimeLineElements() {
+    public LinkedList<TimeLineElement> getTimeLineElements() {
         return timeLineElements;
     }
 
@@ -60,11 +60,16 @@ public class Timeline {
             timeLineElements.add(tle);
         }
         else{
-            for(int i = 0; i < timeLineElements.size(); i++){
+            int i = 0;
+            while(i < timeLineElements.size()){
                 if(tle.getTimeStart() <= timeLineElements.get(i).getTimeStart()){
                     timeLineElements.add(i, tle);
                     break;
                 }
+                i++;
+            }
+            if (i >= timeLineElements.size()){
+                timeLineElements.add(tle);
             }
         }
     }

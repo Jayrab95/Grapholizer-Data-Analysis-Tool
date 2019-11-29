@@ -9,13 +9,17 @@ import java.util.List;
 //Manages Information that is required for all timelines
 public class TimeLinesModel {
 
-    private DoubleProperty totalLength;
+    private StrokesModel strokesModel;
     private DoubleProperty scale;
-    private List<ObservableStroke> strokes;
 
-    public TimeLinesModel(double totalLength, double scale, List<ObservableStroke> strokes){
-        this.totalLength = new SimpleDoubleProperty(totalLength);
+    public TimeLinesModel(StrokesModel strokesModel, double scale){
+        this.strokesModel = strokesModel;
         this.scale = new SimpleDoubleProperty(scale);
-        this.strokes = strokes;
     }
+
+    public StrokesModel getStrokesModel(){return strokesModel;}
+    public DoubleProperty getScaleProperty(){return scale;}
+    public double getScale(){return scale.get();}
+    public void setSacle(double newScale){scale.set(newScale);}
+
 }

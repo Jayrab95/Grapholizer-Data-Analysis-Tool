@@ -1,61 +1,52 @@
 package Controls.Timeline.Pane;
 
-import Controls.TimelineElement.TimeLineElementRect;
+
 import Model.Entities.Dot;
-import Model.Entities.Stroke;
+
 import Model.Entities.TimeLineElement;
+
+import Model.StrokesModel;
+import Model.TimeLinesModel;
 import Observables.ObservableStroke;
-import javafx.scene.Node;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Line;
 
 import java.util.List;
-import java.util.stream.Collectors;
 
-public class PressureTimeLinePane extends TimeLinePane {
-    private List<ObservableStroke> strokes;
-    private TimeLinePane parentPane;
+/**
+ * A PressureTimeLinePane is a subTimeLine which visualizes the pressure applied with each stroke for the time areas marked with
+ * the TimeLineElements on the parentTimeline
+ */
+public class PressureTimeLinePane extends SubTimeLinePane {
 
-    public PressureTimeLinePane(String timeLineName, double width, double height, double scale, Color c, List<ObservableStroke> strokes, TimeLinePane parent) {
-        super(timeLineName, width, height, scale, c);
-        this.strokes = strokes;
-        this.parentPane = parent;
+    public PressureTimeLinePane(String timeLineName, double width, double height, double scale, Color c, TimeLinePane parent, List<ObservableStroke> strokes) {
+        super(timeLineName, width, height, scale, c, parent);
+        this.timeLinesModel = new TimeLinesModel(new StrokesModel(strokes), scale);
         draw();
     }
 
+    /**
+     * Gets all relevant dots from the StrokesModel and draws the pressure as a graph.
+     */
     private void draw(){
-        List<TimeLineElement> parentTimeLineElements = parentPane.timeline.getTimeLineElements();
-        if(parentTimeLineElements.size() > 0 && strokes.size() > 0){
-            double lowerBound = parentTimeLineElements.get(0).getTimeStart();
-            double upperBound = parentTimeLineElements.get(parentTimeLineElements.size()-1).getTimeStop();
-
-            //TODO: Warning. Currently the timestamp in the dots  uses the longformat. this needs to be changed once the timstamps start from 0
-            //Once this is done, simply remove the -strokesStart in the filter.
-            double strokesStart = strokes.get(0).getTimeStart();
-            List<Dot> requiredDots = strokes.stream()
-                    .map(observableStroke -> observableStroke.getDots())
-                    .flatMap(dots -> dots.stream()
-                    .filter(dot -> dot.getTimeStamp() - strokesStart >= lowerBound && dot.getTimeStamp() - strokesStart<= upperBound))
-                    .collect(Collectors.toList());
-            //At least 2 dots are required so that a line can be drawn
-            if(requiredDots.size() >=2){
-                for(int i = 0; i < requiredDots.size() - 1; i++){
-                    Dot d1 = requiredDots.get(i);
-                    Dot d2 = requiredDots.get(i + 1);
-                    Line l = new Line(
-                            d1.getTimeStamp() - strokesStart,
-                            d1.getForce() * getHeight(),
-                            d2.getTimeStamp() - strokesStart,
-                            d2.getForce() * getHeight()
-                    );
-                    getChildren().add(l);
+        List<TimeLineElement> parentTimeLineElements = parentTimeLine.timeline.getTimeLineElements();
+        List<List<Dot>> reqDots = timeLinesModel.getStrokesModel().getDotSectionsForElements(parentTimeLineElements);
+            for(List<Dot> dots : reqDots){
+                //At least 2 dots are required so that a line can be drawn
+                if(dots.size() >=2){
+                    for(int i = 0; i < dots.size() - 1; i++){
+                        Dot d1 = dots.get(i);
+                        Dot d2 = dots.get(i + 1);
+                        Line l = new Line(
+                                (d1.getTimeStamp()) * scale,
+                                d1.getForce() * getHeight(),
+                                (d2.getTimeStamp()) * scale,
+                                d2.getForce() * getHeight()
+                        );
+                        getChildren().add(l);
+                    }
                 }
             }
-
-
-        }
-
-
     }
 
 
