@@ -48,5 +48,18 @@ public class Stroke {
         return dots;
     }
 
+    @Override
+    public String toString() {
+        StringBuilder sBuilder = new StringBuilder();
+        sBuilder.append("Stroke {\n");
+        sBuilder.append("TimeStart");
+        sBuilder.append(this.timeStart);
+        sBuilder.append("Stroke {\n");
+        sBuilder.append(this.timeEnd);
+        sBuilder.append("Stroke {\n");
+        sBuilder.append(this.dots.size());
+        sBuilder.append("}\n");
+        return sBuilder.toString();
 
+    }
 }

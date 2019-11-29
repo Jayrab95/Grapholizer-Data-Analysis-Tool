@@ -20,6 +20,7 @@ import Model.Entities.Page;
 import Model.Entities.Participant;
 import Model.Entities.Stroke;
 import Observables.ObservableStroke;
+import com.google.gson.internal.bind.util.ISO8601Utils;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.Scene;
@@ -31,6 +32,7 @@ import javafx.scene.paint.Color;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
 import javafx.stage.Window;
+import org.w3c.dom.ls.LSOutput;
 import util.JsonLoader;
 import util.PageDataReader;
 import util.ProjectLoader;
@@ -69,10 +71,11 @@ public class MainSceneController implements Observer {
     @FXML
     public void initialize() throws Exception{
         System.out.println("aaa");
-        p = loadDataFromFiles(new ProjectLoader());
+        p = loadDataFromFiles(new PageDataReader());
         initObservableStrokes(p.getStrokes());
         canvas_mainCanvas.setWidth(p.getPageMetaData().getPageWidth() * canvasScale);
         canvas_mainCanvas.setHeight(p.getPageMetaData().getPageHeight() * canvasScale);
+        p.getStrokes().forEach(p -> System.out.println(p.toString()));
 
         drawThatSHit();
 

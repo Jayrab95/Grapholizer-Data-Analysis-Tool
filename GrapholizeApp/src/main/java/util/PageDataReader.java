@@ -59,15 +59,37 @@ public class PageDataReader implements Loader {
 
     private static List<Stroke> ParseContentBody(int numOfStrokes, FileInputStream st) throws IOException {
         List<Stroke> strokes = new ArrayList<>();
+        long timeStart = 0;
         //Stroke[] strokes = new Stroke[numOfStrokes];
         for (int i = 0; i < numOfStrokes; i++) {
+            if(i == 0){
+                //TODO create a sensible first stroke
+                int signalBit = st.read();
+                if (signalBit == 1) {
+                    JumpAmount(108, st); //Skip the length of a voice memo
+                }
+                JumpAmount(5, st); //Skip over color and thickness
+                byte[] integerBuffer = new byte[4];
+                byte[] longBuffer = new byte[8];
+                //Read Number of Dots
+                int numOfDots = ReadInteger(st, integerBuffer);
+                //Read Timestamps
+                long timeStamp = ReadLong(st, longBuffer);
+                timeStart = timeStamp;
+                timeStamp = 0;
+                //Read Dots
+                strokes.add(ReadDots(timeStamp, numOfDots, st, timeStart));
+            }
+            else{
+                strokes.add(ReadStroke(st, timeStart));
+            }
             //strokes[i] = ReadStroke(st);
-            strokes.add(ReadStroke(st));
+
         }
         return strokes;
     }
 
-    private static Stroke ReadStroke(FileInputStream st) throws IOException{
+    private static Stroke ReadStroke(FileInputStream st, long start) throws IOException{
         //TODO create a sensible first stroke
         int signalBit = st.read();
         if (signalBit == 1) {
@@ -79,13 +101,13 @@ public class PageDataReader implements Loader {
         //Read Number of Dots
         int numOfDots = ReadInteger(st, integerBuffer);
         //Read Timestamps
-        long timeStamp = ReadLong(st, longBuffer);
+        long timeStamp = ReadLong(st, longBuffer) - start;
         //Read Dots
-        return ReadDots(timeStamp, numOfDots, st);
+        return ReadDots(timeStamp, numOfDots, st, start);
     }
 
     /*Fills Stroke Object with dots while advancing the filePointer*/
-    private static Stroke ReadDots(long timeStamp, int numberOfDots, FileInputStream st) throws IOException{
+    private static Stroke ReadDots(long timeStamp, int numberOfDots, FileInputStream st, long start) throws IOException{
 
         byte[] signalBuffer = new byte[4];
         byte[] floatBuffer = new byte[4];
