@@ -9,7 +9,7 @@ import java.util.List;
 public class Timeline {
     private String timeLineName;
     private Color timeLineColor;
-    private List<TimeLineElement> timeLineElements;
+    private LinkedList<TimeLineElement> timeLineElements;
 
     public Timeline(String timeLineName, Color timeLineColor){
         this.timeLineName = timeLineName;
@@ -47,7 +47,7 @@ public class Timeline {
      * "addTimeLineElementInOrder" or "removeTimeLineElement".
      * @return
      */
-    public List<TimeLineElement> getTimeLineElements() {
+    public LinkedList<TimeLineElement> getTimeLineElements() {
         return timeLineElements;
     }
 

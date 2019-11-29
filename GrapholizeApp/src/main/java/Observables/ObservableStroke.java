@@ -14,7 +14,13 @@ import java.util.List;
 //TODO: What makes more sense here? Have ObservableStroke be a Wrapper or an extension of the StrokeClass.
 //Argument for extension: ObservableStrokes can be passed over as strokes, if only the base functionality of the stroke is required.
 //Since all the fields are final anyway, the extension doesn't "hurt" the structure, as data cannot be changed anyway.
-public class ObservableStroke extends Stroke implements Observable {
+
+/**
+ * ObservableStroke is a wrapper fo the Stroke class that implements the Observable interface and can be assigned observers.
+ * Additionally, the ObservableStroke is used for drawing and therefore manages the stroke color.
+ * The Observers become notified if the selected property is changed or a filter is applied.
+ */
+public class ObservableStroke implements Observable {
 
     //region Private fields
     //Idea: the strokes/Dots implement a method called draw. This way, they can be wrapped with different filters. => DEcorator DesignPattern
@@ -25,14 +31,23 @@ public class ObservableStroke extends Stroke implements Observable {
     //endregion
 
     //region Constructors
+
+    /**
+     * Basic constructor.
+     * @param s The stroke to be wrapped in this object
+     */
     private ObservableStroke(Stroke s){
-        super(s);
         this.stroke = s;
         this.color = new Color();
         observers = new ArrayList<>();
         selected = new SimpleBooleanProperty(false);
     }
 
+    /**
+     * Constructor which wraps the given stroke and adds an initial observer to the observerList.
+     * @param s Stroke to be wrapped in this object
+     * @param o Initial Observer which should be added.
+     */
     public ObservableStroke(Stroke s, Observer o){
         this(s);
         addObserver(o);
