@@ -1,16 +1,21 @@
 package util;
+import Interfaces.Serializer;
+import Model.TimeLinesModel;
 import net.lingala.zip4j.ZipFile;
 import net.lingala.zip4j.exception.ZipException;
 import net.lingala.zip4j.model.ZipParameters;
+import util.Export.JsonSerializer;
+
 import java.io.File;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
+import java.util.List;
 
 
 public class ZipHelper {
 
-    private final String DATA_FILE_NAME = "data.json";
+    private final String RAW_DATA_FILE_NAME = "data.json";
     private final String TIMELINE_FILE_NAME = "timelines.json";
     private ZipFile zipFile;
     private ZipParameters parameters;
@@ -29,13 +34,19 @@ public class ZipHelper {
         tempDirPath = Files.createTempDirectory("grapholizer");
         String absPathTempDir = tempDirPath.toAbsolutePath().toString();
 
-        zipFile.extractFile(DATA_FILE_NAME, absPathTempDir);
+        zipFile.extractFile(RAW_DATA_FILE_NAME, absPathTempDir);
         zipFile.extractFile(TIMELINE_FILE_NAME, absPathTempDir);
 
-        pathTempData = Path.of(absPathTempDir, File.separator, DATA_FILE_NAME);
+        pathTempData = Path.of(absPathTempDir, File.separator, RAW_DATA_FILE_NAME);
         pathTempTimelines = Path.of(absPathTempDir, File.separator, TIMELINE_FILE_NAME);
         isInitialized = true;
     }
+
+    public void saveTimelines(List<TimeLinesModel> timeLines) throws IOException{
+        String serData = new JsonSerializer().serialize(timeLines);
+        //TODO output to file
+    }
+
     /*
     Cleans up the temporary files created by init(). Should always be called after using ZipHelper
      */
@@ -44,11 +55,18 @@ public class ZipHelper {
         Files.delete(pathTempTimelines);
         Files.delete(tempDirPath);
         isInitialized = false;
+        replaceData();
+        replaceTimelines();
     }
 
-    public void saveTimelines() throws ZipException {
+    public void replaceTimelines() throws ZipException {
         remove(TIMELINE_FILE_NAME);
         add(new File(String.valueOf(pathTempTimelines)));
+    }
+
+    public void replaceData() throws ZipException {
+        remove(RAW_DATA_FILE_NAME);
+        add(new File(String.valueOf(pathTempData)));
     }
 
     public void remove(String fileName) throws ZipException{

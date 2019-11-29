@@ -2,11 +2,11 @@ package Interfaces;
 import Model.Entities.Participant;
 
 import java.io.IOException;
-import java.util.List;
+import java.util.HashMap;
 
 @FunctionalInterface
 public interface Loader
 {
-    List<Participant> load(String path) throws IOException;
+    HashMap<String,Participant> load(String path) throws IOException;
 }
 

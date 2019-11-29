@@ -5,23 +5,21 @@ import Model.Entities.*;
 
 import java.io.FileInputStream;
 import java.io.IOException;
-import java.util.ArrayList;
-import java.util.LinkedList;
-import java.util.List;
+import java.util.*;
+import java.util.concurrent.ConcurrentHashMap;
 
 public class PageDataReader implements Loader {
     private final String PREFIX_PARTICIPANT_ID = "PAGEDATA";
 
-    public List<Participant> load(String path) throws IOException{
-        List<Participant> result = new LinkedList<>();
+    public HashMap<String,Participant> load(String path) throws IOException{
+        HashMap<String,Participant> result = new HashMap<>();
         try(FileInputStream stream = new FileInputStream(path)) {
             if (IsFileValid(stream)) {
                 PageMetaData pmd = ReadMetaData(stream);
                 List<Stroke> strokes = ParseContentBody(pmd.getNumberOfStrokes(), stream);
-
                 Participant newPart = new Participant(PREFIX_PARTICIPANT_ID + "_" + (Long.toString(pmd.getCreateTimeStamp())));
                 newPart.addPage(new Page(pmd, strokes));
-                result.add(newPart);
+                result.put(newPart.getID(),newPart);
                 return result;
             }else {
                 throw new IOException();

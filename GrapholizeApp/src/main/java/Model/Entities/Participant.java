@@ -39,4 +39,20 @@ public class Participant {
         sBuilder.append("\n");
         return sBuilder.toString();
     }
+
+    public String getID() {
+        return ID;
+    }
+
+    public void setID(String ID) {
+        this.ID = ID;
+    }
+
+    public List<Page> getPages() {
+        return pages;
+    }
+
+    public void setPages(List<Page> pages) {
+        this.pages = pages;
+    }
 }

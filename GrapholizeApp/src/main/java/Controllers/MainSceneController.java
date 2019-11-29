@@ -29,11 +29,9 @@ import javafx.scene.paint.Color;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
 import javafx.stage.Window;
+import net.lingala.zip4j.exception.ZipException;
 import org.w3c.dom.ls.LSOutput;
-import util.DialogGenerator;
-import util.JsonLoader;
-import util.PageDataReader;
-import util.ProjectLoader;
+import util.*;
 
 public class MainSceneController implements Observer {
     // location and resources will be automatically injected by the FXML loader
@@ -48,6 +46,7 @@ public class MainSceneController implements Observer {
     private Participant current_participant;
     private Page current_page;
     private List<ObservableStroke> observableStrokes;
+    ZipHelper zHelper;
     private float canvasScale = 10;
     private float canvasScalingStep = 5;
 
@@ -72,7 +71,7 @@ public class MainSceneController implements Observer {
     @FXML
     public void initialize() throws Exception{
         System.out.println("aaa");
-        current_page = loadDataFromFiles(new PageDataReader());
+        current_page = loadDataFromFiles(new ProjectLoader());
         initObservableStrokes(current_page.getStrokes());
         canvas_mainCanvas.setWidth(current_page.getPageMetaData().getPageWidth() * canvasScale);
         canvas_mainCanvas.setHeight(current_page.getPageMetaData().getPageHeight() * canvasScale);
@@ -90,8 +89,10 @@ public class MainSceneController implements Observer {
     }
 
     @FXML
-    private void loadZipedJson() {
-        loadDataFromFiles(new ProjectLoader());
+    private void loadProjectZip() {
+        ProjectLoader pLoader = new ProjectLoader();
+        zHelper = pLoader.getZipHelper();
+        loadDataFromFiles(pLoader);
     }
 
     @FXML
@@ -101,12 +102,12 @@ public class MainSceneController implements Observer {
 
     @FXML
     private void saveProject() {
-
+        //Session.save
     }
 
     @FXML
     private void saveProjectTo() {
-
+        //session.saveto
     }
     //Replace with openFileDialogue after testing.
     private Page loadDataFromFiles(Loader loader) {
@@ -121,9 +122,10 @@ public class MainSceneController implements Observer {
             File sFile = fileChooser.showOpenDialog(stage);
             if (sFile != null) {
                 String absFilePath = sFile.getAbsolutePath();
-                List<Participant> list = loader.load(absFilePath);
-                list.forEach(p -> System.out.println("Participant:: " + p.toString()));
-                return list.get(0).getPage(0);
+                participantDataMap  = loader.load(absFilePath);
+                //TODO Sess set participants
+                String key = participantDataMap.keySet().iterator().next();
+                return participantDataMap.get(key).getPage(0);
             }
             return null;
         }catch(IOException ex) {
