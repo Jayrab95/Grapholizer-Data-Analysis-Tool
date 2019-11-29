@@ -14,8 +14,8 @@ public class PageDataReader implements Loader {
 
     public List<Participant> load(String path) throws IOException{
         List<Participant> result = new LinkedList<>();
-        try(FileInputStream stream = new FileInputStream(path)){
-            if(IsFileValid(stream)){
+        try(FileInputStream stream = new FileInputStream(path)) {
+            if (IsFileValid(stream)) {
                 PageMetaData pmd = ReadMetaData(stream);
                 List<Stroke> strokes = ParseContentBody(pmd.getNumberOfStrokes(), stream);
 
@@ -23,9 +23,10 @@ public class PageDataReader implements Loader {
                 newPart.addPage(new Page(pmd, strokes));
                 result.add(newPart);
                 return result;
+            }else {
+                throw new IOException();
             }
         }
-        return null;
     }
 
 

@@ -30,6 +30,7 @@ import javafx.stage.FileChooser;
 import javafx.stage.Stage;
 import javafx.stage.Window;
 import org.w3c.dom.ls.LSOutput;
+import util.DialogGenerator;
 import util.JsonLoader;
 import util.PageDataReader;
 import util.ProjectLoader;
@@ -71,10 +72,10 @@ public class MainSceneController implements Observer {
     @FXML
     public void initialize() throws Exception{
         System.out.println("aaa");
-        p = loadDataFromFiles(new PageDataReader());
-        initObservableStrokes(p.getStrokes());
-        canvas_mainCanvas.setWidth(p.getPageMetaData().getPageWidth() * canvasScale);
-        canvas_mainCanvas.setHeight(p.getPageMetaData().getPageHeight() * canvasScale);
+        current_page = loadDataFromFiles(new PageDataReader());
+        initObservableStrokes(current_page.getStrokes());
+        canvas_mainCanvas.setWidth(current_page.getPageMetaData().getPageWidth() * canvasScale);
+        canvas_mainCanvas.setHeight(current_page.getPageMetaData().getPageHeight() * canvasScale);
 
         drawThatSHit();
 
@@ -126,7 +127,10 @@ public class MainSceneController implements Observer {
             }
             return null;
         }catch(IOException ex) {
-            //TODO what to do with the exception?
+            new DialogGenerator().simpleErrorDialog("Input Error"
+                    , "File could not be loaded"
+                    , "The File you tried to open might not be in the right format or " +
+                            "or contains corrupted data");
             System.out.println("File could not be loaded");
         }
         return null;
