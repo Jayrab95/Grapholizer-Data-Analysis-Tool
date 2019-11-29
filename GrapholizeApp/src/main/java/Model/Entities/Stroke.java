@@ -24,11 +24,11 @@ public class Stroke {
         this.dots = s.dots;
     }
 
-    public Stroke(CompressedStroke cs) {
-        this.timeStart = cs.TimeStart;
-        this.timeEnd = cs.TimeEnd;
+    public Stroke(CompressedStroke cs, long initialTimestamp) {
+        this.timeStart = cs.TimeStart - initialTimestamp;
+        this.timeEnd = cs.TimeEnd - initialTimestamp;
         dots = new LinkedList<>();
-        long accumulator = cs.TimeStart;
+        long accumulator = this.timeStart;
         for (CompressedDot compressedDot : cs.CompressedDots) {
             accumulator += compressedDot.TimeDiff;
             dots.add(new Dot(compressedDot, accumulator));
@@ -48,5 +48,18 @@ public class Stroke {
         return dots;
     }
 
+    @Override
+    public String toString() {
+        StringBuilder sBuilder = new StringBuilder();
+        sBuilder.append("Stroke {\n");
+        sBuilder.append("TimeStart");
+        sBuilder.append(this.timeStart);
+        sBuilder.append("Stroke {\n");
+        sBuilder.append(this.timeEnd);
+        sBuilder.append("Stroke {\n");
+        sBuilder.append(this.dots.size());
+        sBuilder.append("}\n");
+        return sBuilder.toString();
 
+    }
 }

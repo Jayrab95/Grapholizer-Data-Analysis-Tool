@@ -17,12 +17,13 @@ public class Page {
 
     public Page (CompressedPage cp) {
         //TODO: Lukas Width und Height müssen durch die Book Nummber bestimmt werden
+        long initialTimestamp = cp.Strokes.get(0).TimeStart;
         this.pageMetaData = new PageMetaData(0, cp.Number, cp.Book
                 , 63.273216f, 88.582596f
-                , 0,0,0, cp.Strokes.size());
+                , initialTimestamp, initialTimestamp,0, cp.Strokes.size());
         strokes = new LinkedList<>();
         for (CompressedStroke cstroke : cp.Strokes) {
-            strokes.add(new Stroke(cstroke));
+            strokes.add(new Stroke(cstroke, initialTimestamp));
         }
     }
 
