@@ -4,6 +4,7 @@ import util.Import.CompressedDot;
 import util.Import.CompressedStroke;
 
 import java.util.*;
+import java.util.stream.Collectors;
 
 public class Stroke {
 
@@ -46,6 +47,17 @@ public class Stroke {
     //Todo: Perhaps return a clone of dots. Dots should not be modifiable. Depending on the size of the list, this could hurt the performance however.
     public List<Dot> getDots() {
         return dots;
+    }
+
+    public List<Dot> getDotsWithinTimeRange(double start, double end){
+        return dots.stream()
+                .filter(dot -> dot.getTimeStamp() - this.timeStart >= start && dot.getTimeStamp()-this.timeStart <= end)
+                .collect(Collectors.toList());
+    }
+
+    //TODO: Wait for uniform timestamps that start with 0
+    public boolean isWithinTimeRange(double start, double end){
+        return false;
     }
 
 
