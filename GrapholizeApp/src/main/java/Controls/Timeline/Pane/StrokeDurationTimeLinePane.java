@@ -17,7 +17,6 @@ public class StrokeDurationTimeLinePane extends TimeLinePane {
         setUpTimeLine();
     }
 
-
     //TODO: Timelines need to become observers of which ever class/control saves the timeLineScale.
     private void setUpTimeLine(){
         long strokesStart = strokes.get(0).getTimeStart();

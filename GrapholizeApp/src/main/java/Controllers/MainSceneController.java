@@ -1,12 +1,10 @@
 package Controllers;
 
-import java.awt.*;
 import java.io.File;
 import java.io.IOException;
 import java.net.URL;
 import java.util.*;
 import java.util.List;
-import java.util.zip.ZipException;
 
 import Controls.Container.TimeLineContainer;
 import Controls.Timeline.Pane.CommentTimeLinePane;
@@ -15,14 +13,11 @@ import Controls.Timeline.Pane.StrokeDurationTimeLinePane;
 import Interfaces.Loader;
 import Interfaces.Observable;
 import Interfaces.Observer;
-import Model.Entities.Dot;
-import Model.Entities.Page;
-import Model.Entities.Participant;
-import Model.Entities.Stroke;
+import Model.Entities.*;
 import Observables.ObservableStroke;
+import com.google.gson.internal.bind.util.ISO8601Utils;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
-import javafx.scene.Scene;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.control.ScrollPane;
@@ -31,9 +26,9 @@ import javafx.scene.paint.Color;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
 import javafx.stage.Window;
-import util.JsonLoader;
-import util.PageDataReader;
-import util.ProjectLoader;
+import net.lingala.zip4j.exception.ZipException;
+import org.w3c.dom.ls.LSOutput;
+import util.*;
 
 public class MainSceneController implements Observer {
     // location and resources will be automatically injected by the FXML loader
@@ -43,7 +38,8 @@ public class MainSceneController implements Observer {
     @FXML
     private ResourceBundle resources;
 
-    private Page p;
+    /* Internal State Of Application */
+    Session _session;
     private List<ObservableStroke> observableStrokes;
     private float canvasScale = 10;
     private float canvasScalingStep = 5;
@@ -69,14 +65,18 @@ public class MainSceneController implements Observer {
     @FXML
     public void initialize() throws Exception{
         System.out.println("aaa");
-        p = loadDataFromFiles(new ProjectLoader());
-        initObservableStrokes(p.getStrokes());
-        canvas_mainCanvas.setWidth(p.getPageMetaData().getPageWidth() * canvasScale);
-        canvas_mainCanvas.setHeight(p.getPageMetaData().getPageHeight() * canvasScale);
+        ProjectLoader loader = new ProjectLoader();
+        _session = new Session();
+        _session.setCurrent_page(loadDataFromFiles(loader));
+        _session.setZ_Helper(loader.getZipHelper());
+        Page current_page = _session.getCurrent_page();
+        initObservableStrokes(current_page.getStrokes());
+        canvas_mainCanvas.setWidth(current_page.getPageMetaData().getPageWidth() * canvasScale);
+        canvas_mainCanvas.setHeight(current_page.getPageMetaData().getPageHeight() * canvasScale);
 
         drawThatSHit();
 
-        totalDuration = p.getStrokes().get(p.getStrokes().size() - 1).getTimeEnd() - p.getStrokes().get(0).getTimeStart();
+        totalDuration = current_page.getStrokes().get(current_page.getStrokes().size() - 1).getTimeEnd() - current_page.getStrokes().get(0).getTimeStart();
         setUpTimeLines();
         setupTimelineContainer();
     }
@@ -87,8 +87,10 @@ public class MainSceneController implements Observer {
     }
 
     @FXML
-    private void loadZipedJson() {
-        loadDataFromFiles(new ProjectLoader());
+    private void loadProjectZip() {
+        ProjectLoader pLoader = new ProjectLoader();
+        _session.setZ_Helper(pLoader.getZipHelper());
+        loadDataFromFiles(pLoader);
     }
 
     @FXML
@@ -96,6 +98,15 @@ public class MainSceneController implements Observer {
         loadDataFromFiles(new PageDataReader());
     }
 
+    @FXML
+    private void saveProject() {
+        //Session.save
+    }
+
+    @FXML
+    private void saveProjectTo() {
+        //session.saveto
+    }
     //Replace with openFileDialogue after testing.
     private Page loadDataFromFiles(Loader loader) {
         try {
@@ -105,16 +116,20 @@ public class MainSceneController implements Observer {
                     new FileChooser.ExtensionFilter("Data Files", "*.json", "*.zip", "*.data")
             );
             Stage stage = new Stage();
-            stage.setTitle("My New Stage Title");
+            stage.setTitle("Load File");
             File sFile = fileChooser.showOpenDialog(stage);
             if (sFile != null) {
                 String absFilePath = sFile.getAbsolutePath();
-                List<Participant> list = loader.load(absFilePath);
-                return list.get(0).getPage(0);
+                _session.setParticipantDataMap(loader.load(absFilePath));
+                String key = _session.getParticipantDataMap().keySet().iterator().next();
+                return _session.getParticipantDataMap().get(key).getPage(0);
             }
             return null;
         }catch(IOException ex) {
-            //TODO what to do with the exception?
+            new DialogGenerator().simpleErrorDialog("Input Error"
+                    , "File could not be loaded"
+                    , "The File you tried to open might not be in the right format or " +
+                            "or contains corrupted data");
             System.out.println("File could not be loaded");
         }
         return null;
@@ -182,8 +197,9 @@ public class MainSceneController implements Observer {
         }
         else {
             canvasScale = 40;}
-        canvas_mainCanvas.setWidth(p.getPageMetaData().getPageWidth() * canvasScale);
-        canvas_mainCanvas.setHeight(p.getPageMetaData().getPageHeight() * canvasScale);
+        Page current_page = _session.getCurrent_page();
+        canvas_mainCanvas.setWidth(current_page.getPageMetaData().getPageWidth() * canvasScale);
+        canvas_mainCanvas.setHeight(current_page.getPageMetaData().getPageHeight() * canvasScale);
         reDraw();
     }
 
@@ -194,8 +210,9 @@ public class MainSceneController implements Observer {
         else{
             canvasScale = 1;
         }
-        canvas_mainCanvas.setWidth(p.getPageMetaData().getPageWidth() * canvasScale);
-        canvas_mainCanvas.setHeight(p.getPageMetaData().getPageHeight() * canvasScale);
+        Page current_page = _session.getCurrent_page();
+        canvas_mainCanvas.setWidth(current_page.getPageMetaData().getPageWidth() * canvasScale);
+        canvas_mainCanvas.setHeight(current_page.getPageMetaData().getPageHeight() * canvasScale);
         reDraw();
     }
 

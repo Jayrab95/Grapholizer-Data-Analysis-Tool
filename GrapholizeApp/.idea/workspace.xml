@@ -57,8 +57,8 @@
     <option name="RECENT_TEMPLATES">
       <list>
         <option value="FxmlFile" />
-        <option value="Interface" />
         <option value="FxmlFile" />
+        <option value="Interface" />
         <option value="Class" />
       </list>
     </option>
@@ -247,6 +247,9 @@
       <workItem from="1574757195118" duration="9684000" />
       <workItem from="1574930041066" duration="14121000" />
       <workItem from="1574946122404" duration="8091000" />
+      <workItem from="1574965823180" duration="1496000" />
+      <workItem from="1574968738667" duration="1827000" />
+      <workItem from="1575015968333" duration="1928000" />
     </task>
     <servers />
   </component>

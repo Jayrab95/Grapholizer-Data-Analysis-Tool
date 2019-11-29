@@ -1,48 +1,72 @@
 package util;
+import Interfaces.Serializer;
+import Model.TimeLinesModel;
 import net.lingala.zip4j.ZipFile;
 import net.lingala.zip4j.exception.ZipException;
 import net.lingala.zip4j.model.ZipParameters;
+import util.Export.JsonSerializer;
+
 import java.io.File;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
+import java.util.List;
 
 
 public class ZipHelper {
 
-    private final String DATA_FILE_NAME = "data.json";
+    private final String RAW_DATA_FILE_NAME = "data.json";
     private final String TIMELINE_FILE_NAME = "timelines.json";
     private ZipFile zipFile;
     private ZipParameters parameters;
     private Path tempDirPath;
-    private Path pathData;
-    private Path pathTimelines;
+    private Path pathTempData;
+    private Path pathTempTimelines;
+    private boolean isInitialized;
 
     public ZipHelper(String filePath){
         parameters = new ZipParameters();
         zipFile = new ZipFile(filePath);
+        isInitialized = false;
     }
 
     public void init() throws IOException {
         tempDirPath = Files.createTempDirectory("grapholizer");
         String absPathTempDir = tempDirPath.toAbsolutePath().toString();
 
-        zipFile.extractFile(DATA_FILE_NAME, absPathTempDir);
+        zipFile.extractFile(RAW_DATA_FILE_NAME, absPathTempDir);
         zipFile.extractFile(TIMELINE_FILE_NAME, absPathTempDir);
 
-        pathData = Path.of(absPathTempDir, File.separator, DATA_FILE_NAME);
-        pathTimelines = Path.of(absPathTempDir, File.separator, TIMELINE_FILE_NAME);
+        pathTempData = Path.of(absPathTempDir, File.separator, RAW_DATA_FILE_NAME);
+        pathTempTimelines = Path.of(absPathTempDir, File.separator, TIMELINE_FILE_NAME);
+        isInitialized = true;
     }
 
+    public void saveTimelines(List<TimeLinesModel> timeLines) throws IOException{
+        String serData = new JsonSerializer().serialize(timeLines);
+        //TODO output to file
+    }
+
+    /*
+    Cleans up the temporary files created by init(). Should always be called after using ZipHelper
+     */
     public void cleanUp() throws IOException {
-        Files.delete(pathData);
-        Files.delete(pathTimelines);
+        Files.delete(pathTempData);
+        Files.delete(pathTempTimelines);
         Files.delete(tempDirPath);
+        isInitialized = false;
+        replaceData();
+        replaceTimelines();
     }
 
-/*    public void replaceFile(File file) throws ZipException {
-        remove(file.getName());
-        add(file);
+    public void replaceTimelines() throws ZipException {
+        remove(TIMELINE_FILE_NAME);
+        add(new File(String.valueOf(pathTempTimelines)));
+    }
+
+    public void replaceData() throws ZipException {
+        remove(RAW_DATA_FILE_NAME);
+        add(new File(String.valueOf(pathTempData)));
     }
 
     public void remove(String fileName) throws ZipException{
@@ -51,22 +75,22 @@ public class ZipHelper {
 
     public void add(File file) throws ZipException{
         zipFile.addFile(file , parameters);
-    }*/
-
-    public Path getPathData() {
-        return pathData;
     }
 
-    public void setPathData(Path pathData) {
-        this.pathData = pathData;
+    public Path getPathTempData() {
+        return pathTempData;
     }
 
-    public Path getPathTimelines() {
-        return pathTimelines;
+    public void setPathTempData(Path pathTempData) {
+        this.pathTempData = pathTempData;
     }
 
-    public void setPathTimelines(Path pathTimelines) {
-        this.pathTimelines = pathTimelines;
+    public Path getPathTempTimelines() {
+        return pathTempTimelines;
+    }
+
+    public void setPathTempTimelines(Path pathTempTimelines) {
+        this.pathTempTimelines = pathTempTimelines;
     }
 
 }

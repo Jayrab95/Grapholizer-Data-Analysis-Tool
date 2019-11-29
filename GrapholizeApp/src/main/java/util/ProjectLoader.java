@@ -5,22 +5,25 @@ import Model.Entities.Participant;
 import net.lingala.zip4j.exception.ZipException;
 
 import java.io.IOException;
-import java.util.List;
+import java.util.HashMap;
 
 public class ProjectLoader implements Loader {
+    ZipHelper zipHelper;
     @Override
-    public List<Participant> load(String path) throws IOException {
-        ZipHelper zipHelper = new ZipHelper(path);
+    public HashMap<String,Participant> load(String path) throws IOException {
+        zipHelper = new ZipHelper(path);
         try{
             zipHelper.init();
             Loader jsonLoader = new JsonLoader();
-            String name = zipHelper.getPathData().toString();
-            return jsonLoader.load(name);
+            String name = zipHelper.getPathTempData().toString();
+            return (HashMap<String, Participant>) jsonLoader.load(name);
         } catch(ZipException exp) {
             exp.printStackTrace();
             throw new IOException();
-        } finally {
-            zipHelper.cleanUp();
         }
+    }
+
+    public ZipHelper getZipHelper() {
+        return zipHelper;
     }
 }

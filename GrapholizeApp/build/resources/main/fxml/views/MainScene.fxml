@@ -20,10 +20,10 @@
                 <Menu mnemonicParsing="false" text="File">
                   <items>
                     <MenuItem mnemonicParsing="false" onAction="#loadRawJson" text="Load Json" />
-                        <MenuItem mnemonicParsing="false" onAction="#loadZipedJson" text="Load Project" />
+                        <MenuItem mnemonicParsing="false" onAction="#loadProjectZip" text="Load Project" />
                         <MenuItem mnemonicParsing="false" onAction="#loadNeoNotesFile" text="Load NeoNotes Data" />
-                        <MenuItem mnemonicParsing="false" text="Save to ...." />
-                        <MenuItem mnemonicParsing="false" text="Save" />
+                        <MenuItem mnemonicParsing="false" onAction="#saveProjectTo" text="Save to ...." />
+                        <MenuItem mnemonicParsing="false" onAction="#saveProject" text="Save" />
                   </items>
                 </Menu>
                 <Menu mnemonicParsing="false" text="Edit" />
