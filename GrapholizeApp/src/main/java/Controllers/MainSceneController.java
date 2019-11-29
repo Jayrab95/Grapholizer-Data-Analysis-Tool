@@ -65,8 +65,11 @@ public class MainSceneController implements Observer {
     @FXML
     public void initialize() throws Exception{
         System.out.println("aaa");
+        ProjectLoader loader = new ProjectLoader();
+        _session = new Session();
+        _session.setCurrent_page(loadDataFromFiles(loader));
+        _session.setZ_Helper(loader.getZipHelper());
         Page current_page = _session.getCurrent_page();
-        current_page = loadDataFromFiles(new ProjectLoader());
         initObservableStrokes(current_page.getStrokes());
         canvas_mainCanvas.setWidth(current_page.getPageMetaData().getPageWidth() * canvasScale);
         canvas_mainCanvas.setHeight(current_page.getPageMetaData().getPageHeight() * canvasScale);
@@ -118,7 +121,6 @@ public class MainSceneController implements Observer {
             if (sFile != null) {
                 String absFilePath = sFile.getAbsolutePath();
                 _session.setParticipantDataMap(loader.load(absFilePath));
-                //TODO Sess set participants
                 String key = _session.getParticipantDataMap().keySet().iterator().next();
                 return _session.getParticipantDataMap().get(key).getPage(0);
             }

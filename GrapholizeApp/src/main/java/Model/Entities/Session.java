@@ -10,6 +10,13 @@ public class Session {
     private Page current_page;
     ZipHelper z_Helper;
 
+
+    public Session() {}
+
+    public Session(Page current_page) {
+        this.current_page = current_page;
+    }
+
     public HashMap<String, Participant> getParticipantDataMap() {
         return participantDataMap;
     }
