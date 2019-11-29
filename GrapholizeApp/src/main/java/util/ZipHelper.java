@@ -17,10 +17,12 @@ public class ZipHelper {
     private Path tempDirPath;
     private Path pathTempData;
     private Path pathTempTimelines;
+    private boolean isInitialized;
 
     public ZipHelper(String filePath){
         parameters = new ZipParameters();
         zipFile = new ZipFile(filePath);
+        isInitialized = false;
     }
 
     public void init() throws IOException {
@@ -32,6 +34,7 @@ public class ZipHelper {
 
         pathTempData = Path.of(absPathTempDir, File.separator, DATA_FILE_NAME);
         pathTempTimelines = Path.of(absPathTempDir, File.separator, TIMELINE_FILE_NAME);
+        isInitialized = true;
     }
     /*
     Cleans up the temporary files created by init(). Should always be called after using ZipHelper
@@ -40,6 +43,7 @@ public class ZipHelper {
         Files.delete(pathTempData);
         Files.delete(pathTempTimelines);
         Files.delete(tempDirPath);
+        isInitialized = false;
     }
 
     public void saveTimelines() throws ZipException {

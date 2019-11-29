@@ -1,12 +1,10 @@
 package Controllers;
 
-import java.awt.*;
 import java.io.File;
 import java.io.IOException;
 import java.net.URL;
 import java.util.*;
 import java.util.List;
-import java.util.zip.ZipException;
 
 import Controls.Container.TimeLineContainer;
 import Controls.Timeline.Pane.CommentTimeLinePane;
@@ -22,7 +20,6 @@ import Model.Entities.Stroke;
 import Observables.ObservableStroke;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
-import javafx.scene.Scene;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.control.ScrollPane;
@@ -30,7 +27,6 @@ import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
-import javafx.stage.Window;
 import util.JsonLoader;
 import util.PageDataReader;
 import util.ProjectLoader;
@@ -43,7 +39,10 @@ public class MainSceneController implements Observer {
     @FXML
     private ResourceBundle resources;
 
-    private Page p;
+    /* Internal State Of Application */
+    private HashMap<String,Participant> participantDataMap;
+    private Participant current_participant;
+    private Page current_page;
     private List<ObservableStroke> observableStrokes;
     private float canvasScale = 10;
     private float canvasScalingStep = 5;
@@ -68,15 +67,15 @@ public class MainSceneController implements Observer {
 
     @FXML
     public void initialize() throws Exception{
-        //System.out.println("aaa");
-        p = loadDataFromFiles(new JsonLoader());
-        initObservableStrokes(p.getStrokes());
-        canvas_mainCanvas.setWidth(p.getPageMetaData().getPageWidth() * canvasScale);
-        canvas_mainCanvas.setHeight(p.getPageMetaData().getPageHeight() * canvasScale);
+        //participantDataMap = Collections.synchronizedMap();
+        current_page = loadDataFromFiles(new JsonLoader());
+        initObservableStrokes(current_page.getStrokes());
+        canvas_mainCanvas.setWidth(current_page.getPageMetaData().getPageWidth() * canvasScale);
+        canvas_mainCanvas.setHeight(current_page.getPageMetaData().getPageHeight() * canvasScale);
 
         drawThatSHit();
 
-        totalDuration = p.getStrokes().get(p.getStrokes().size() - 1).getTimeEnd() - p.getStrokes().get(0).getTimeStart();
+        totalDuration = current_page.getStrokes().get(current_page.getStrokes().size() - 1).getTimeEnd() - current_page.getStrokes().get(0).getTimeStart();
         setUpTimeLines();
         setupTimelineContainer();
     }
@@ -192,8 +191,8 @@ public class MainSceneController implements Observer {
         }
         else {
             canvasScale = 40;}
-        canvas_mainCanvas.setWidth(p.getPageMetaData().getPageWidth() * canvasScale);
-        canvas_mainCanvas.setHeight(p.getPageMetaData().getPageHeight() * canvasScale);
+        canvas_mainCanvas.setWidth(current_page.getPageMetaData().getPageWidth() * canvasScale);
+        canvas_mainCanvas.setHeight(current_page.getPageMetaData().getPageHeight() * canvasScale);
         reDraw();
     }
 
@@ -204,8 +203,8 @@ public class MainSceneController implements Observer {
         else{
             canvasScale = 1;
         }
-        canvas_mainCanvas.setWidth(p.getPageMetaData().getPageWidth() * canvasScale);
-        canvas_mainCanvas.setHeight(p.getPageMetaData().getPageHeight() * canvasScale);
+        canvas_mainCanvas.setWidth(current_page.getPageMetaData().getPageWidth() * canvasScale);
+        canvas_mainCanvas.setHeight(current_page.getPageMetaData().getPageHeight() * canvasScale);
         reDraw();
     }
 

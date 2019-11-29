@@ -31,10 +31,6 @@ public class JsonLoader implements Loader {
             comParticipant.add(partic);
         }
         comParticipant.parallelStream().forEach(cPar -> concDeque.add(new Participant(cPar)));
-        /*List<Participant> resultList = new LinkedList<>();
-        for (CompressedParticipant cPartic : partics) {
-            resultList.add(new Participant(cPartic));
-        }*/
         return concDeque.stream().collect(Collectors.toList());
     }
 }
