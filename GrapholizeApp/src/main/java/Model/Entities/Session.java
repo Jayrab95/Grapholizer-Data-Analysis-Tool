@@ -3,9 +3,11 @@ package Model.Entities;
 import util.ZipHelper;
 
 import java.util.HashMap;
+import java.util.Map;
 
 public class Session {
-    private HashMap<String,Participant> participantDataMap;
+    private Project project;
+    private Map<String,Participant> participantDataMap;
     private Participant current_participant;
     private Page current_page;
     ZipHelper z_Helper;
@@ -13,11 +15,15 @@ public class Session {
 
     public Session() {}
 
+    public Session(Project p){
+        project = p;
+    }
+
     public Session(Page current_page) {
         this.current_page = current_page;
     }
 
-    public HashMap<String, Participant> getParticipantDataMap() {
+    public Map<String, Participant> getParticipantDataMap() {
         return participantDataMap;
     }
 

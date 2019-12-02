@@ -7,6 +7,7 @@ import java.util.LinkedList;
 import java.util.List;
 
 public class Timeline {
+
     private String timeLineName;
     private Color timeLineColor;
     private LinkedList<TimeLineElement> timeLineElements;

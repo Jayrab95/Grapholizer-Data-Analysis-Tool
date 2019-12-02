@@ -44,6 +44,8 @@ public class Participant {
         return ID;
     }
 
+    public Participant getParticipant(){return this;}
+
     public void setID(String ID) {
         this.ID = ID;
     }
