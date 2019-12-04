@@ -35,13 +35,58 @@ public class Project {
         return projectTags.get(tagKey);
     }
 
-    public void insertOrEditParticipant(Participant p){
+    public boolean insertParticipant(Participant p){
+        if(containsParticipantId(p.getID())){return false;}
         //TODO: are the ID's unmodifiable?
         participants.put(p.getID(), p);
+        return true;
     }
 
-    public void insertOrEditTimeLineTag(TimeLineTag t){
+    public boolean editParticipant(Participant oldParticipant, String name){
+        if(!oldParticipant.getID().equals(name)){
+            if(containsParticipantId(name)){
+                return false;
+            }
+            participants.remove(oldParticipant.getID());
+            oldParticipant.setID(name);
+            participants.put(name, oldParticipant);
+        }
+        return true;
+    }
+
+    public Participant removeParticipant(String key){
+        return participants.remove(key);
+    }
+
+    public boolean containsParticipantId(String id){
+        return participants.keySet().contains(id);
+    }
+
+    public boolean insertTimeLineTag(TimeLineTag t){
+        if(timeLineTagExists(t.getTag())){return false;}
         projectTags.put(t.getTag(), t);
+        return true;
+    }
+
+    public boolean editTimeLineTag(TimeLineTag oldTag, String newTagName, Color newColor){
+        if(!oldTag.getTag().equals(newTagName)){
+            if(timeLineTagExists(newTagName)){
+                return false;
+            }
+            projectTags.remove(oldTag.getTag());
+            oldTag.setTag(newTagName);
+            projectTags.put(newTagName, oldTag);
+        }
+        oldTag.setColor(newColor);
+        return true;
+    }
+
+    public TimeLineTag removeTimeLineTag(String key){
+        return projectTags.remove(key);
+    }
+
+    public boolean timeLineTagExists(String tag){
+        return projectTags.keySet().contains(tag);
     }
 
 }

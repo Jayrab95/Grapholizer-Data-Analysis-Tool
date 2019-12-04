@@ -2,6 +2,7 @@ package Controls.Timeline.Pane;
 
 import Controls.TimelineElement.TimeLineElementRect;
 import Model.Entities.TimeLineElement;
+import javafx.beans.property.DoubleProperty;
 import javafx.scene.Node;
 import javafx.scene.control.*;
 import javafx.scene.effect.Light;
@@ -26,11 +27,9 @@ public class CommentTimeLinePane extends TimeLinePane {
     private Tooltip tooltip;
 
     private TimeLineElementRect debugElement;
-    private double debugX;
-    private double debugY;
 
 
-    public CommentTimeLinePane(String timeLineName, double width, double height, double scale, Color c) {
+    public CommentTimeLinePane(String timeLineName, double width, double height, DoubleProperty scale, Color c) {
         super(timeLineName, width, height, scale, c);
 
         this.anchor = new Light.Point();
@@ -44,6 +43,13 @@ public class CommentTimeLinePane extends TimeLinePane {
         setOnMouseReleased(e-> handleTimelineMouseRelease(e));
         setOnMouseMoved(e -> getToolTip(e));
     }
+    public CommentTimeLinePane(String timeLineName, double width, double height, DoubleProperty scale, Color c, List<TimeLineElement> elements) {
+        this(timeLineName,width,height,scale,c);
+        for(TimeLineElement element : elements){
+            addTimeLineElement(new TimeLineElementRect(element.getTimeStart(), element.getTimeStop(), height, c, element.getAnnotationText(), scale));
+        }
+    }
+
 
     /**
      * Adds a new TimeLineElement to this TimeLine's children.
@@ -212,7 +218,7 @@ public class CommentTimeLinePane extends TimeLinePane {
                     "Annotation text");
             if(s.isPresent()){
                 System.out.println(s.get());
-                TimeLineElementRect tle = new TimeLineElementRect(timeLineColor, selection, s.get());
+                TimeLineElementRect tle = new TimeLineElementRect(timeLineColor, selection, s.get(), scale);
                 addTimeLineElement(tle);
             }
             else{

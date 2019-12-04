@@ -1,19 +1,19 @@
 package Model.Entities;
 
+import Observables.ObservableStroke;
+import javafx.scene.paint.Color;
+import util.ColorConverter;
 import util.Import.CompressedPage;
 import util.Import.CompressedStroke;
 
-import java.util.Collections;
-import java.util.LinkedList;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 import java.util.stream.Collectors;
 
 public class Page {
     private final PageMetaData pageMetaData;
     private final List<Stroke> strokes;
 
-    private Map<TimeLineTag, Timeline> timeLines;
+    private Map<String, List<TimeLineElement>> timeLines;
 
     public Page (PageMetaData pageMetaData, List<Stroke> strokes){
         this.pageMetaData = pageMetaData;
@@ -40,6 +40,8 @@ public class Page {
     public List<Stroke> getStrokes() {
         return strokes;
     }
+
+    public Map<String, List<TimeLineElement>> getTimeLines(){return this.timeLines;}
 
     /**
      * Returns a list of individual dot sections that lie within each of the given Timeline elements. These dot sections are
@@ -85,5 +87,12 @@ public class Page {
             }
         }
         return Collections.emptyList();
+    }
+    public List<ObservableStroke> getObservableStrokes(){
+        List<ObservableStroke> observableStrokes = new ArrayList<>();
+        for(Stroke s : strokes){
+            observableStrokes.add(new ObservableStroke(s, ColorConverter.convertJavaFXColorToModelColor(Color.BLACK)));
+        }
+        return observableStrokes;
     }
 }

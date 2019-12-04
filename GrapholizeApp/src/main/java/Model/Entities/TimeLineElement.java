@@ -45,6 +45,37 @@ public class TimeLineElement {
         this.timeStop = timeStop;
     }
 
+    //TODO: Consider moving these to Entity class?
+    public boolean collidesWith(TimeLineElement other){
+        /* Timestart of other lies before timestart of this element, and the timestop lies after the timestart of this element
+         * ___[-------]_ this
+         * [-----]______ other
+         */
+        boolean startCollidesWithOther =
+                other.getTimeStart() <= getTimeStart()
+                        && other.getTimeStop() >= getTimeStart();
+        /* Timestart of other lies before timestop of this element, and the timestop lies after the timestop of this element
+         * [-------]___ this
+         * ______[----] other
+         */
+        boolean endCollidesWithOther =
+                other.getTimeStart() <= getTimeStop()
+                        && other.getTimeStop() >= getTimeStop();
+        /* Timestart of other lies after timestart of this element, and the timestop lies before the timestop of this element
+         * ___[--------]__ this
+         * _____[----]____ other
+         */
+        boolean otherIsContainedInThis =
+                other.getTimeStart() >= getTimeStop()
+                        && other.getTimeStop() <= getTimeStop();
+
+        return startCollidesWithOther || endCollidesWithOther || otherIsContainedInThis;
+    }
+
+    public boolean timeStampWithinTimeRange(double timeStamp){
+        return getTimeStart() <= timeStamp && getTimeStop() >= timeStamp;
+    }
+
 
 
 }

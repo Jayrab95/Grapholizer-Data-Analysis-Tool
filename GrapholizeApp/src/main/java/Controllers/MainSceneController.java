@@ -53,7 +53,7 @@ public class MainSceneController implements Observer {
     @FXML
     private Canvas canvas_mainCanvas;
 
-    private VBox timeLineContainer;
+    private TimeLineContainer timeLineContainer;
 
     private long totalDuration;
 
@@ -228,19 +228,25 @@ public class MainSceneController implements Observer {
     private void setupTimelineContainer(){
         //scrollPane_TimeLines.setContent(timeLineContainer);
         TimeLineContainer tlc = new TimeLineContainer(totalDuration, timeLineScale);
+        /*
         StrokeDurationTimeLinePane s = new StrokeDurationTimeLinePane("Stroke duration", totalDuration,  50, timeLineScale, observableStrokes);
         tlc.addTimeLine(s);
         tlc.addTimeLine(new StrokeDurationTimeLinePane("Stroke duration 2", totalDuration,  50, timeLineScale, observableStrokes));
         tlc.addTimeLine(new CommentTimeLinePane("Custom", totalDuration, 50, timeLineScale, Color.ROYALBLUE));
         tlc.addTimeLine(new PressureTimeLinePane("pressure", totalDuration, 50, timeLineScale, Color.PINK, s, observableStrokes));
+
+         */
         scrollPane_TimeLines.setContent(tlc);
     }
 
     private void setUpTimeLines(){
-        timeLineContainer = new VBox();
+        /*
+        timeLineContainer = new TimeLineContainer(totalDuration, _session)
         timeLineContainer.setSpacing(10);
         timeLineContainer.getChildren().add(new StrokeDurationTimeLinePane("Stroke duration", totalDuration,  50, timeLineScale, observableStrokes));
         timeLineContainer.getChildren().add(new CommentTimeLinePane("Custom", totalDuration, 50, timeLineScale, Color.ROYALBLUE));
+
+         */
     }
 
     public float getTimeLineScale(){return this.timeLineScale;}

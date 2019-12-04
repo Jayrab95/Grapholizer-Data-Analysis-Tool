@@ -2,6 +2,7 @@ package Controls.Timeline.Pane;
 
 import Controls.TimelineElement.StrokeTimeLineElementRect;
 import Observables.ObservableStroke;
+import javafx.beans.property.DoubleProperty;
 import javafx.scene.input.MouseButton;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.paint.Color;
@@ -11,7 +12,7 @@ import java.util.List;
 public class StrokeDurationTimeLinePane extends TimeLinePane {
     List<ObservableStroke> strokes;
 
-    public StrokeDurationTimeLinePane(String timeLineName, double width, double height, double scale, List<ObservableStroke> strokes) {
+    public StrokeDurationTimeLinePane(String timeLineName, double width, double height, DoubleProperty scale, List<ObservableStroke> strokes) {
         super(timeLineName,width, height, scale, Color.BLACK);
         this.strokes = strokes;
         setUpTimeLine();
@@ -25,8 +26,8 @@ public class StrokeDurationTimeLinePane extends TimeLinePane {
             //Elements need to become listeners of whichever class manages the timeline scale.
             //Their width is updated on scale change.
             //Time start and Time end should be saved as is in the TLE. The TLE should then applies the scale for the width
-            double startDelta = (s.getTimeStart() - strokesStart) * scale;
-            double endDelta = (s.getTimeEnd() - strokesStart) * scale;
+            double startDelta = (s.getTimeStart() - strokesStart) * scale.get();
+            double endDelta = (s.getTimeEnd() - strokesStart) * scale.get();
             Color c = new Color(s.getColor().getR(), s.getColor().getG(), s.getColor().getB(), s.getColor().getO());
 
             StrokeTimeLineElementRect stle = new StrokeTimeLineElementRect(startDelta,endDelta, getHeight(), c, s);

@@ -1,10 +1,17 @@
 package Controls.Container;
 
+import Controllers.TimeLinesController;
 import Controls.Timeline.Pane.CommentTimeLinePane;
 import Controls.Timeline.Pane.StrokeDurationTimeLinePane;
 import Controls.Timeline.Pane.TimeLinePane;
 import Controls.TimelineElement.TimeLineElementRect;
+import Interfaces.Observable;
 import Interfaces.Observer;
+import Model.Entities.Page;
+import Model.Entities.Project;
+import Model.ObservableActiveState;
+import javafx.beans.property.DoubleProperty;
+import javafx.beans.property.SimpleDoubleProperty;
 import javafx.event.ActionEvent;
 import javafx.scene.Node;
 import javafx.scene.control.*;
@@ -26,7 +33,7 @@ import java.util.stream.Collectors;
 into a TimeLineWrapper which contains the visual timeline and Timeline information (name and some control buttons) and then adds it into
 the VBox that has all the timelines.
  */
-public class TimeLineContainer extends HBox {
+public class TimeLineContainer extends VBox implements Observer{
 
 
     private final static String TXT_TL_CREATION_TITLE = "Create a new timeline";
@@ -48,120 +55,54 @@ public class TimeLineContainer extends HBox {
     private final static String TXT_TL_DELETE_ERROR_TITLE = "Delete timeline error";
     private final static String TXT_TL_DELETE_ERROR_HEADER = "Error while deleting timeline";
 
-
-    private double scale;
-    private double length;
-
-    //Left side contains the Timeline information and buttons. Right side contains the timeline.
-    //Downside of doing this split approach: Timelines now consist of 2 separate nodes that need to be separately managed...
-    //private SplitPane splitPane_splitContainer;
-    private VBox vbox_timeLineInfoContainer;
-    //private ScrollPane scrollpane_timeLines;
-    private VBox vbox_timeLines;
+    private TimeLinesController timeLinesController;
 
     private Button btn_CreateNewTimeLine;
 
     private TimeLinePane selectedTimeLine;
 
     //TODO: The container should read/update the length and scale of the timeline (determined by the strokes) from a model class
-    public TimeLineContainer(double length, double scale){
-        this.length = length;
-        this.scale = scale;
+    public TimeLineContainer(Project p, ObservableActiveState state){
+        this.timeLinesController = new TimeLinesController(p, 0.05, 50, state);
+        state.addObserver(this);
         setup();
     }
 
     private void setup(){
-        vbox_timeLineInfoContainer = new VBox();
-        vbox_timeLines = new VBox();
-
+        generateTimeLines();
         btn_CreateNewTimeLine = new Button("Create new TimeLine");
         btn_CreateNewTimeLine.setOnAction(e -> handleCreateNewTimeLineClick());
-        vbox_timeLineInfoContainer.getChildren().add(btn_CreateNewTimeLine);
-
-        getChildren().addAll(vbox_timeLineInfoContainer, vbox_timeLines);
+        getChildren().add(btn_CreateNewTimeLine);
     }
 
     public void createNewCustomTimeLine(String name, Color c, Optional<List<TimeLineElementRect>> tleList){
-        //Currently: Since the StrokeTimeLine is always available, take the width of this element
-        //TODO: Think of better solution. Perhaps the TimeLineContainer class can manage the total width?
-        //Creation of timeline
-        TimeLinePane ctlp = new CommentTimeLinePane(name, length, 50, scale, c);
-        if(tleList.isPresent()){
-            for(TimeLineElementRect tle : tleList.get()){
-                TimeLineElementRect ctle = new TimeLineElementRect(c, tle, tle.getAnnotationText());
-                ctlp.addTimeLineElement(ctle);
-            }
-        }
-        addTimeLine(ctlp);
+        addTimeLine(timeLinesController.createNewCustomTimeLine(name, c, tleList));
     }
 
     public void addTimeLine(TimeLinePane tl){
-        vbox_timeLineInfoContainer.getChildren().remove(btn_CreateNewTimeLine);
+        getChildren().remove(btn_CreateNewTimeLine);
 
         tl.setOnMouseClicked(event -> handleTimeLineClick(event, tl));
         tl.setOnContextMenuRequested(contextMenuEvent -> GenerateTimelineContextMenu(tl).show(tl, contextMenuEvent.getScreenX(), contextMenuEvent.getScreenY()));
 
-        vbox_timeLineInfoContainer.getChildren().add(new TimeLineWrapper(tl, new TimeLineInformation(tl)));
-        vbox_timeLineInfoContainer.getChildren().add(btn_CreateNewTimeLine);
+        getChildren().add(new TimeLineWrapper(tl, new TimeLineInformation(tl)));
+        getChildren().add(btn_CreateNewTimeLine);
     }
 
 
 
     //TODO: Consider binding events to Wrapper and not to timeline...
     private void removeTimeLine(TimeLinePane tl){
-        for(Node n : vbox_timeLineInfoContainer.getChildren()){
+        for(Node n : getChildren()){
             if(n.getClass() == TimeLineWrapper.class && ((TimeLineWrapper)n).getTimeLinePane() == tl){
-                vbox_timeLineInfoContainer.getChildren().remove(n);
+                getChildren().remove(n);
                 break;
             }
         }
     }
 
 
-    //TODO: maybe move this to a "Dialog creator class"
-    private boolean deleteConfirmation(String tlname){
-        Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
-        alert.setTitle("Delete Timeline");
-        alert.setHeaderText("Delete timeline?");
-        alert.setContentText("Are you sure you want to delete the timeline " + tlname + "? This action cannot be undone.");
-        Optional<ButtonType> option = alert.showAndWait();
-        if(option.isPresent() && option.get() == ButtonType.OK){
-            return true;
-        }
-        return false;
-    }
 
-    private void createCopyAnnotations(TimeLinePane tl, boolean combinedElement, String combinedAnnotationText){
-        List<TimeLineElementRect> tles = selectedTimeLine.getChildren().stream()
-                .map(node -> (TimeLineElementRect)node)
-                .filter(elem -> elem.isSelected())
-                .collect(Collectors.toList());
-        boolean newAnnotationsColideWithExisting = tles.stream()
-                .filter(element -> ((CommentTimeLinePane)tl).collidesWithOtherElements(element))
-                .count() > 0;
-        if(!newAnnotationsColideWithExisting){
-            if(!combinedElement){
-                for(TimeLineElementRect tle : tles){
-                    tl.addTimeLineElement(new TimeLineElementRect(tl.getTimeLineColor(), tle, tle.getAnnotationText()));
-                }
-            }
-            else{
-                TimeLineElementRect tle = new TimeLineElementRect(tles.get(0).getTimeStart(), tles.get(tles.size()-1).getTimeStop(), tl.getHeight(), tl.getTimeLineColor(), combinedAnnotationText);
-                tl.addTimeLineElement(tle);
-                //TODO: What should happen if the newly created comment (or copies in general) overlaps with existing comments?
-                //TODO: For the combined element, use the dialogue to figure out what the comment should be => Checkbox combined? If Checked, enble textbox for new comment
-            }
-        }
-        else{
-            DialogGenerator.simpleErrorDialog(
-                    "Annotation copy error",
-                    "Error while copying annotations to timeline " + tl.getTimeLineName(),
-                    "One or more of the selected elements collides with other elements on the timeline."
-            );
-        }
-
-
-    }
 
     /**
      * Initiates a new ContextMenu with two default commands: "Create new Timeline" and "Create new Timeline out of selected items.
@@ -259,7 +200,7 @@ public class TimeLineContainer extends HBox {
     public void handleRemoveTimeLineClick(TimeLinePane source){
         //Ask if TL should actually be removed
         if(source.getClass() == CommentTimeLinePane.class){
-            if(deleteConfirmation(source.getTimeLineName())){
+            if(timeLinesController.deleteConfirmation(source.getTimeLineName())){
                 removeTimeLine(source);
             }
         }
@@ -305,7 +246,7 @@ public class TimeLineContainer extends HBox {
 
         dialog.setResultConverter(b -> {
             if (b == buttonTypeOk) {
-                createCopyAnnotations(tl, cbox_joinedAnnotation.isSelected(), text1.getText());
+                timeLinesController.createCopyAnnotations(tl, cbox_joinedAnnotation.isSelected(), text1.getText());
             }
 
             return null;
@@ -389,12 +330,24 @@ public class TimeLineContainer extends HBox {
         return !s.isBlank();
     }
     private boolean stringUnique(String s){
-        List<String> timelineTags = vbox_timeLineInfoContainer.getChildren().stream()
+        List<String> timelineTags = getChildren().stream()
                 .filter(elem -> elem.getClass() == TimeLineWrapper.class) //TODO: Maybe there is a better solution?
                 .map(tlwrapper -> ((TimeLineWrapper)tlwrapper).getTimeLinePane().getTimeLineName())
                 .collect(Collectors.toList()
         );
         return !timelineTags.contains(s);
+    }
+
+    @Override
+    public void update(Observable sender) {
+        generateTimeLines();
+    }
+
+    private void generateTimeLines(){
+        getChildren().clear();
+        for(TimeLinePane tlp : timeLinesController.generateTimeLinePanes()){
+            getChildren().add(new TimeLineWrapper(tlp, new TimeLineInformation(tlp)));
+        }
     }
 
     //endregion

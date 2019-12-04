@@ -5,8 +5,11 @@ import Model.Entities.TimeLineElement;
 import Model.Entities.Timeline;
 import Model.StrokesModel;
 import Model.TimeLinesModel;
+import javafx.beans.property.DoubleProperty;
+import javafx.beans.property.SimpleDoubleProperty;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.property.StringProperty;
+import javafx.collections.ObservableList;
 import javafx.scene.Node;
 import javafx.scene.layout.Pane;
 import javafx.scene.paint.Color;
@@ -19,24 +22,30 @@ public abstract class TimeLinePane extends Pane {
     protected TimeLinesModel timeLinesModel;
 
     protected Timeline timeline;
+    protected ObservableList<TimeLineElementRect> timeLineElements;
     protected StringProperty timeLineName;
-    protected double scale;
+    protected DoubleProperty scale;
     protected Color timeLineColor;
     //Todo: perhaps reference style from a style sheet.
     protected String style = "-fx-padding: 10; -fx-border-style: solid inside; -fx-border-width: 2; -fx-border-insets: 5; -fx-border-radius: 5; -fx-border-color: blue; -fx-background-color: grey";
 
-    protected TimeLinePane(String timeLineName, double width, double height, double scale, Color c){
+    protected TimeLinePane(String timeLineName, double width, double height, DoubleProperty scaleProp, Color c){
         this.timeLineName = new SimpleStringProperty(timeLineName);
-        this.scale = scale;
+        this.scale = new SimpleDoubleProperty(scale.get());
+        this.scale.bind(scaleProp);
         this.timeLineColor = c;
 
         this.timeline = new Timeline(timeLineName, ColorConverter.convertJavaFXColorToModelColor(c));
 
         setHeight(height);
         setPrefHeight(height);
-        setWidth(width * scale);
-        setPrefWidth(width * scale);
+        setWidth(width * scale.get());
+        setPrefWidth(width * scale.get());
         InitiateTimeLine();
+    }
+
+    protected void onValueChange(){
+        setWidth(getWidth() * scale.get());
     }
 
     private void InitiateTimeLine(){
@@ -72,7 +81,7 @@ public abstract class TimeLinePane extends Pane {
 
     public void addTimeLineElement(TimeLineElementRect tle){
         getChildren().add(tle);
-        timeline.addTimeLineElementInOrder(new TimeLineElement(tle.getAnnotationText(), tle.getTimeStart() / scale, tle.getTimeStop() / scale));
+        timeline.addTimeLineElementInOrder(new TimeLineElement(tle.getAnnotationText(), tle.getTimeStart() / scale.get(), tle.getTimeStop() / scale.get()));
         //TODO: Add the TimeLineElemet entity to the TimeLine Entity lis
         /*
         tle.setOnContextMenuRequested(event -> {
