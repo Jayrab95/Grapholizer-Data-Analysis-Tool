@@ -233,7 +233,7 @@ public class TimeLineContainer extends HBox {
     private void handleCreateNewTimeLineOutOfSelectedClick(TimeLinePane tl){
         Optional<DialogResult> dialogResult = openTimeLineCreationDialog(TXT_TL_CREATION_TITLE, TXT_TL_CREATION_HEADER, TXT_TL_CREATION_TEXT, TXT_TL_TIMELINETAG_LABEL, TXT_TL_TAG_DEFAULTVAL, Color.CADETBLUE);
         if(dialogResult.isPresent()){
-            List<TimeLineElementRect> tles = tl.getChildren().stream()
+            List<TimeLineElementRect> tles = selectedTimeLine.getChildren().stream()
                     .map(node -> (TimeLineElementRect)node)//TODO: Maybe there's a better solution? (Should there be a separate List with the TLE in the timeline?)
                     .filter(tle -> ((TimeLineElementRect)tle).isSelected())
                     .collect(Collectors.toList());
