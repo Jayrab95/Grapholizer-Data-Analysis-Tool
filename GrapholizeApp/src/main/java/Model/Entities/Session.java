@@ -2,6 +2,7 @@ package Model.Entities;
 
 import util.ZipHelper;
 
+import java.io.IOException;
 import java.util.HashMap;
 
 public class Session {
@@ -13,8 +14,8 @@ public class Session {
 
     public Session() {}
 
-    public Session(Page current_page) {
-        this.current_page = current_page;
+    public void saveProjectToFile() throws IOException {
+        //z_Helper.saveTimelines();
     }
 
     public HashMap<String, Participant> getParticipantDataMap() {

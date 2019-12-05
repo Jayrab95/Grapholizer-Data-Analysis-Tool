@@ -103,9 +103,7 @@ public class MainSceneController implements Observer {
     }
 
     @FXML
-    private void loadNeoNotesFile() {
-        loadDataFromFiles(new PageDataReader());
-    }
+    private void loadNeoNotesFile() { loadDataFromFiles(new PageDataReader()); }
 
     @FXML
     private void saveProject() {
@@ -129,8 +127,17 @@ public class MainSceneController implements Observer {
             File sFile = fileChooser.showOpenDialog(stage);
             if (sFile != null) {
                 String absFilePath = sFile.getAbsolutePath();
+
                 _session.setParticipantDataMap(loader.load(absFilePath));
                 String key = _session.getParticipantDataMap().keySet().iterator().next();
+                //aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
+                _session.setCurrent_page(_session.getParticipantDataMap().get(key).getPage(0));
+                totalDuration = _session.getCurrent_page().getStrokes().get(_session.getCurrent_page().getStrokes().size() - 1).getTimeEnd() - _session.getCurrent_page().getStrokes().get(0).getTimeStart();
+                initObservableStrokes(_session.getCurrent_page().getStrokes());
+                reDraw();
+                setUpTimeLines();
+                setupTimelineContainer();
+                //aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
                 return _session.getParticipantDataMap().get(key).getPage(0);
             }
             return null;
