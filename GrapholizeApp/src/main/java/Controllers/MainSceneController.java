@@ -152,9 +152,12 @@ public class MainSceneController implements Observer {
     }
 
     private void initObservableStrokes(List<Stroke> strokes){
+        Color[] colors = new Color[]{Color.GREEN, Color.INDIANRED};
+        int colori = 0;
         observableStrokes = new ArrayList<>();
         for (Stroke s : strokes){
-            observableStrokes.add(new ObservableStroke(s, this));
+            observableStrokes.add(new ObservableStroke(s, this, ColorConverter.convertJavaFXColorToModelColor(colors[colori])));
+            colori = (colori + 1) % colors.length;
         }
     }
 
@@ -168,6 +171,8 @@ public class MainSceneController implements Observer {
 
     private void drawThatSHit(){
         GraphicsContext gc = canvas_mainCanvas.getGraphicsContext2D();
+        Color[] cs = new Color[]{Color.DODGERBLUE, Color.DARKRED, Color.FORESTGREEN};
+        int colori = 0;
         for(ObservableStroke s : observableStrokes){
 
             for(int i = 0; i < s.getDots().size() - 1; i++){
@@ -237,9 +242,10 @@ public class MainSceneController implements Observer {
         TimeLineContainer tlc = new TimeLineContainer(totalDuration, timeLineScale);
         StrokeDurationTimeLinePane s = new StrokeDurationTimeLinePane("Stroke duration", totalDuration,  50, timeLineScale, observableStrokes);
         tlc.addTimeLine(s);
-        tlc.addTimeLine(new StrokeDurationTimeLinePane("Stroke duration 2", totalDuration,  50, timeLineScale, observableStrokes));
-        tlc.addTimeLine(new CommentTimeLinePane("Custom", totalDuration, 50, timeLineScale, Color.ROYALBLUE));
         tlc.addTimeLine(new PressureTimeLinePane("pressure", totalDuration, 50, timeLineScale, Color.PINK, s, observableStrokes));
+        //tlc.addTimeLine(new StrokeDurationTimeLinePane("Stroke duration 2", totalDuration,  50, timeLineScale, observableStrokes));
+        tlc.addTimeLine(new CommentTimeLinePane("Custom", totalDuration, 50, timeLineScale, Color.ROYALBLUE));
+
         scrollPane_TimeLines.setContent(tlc);
     }
 

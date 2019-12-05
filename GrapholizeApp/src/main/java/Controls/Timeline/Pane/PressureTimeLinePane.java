@@ -39,9 +39,9 @@ public class PressureTimeLinePane extends SubTimeLinePane {
                         Dot d2 = dots.get(i + 1);
                         Line l = new Line(
                                 (d1.getTimeStamp()) * scale,
-                                d1.getForce() * getHeight(),
+                                getHeight() - (d1.getForce() * getHeight()),
                                 (d2.getTimeStamp()) * scale,
-                                d2.getForce() * getHeight()
+                                getHeight() - (d2.getForce() * getHeight())
                         );
                         getChildren().add(l);
                     }
