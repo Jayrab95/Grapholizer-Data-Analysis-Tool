@@ -1,17 +1,14 @@
-package Controls.Container;
+package New.CustomControls;
 
-import Controllers.TimeLinesController;
-import Controls.Timeline.Pane.CommentTimeLinePane;
-import Controls.Timeline.Pane.StrokeDurationTimeLinePane;
-import Controls.Timeline.Pane.TimeLinePane;
-import Controls.TimelineElement.TimeLineElementRect;
-import Interfaces.Observable;
-import Interfaces.Observer;
-import Model.Entities.Page;
-import Model.Entities.Project;
-import Model.ObservableActiveState;
-import javafx.beans.property.DoubleProperty;
-import javafx.beans.property.SimpleDoubleProperty;
+
+import Execptions.TimeLineTagException;
+import New.Controllers.TimeLineContainerController;
+import New.CustomControls.TimeLine.TimeLinePane;
+import New.Interfaces.Observable;
+import New.Interfaces.Observer;
+import New.Model.Entities.Project;
+import New.Model.Entities.TimeLineTag;
+import New.Model.ObservableModel.ObservableActiveState;
 import javafx.event.ActionEvent;
 import javafx.scene.Node;
 import javafx.scene.control.*;
@@ -21,10 +18,12 @@ import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
-import util.DialogGenerator;
+import New.util.ColorConverter;
+import New.util.DialogGenerator;
 
 import java.util.List;
 import java.util.Optional;
+import java.util.concurrent.atomic.AtomicReference;
 import java.util.stream.Collectors;
 
 //https://stackoverflow.com/questions/17761415/how-to-change-order-of-children-in-javafx for children swapping
@@ -33,12 +32,28 @@ import java.util.stream.Collectors;
 into a TimeLineWrapper which contains the visual timeline and Timeline information (name and some control buttons) and then adds it into
 the VBox that has all the timelines.
  */
-public class TimeLineContainer extends VBox implements Observer{
+public class TimeLineContainer extends VBox implements Observer {
+
+    private final static String TXT_TL_CREATION_TITLE = "Create a new timeline";
+    private final static String TXT_TL_CREATION_HEADER = "Creation of a new timeline";
+    private final static String TXT_TL_CREATION_TEXT = "Create a new timeline by entering a tag. The tag must be unique and cannot be empty.";
+    private final static String TXT_TL_TIMELINETAG_LABEL = "Timeline tag:";
+    private final static String TXT_TL_TAG_DEFAULTVAL = "New Timeline";
+    private final static String TXT_TL_EDIT_TITLE = "Edit timeline";
+    private final static String TXT_TL_EDIT_HEADER = "Editing a timeline";
+    private final static String TXT_TL_EDIT_TEXT = "Change the name of the timeline";
+    private final static String TXT_TL_CREATION_ERROR_TITLE = "Timeline creation error";
+    private final static String TXT_TL_CREATION_ERROR_HEADER = "Error while creating timeline";
+    private final static String TXT_TL_EDIT_ERROR_TITLE = "Timeline edit error";
+    private final static String TXT_TL_EDIT_ERROR_HEADER = "Error while editing timeline";
+    private final static String TXT_TL_ERROR_NAME_EMPTY_OR_NOT_UNIQUE = "The name of the tag must be unique and cannot be empty.";
+    private final static String TXT_TL_ERROR_CANNOT_BE_DELETED = "This timeline cannot be deleted. Only custom timelines can be deleted.";
+    private final static String TXT_TL_ERROR_CANNOT_BE_EDITED = "This timeline cannot be edited. Only custom timelines can be edited.";
+    private final static String TXT_TL_DELETE_ERROR_TITLE = "Delete timeline error";
+    private final static String TXT_TL_DELETE_ERROR_HEADER = "Error while deleting timeline";
 
 
-
-
-    private TimeLinesController timeLinesController;
+    private TimeLineContainerController timeLinesController;
 
     private Button btn_CreateNewTimeLine;
 
@@ -46,7 +61,7 @@ public class TimeLineContainer extends VBox implements Observer{
 
     //TODO: The container should read/update the length and scale of the timeline (determined by the strokes) from a model class
     public TimeLineContainer(Project p, ObservableActiveState state){
-        this.timeLinesController = new TimeLinesController(p, 0.05, 50, state);
+        this.timeLinesController = new TimeLineContainerController(p, 0.05, 50, state);
         state.addObserver(this);
         setup();
     }
@@ -56,10 +71,6 @@ public class TimeLineContainer extends VBox implements Observer{
         btn_CreateNewTimeLine = new Button("Create new TimeLine");
         btn_CreateNewTimeLine.setOnAction(e -> handleCreateNewTimeLineClick());
         getChildren().add(btn_CreateNewTimeLine);
-    }
-
-    public void createNewCustomTimeLine(String name, Color c, Optional<List<TimeLineElementRect>> tleList){
-        addTimeLine(timeLinesController.createNewCustomTimeLine(name, c, tleList));
     }
 
     public void addTimeLine(TimeLinePane tl){
@@ -146,9 +157,9 @@ public class TimeLineContainer extends VBox implements Observer{
      * Handles a click event on buttons/menuitems that create new Timelines
      */
     private void handleCreateNewTimeLineClick(){
-        Optional<DialogResult> dialogResult = openTimeLineCreationDialog(TXT_TL_CREATION_TITLE, TXT_TL_CREATION_HEADER, TXT_TL_CREATION_TEXT, TXT_TL_TIMELINETAG_LABEL, TXT_TL_TAG_DEFAULTVAL, Color.CADETBLUE);
+        Optional<TimeLineTag> dialogResult = openTimeLineCreationDialog(TXT_TL_CREATION_TITLE, TXT_TL_CREATION_HEADER, TXT_TL_CREATION_TEXT, TXT_TL_TIMELINETAG_LABEL, TXT_TL_TAG_DEFAULTVAL, Color.CADETBLUE);
         if(dialogResult.isPresent()){
-            createNewCustomTimeLine(dialogResult.get().timeLinename, dialogResult.get().timeLineColor, Optional.empty());
+            timeLinesController.createNewTimeLinePane(dialogResult.get().timeLinename, dialogResult.get().timeLineColor, Optional.empty());
         }
     }
     /**
@@ -178,18 +189,6 @@ public class TimeLineContainer extends VBox implements Observer{
             DialogGenerator.simpleErrorDialog(TXT_TL_EDIT_ERROR_TITLE, TXT_TL_EDIT_ERROR_HEADER, TXT_TL_ERROR_CANNOT_BE_EDITED);
         }
 
-    }
-
-    public void handleRemoveTimeLineClick(TimeLinePane source){
-        //Ask if TL should actually be removed
-        if(source.getClass() == CommentTimeLinePane.class){
-            if(timeLinesController.deleteConfirmation(source.getTimeLineName())){
-                removeTimeLine(source);
-            }
-        }
-        else{
-            DialogGenerator.simpleErrorDialog(TXT_TL_DELETE_ERROR_TITLE, TXT_TL_DELETE_ERROR_HEADER, TXT_TL_ERROR_CANNOT_BE_DELETED);
-        }
     }
 
     public void handleCreateNewAnnotationOutOfSelectedClick(TimeLinePane source){
@@ -242,13 +241,14 @@ public class TimeLineContainer extends VBox implements Observer{
     //https://code.makery.ch/blog/javafx-dialogs-official/
     //https://examples.javacodegeeks.com/desktop-java/javafx/dialog-javafx/javafx-dialog-example/
     //https://docs.oracle.com/javase/8/javafx/api/javafx/scene/control/Dialog.html#resultConverterProperty--
-    private Optional<DialogResult> openTimeLineCreationDialog(String dialogTitle, String dialogHeader, String dialogText, String labelText, String defaultValue, Color defaultColor){
-
+    private Optional<TimeLineTag> openTimeLineCreationDialog(String dialogTitle, String dialogHeader, String dialogText, String labelText, String defaultValue, Color defaultColor){
+        //TODO: This is kinda messy. the dialog needs to either return the tag or the timelinepane as a result.
+        //This means that the error handling needs to e changed somewhat.
         /*
         This dialog is specific to the creation of timelines and contains some more complex logic
         specific to timelines and the TimelineContainer. Therefore it cannot be moved to DialogGenerator
          */
-        Dialog<DialogResult> dialog = new Dialog<>();
+        Dialog<TimeLineTag> dialog = new Dialog<>();
         dialog.setTitle(dialogTitle);
         dialog.setHeaderText(dialogHeader);
         dialog.setContentText(dialogText);
@@ -271,54 +271,26 @@ public class TimeLineContainer extends VBox implements Observer{
 
         final Button okButton = (Button) dialog.getDialogPane().lookupButton(buttonTypeOk);
 
+        AtomicReference<TimeLineTag> newTag = new AtomicReference<>();
         okButton.addEventFilter(ActionEvent.ACTION, ae -> {
-            if (!stringIsUniqueAndValid(text1.getText())) {
+            try{
+                newTag.set(timeLinesController.createNewTimeLineTag(text1.getText(), ColorConverter.convertJavaFXColorToModelColor(colorPicker.getValue())));
+            }
+            catch(TimeLineTagException ex){
+                DialogGenerator.simpleErrorDialog(TXT_TL_CREATION_ERROR_TITLE, TXT_TL_CREATION_ERROR_HEADER, ex.toString());
                 ae.consume(); //not valid
             }
         });
 
         dialog.setResultConverter(b -> {
             if (b == buttonTypeOk) {
-                return new DialogResult(text1.getText(), colorPicker.getValue());
+                return newTag.get();
             }
 
             return null;
         });
 
         return dialog.showAndWait();
-    }
-
-    //TODO: Define static strings for title etc.
-    private boolean stringIsUniqueAndValid(String s){
-        boolean notEmpty = stringNotEmpty(s);
-        boolean nameUnique = stringUnique(s);
-        if(!notEmpty){
-            DialogGenerator.simpleErrorDialog(
-                    TXT_TL_CREATION_ERROR_TITLE,
-                    TXT_TL_CREATION_ERROR_HEADER,
-                    TXT_TL_ERROR_NAMEEMPTY);
-            return false;
-        }
-        else if(!nameUnique){
-            DialogGenerator.simpleErrorDialog(
-                    TXT_TL_CREATION_ERROR_TITLE,
-                    TXT_TL_CREATION_ERROR_HEADER,
-                    TXT_TL_ERROR_NAME_NOT_UNIQUE);
-            return false;
-        }
-        return true;
-    }
-
-    private boolean stringNotEmpty(String s){
-        return !s.isBlank();
-    }
-    private boolean stringUnique(String s){
-        List<String> timelineTags = getChildren().stream()
-                .filter(elem -> elem.getClass() == TimeLineWrapper.class) //TODO: Maybe there is a better solution?
-                .map(tlwrapper -> ((TimeLineWrapper)tlwrapper).getTimeLinePane().getTimeLineName())
-                .collect(Collectors.toList()
-        );
-        return !timelineTags.contains(s);
     }
 
     @Override
@@ -332,6 +304,7 @@ public class TimeLineContainer extends VBox implements Observer{
             getChildren().add(new TimeLineWrapper(tlp, new TimeLineInformation(tlp)));
         }
     }
+
 
     //endregion
 
@@ -397,13 +370,6 @@ public class TimeLineContainer extends VBox implements Observer{
         }
         TimeLinePane getTimeLinePane(){return tl;}
         TimeLineInformation getTimelineInformation(){return tli;}
-    }
-
-    private class DialogResult{
-        String timeLinename;
-        Color timeLineColor;
-        public DialogResult(String name, Color color){this.timeLinename = name; this.timeLineColor = color;}
-
     }
 
     //endregion

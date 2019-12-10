@@ -2,23 +2,68 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="f9c9e85c-b6d3-4a2f-99c7-3350288aea5b" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/src/main/java/Controllers/TimeLineElementController.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/Model/ObservableActiveState.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/Execptions/ParticipantNotFoundException.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/Execptions/TimeLineTagEmptyException.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/Execptions/TimeLineTagException.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/Execptions/TimeLineTagNotFoundException.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/Execptions/TimelineTagNotUniqueException.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/New/Controllers/AnnotationController.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/New/Controllers/CanvasController.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/New/Controllers/MainSceneController.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/New/Controllers/TimeLineContainerController.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/New/Controllers/TimeLineController.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/New/CustomControls/MainCanvas.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/New/CustomControls/TimeLine/CustomTimeLinePane.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/New/CustomControls/TimeLine/StrokeDurationTimeLinePane.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/New/CustomControls/TimeLine/TimeLinePane.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/New/CustomControls/TimeLineContainer.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/New/CustomControls/TimeLineElement/AnnotationRectangle.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/New/CustomControls/TimeLineElement/MovableAnnotationRectangle.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/New/CustomControls/TimeLineElement/StrokeAnnotation.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/New/Interfaces/Loader.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/New/Interfaces/Observable.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/New/Interfaces/Observer.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/New/Interfaces/Serializer.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/New/Model/Entities/Annotation.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/New/Model/Entities/Dot.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/New/Model/Entities/Page.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/New/Model/Entities/PageMetaData.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/New/Model/Entities/Participant.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/New/Model/Entities/Project.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/New/Model/Entities/SimpleColor.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/New/Model/Entities/Stroke.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/New/Model/Entities/TimeLineTag.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/New/Model/Entities/Timeline.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/New/Model/ObservableModel/ObservableActiveState.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/New/Model/ObservableModel/ObservableAnnotation.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/New/Model/ObservableModel/ObservableDot.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/New/Model/ObservableModel/ObservablePage.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/New/Model/ObservableModel/ObservableParticipant.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/New/Model/ObservableModel/ObservableProject.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/New/Model/ObservableModel/ObservableStroke.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/New/Model/ObservableModel/ObservableTimeLineTag.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/New/Model/Session.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/New/Model/StrokesModel.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/New/Model/TimeLinesModel.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/New/Scenes/HelloFX.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/New/util/ColorConverter.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/New/util/DialogGenerator.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/New/util/Export/JsonSerializer.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/New/util/Import/CompressedDot.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/New/util/Import/CompressedPage.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/New/util/Import/CompressedParticipant.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/New/util/Import/CompressedStroke.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/New/util/Import/JsonLoadThread.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/New/util/JsonLoader.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/New/util/PageDataReader.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/New/util/ProjectLoader.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/New/util/Selector.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/New/util/ZipHelper.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/resources/fxml/containers/MainCanvas.fxml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/build/classes/java/main/Controls/Timeline/Pane/TimeLinePane.class" beforeDir="false" afterPath="$PROJECT_DIR$/build/classes/java/main/Controls/Timeline/Pane/TimeLinePane.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/Controllers/MainSceneController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/Controllers/MainSceneController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/Controllers/TimeLinesController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/Controllers/TimeLinesController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/Controllers/TimeLineElementController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/Controllers/TimeLineElementController.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/Controls/Container/TimeLineContainer.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/Controls/Container/TimeLineContainer.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/Controls/Timeline/Pane/CommentTimeLinePane.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/Controls/Timeline/Pane/CommentTimeLinePane.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/Controls/Timeline/Pane/PressureTimeLinePane.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/Controls/Timeline/Pane/PressureTimeLinePane.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/Controls/Timeline/Pane/StrokeDurationTimeLinePane.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/Controls/Timeline/Pane/StrokeDurationTimeLinePane.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/Controls/Timeline/Pane/SubTimeLinePane.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/Controls/Timeline/Pane/SubTimeLinePane.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/Controls/Timeline/Pane/TimeLinePane.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/Controls/Timeline/Pane/TimeLinePane.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/Controls/TimelineElement/TimeLineElementRect.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/Controls/TimelineElement/TimeLineElementRect.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/Model/Entities/Page.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/Model/Entities/Page.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/Model/Entities/Project.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/Model/Entities/Project.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/Model/Entities/Session.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/Model/Entities/Session.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/Model/Entities/TimeLineElement.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/Model/Entities/TimeLineElement.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/Model/MainWindowModel.java" beforeDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -74,9 +119,9 @@
   <component name="FileTemplateManagerImpl">
     <option name="RECENT_TEMPLATES">
       <list>
-        <option value="FxmlFile" />
-        <option value="FxmlFile" />
         <option value="Interface" />
+        <option value="FxmlFile" />
+        <option value="FxmlFile" />
         <option value="Class" />
       </list>
     </option>
@@ -96,7 +141,7 @@
     <property name="SHARE_PROJECT_CONFIGURATION_FILES" value="true" />
     <property name="WebServerToolWindowFactoryState" value="false" />
     <property name="aspect.path.notification.shown" value="true" />
-    <property name="last_opened_file_path" value="C:/Program Files/SceneBuilder/SceneBuilder.exe" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$/src/main/java/New" />
     <property name="node.js.detected.package.eslint" value="true" />
     <property name="node.js.detected.package.tslint" value="true" />
     <property name="node.js.path.for.package.eslint" value="project" />
@@ -115,8 +160,16 @@
     <key name="MoveClassesOrPackagesDialog.RECENTS_KEY">
       <recent name="" />
     </key>
+    <key name="CopyFile.RECENT_KEYS">
+      <recent name="C:\Users\jarab\Documents\FHNW\Semester 7\Projekt\IP6_Grapholize\GrapholizeApp\src\main\java\New" />
+      <recent name="C:\Users\jarab\Documents\FHNW\Semester 7\Projekt\IP6_Grapholize\GrapholizeApp\src\main\java\New\Model" />
+    </key>
     <key name="CopyClassDialog.RECENTS_KEY">
-      <recent name="Controls" />
+      <recent name="New.CustomControls" />
+      <recent name="New.Controllers" />
+      <recent name="New.CustomControls.TimeLineElement" />
+      <recent name="New.CustomControls.TimeLine" />
+      <recent name="New.Scenes" />
     </key>
     <key name="MoveFile.RECENT_KEYS">
       <recent name="C:\Users\jarab\Documents\FHNW\Semester 7\Projekt\IP6_Grapholize\GrapholizeApp\src\main\resources\fxml" />
@@ -269,6 +322,8 @@
       <workItem from="1574968738667" duration="1827000" />
       <workItem from="1575015968333" duration="1928000" />
       <workItem from="1575303701556" duration="4206000" />
+      <workItem from="1575635467291" duration="31327000" />
+      <workItem from="1575888304485" duration="33645000" />
     </task>
     <servers />
   </component>
