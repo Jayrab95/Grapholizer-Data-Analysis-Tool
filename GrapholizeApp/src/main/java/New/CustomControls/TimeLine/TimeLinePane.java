@@ -6,8 +6,9 @@ import New.CustomControls.TimeLineContainer;
 import New.CustomControls.TimeLineElement.AnnotationRectangle;
 import New.Model.Entities.SimpleColor;
 import New.Model.Entities.TimeLineTag;
-import New.Model.ObservableModel.ObservableActiveState;
 
+import New.Model.ObservableModel.ObservablePage;
+import New.Model.ObservableModel.ObservableTimeLineTag;
 import javafx.beans.property.DoubleProperty;
 import javafx.beans.property.ObjectProperty;
 import javafx.beans.property.SimpleDoubleProperty;
@@ -27,11 +28,11 @@ public abstract class TimeLinePane extends Pane {
     //Todo: perhaps reference style from a style sheet.
     protected String style = "-fx-padding: 10; -fx-border-style: solid inside; -fx-border-width: 2; -fx-border-insets: 5; -fx-border-radius: 5; -fx-border-color: blue; -fx-background-color: grey";
 
-    protected TimeLinePane(double width, double height, DoubleProperty scaleProp, ObservableActiveState state, TimeLineTag tag, TimeLineContainer parent){
+    protected TimeLinePane(double width, double height, DoubleProperty scaleProp, ObservableTimeLineTag tag, ObservablePage p, TimeLineContainer parent){
         this.scale = new SimpleDoubleProperty(scale.get());
         this.scale.bind(scaleProp);
         this.scale.addListener((observable, oldValue, newValue) -> onScaleValueChange());
-        this.timeLineController = new TimeLineController(state, tag, parent);
+        this.timeLineController = new TimeLineController(tag, p, parent);
 
         setHeight(height);
         setPrefHeight(height);

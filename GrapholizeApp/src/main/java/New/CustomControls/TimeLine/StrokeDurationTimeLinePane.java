@@ -1,10 +1,7 @@
 package New.CustomControls.TimeLine;
 
-import New.CustomControls.TimeLineContainer;
-import New.CustomControls.TimeLineElement.StrokeAnnotation;
 import New.Model.Entities.Annotation;
 import New.Model.Entities.TimeLineTag;
-import New.Model.ObservableModel.ObservableActiveState;
 import New.Model.ObservableModel.ObservableStroke;
 import New.util.ColorConverter;
 import javafx.beans.property.DoubleProperty;

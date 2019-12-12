@@ -1,9 +1,7 @@
 package New.CustomControls.TimeLine;
 
-import New.CustomControls.TimeLineElement.AnnotationRectangle;
 import New.Model.Entities.Annotation;
 import New.Model.Entities.TimeLineTag;
-import New.Model.ObservableModel.ObservableActiveState;
 import New.util.ColorConverter;
 import javafx.beans.property.DoubleProperty;
 import javafx.scene.effect.Light;

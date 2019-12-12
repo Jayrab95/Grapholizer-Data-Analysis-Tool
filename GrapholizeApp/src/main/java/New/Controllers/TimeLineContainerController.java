@@ -5,12 +5,10 @@ import Execptions.TimeLineTagException;
 import New.CustomControls.TimeLine.CustomTimeLinePane;
 import New.CustomControls.TimeLine.StrokeDurationTimeLinePane;
 import New.CustomControls.TimeLine.TimeLinePane;
-import New.CustomControls.TimeLineElement.AnnotationRectangle;
 import New.Model.Entities.Annotation;
 import New.Model.Entities.SimpleColor;
 import New.Model.Entities.Project;
 import New.Model.Entities.TimeLineTag;
-import New.Model.ObservableModel.ObservableActiveState;
 import javafx.beans.property.DoubleProperty;
 import javafx.beans.property.SimpleDoubleProperty;
 
