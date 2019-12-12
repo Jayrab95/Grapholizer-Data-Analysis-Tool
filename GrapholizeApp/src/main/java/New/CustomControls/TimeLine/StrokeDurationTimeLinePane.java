@@ -15,6 +15,7 @@ public class StrokeDurationTimeLinePane extends TimeLinePane implements Observer
     public StrokeDurationTimeLinePane(double width, double height, DoubleProperty scaleProp, ObservablePage page) {
         super(width, height, scaleProp, new SimpleStringProperty("Stroke duration"));
         page.addObserver(this);
+        setUpTimeLine(page.getObservableStrokes());
     }
 
     private void setUpTimeLine(List<ObservableStroke> strokes){

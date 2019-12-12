@@ -1,6 +1,7 @@
 package New.Controllers;
 
 import New.CustomControls.MainCanvas;
+import New.CustomControls.TimeLineContainer;
 import New.Interfaces.*;
 import New.Model.Entities.*;
 import New.Model.Session;
@@ -58,8 +59,10 @@ public class MainSceneController {
         ProjectLoader loader = new ProjectLoader();
         loadThatShitBoy();
         PageMetaData pmd = _session.getActivePage().getPageMetaData();
-        anchorPane_canvasContainer.getChildren().add(new MainCanvas(pmd.getPageWidth(), pmd.getPageHeight(), 0.05, _session.getActivePage()));
         _session.setZ_Helper(loader.getZipHelper());
+        anchorPane_canvasContainer.getChildren().add(new MainCanvas(pmd.getPageWidth(), pmd.getPageHeight(), 10, _session.getActivePage()));
+        scrollPane_TimeLines.setContent(new TimeLineContainer(_session.getActiveProject(), _session.getActivePage(), 0.05));
+
     }
 
     //Replace with openFileDialogue after testing.

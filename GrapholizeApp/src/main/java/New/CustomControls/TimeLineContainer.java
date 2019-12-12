@@ -2,6 +2,7 @@ package New.CustomControls;
 
 import New.Controllers.TimeLineContainerController;
 import New.CustomControls.TimeLine.CustomTimeLinePane;
+import New.CustomControls.TimeLine.StrokeDurationTimeLinePane;
 import New.CustomControls.TimeLine.TimeLinePane;
 import New.CustomControls.TimeLineElement.AnnotationRectangle;
 import New.Execptions.TimeLineTagException;
@@ -75,6 +76,7 @@ public class TimeLineContainer extends VBox {
         //Step 1: Create the stroke timeline
         //Step 2: For each tag, create a new timeline and pass over the observble Tag and the page. Then create the annotations.
         totalWidth = page.getDuration();
+        getChildren().add(new StrokeDurationTimeLinePane(totalWidth,timeLinesHeight, scale, timeLineContainerController.getPage()));
         for(String tag : project.getTimeLineTagNames()){
 
         }

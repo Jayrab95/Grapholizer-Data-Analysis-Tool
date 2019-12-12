@@ -28,7 +28,8 @@ public class MainCanvas extends VBox implements Observer {
         this.canvasWidth = initWidth;
         this.canvasHeight = initHeight;
         this.canvasScale = initScale;
-        canvas = new Canvas(initWidth, initHeight);
+        this.strokes = obsPage.getObservableStrokes();
+        canvas = new Canvas(initWidth * canvasScale, initHeight * canvasScale);
         obsPage.addObserver(this);
         initializeCanvas();
     }
@@ -36,6 +37,7 @@ public class MainCanvas extends VBox implements Observer {
     private void initializeCanvas(){
         canvasContainer = new ScrollPane(canvas);
         getChildren().add(canvasContainer);
+        drawStrokes();
     }
 
     private void drawStrokes(){

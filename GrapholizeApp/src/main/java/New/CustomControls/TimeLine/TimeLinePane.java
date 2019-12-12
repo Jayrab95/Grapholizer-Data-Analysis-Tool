@@ -21,7 +21,7 @@ public abstract class TimeLinePane extends Pane {
     protected String style = "-fx-padding: 10; -fx-border-style: solid inside; -fx-border-width: 2; -fx-border-insets: 5; -fx-border-radius: 5; -fx-border-color: blue; -fx-background-color: grey";
 
     protected TimeLinePane(double width, double height, DoubleProperty scaleProp, StringProperty name){
-        this.scale = new SimpleDoubleProperty(scale.get());
+        this.scale = new SimpleDoubleProperty(scaleProp.get());
         this.scale.bind(scaleProp);
         this.scale.addListener((observable, oldValue, newValue) -> onScaleValueChange());
 
