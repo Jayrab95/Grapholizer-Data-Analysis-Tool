@@ -10,24 +10,22 @@ import java.util.List;
 public class ObservableParticipant implements Observable {
 
     private Participant inner;
-    private ObservablePage activePage;
     private List<Observer>observers;
 
     public ObservableParticipant(Participant inner){
         this.inner = inner;
-        activePage = new ObservablePage(inner.getPage(0));
         this.observers = new LinkedList<>();
     }
 
     public void setParticipant(Participant p){
         this.inner = p;
-        activePage.setPage(p.getPage(0));
         notifyObservers();
     }
 
-    public ObservablePage getActivePage(){
-        return this.activePage;
+    public void setParticipant(ObservableParticipant p){
+        this.setParticipant(p.inner);
     }
+
 
     public ObservablePage getPage(int index) throws IndexOutOfBoundsException{
         return new ObservablePage(inner.getPage(index));

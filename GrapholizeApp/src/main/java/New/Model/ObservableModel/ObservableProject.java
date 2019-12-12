@@ -1,18 +1,31 @@
 package New.Model.ObservableModel;
 
-import Execptions.TimeLineTagEmptyException;
-import Execptions.TimeLineTagException;
-import Execptions.TimelineTagNotUniqueException;
+import New.Execptions.TimeLineTagEmptyException;
+import New.Execptions.TimeLineTagException;
+import New.Execptions.TimelineTagNotUniqueException;
 import New.Model.Entities.SimpleColor;
 import New.Model.Entities.Participant;
 import New.Model.Entities.Project;
 import New.Model.Entities.TimeLineTag;
+import New.util.ColorConverter;
+import javafx.scene.paint.Color;
+
+import java.util.Collections;
+import java.util.Set;
 
 public class ObservableProject {
     private Project inner;
 
     public ObservableProject(Project inner){
         this.inner = inner;
+    }
+
+    public Set<String> getParticipantIDs(){
+        return Collections.unmodifiableSet(inner.getParticipantIDs());
+    }
+
+    public Set<String> getTimeLineTagNames(){
+        return Collections.unmodifiableSet(inner.getTimeLineTagNames());
     }
 
     public ObservableParticipant getParticipant(String key){
@@ -23,6 +36,8 @@ public class ObservableProject {
         return new ObservableTimeLineTag(inner.getTimeLineTag(tag));
     }
 
+    //region Participant Modification and insertion
+    //TODO: Are these functionalities even necessary?
     public boolean insertParticipant(Participant p){
         if(containsParticipantId(p.getID())){return false;}
         //TODO: are the ID's unmodifiable?
@@ -49,47 +64,48 @@ public class ObservableProject {
     public boolean containsParticipantId(String id){
         return inner.getParticipantIDs().contains(id);
     }
+    //endregion
 
-    public void insertTimeLineTag(TimeLineTag t) throws TimeLineTagException {
-        checkIfTagIsValid(t.getTag());
+    public void insertTimeLineTag(TimeLineTag t) {
         inner.getProjectTagsMap().put(t.getTag(), t);
     }
 
-    public boolean editTimeLineTag(String oldTag, String newTagName, SimpleColor newSimpleColor) throws TimeLineTagException{
+    //TODO: What's better? Doing the valid check before inserting or assuming that the check has been called before inserting?
+    //PRoblem with doing the check during creation and edit: the insertion has to happen as a result of a DialogOK.
+    //Problem with assumption: The caller could technically use the edit function without checking first.
+    public boolean editTimeLineTag(String oldTag, String newTagName, Color newColor){
         TimeLineTag oldTimeLineTag = inner.getTimeLineTag(oldTag);
         if(oldTimeLineTag != null){
             if(!oldTag.equals(newTagName)){
-                checkIfTagIsValid(newTagName);
                 inner.getProjectTagsMap().remove(oldTag);
                 oldTimeLineTag.setTag(newTagName);
                 inner.getProjectTagsMap().put(newTagName, oldTimeLineTag);
             }
-            oldTimeLineTag.setSimpleColor(newSimpleColor);
+            oldTimeLineTag.setSimpleColor(ColorConverter.convertJavaFXColorToModelColor(newColor));
             return true;
         }
+        //The tag was not found for soem reason. Throw exception?
         return false;
     }
 
-    private void checkIfTagIsValid(String key) throws TimeLineTagException {
-        boolean exists = timeLineTagExists(key);
-        boolean notEmpty = timeLineTagIsNotEmpty(key);
+    public void checkIfTagIsValid(String key) throws TimeLineTagException {
+        timeLineTagExists(key);
+        timeLineTagIsNotEmpty(key);
+    }
+
+    private void timeLineTagExists(String tag) throws TimeLineTagException{
+        if(inner.getProjectTagsMap().keySet().contains(tag)){
+            throw new TimelineTagNotUniqueException(tag);
+        }
+    }
+
+    private void timeLineTagIsNotEmpty(String tag) throws TimeLineTagException{
+        if(tag.isBlank()){
+            throw new TimeLineTagEmptyException(tag);
+        }
     }
 
     public TimeLineTag removeTimeLineTag(String key){
         return inner.getProjectTagsMap().remove(key);
-    }
-
-    public boolean timeLineTagExists(String tag) throws TimeLineTagException{
-        if(inner.getProjectTagsMap().keySet().contains(tag)){
-            throw new TimelineTagNotUniqueException(tag);
-        }
-        return true;
-    }
-
-    public boolean timeLineTagIsNotEmpty(String tag) throws TimeLineTagException{
-        if(tag.isBlank()){
-            throw new TimeLineTagEmptyException(tag);
-        }
-        return true;
     }
 }

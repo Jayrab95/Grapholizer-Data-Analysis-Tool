@@ -1,13 +1,14 @@
 package New.Controllers;
 
+import New.CustomControls.TimeLine.CustomTimeLinePane;
 import New.CustomControls.TimeLine.TimeLinePane;
 import New.Model.Entities.Annotation;
 import New.Model.ObservableModel.ObservableAnnotation;
 
 public class AnnotationController {
     private final ObservableAnnotation annotation;
-    private TimeLinePane parent;
-    public AnnotationController(ObservableAnnotation annotation, TimeLinePane parent){
+    private CustomTimeLinePane parent;
+    public AnnotationController(ObservableAnnotation annotation, CustomTimeLinePane parent){
         this.annotation = annotation;
         this.parent = parent;
     }

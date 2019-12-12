@@ -9,12 +9,13 @@ public class Page {
     private final PageMetaData pageMetaData;
     private final List<Stroke> strokes;
 
-    private Map<TimeLineTag, List<Annotation>> timeLines;
+    private Map<String, List<Annotation>> timeLines;
 
+    //TODO: Load page annotations and add them to map
     public Page (PageMetaData pageMetaData, List<Stroke> strokes){
         this.pageMetaData = pageMetaData;
         this.strokes = strokes;
-
+        timeLines = new HashMap<>();
     }
 
     public Page (CompressedPage cp) {
@@ -37,9 +38,13 @@ public class Page {
         return strokes;
     }
 
-    public Map<TimeLineTag, List<Annotation>> getTimeLines(){return this.timeLines;}
+    public double getDuration(){
+        return strokes.get(strokes.size()-1).getTimeEnd();
+    }
 
-    public List<Annotation> getTimeLine(TimeLineTag key){
+    public Map<String, List<Annotation>> getTimeLines(){return this.timeLines;}
+
+    public List<Annotation> getTimeLine(String key){
         return timeLines.get(key);
     }
 

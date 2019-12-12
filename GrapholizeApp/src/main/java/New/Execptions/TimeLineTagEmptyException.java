@@ -1,4 +1,4 @@
-package Execptions;
+package New.Execptions;
 
 public class TimeLineTagEmptyException extends TimeLineTagException {
     public TimeLineTagEmptyException(String tag) {

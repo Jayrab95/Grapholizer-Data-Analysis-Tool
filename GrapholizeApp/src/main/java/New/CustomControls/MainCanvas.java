@@ -1,42 +1,46 @@
 package New.CustomControls;
 
-import Model.Entities.Dot;
-import New.Controllers.CanvasController;
+import New.Model.Entities.Dot;
 import New.Interfaces.Observable;
 import New.Interfaces.Observer;
-import New.Model.ObservableModel.ObservableActiveState;
-import Observables.ObservableStroke;
+import New.Model.ObservableModel.ObservablePage;
+import New.Model.ObservableModel.ObservableStroke;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
+import javafx.scene.control.ScrollPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
 
+import java.util.List;
+
 public class MainCanvas extends VBox implements Observer {
     private HBox hbox_Controls;
+    private ScrollPane canvasContainer;
     private final Canvas canvas;
     private final double canvasWidth;
     private final double canvasHeight;
-    private CanvasController canvasController;
     private double canvasScale;
+    private List<ObservableStroke> strokes;
 
 
-    public MainCanvas(ObservableActiveState state, double initWidth, double initHeight, double initScale){
+    public MainCanvas(double initWidth, double initHeight, double initScale, ObservablePage obsPage){
         this.canvasWidth = initWidth;
         this.canvasHeight = initHeight;
-        this.canvasController = new CanvasController(state);
         this.canvasScale = initScale;
         canvas = new Canvas(initWidth, initHeight);
+        obsPage.addObserver(this);
         initializeCanvas();
     }
 
     private void initializeCanvas(){
-
+        canvasContainer = new ScrollPane(canvas);
+        getChildren().add(canvasContainer);
     }
 
     private void drawStrokes(){
         GraphicsContext gc = canvas.getGraphicsContext2D();
-        for(ObservableStroke s : canvasController.getStrokes()){
+        for(ObservableStroke s : strokes){
 
             for(int i = 0; i < s.getDots().size() - 1; i++){
 
@@ -50,7 +54,7 @@ public class MainCanvas extends VBox implements Observer {
                     gc.strokeLine(d1.getX() * canvasScale, d1.getY() * canvasScale, d2.getX() * canvasScale, d2.getY() * canvasScale);
                 }
                 gc.setLineWidth((fAvg + 0.5));
-                gc.setStroke(new Color(s.getColor().getR(), s.getColor().getG(), s.getColor().getB(), 1));
+                gc.setStroke(s.getColor());
                 gc.strokeLine(d1.getX() * canvasScale, d1.getY() * canvasScale, d2.getX() * canvasScale, d2.getY() * canvasScale);
             }
         }
@@ -59,6 +63,7 @@ public class MainCanvas extends VBox implements Observer {
 
     @Override
     public void update(Observable sender) {
+        this.strokes = ((ObservablePage)sender).getObservableStrokes();
         resetCanvas();
     }
 

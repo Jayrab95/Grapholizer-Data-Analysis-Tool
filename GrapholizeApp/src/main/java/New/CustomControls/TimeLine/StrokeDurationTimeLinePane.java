@@ -1,30 +1,32 @@
 package New.CustomControls.TimeLine;
 
-import New.Model.Entities.Annotation;
-import New.Model.Entities.TimeLineTag;
+import New.CustomControls.TimeLineElement.StrokeAnnotationRectangle;
+import New.Interfaces.Observable;
+import New.Interfaces.Observer;
+import New.Model.ObservableModel.ObservablePage;
 import New.Model.ObservableModel.ObservableStroke;
-import New.util.ColorConverter;
 import javafx.beans.property.DoubleProperty;
+import javafx.beans.property.SimpleStringProperty;
 
 import java.util.List;
 
-public class StrokeDurationTimeLinePane extends TimeLinePane {
+public class StrokeDurationTimeLinePane extends TimeLinePane implements Observer {
 
-    public StrokeDurationTimeLinePane(double width, double height, DoubleProperty scaleProp, ObservableActiveState state, TimeLineTag tag, TimeLineContainer parent) {
-        super(width, height, scaleProp, state, tag, parent);
-        setUpTimeLine(state.getObservableStrokes());
+    public StrokeDurationTimeLinePane(double width, double height, DoubleProperty scaleProp, ObservablePage page) {
+        super(width, height, scaleProp, new SimpleStringProperty("Stroke duration"));
+        page.addObserver(this);
     }
 
     private void setUpTimeLine(List<ObservableStroke> strokes){
         for(ObservableStroke s : strokes){
-            getChildren().add(new StrokeAnnotation(
-                    ColorConverter.convertModelColorToJavaFXColor(s.getSimpleColor()),
-                    scale,
-                    new Annotation("Stroke", s.getTimeStart(), s.getTimeEnd()),
-                    this,
-                    s
-            ));
+            StrokeAnnotationRectangle sa = new StrokeAnnotationRectangle(s.getColorProperty(), scale, s, this);
+            getChildren().add(sa);
         }
     }
 
+    @Override
+    public void update(Observable sender) {
+        getChildren().clear();
+        setUpTimeLine(((ObservablePage)sender).getObservableStrokes());
+    }
 }

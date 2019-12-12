@@ -1,50 +1,49 @@
 package New.Model;
 
-import New.Model.Entities.Page;
-import New.Model.Entities.Participant;
+
 import New.Model.Entities.Project;
-import New.Model.ObservableModel.ObservableActiveState;
+import New.Model.ObservableModel.ObservablePage;
+import New.Model.ObservableModel.ObservableParticipant;
+import New.Model.ObservableModel.ObservableProject;
 import New.util.ZipHelper;
+import javafx.beans.property.ObjectProperty;
 
 import java.util.HashMap;
 import java.util.Map;
 
 public class Session {
-    private Project project;
-    private Map<String, Participant> participantDataMap;
-    private ObservableActiveState activeState;
-    ZipHelper z_Helper;
 
-
-    public Session() {}
+    private final ObservableProject activeProject;
+    private final ObservableParticipant activeParticipant;
+    private final ObservablePage activePage;
+    private ZipHelper z_Helper;
 
     public Session(Project p){
-
-        project = p;
+        this.activeProject = new ObservableProject(p);
+        this.activeParticipant = new ObservableParticipant(p.getParticipant(p.getParticipantIDs().iterator().next()));
+        this.activePage = activeParticipant.getPage(0);
     }
 
-    public Map<String, Participant> getParticipantDataMap() {
-        return participantDataMap;
+    public ObservableProject getActiveProject() {
+        return activeProject;
     }
 
-    public void setParticipantDataMap(HashMap<String, Participant> participantDataMap) {
-        this.participantDataMap = participantDataMap;
+    public ObservableParticipant getActiveParticipant() {
+        return activeParticipant;
     }
 
-    public Participant getCurrent_participant() {
-        return activeState.getActiveParticipant();
+    public ObservablePage getActivePage() {
+        return activePage;
     }
 
-    public void setCurrent_participant(Participant current_participant) {
-        activeState.setActiveParticipant(current_participant);
+    public void switchParticipant(String participantKey){
+        activeParticipant.setParticipant(activeProject.getParticipant(participantKey));
+        activePage.setPage(activeParticipant.getPage(0));
     }
 
-    public Page getCurrent_page() {
-        return activeState.getActivePage();
-    }
-
-    public void setCurrent_page(int current_page) {
-        activeState.setActivePage(current_page);
+    public void switchPage(int pageIndex){
+        //TODO: Does there need to be a check if the index is legal?
+        activePage.setPage(activeParticipant.getPage(pageIndex));
     }
 
     public ZipHelper getZ_Helper() {
@@ -55,12 +54,6 @@ public class Session {
         this.z_Helper = z_Helper;
     }
 
-    public ObservableActiveState getActiveState() {
-        return activeState;
-    }
 
-    public Session setActiveState(ObservableActiveState activeState) {
-        this.activeState = activeState;
-        return this;
-    }
+
 }

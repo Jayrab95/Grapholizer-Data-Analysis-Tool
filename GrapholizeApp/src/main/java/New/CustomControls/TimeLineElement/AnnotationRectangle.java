@@ -10,20 +10,21 @@ import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
 
 
-public class AnnotationRectangle extends Rectangle {
+public abstract class AnnotationRectangle extends Rectangle {
 
-    protected StringProperty viewAnnotationTextProp;
     protected ObjectProperty<Color> annotationColor;
+    protected StringProperty annotationText;
     protected BooleanProperty selected;
     protected DoubleProperty scale;
 
-    protected AnnotationController annotationController;
-    //Reason for having comment in baseclass: When copying annotations, there first needs to be a type check to see if
-    //There's also a comment
 
-    public AnnotationRectangle(ObjectProperty<Color> c, DoubleProperty scale, Annotation t, TimeLinePane parent){
+
+    public AnnotationRectangle(ObjectProperty<Color> c, StringProperty text, DoubleProperty scale, double width, double height, double start){
         this.annotationColor = new SimpleObjectProperty<>(c.get());
         this.selected = new SimpleBooleanProperty(false);
+
+        this.annotationText = new SimpleStringProperty(text.get());
+        this.annotationText.bind(text);
 
         this.scale = new SimpleDoubleProperty(scale.get());
         this.scale.bind(scale);
@@ -32,17 +33,9 @@ public class AnnotationRectangle extends Rectangle {
         this.annotationColor.bind(c);
         this.annotationColor.addListener((observable, oldValue, newValue) -> onColorChange());
 
-        this.viewAnnotationTextProp = new SimpleStringProperty(t.getAnnotationText());
-
-        ObservableAnnotation observableAnnotation = new ObservableAnnotation(t);
-        viewAnnotationTextProp.bind(observableAnnotation.getAnnotationTextProperty());
-
-        this.annotationController = new AnnotationController(observableAnnotation, parent);
-
-        setHeight(parent.getHeight());
-        double width = t.getDuration();
+        setHeight(height);
         setWidth(width);
-        setX(t.getTimeStart());
+        setX(start);
         setY(0);
 
         setOnMouseClicked(e -> handleMouseClick(e));
@@ -59,16 +52,25 @@ public class AnnotationRectangle extends Rectangle {
 
 
     protected void rescaleElement(){
-        setX(annotationController.getAnnotation().getTimeStart() * scale.get());
-        setWidth((annotationController.getAnnotation().getDuration()) * scale.get());
+        setX(getX() * scale.get());
+        setWidth(getWidth() * scale.get());
     }
 
     protected void onValueChange(){
         rescaleElement();
     }
 
+    public double getTimeStart(){
+        return this.getX() / scale.get();
+    }
 
-    public Annotation getTimeLineElement(){return this.annotationController.getAnnotation();}
+    public double getTimeStop(){
+        return (this.getX() + this.getWidth()) / scale.get();
+    }
+
+    public String getText(){
+        return annotationText.get();
+    }
 
     public BooleanProperty getSelectedBooleanProperty(){return this.selected;}
     public boolean isSelected(){
@@ -81,13 +83,6 @@ public class AnnotationRectangle extends Rectangle {
         this.selected.set(!selected.get());
     }
 
-    public boolean collidesWith(AnnotationRectangle other){
-        return annotationController.getAnnotation().collidesWith(other.getTimeLineElement().getTimeStart(), other.getTimeLineElement().getTimeStop());
-    }
-
-    public boolean timeStampWithinTimeRange(double timeStamp){
-        return annotationController.getAnnotation().timeStampWithinTimeRange(timeStamp);
-    }
 
     protected void handleMouseClick(MouseEvent e){
         toggleSelected();

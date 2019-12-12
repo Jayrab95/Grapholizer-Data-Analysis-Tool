@@ -1,4 +1,4 @@
-package Execptions;
+package New.Execptions;
 
 public class TimeLineTagNotFoundException extends TimeLineTagException{
     public TimeLineTagNotFoundException(String tag){

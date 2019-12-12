@@ -1,5 +1,5 @@
 package New.util;
-import Model.TimeLinesModel;
+
 import New.util.Export.JsonSerializer;
 import net.lingala.zip4j.ZipFile;
 import net.lingala.zip4j.exception.ZipException;
@@ -41,10 +41,13 @@ public class ZipHelper {
         isInitialized = true;
     }
 
+    /*
     public void saveTimelines(List<TimeLinesModel> timeLines) throws IOException{
         String serData = new JsonSerializer().serialize(timeLines);
         //TODO output to file
     }
+
+     */
 
     /*
     Cleans up the temporary files created by init(). Should always be called after using ZipHelper

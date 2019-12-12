@@ -1,12 +1,11 @@
 package New.Model.ObservableModel;
 
+import New.CustomControls.TimeLineElement.AnnotationRectangle;
 import New.Interfaces.Observable;
 import New.Interfaces.Observer;
-import New.Model.Entities.Annotation;
-import New.Model.Entities.Dot;
-import New.Model.Entities.Page;
-import New.Model.Entities.Stroke;
+import New.Model.Entities.*;
 import New.util.ColorConverter;
+import javafx.beans.property.SimpleObjectProperty;
 import javafx.scene.paint.Color;
 
 import java.util.ArrayList;
@@ -27,6 +26,30 @@ public class ObservablePage implements Observable{
     public void setPage(Page newPage){
         this.inner = newPage;
         notifyObservers();
+    }
+
+    public void setPage(ObservablePage p){
+        this.setPage(p.inner);
+    }
+
+    public void addAnnotation(String key, Annotation a){
+        inner.getTimeLines().get(key).add(a);
+    }
+
+    public void removeAnnotation(TimeLineTag key, Annotation a){
+        inner.getTimeLines().get(key).remove(a);
+    }
+
+    public boolean collidesWithOtherElements(String timeLineKey, double timestart, double timeStop){
+        return inner.getTimeLine(timeLineKey).stream()
+                .filter(annotation -> annotation.collidesWith(timestart, timeStop))
+                .count() > 0;
+    }
+
+    public boolean listCollidesWithOtherElements(String key, List<AnnotationRectangle> annotations){
+        return annotations.stream()
+                .filter(a -> collidesWithOtherElements(key, a.getTimeStart(), a.getTimeStop()))
+                .count() > 0;
     }
 
     /**
@@ -76,12 +99,25 @@ public class ObservablePage implements Observable{
     }
 
     public List<ObservableStroke> getObservableStrokes(){
-        List<ObservableStroke> observableStrokes = new ArrayList<>();
+        List<ObservableStroke> observableStrokes = new LinkedList<>();
         for(Stroke s : inner.getStrokes()){
-            observableStrokes.add(new ObservableStroke(s, ColorConverter.convertJavaFXColorToModelColor(Color.BLACK)));
+            observableStrokes.add(new ObservableStroke(s, Color.BLACK));
         }
         return observableStrokes;
     }
+
+    public List<ObservableAnnotation>getTimeLineAnnotations(String timeLineKey){
+        List<ObservableAnnotation> res = new LinkedList<>();
+        for(Annotation a : inner.getTimeLine(timeLineKey)){
+            res.add(new ObservableAnnotation(a));
+        }
+        return res;
+    }
+    public PageMetaData getPageMetaData(){
+        return inner.getPageMetaData();
+    }
+
+    public double getDuration(){return inner.getDuration();}
 
     @Override
     public void addObserver(Observer obs) {

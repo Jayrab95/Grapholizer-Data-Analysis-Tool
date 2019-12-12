@@ -1,4 +1,4 @@
-package Execptions;
+package New.Execptions;
 
 public class TimelineTagNotUniqueException extends TimeLineTagException {
 

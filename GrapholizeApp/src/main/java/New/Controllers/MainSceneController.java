@@ -1,5 +1,6 @@
 package New.Controllers;
 
+import New.CustomControls.MainCanvas;
 import New.Interfaces.*;
 import New.Model.Entities.*;
 import New.Model.Session;
@@ -10,6 +11,7 @@ import javafx.fxml.FXML;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.control.ScrollPane;
+import javafx.scene.layout.AnchorPane;
 import javafx.scene.paint.Color;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
@@ -39,6 +41,9 @@ public class MainSceneController {
     @FXML
     private Canvas canvas_mainCanvas;
 
+    @FXML
+    private AnchorPane anchorPane_canvasContainer;
+
     //private TimeLineContainer timeLineContainer;
 
 
@@ -52,8 +57,9 @@ public class MainSceneController {
 
         ProjectLoader loader = new ProjectLoader();
         loadThatShitBoy();
+        PageMetaData pmd = _session.getActivePage().getPageMetaData();
+        anchorPane_canvasContainer.getChildren().add(new MainCanvas(pmd.getPageWidth(), pmd.getPageHeight(), 0.05, _session.getActivePage()));
         _session.setZ_Helper(loader.getZipHelper());
-
     }
 
     //Replace with openFileDialogue after testing.
@@ -89,7 +95,7 @@ public class MainSceneController {
         //session.saveto
     }
     //Replace with openFileDialogue after testing.
-    private Page loadDataFromFiles(Loader loader) {
+    private void loadDataFromFiles(Loader loader) {
         try {
             FileChooser fileChooser = new FileChooser();
             fileChooser.setTitle("Open Resource File");
@@ -102,10 +108,8 @@ public class MainSceneController {
             if (sFile != null) {
                 String absFilePath = sFile.getAbsolutePath();
                 _session = new Session(loader.load(absFilePath));
-                String key = _session.getParticipantDataMap().keySet().iterator().next();
-                return _session.getParticipantDataMap().get(key).getPage(0);
             }
-            return null;
+
         }catch(IOException ex) {
             new DialogGenerator().simpleErrorDialog("Input Error"
                     , "File could not be loaded"
@@ -113,6 +117,6 @@ public class MainSceneController {
                             "or contains corrupted data");
             System.out.println("File could not be loaded");
         }
-        return null;
+
     }
 }

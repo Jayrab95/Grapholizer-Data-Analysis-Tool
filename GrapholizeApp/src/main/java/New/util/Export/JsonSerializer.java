@@ -1,6 +1,6 @@
 package New.util.Export;
 
-import Interfaces.Serializer;
+import New.Interfaces.Serializer;
 import com.google.gson.Gson;
 
 public class JsonSerializer implements Serializer {

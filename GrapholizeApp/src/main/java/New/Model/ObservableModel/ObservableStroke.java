@@ -6,7 +6,10 @@ import New.Model.Entities.SimpleColor;
 import New.Model.Entities.Dot;
 import New.Model.Entities.Stroke;
 import javafx.beans.property.BooleanProperty;
+import javafx.beans.property.ObjectProperty;
 import javafx.beans.property.SimpleBooleanProperty;
+import javafx.beans.property.SimpleObjectProperty;
+import javafx.scene.paint.Color;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -27,7 +30,7 @@ public class ObservableStroke implements Observable {
     private final List<Observer> observers;
     private final Stroke stroke;
     private BooleanProperty selected;
-    private SimpleColor simpleColor;
+    private ObjectProperty<Color> color;
     //endregion
 
     //region Constructors
@@ -38,7 +41,7 @@ public class ObservableStroke implements Observable {
      */
     private ObservableStroke(Stroke s){
         this.stroke = s;
-        this.simpleColor = new SimpleColor();
+        this.color = new SimpleObjectProperty<>(Color.BLACK);
         observers = new ArrayList<>();
         selected = new SimpleBooleanProperty(false);
     }
@@ -54,14 +57,14 @@ public class ObservableStroke implements Observable {
     }
 
     //Not sure if these are necessary yet, but they're nice to have.
-    public ObservableStroke(Stroke s, SimpleColor c){
+    public ObservableStroke(Stroke s, Color c){
         this(s);
-        this.simpleColor = c;
+        this.color = new SimpleObjectProperty<>(c);
     }
 
-    public ObservableStroke(Stroke s, Observer o, SimpleColor c){
+    public ObservableStroke(Stroke s, Observer o, Color c){
         this(s, o);
-        this.simpleColor = c;
+        this.color = new SimpleObjectProperty<>(c);
     }
     //endregion
 
@@ -78,15 +81,21 @@ public class ObservableStroke implements Observable {
     public long getTimeEnd() {
         return stroke.getTimeEnd();
     }
+
+    public long getDuration(){ return stroke.getTimeEnd() - stroke.getTimeStart();}
     //endregion
 
     //region ObservableStroke specific getters and setters
-    public SimpleColor getSimpleColor() {
-        return simpleColor;
+    public Color getColor() {
+        return color.get();
     }
 
-    public void setSimpleColor(SimpleColor simpleColor) {
-        this.simpleColor = simpleColor;
+    public ObjectProperty<Color> getColorProperty(){
+        return this.color;
+    }
+
+    public void setSimpleColor(Color newColor) {
+        this.color.set(newColor);
     }
 
     public BooleanProperty getSelectedBooleanProperty(){

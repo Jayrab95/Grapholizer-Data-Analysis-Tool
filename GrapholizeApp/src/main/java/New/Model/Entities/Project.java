@@ -1,9 +1,5 @@
 package New.Model.Entities;
 
-import Execptions.TimeLineTagEmptyException;
-import Execptions.TimeLineTagException;
-import Execptions.TimelineTagNotUniqueException;
-
 import java.util.Collections;
 import java.util.List;
 import java.util.Map;
@@ -34,11 +30,13 @@ public class Project {
     }
 
     public Set<String>getParticipantIDs(){
-        return Collections.unmodifiableSet(participants.keySet());
+        return participants.keySet();
     }
 
     public TimeLineTag getTimeLineTag(String tagKey){
         return projectTags.get(tagKey);
     }
+
+    public Set<String> getTimeLineTagNames(){return projectTags.keySet();}
 
 }
