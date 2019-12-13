@@ -2,8 +2,8 @@ package New.CustomControls.TimeLine;
 
 import New.Controllers.CustomTimeLineController;
 import New.CustomControls.TimeLineContainer;
-import New.CustomControls.TimeLineElement.AnnotationRectangle;
-import New.CustomControls.TimeLineElement.MovableAnnotationRectangle;
+import New.CustomControls.Annotation.AnnotationRectangle;
+import New.CustomControls.Annotation.MovableAnnotationRectangle;
 import New.Interfaces.Observable;
 import New.Interfaces.Observer;
 import New.Model.Entities.Annotation;
@@ -12,7 +12,6 @@ import New.Model.ObservableModel.ObservablePage;
 import New.Model.ObservableModel.ObservableTimeLineTag;
 import New.util.DialogGenerator;
 import javafx.beans.property.DoubleProperty;
-import javafx.event.ActionEvent;
 import javafx.scene.Node;
 import javafx.scene.control.*;
 import javafx.scene.effect.Light;
@@ -48,6 +47,7 @@ public class CustomTimeLinePane extends TimeLinePane implements Observer {
 
     public CustomTimeLinePane(double width, double height, DoubleProperty scaleProp, ObservableTimeLineTag tag, ObservablePage p, TimeLineContainer parent) {
         super(width, height, scaleProp, tag.getTagProperty());
+        this.timeLineTag = tag;
         customTimeLineController = new CustomTimeLineController(tag, p, parent);
         anchor = new Light.Point();
         selection = new Rectangle();

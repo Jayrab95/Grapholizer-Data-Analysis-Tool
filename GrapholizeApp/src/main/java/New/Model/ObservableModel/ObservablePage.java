@@ -1,14 +1,11 @@
 package New.Model.ObservableModel;
 
-import New.CustomControls.TimeLineElement.AnnotationRectangle;
+import New.CustomControls.Annotation.AnnotationRectangle;
 import New.Interfaces.Observable;
 import New.Interfaces.Observer;
 import New.Model.Entities.*;
-import New.util.ColorConverter;
-import javafx.beans.property.SimpleObjectProperty;
 import javafx.scene.paint.Color;
 
-import java.util.ArrayList;
 import java.util.Collections;
 import java.util.LinkedList;
 import java.util.List;
@@ -33,7 +30,7 @@ public class ObservablePage implements Observable{
     }
 
     public void addAnnotation(String key, Annotation a){
-        inner.getTimeLines().get(key).add(a);
+        inner.getTimeLine(key).add(a);
     }
 
     public void removeAnnotation(TimeLineTag key, Annotation a){

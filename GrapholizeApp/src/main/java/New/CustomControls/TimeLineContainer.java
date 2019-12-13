@@ -4,18 +4,15 @@ import New.Controllers.TimeLineContainerController;
 import New.CustomControls.TimeLine.CustomTimeLinePane;
 import New.CustomControls.TimeLine.StrokeDurationTimeLinePane;
 import New.CustomControls.TimeLine.TimeLinePane;
-import New.CustomControls.TimeLineElement.AnnotationRectangle;
+import New.CustomControls.Annotation.AnnotationRectangle;
 import New.Execptions.TimeLineTagException;
 import New.Interfaces.Observer;
 import New.Model.Entities.Annotation;
-import New.Model.Entities.TimeLineTag;
-import New.Model.ObservableModel.ObservableAnnotation;
 import New.Model.ObservableModel.ObservablePage;
 import New.Model.ObservableModel.ObservableProject;
 import New.Model.ObservableModel.ObservableTimeLineTag;
 import New.util.DialogGenerator;
 import javafx.beans.property.DoubleProperty;
-import javafx.beans.property.ObjectProperty;
 import javafx.beans.property.SimpleDoubleProperty;
 import javafx.event.ActionEvent;
 import javafx.scene.control.*;
@@ -73,10 +70,13 @@ public class TimeLineContainer extends VBox {
     }
 
     private void InitializeContainer(ObservableProject project, ObservablePage page){
+        btn_CreateNewTimeLine = new Button("Create new timeline");
+        btn_CreateNewTimeLine.setOnAction(event -> createNewTimeLine());
         //Step 1: Create the stroke timeline
         //Step 2: For each tag, create a new timeline and pass over the observble Tag and the page. Then create the annotations.
         totalWidth = page.getDuration();
         getChildren().add(new StrokeDurationTimeLinePane(totalWidth,timeLinesHeight, scale, timeLineContainerController.getPage()));
+        getChildren().add(btn_CreateNewTimeLine);
         for(String tag : project.getTimeLineTagNames()){
 
         }
@@ -103,7 +103,8 @@ public class TimeLineContainer extends VBox {
                 Color.CADETBLUE);
         if(tag.isPresent()){
             ObservableTimeLineTag newTag = timeLineContainerController.createNewTimeLineTag(tag.get().timeLinename, tag.get().timeLineColor);
-            this.getChildren().add(createNewTimeLinePane(newTag, timeLineContainerController.getPage(),Optional.empty()));
+            TimeLinePane timeLinePane = createNewTimeLinePane(newTag, timeLineContainerController.getPage(),Optional.empty());
+            addTimeLinePane(timeLinePane);
         }
     }
 
@@ -117,7 +118,8 @@ public class TimeLineContainer extends VBox {
                 Color.CADETBLUE);
         if(tag.isPresent()){
             ObservableTimeLineTag newTag = timeLineContainerController.createNewTimeLineTag(tag.get().timeLinename, tag.get().timeLineColor);
-            this.getChildren().add(createNewTimeLineTagOutOfSelected(newTag, timeLineContainerController.getPage()));
+            TimeLinePane timeLinePane = createNewTimeLineTagOutOfSelected(newTag, timeLineContainerController.getPage());
+            addTimeLinePane(timeLinePane);
         }
     }
 
@@ -131,7 +133,8 @@ public class TimeLineContainer extends VBox {
                 Color.CADETBLUE);
         if(tag.isPresent()){
             ObservableTimeLineTag newTag = timeLineContainerController.createNewTimeLineTag(tag.get().timeLinename, tag.get().timeLineColor);
-            this.getChildren().add(createNewTimeLinePaneOutOfCombined(newTag, timeLineContainerController.getPage(), a));
+            TimeLinePane timeLinePane = createNewTimeLinePaneOutOfCombined(newTag, timeLineContainerController.getPage(), a);
+            addTimeLinePane(timeLinePane);
         }
     }
 
@@ -153,6 +156,12 @@ public class TimeLineContainer extends VBox {
     private TimeLinePane createNewTimeLinePaneOutOfCombined(ObservableTimeLineTag tag, ObservablePage page, Annotation annotation){
         CustomTimeLinePane newTimeLine = new CustomTimeLinePane(totalWidth, timeLinesHeight, scale, tag, page, this, annotation);
         return newTimeLine;
+    }
+
+    private void addTimeLineToChildren(TimeLinePane timeline){
+        getChildren().remove(btn_CreateNewTimeLine);
+        getChildren().add(timeline);
+        getChildren().add(btn_CreateNewTimeLine);
     }
 
     public void editTimeLine(String oldName, Color oldColor){

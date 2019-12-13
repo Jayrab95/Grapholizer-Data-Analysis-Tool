@@ -2,7 +2,7 @@ package New.Controllers;
 
 import New.CustomControls.TimeLine.CustomTimeLinePane;
 import New.CustomControls.TimeLineContainer;
-import New.CustomControls.TimeLineElement.AnnotationRectangle;
+import New.CustomControls.Annotation.AnnotationRectangle;
 import New.Model.Entities.Annotation;
 import New.Model.ObservableModel.ObservablePage;
 import New.Model.ObservableModel.ObservableTimeLineTag;

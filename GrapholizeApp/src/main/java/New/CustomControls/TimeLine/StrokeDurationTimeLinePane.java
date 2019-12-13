@@ -1,6 +1,6 @@
 package New.CustomControls.TimeLine;
 
-import New.CustomControls.TimeLineElement.StrokeAnnotationRectangle;
+import New.CustomControls.Annotation.StrokeAnnotationRectangle;
 import New.Interfaces.Observable;
 import New.Interfaces.Observer;
 import New.Model.ObservableModel.ObservablePage;

@@ -1,20 +1,14 @@
-package New.CustomControls.TimeLineElement;
+package New.CustomControls.Annotation;
 
 
 import New.Controllers.AnnotationController;
 import New.CustomControls.TimeLine.CustomTimeLinePane;
-import New.CustomControls.TimeLine.TimeLinePane;
-import New.Model.Entities.Annotation;
 import New.Model.ObservableModel.ObservableAnnotation;
 import New.util.DialogGenerator;
 import javafx.beans.property.DoubleProperty;
 import javafx.beans.property.ObjectProperty;
-import javafx.beans.property.SimpleStringProperty;
-import javafx.beans.property.StringProperty;
-import javafx.scene.Node;
 import javafx.scene.control.ContextMenu;
 import javafx.scene.control.MenuItem;
-import javafx.scene.input.MouseButton;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.paint.Color;
 

@@ -18,11 +18,11 @@ public class Project {
     }
 
     public Map<String, Participant> getParticipantsMap(){
-        return Collections.unmodifiableMap(participants);
+        return participants;
     }
 
     public Map<String, TimeLineTag> getProjectTagsMap(){
-        return Collections.unmodifiableMap(projectTags);
+        return projectTags;
     }
 
     public Participant getParticipant(String participantKey){

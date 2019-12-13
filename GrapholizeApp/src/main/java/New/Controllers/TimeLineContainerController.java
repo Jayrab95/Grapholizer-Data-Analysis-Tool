@@ -1,27 +1,13 @@
 package New.Controllers;
 
 
-import New.CustomControls.TimeLineContainer;
 import New.Execptions.TimeLineTagException;
-import New.CustomControls.TimeLine.CustomTimeLinePane;
-import New.CustomControls.TimeLine.StrokeDurationTimeLinePane;
-import New.CustomControls.TimeLine.TimeLinePane;
-import New.CustomControls.TimeLineElement.AnnotationRectangle;
-import New.Model.Entities.Annotation;
-import New.Model.Entities.SimpleColor;
-import New.Model.Entities.Project;
 import New.Model.Entities.TimeLineTag;
 import New.Model.ObservableModel.ObservablePage;
 import New.Model.ObservableModel.ObservableProject;
 import New.Model.ObservableModel.ObservableTimeLineTag;
 import New.util.ColorConverter;
-import javafx.beans.property.DoubleProperty;
-import javafx.beans.property.SimpleDoubleProperty;
 import javafx.scene.paint.Color;
-
-
-import java.util.*;
-import java.util.stream.Collectors;
 
 public class TimeLineContainerController {
 

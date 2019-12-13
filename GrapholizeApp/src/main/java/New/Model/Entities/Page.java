@@ -45,6 +45,9 @@ public class Page {
     public Map<String, List<Annotation>> getTimeLines(){return this.timeLines;}
 
     public List<Annotation> getTimeLine(String key){
+        if(!timeLines.keySet().contains(key)){
+            timeLines.put(key, new LinkedList<>());
+        }
         return timeLines.get(key);
     }
 
