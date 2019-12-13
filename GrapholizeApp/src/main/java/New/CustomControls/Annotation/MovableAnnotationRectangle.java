@@ -1,7 +1,7 @@
 package New.CustomControls.Annotation;
 
 
-import New.Controllers.AnnotationController;
+import New.Controllers.MovableAnnotationController;
 import New.CustomControls.TimeLine.CustomTimeLinePane;
 import New.Model.ObservableModel.ObservableAnnotation;
 import New.util.DialogGenerator;
@@ -18,12 +18,12 @@ public class MovableAnnotationRectangle extends AnnotationRectangle {
 
     private double[] dragBounds;
     private double mouseDelta;
-    private AnnotationController annotationController;
+    private MovableAnnotationController movableAnnotationController;
 
     public MovableAnnotationRectangle(ObjectProperty<Color> c, DoubleProperty scale, ObservableAnnotation t, CustomTimeLinePane parent) {
-        super(c, t.getAnnotationTextProperty(), scale, t.getDuration() * scale.get(), parent.getHeight(), t.getTimeStart() * scale.get());
+        super(c, t.getAnnotationTextProperty(), scale, t.getDuration() * scale.get(), parent.getHeight(), t.getTimeStart() * scale.get(), parent);
 
-        this.annotationController = new AnnotationController(t,parent);
+        this.movableAnnotationController = new MovableAnnotationController(t,parent);
 
         setOnMousePressed(e-> handleMousePress(e));
         setOnMouseDragged(e-> handleMouseDrag(e));
@@ -34,7 +34,7 @@ public class MovableAnnotationRectangle extends AnnotationRectangle {
     private void move(double newTimeStart){
         double delta = (newTimeStart - getX()) / scale.get();
         this.setX(newTimeStart);
-        annotationController.moveElement(delta);
+        movableAnnotationController.moveElement(delta);
     }
 
     /**
@@ -62,7 +62,7 @@ public class MovableAnnotationRectangle extends AnnotationRectangle {
                 annotationText.get()
         );
         if(newAnnotationText.isPresent()){
-            annotationController.editElement(newAnnotationText.get());
+            movableAnnotationController.editElement(newAnnotationText.get());
         }
     }
 
@@ -76,7 +76,7 @@ public class MovableAnnotationRectangle extends AnnotationRectangle {
                 "Delete annotation?",
                 "Are you sure you want to delete the annotation \"" + annotationText.get() + "\"? This action cannot be undone."))
         {
-            annotationController.removeElement();
+            movableAnnotationController.removeElement();
         }
     }
 
@@ -84,7 +84,7 @@ public class MovableAnnotationRectangle extends AnnotationRectangle {
 
     private void handleMousePress(MouseEvent event){
         mouseDelta = event.getX() - getX();
-        dragBounds = annotationController.getBounds(event.getX());
+        dragBounds = movableAnnotationController.getBounds(event.getX());
         event.consume();
     }
 

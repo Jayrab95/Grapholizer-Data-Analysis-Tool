@@ -1,15 +1,18 @@
 package New.Controllers;
 
+import New.CustomControls.TimeLine.SelectableTimeLinePane;
 import New.CustomControls.TimeLineContainer;
+import New.Model.ObservableModel.ObservableTimeLine;
 
 public class SelectableTimeLineController {
-    private TimeLineContainer parent;
 
-    public SelectableTimeLineController(TimeLineContainer parent){
-        this.parent = parent;
+    ObservableTimeLine timeLine;
+
+    public SelectableTimeLineController(ObservableTimeLine timeLine){
+        this.timeLine = timeLine;
     }
 
-    public void selectTimeLine(){
-
+    public void selectTimeLine(SelectableTimeLinePane timeLinePane){
+        timeLine.setSelectedTimeLine(timeLinePane);
     }
 }

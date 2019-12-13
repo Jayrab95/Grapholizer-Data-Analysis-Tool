@@ -10,6 +10,7 @@ import New.Interfaces.Observer;
 import New.Model.Entities.Annotation;
 import New.Model.ObservableModel.ObservablePage;
 import New.Model.ObservableModel.ObservableProject;
+import New.Model.ObservableModel.ObservableTimeLine;
 import New.Model.ObservableModel.ObservableTimeLineTag;
 import New.util.DialogGenerator;
 import javafx.beans.property.DoubleProperty;
@@ -44,20 +45,11 @@ public class TimeLineContainer extends VBox {
     private final static String TXT_TL_CREATION_ERROR_TITLE = "Timeline creation error";
     private final static String TXT_TL_CREATION_ERROR_HEADER = "Error while creating timeline";
 
-    private final static String TXT_TL_EDIT_ERROR_TITLE = "Timeline edit error";
-    private final static String TXT_TL_EDIT_ERROR_HEADER = "Error while editing timeline";
-
-    private final static String TXT_TL_ERROR_CANNOT_BE_DELETED = "This timeline cannot be deleted. Only custom timelines can be deleted.";
-    private final static String TXT_TL_ERROR_CANNOT_BE_EDITED = "This timeline cannot be edited. Only custom timelines can be edited.";
-
-    private final static String TXT_TL_DELETE_ERROR_TITLE = "Delete timeline error";
-    private final static String TXT_TL_DELETE_ERROR_HEADER = "Error while deleting timeline";
-
     private double totalWidth;
     private double timeLinesHeight = 50;
     private DoubleProperty scale;
 
-    private TimeLinePane selectedTimeLine;
+    private ObservableTimeLine selectedTimeLine;
 
     private TimeLineContainerController timeLineContainerController;
 
@@ -84,7 +76,9 @@ public class TimeLineContainer extends VBox {
         //Step 1: Create the stroke timeline
         //Step 2: For each tag, create a new timeline and pass over the observble Tag and the page. Then create the annotations.
         totalWidth = page.getDuration();
-        getChildren().add(new StrokeDurationTimeLinePane(totalWidth,timeLinesHeight, scale, timeLineContainerController.getPage()));
+        StrokeDurationTimeLinePane strokePane = new StrokeDurationTimeLinePane(totalWidth,timeLinesHeight, scale, timeLineContainerController.getPage(), this);
+        selectedTimeLine = new ObservableTimeLine(strokePane);
+        getChildren().add(strokePane);
 
         for(String tag : project.getTimeLineTagNames()){
 
@@ -92,11 +86,8 @@ public class TimeLineContainer extends VBox {
         getChildren().add(hbox_buttonHBox);
     }
 
-    public List<AnnotationRectangle> getSelectedAnnotations(){
-        return selectedTimeLine.getChildren().stream()
-                .map(node -> (AnnotationRectangle)node)
-                .filter(ar -> ar.isSelected())
-                .collect(Collectors.toList());
+    public ObservableTimeLine getSelectedTimeLine() {
+        return selectedTimeLine;
     }
 
     private void addTimeLinePane(TimeLinePane timeLinePane){
@@ -156,11 +147,7 @@ public class TimeLineContainer extends VBox {
     }
 
     private TimeLinePane createNewTimeLineTagOutOfSelected(ObservableTimeLineTag newTimeLineTag, ObservablePage page){
-        List<AnnotationRectangle> selected = selectedTimeLine.getChildren().stream()
-                .map(node -> (AnnotationRectangle)node)
-                .filter(a -> a.isSelected())
-                .collect(Collectors.toList());
-        return createNewTimeLinePane(newTimeLineTag, page, Optional.of(selected));
+        return createNewTimeLinePane(newTimeLineTag, page, Optional.of(selectedTimeLine.getSelectedElements()));
     }
 
     private TimeLinePane createNewTimeLinePaneOutOfCombined(ObservableTimeLineTag tag, ObservablePage page, Annotation annotation){

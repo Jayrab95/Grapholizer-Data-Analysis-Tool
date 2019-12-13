@@ -1,5 +1,8 @@
 package New.CustomControls.Annotation;
 
+import New.Controllers.AnnotationSelectionController;
+import New.CustomControls.TimeLine.CustomTimeLinePane;
+import New.CustomControls.TimeLine.SelectableTimeLinePane;
 import javafx.beans.property.*;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.paint.Color;
@@ -12,9 +15,10 @@ public abstract class AnnotationRectangle extends Rectangle {
     protected StringProperty annotationText;
     protected BooleanProperty selected;
     protected DoubleProperty scale;
+    protected AnnotationSelectionController annotationSelectionController;
 
 
-    public AnnotationRectangle(ObjectProperty<Color> c, StringProperty text, DoubleProperty scale, double width, double height, double start){
+    public AnnotationRectangle(ObjectProperty<Color> c, StringProperty text, DoubleProperty scale, double width, double height, double start, SelectableTimeLinePane parent){
         this.annotationColor = new SimpleObjectProperty<>(c.get());
         this.selected = new SimpleBooleanProperty(false);
 
@@ -27,6 +31,8 @@ public abstract class AnnotationRectangle extends Rectangle {
 
         this.annotationColor.bind(c);
         this.annotationColor.addListener((observable, oldValue, newValue) -> onColorChange());
+
+        this.annotationSelectionController = new AnnotationSelectionController(parent);
 
         setHeight(height);
         setWidth(width);
@@ -81,6 +87,7 @@ public abstract class AnnotationRectangle extends Rectangle {
 
     protected void handleMouseClick(MouseEvent e){
         System.out.println("HandleMouseClick in AnnotationRectangle Base has been called");
+        annotationSelectionController.selectTimeLine(e.isControlDown());
         toggleSelected();
     }
 }

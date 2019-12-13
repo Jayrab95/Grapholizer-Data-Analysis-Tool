@@ -24,7 +24,7 @@ import javafx.scene.shape.Rectangle;
 import java.util.List;
 import java.util.Optional;
 
-public class CustomTimeLinePane extends TimeLinePane implements Observer {
+public class CustomTimeLinePane extends SelectableTimeLinePane implements Observer {
 
     public static final String TXT_COPYANNOTATION_TITLE = "Copy selected annotations";
     public static final String TXT_COPYANNOTATION_HEADER = "Copy selected annotations into timeline %s";
@@ -46,7 +46,7 @@ public class CustomTimeLinePane extends TimeLinePane implements Observer {
     private ContextMenu contextMenu;
 
     public CustomTimeLinePane(double width, double height, DoubleProperty scaleProp, ObservableTimeLineTag tag, ObservablePage p, TimeLineContainer parent) {
-        super(width, height, scaleProp, tag.getTagProperty());
+        super(width, height, scaleProp, tag.getTagProperty(), parent);
         this.timeLineTag = tag;
         customTimeLineController = new CustomTimeLineController(tag, p, parent);
         anchor = new Light.Point();
