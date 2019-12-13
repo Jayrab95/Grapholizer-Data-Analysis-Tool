@@ -10,7 +10,7 @@ public class VelocityMathUtil {
     private final static double  PIXEL_DPI_RATIO = PIXEL_PER_NCODE_CELL/DPI;
     private final static float CM_TO_INCH_RATIO = 2.54f;
 
-    public static double calculateVelocityBetweenDots(
+    public static double calculateVelocityBetweenDotsMmMs(
             float x1, float y1
             , float x2, float y2
             , int timeDifference
@@ -27,7 +27,7 @@ public class VelocityMathUtil {
         return velocityMMPerMS(vecLenghtMm, timeDifference);
     }
 
-    public static double vectorLengthMm(double xMm, double yMm) {
+    private static double vectorLengthMm(double xMm, double yMm) {
         double pythagoras = (Math.pow(xMm,2) + Math.pow(yMm,2));
         return Math.sqrt(pythagoras);
     }
@@ -56,7 +56,6 @@ public class VelocityMathUtil {
         return velocityMmPerMs/(double)milliseconds;
     }
 
-    //TODO Normalize it
     public static double jerk(double accelerationMmPerMsSquare, int milliseconds) {
         if(milliseconds == 0 || accelerationMmPerMsSquare == 0) return 0.0d;
         return accelerationMmPerMsSquare/(double)milliseconds;
@@ -64,6 +63,7 @@ public class VelocityMathUtil {
 
     public static double normalizedJerk(double accelerationMmPerMsSquare, int miliseconds) {
         if(miliseconds == 0 || accelerationMmPerMsSquare == 0) return 0.0d;
+        //TODO Might Change in the futur
         return 1.0d / (accelerationMmPerMsSquare/(double)miliseconds);
     }
 }
