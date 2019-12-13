@@ -62,6 +62,8 @@ public class TimeLineContainer extends VBox {
     private TimeLineContainerController timeLineContainerController;
 
     private Button btn_CreateNewTimeLine;
+    private Button btn_CreateNewTimeLineOutOfSelected;
+    private HBox hbox_buttonHBox;
 
     public TimeLineContainer(ObservableProject project, ObservablePage page, double initialScale){
         timeLineContainerController = new TimeLineContainerController(project, page);
@@ -69,17 +71,24 @@ public class TimeLineContainer extends VBox {
         InitializeContainer(project, page);
     }
 
-    private void InitializeContainer(ObservableProject project, ObservablePage page){
+    private void InitializeButtonHBox(){
         btn_CreateNewTimeLine = new Button("Create new timeline");
         btn_CreateNewTimeLine.setOnAction(event -> createNewTimeLine());
+        btn_CreateNewTimeLineOutOfSelected = new Button("Create new Timeline out of selected annotations");
+        btn_CreateNewTimeLineOutOfSelected.setOnAction(event -> createNewTimeLineOutOfSelectedElements());
+        hbox_buttonHBox = new HBox(btn_CreateNewTimeLine, btn_CreateNewTimeLineOutOfSelected);
+    }
+
+    private void InitializeContainer(ObservableProject project, ObservablePage page){
         //Step 1: Create the stroke timeline
         //Step 2: For each tag, create a new timeline and pass over the observble Tag and the page. Then create the annotations.
         totalWidth = page.getDuration();
         getChildren().add(new StrokeDurationTimeLinePane(totalWidth,timeLinesHeight, scale, timeLineContainerController.getPage()));
-        getChildren().add(btn_CreateNewTimeLine);
+
         for(String tag : project.getTimeLineTagNames()){
 
         }
+        getChildren().add(hbox_buttonHBox);
     }
 
     public List<AnnotationRectangle> getSelectedAnnotations(){
@@ -159,9 +168,9 @@ public class TimeLineContainer extends VBox {
     }
 
     private void addTimeLineToChildren(TimeLinePane timeline){
-        getChildren().remove(btn_CreateNewTimeLine);
+        getChildren().remove(hbox_buttonHBox);
         getChildren().add(timeline);
-        getChildren().add(btn_CreateNewTimeLine);
+        getChildren().add(hbox_buttonHBox);
     }
 
     public void editTimeLine(String oldName, Color oldColor){
