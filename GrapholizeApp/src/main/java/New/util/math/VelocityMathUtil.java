@@ -1,6 +1,6 @@
 package New.util.math;
 
-import Model.Entities.Dot;
+
 
 public class VelocityMathUtil {
     //Dots-Per-Inch is a standard value that is used by NeoNotes for all their papersizes
@@ -23,12 +23,12 @@ public class VelocityMathUtil {
         //calculate the distance of two points with euclidean norm
         double distanceVecX = x1Mm - x2Mm;
         double distanceVecY = y1Mm - y2Mm;
-        double vecLenghtMm = vectorLength(distanceVecX,distanceVecY);
-        return velocityMMPerMS(vecLenght, timeDifference);
+        double vecLenghtMm = vectorLengthMm(distanceVecX,distanceVecY);
+        return velocityMMPerMS(vecLenghtMm, timeDifference);
     }
 
     public static double vectorLengthMm(double xMm, double yMm) {
-        double pythagoras = (Math.pow(x,2) + Math.pow(y,2));
+        double pythagoras = (Math.pow(xMm,2) + Math.pow(yMm,2));
         return Math.sqrt(pythagoras);
     }
     //Converts Ncode™coordinates to Inch: InchVal(NcodeXY) = NcodeXY * 56.0 / 600.0

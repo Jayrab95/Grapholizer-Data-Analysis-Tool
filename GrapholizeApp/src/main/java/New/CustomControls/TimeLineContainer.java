@@ -68,6 +68,7 @@ public class TimeLineContainer extends VBox {
     public TimeLineContainer(ObservableProject project, ObservablePage page, double initialScale){
         timeLineContainerController = new TimeLineContainerController(project, page);
         scale = new SimpleDoubleProperty(initialScale);
+        InitializeButtonHBox();
         InitializeContainer(project, page);
     }
 

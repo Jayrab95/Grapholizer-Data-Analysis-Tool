@@ -24,4 +24,4 @@ javafx {
     modules = [ 'javafx.controls' , 'javafx.base', 'javafx.fxml', 'javafx.graphics']
 }
 
-mainClassName = 'Scenes.HelloFX'
+mainClassName = 'New.Scenes.HelloFX'

@@ -2,19 +2,12 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="f9c9e85c-b6d3-4a2f-99c7-3350288aea5b" name="Default Changelist" comment="">
-<<<<<<< HEAD
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/build/classes/java/main/Controls/Timeline/Pane/PressureTimeLinePane.class" beforeDir="false" afterPath="$PROJECT_DIR$/build/classes/java/main/Controls/Timeline/Pane/PressureTimeLinePane.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/Controllers/MainSceneController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/Controllers/MainSceneController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/Controls/Container/TimeLineContainer.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/Controls/Container/TimeLineContainer.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/Controls/Timeline/Pane/PressureTimeLinePane.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/Controls/Timeline/Pane/PressureTimeLinePane.java" afterDir="false" />
-=======
-      <change afterPath="$PROJECT_DIR$/src/main/java/New/Controllers/SelectableTimeLineController.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/New/CustomControls/TimeLine/SelectableTimeLinePane.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/New/Model/ObservableModel/ObservableTimeLine.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/build.gradle" beforeDir="false" afterPath="$PROJECT_DIR$/build.gradle" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/classes/java/main/Scenes/HelloFX.class" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/New/CustomControls/TimeLineContainer.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/New/CustomControls/TimeLineContainer.java" afterDir="false" />
->>>>>>> Remodelling
+      <change beforePath="$PROJECT_DIR$/src/main/java/New/util/math/DotCalculations.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/New/util/math/DotCalculationsUtil.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/New/util/math/VelocityMathUtil.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/New/util/math/VelocityMathUtil.java" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -97,14 +90,10 @@
     <property name="SHARE_PROJECT_CONFIGURATION_FILES" value="true" />
     <property name="WebServerToolWindowFactoryState" value="false" />
     <property name="aspect.path.notification.shown" value="true" />
-<<<<<<< HEAD
-    <property name="last_opened_file_path" value="$PROJECT_DIR$/src/main/java/New" />
-=======
     <property name="com.intellij.testIntegration.createTest.CreateTestDialog.defaultLibrary" value="JUnit5" />
     <property name="com.intellij.testIntegration.createTest.CreateTestDialog.defaultLibrarySuperClass.JUnit5" value="" />
     <property name="create.test.in.the.same.root" value="true" />
     <property name="last_opened_file_path" value="C:/Program Files/SceneBuilder/SceneBuilder.exe" />
->>>>>>> ba5014ceb224d3905fb44c7fa1e806ec6f9ea9b5
     <property name="node.js.detected.package.eslint" value="true" />
     <property name="node.js.detected.package.tslint" value="true" />
     <property name="node.js.path.for.package.eslint" value="project" />
@@ -120,20 +109,13 @@
     <property name="settings.editor.selected.configurable" value="web.server" />
   </component>
   <component name="RecentsManager">
-<<<<<<< HEAD
-    <key name="MoveFile.RECENT_KEYS">
-=======
     <key name="CreateTestDialog.RecentsKey">
       <recent name="util.math" />
     </key>
-    <key name="MoveFile.RECENT_KEYS">
-      <recent name="C:\Users\lukat\Repos\repotest\IP6_Grapholize\GrapholizeApp" />
-      <recent name="C:\Users\lukat\Repos\repotest\IP6_Grapholize\GrapholizeApp\src" />
->>>>>>> ba5014ceb224d3905fb44c7fa1e806ec6f9ea9b5
-      <recent name="C:\Users\jarab\Documents\FHNW\Semester 7\Projekt\IP6_Grapholize\GrapholizeApp\src\main\resources\fxml" />
-      <recent name="C:\Users\jarab\Documents\FHNW\Semester 7\Projekt\IP6_Grapholize\GrapholizeApp\src\main\resources\views" />
-    </key>
     <key name="MoveClassesOrPackagesDialog.RECENTS_KEY">
+      <recent name="" />
+    </key>
+    <key name="CreateTestDialog.Recents.Supers">
       <recent name="" />
     </key>
     <key name="CopyClassDialog.RECENTS_KEY">
@@ -143,14 +125,9 @@
       <recent name="New.CustomControls.TimeLine" />
       <recent name="New.Scenes" />
     </key>
-<<<<<<< HEAD
-    <key name="CopyFile.RECENT_KEYS">
-      <recent name="C:\Users\jarab\Documents\FHNW\Semester 7\Projekt\IP6_Grapholize\GrapholizeApp\src\main\java\New" />
-      <recent name="C:\Users\jarab\Documents\FHNW\Semester 7\Projekt\IP6_Grapholize\GrapholizeApp\src\main\java\New\Model" />
-=======
-    <key name="CreateTestDialog.Recents.Supers">
-      <recent name="" />
->>>>>>> ba5014ceb224d3905fb44c7fa1e806ec6f9ea9b5
+    <key name="MoveFile.RECENT_KEYS">
+      <recent name="C:\Users\jarab\Documents\FHNW\Semester 7\Projekt\IP6_Grapholize\GrapholizeApp\src\main\resources\fxml" />
+      <recent name="C:\Users\jarab\Documents\FHNW\Semester 7\Projekt\IP6_Grapholize\GrapholizeApp\src\main\resources\views" />
     </key>
   </component>
   <component name="RunDashboard">
@@ -173,7 +150,7 @@
       </method>
     </configuration>
     <configuration name="HelloFX" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
-      <option name="MAIN_CLASS_NAME" value="Scenes.HelloFX" />
+      <option name="MAIN_CLASS_NAME" value="New.Scenes.HelloFX" />
       <module name="GrapholizeAppAID.main" />
       <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$" />
       <extension name="coverage">
@@ -258,8 +235,8 @@
     <recent_temporary>
       <list>
         <item itemvalue="Gradle.GrapholizeApp [run]" />
-        <item itemvalue="Gradle.GrapholizeApp [build]" />
         <item itemvalue="Application.HelloFX" />
+        <item itemvalue="Gradle.GrapholizeApp [build]" />
       </list>
     </recent_temporary>
   </component>
@@ -298,13 +275,6 @@
       <workItem from="1574965823180" duration="1496000" />
       <workItem from="1574968738667" duration="1827000" />
       <workItem from="1575015968333" duration="1928000" />
-<<<<<<< HEAD
-      <workItem from="1575303701556" duration="4206000" />
-      <workItem from="1575635467291" duration="31327000" />
-      <workItem from="1575888304485" duration="38199000" />
-      <workItem from="1576075760380" duration="44142000" />
-      <workItem from="1576239795179" duration="6330000" />
-=======
       <workItem from="1575052323705" duration="551000" />
       <workItem from="1575462555568" duration="4713000" />
       <workItem from="1575477145441" duration="1863000" />
@@ -314,7 +284,6 @@
       <workItem from="1575643835382" duration="1096000" />
       <workItem from="1575645422355" duration="2508000" />
       <workItem from="1575712386641" duration="2967000" />
->>>>>>> ba5014ceb224d3905fb44c7fa1e806ec6f9ea9b5
     </task>
     <servers />
   </component>
