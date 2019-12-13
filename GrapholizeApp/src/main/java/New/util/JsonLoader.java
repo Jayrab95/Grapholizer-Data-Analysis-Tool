@@ -22,8 +22,9 @@ public class JsonLoader implements Loader {
         CompressedParticipant[] partics;
         try(BufferedReader stream = new BufferedReader(new InputStreamReader(new FileInputStream(path)))){
             Gson gson = new Gson();
-            String content = stream.lines().reduce("", String::concat);
-            partics = gson.fromJson(content, CompressedParticipant[].class);
+            StringBuilder sBuilder = new StringBuilder();
+            stream.lines().forEach(s -> sBuilder.append(s));
+            partics = gson.fromJson(sBuilder.toString(), CompressedParticipant[].class);
         }
         return turnToInternalDataStructur(partics);
     }
