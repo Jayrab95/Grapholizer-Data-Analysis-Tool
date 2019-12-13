@@ -11,7 +11,7 @@
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.VBox?>
 
-<AnchorPane prefHeight="720.0" prefWidth="1280.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Controllers.MainSceneController">
+<AnchorPane prefHeight="720.0" prefWidth="1280.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="New.Controllers.MainSceneController">
    <children>
       <VBox layoutX="14.0" layoutY="14.0" AnchorPane.bottomAnchor="14.0" AnchorPane.leftAnchor="14.0" AnchorPane.rightAnchor="14.0" AnchorPane.topAnchor="14.0">
          <children>
@@ -36,20 +36,7 @@
             </MenuBar>
             <SplitPane dividerPositions="0.4992" prefHeight="675.0" prefWidth="1252.0">
               <items>
-                <AnchorPane minHeight="0.0" minWidth="0.0">
-                     <children>
-                        <ScrollPane layoutY="52.0" prefHeight="638.0" prefWidth="619.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="52.0">
-                           <content>
-                              <Canvas fx:id="canvas_mainCanvas" />
-                           </content>
-                        </ScrollPane>
-                        <HBox layoutX="306.0" layoutY="-1.0" spacing="5.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
-                           <children>
-                              <Button fx:id="btn_scaleDown" mnemonicParsing="false" onAction="#handleScaleDownPress" text="Scale down" />
-                              <Button fx:id="btn_scaleUp" mnemonicParsing="false" onAction="#handleScaleUpPress" text="Scale up" />
-                           </children>
-                        </HBox>
-                     </children>
+                <AnchorPane fx:id="anchorPane_canvasContainer" minHeight="0.0" minWidth="0.0">
                 </AnchorPane>
                 <AnchorPane minHeight="0.0" minWidth="0.0">
                      <children>
