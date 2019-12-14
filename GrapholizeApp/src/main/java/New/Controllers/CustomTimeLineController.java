@@ -31,7 +31,7 @@ public class CustomTimeLineController {
     }
 
     public void editTimeLine(){
-        parent.editTimeLine(timeLineTag.getTag(), timeLineTag.getColor());
+        parent.editTimeLine(timeLineTag);
     }
 
     public void removeTimeLine(CustomTimeLinePane timeLine){

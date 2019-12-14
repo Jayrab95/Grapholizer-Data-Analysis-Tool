@@ -6,7 +6,7 @@ import New.CustomControls.TimeLine.StrokeDurationTimeLinePane;
 import New.CustomControls.TimeLine.TimeLinePane;
 import New.CustomControls.Annotation.AnnotationRectangle;
 import New.Execptions.TimeLineTagException;
-import New.Interfaces.Observer;
+import New.Interfaces.Observer.Observer;
 import New.Model.Entities.Annotation;
 import New.Model.ObservableModel.ObservablePage;
 import New.Model.ObservableModel.ObservableProject;
@@ -24,7 +24,6 @@ import javafx.scene.paint.Color;
 
 import java.util.List;
 import java.util.Optional;
-import java.util.stream.Collectors;
 
 public class TimeLineContainer extends VBox {
 
@@ -33,6 +32,7 @@ public class TimeLineContainer extends VBox {
     private final static String TXT_TL_CREATION_TEXT = "Create a new timeline by entering a tag. The tag must be unique and cannot be empty.";
     private final static String TXT_TL_TIMELINETAG_LABEL = "Timeline tag:";
     private final static String TXT_TL_TAG_DEFAULTVAL = "New Timeline";
+    private final static Color COLOR_TL_TAG_DEFAULTVAL = Color.CADETBLUE;
 
     private final static String TXT_TL_EDIT_TITLE = "Edit timeline";
     private final static String TXT_TL_EDIT_HEADER = "Editing a timeline";
@@ -87,6 +87,9 @@ public class TimeLineContainer extends VBox {
     }
 
     public ObservableTimeLine getSelectedTimeLine() {
+        if(selectedTimeLine == null){
+            selectedTimeLine = new ObservableTimeLine();
+        }
         return selectedTimeLine;
     }
 
@@ -101,7 +104,8 @@ public class TimeLineContainer extends VBox {
                 TXT_TL_CREATION_TEXT,
                 TXT_TL_TIMELINETAG_LABEL,
                 TXT_TL_TAG_DEFAULTVAL,
-                Color.CADETBLUE);
+                COLOR_TL_TAG_DEFAULTVAL,
+                false);
         if(tag.isPresent()){
             ObservableTimeLineTag newTag = timeLineContainerController.createNewTimeLineTag(tag.get().timeLinename, tag.get().timeLineColor);
             TimeLinePane timeLinePane = createNewTimeLinePane(newTag, timeLineContainerController.getPage(),Optional.empty());
@@ -116,7 +120,8 @@ public class TimeLineContainer extends VBox {
                 TXT_TL_CREATION_TEXT,
                 TXT_TL_TIMELINETAG_LABEL,
                 TXT_TL_TAG_DEFAULTVAL,
-                Color.CADETBLUE);
+                COLOR_TL_TAG_DEFAULTVAL,
+                false);
         if(tag.isPresent()){
             ObservableTimeLineTag newTag = timeLineContainerController.createNewTimeLineTag(tag.get().timeLinename, tag.get().timeLineColor);
             TimeLinePane timeLinePane = createNewTimeLineTagOutOfSelected(newTag, timeLineContainerController.getPage());
@@ -131,7 +136,9 @@ public class TimeLineContainer extends VBox {
                 TXT_TL_CREATION_TEXT,
                 TXT_TL_TIMELINETAG_LABEL,
                 TXT_TL_TAG_DEFAULTVAL,
-                Color.CADETBLUE);
+                COLOR_TL_TAG_DEFAULTVAL,
+                false
+        );
         if(tag.isPresent()){
             ObservableTimeLineTag newTag = timeLineContainerController.createNewTimeLineTag(tag.get().timeLinename, tag.get().timeLineColor);
             TimeLinePane timeLinePane = createNewTimeLinePaneOutOfCombined(newTag, timeLineContainerController.getPage(), a);
@@ -161,16 +168,19 @@ public class TimeLineContainer extends VBox {
         getChildren().add(hbox_buttonHBox);
     }
 
-    public void editTimeLine(String oldName, Color oldColor){
+    public void editTimeLine(ObservableTimeLineTag oldTag){
         Optional<DialogResult> tag = openTimeLineCreationDialog(
                 TXT_TL_EDIT_TITLE,
                 TXT_TL_EDIT_HEADER,
                 TXT_TL_EDIT_TEXT,
                 TXT_TL_TIMELINETAG_LABEL,
-                oldName,
-                oldColor);
+                oldTag.getTag(),
+                oldTag.getColor(),
+                true);
         if (tag.isPresent()){
-            timeLineContainerController.editTimeLineTag(oldName, tag.get().timeLinename, tag.get().timeLineColor);
+            timeLineContainerController.editTimeLineTag(oldTag.getTag(), tag.get().timeLinename, tag.get().timeLineColor);
+            oldTag.setTag(tag.get().timeLinename);
+            oldTag.setColor(tag.get().timeLineColor);
         }
     }
 
@@ -192,8 +202,7 @@ public class TimeLineContainer extends VBox {
     //https://code.makery.ch/blog/javafx-dialogs-official/
     //https://examples.javacodegeeks.com/desktop-java/javafx/dialog-javafx/javafx-dialog-example/
     //https://docs.oracle.com/javase/8/javafx/api/javafx/scene/control/Dialog.html#resultConverterProperty--
-    private Optional<DialogResult> openTimeLineCreationDialog(String dialogTitle, String dialogHeader, String dialogText, String labelText, String defaultValue, Color defaultColor){
-
+    private Optional<DialogResult> openTimeLineCreationDialog(String dialogTitle, String dialogHeader, String dialogText, String labelText, String defaultValue, Color defaultColor, boolean editCall){
         /*
         This dialog is specific to the creation of timelines and contains some more complex logic
         specific to timelines and the TimelineContainer. Therefore it cannot be moved to DialogGenerator
@@ -222,17 +231,22 @@ public class TimeLineContainer extends VBox {
         final Button okButton = (Button) dialog.getDialogPane().lookupButton(buttonTypeOk);
 
         okButton.addEventFilter(ActionEvent.ACTION, ae -> {
-            try{
-                timeLineContainerController.checkIfTagIsValid(textBox_TimeLineTag.getText());
-            }
-            catch(TimeLineTagException ex){
-                DialogGenerator.simpleErrorDialog(
-                        TXT_TL_CREATION_ERROR_TITLE,
-                        TXT_TL_CREATION_ERROR_HEADER,
-                        ex.toString()
-                );
-                //Consume the event so that the dialog stays open.
-                ae.consume();
+            String newTimeLineName = textBox_TimeLineTag.getText();
+            //The if-block is entered if the dialog was opened by a creation command OR  if it's an edit command and
+            //the old and new value are different.
+            //If neither is true, it's an edit call where only the color of the timeline is edited and no name check is required.
+            if(!editCall || !defaultValue.equals(newTimeLineName)) {
+                try {
+                    timeLineContainerController.checkIfTagIsValid(textBox_TimeLineTag.getText());
+                } catch (TimeLineTagException ex) {
+                    DialogGenerator.simpleErrorDialog(
+                            TXT_TL_CREATION_ERROR_TITLE,
+                            TXT_TL_CREATION_ERROR_HEADER,
+                            ex.toString()
+                    );
+                    //Consume the event so that the dialog stays open.
+                    ae.consume();
+                }
             }
         });
 

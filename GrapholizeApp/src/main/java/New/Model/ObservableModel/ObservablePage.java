@@ -2,7 +2,8 @@ package New.Model.ObservableModel;
 
 import New.CustomControls.Annotation.AnnotationRectangle;
 import New.Interfaces.Observable;
-import New.Interfaces.Observer;
+import New.Interfaces.Observer.Observer;
+import New.Interfaces.Observer.PageObserver;
 import New.Model.Entities.*;
 import javafx.scene.paint.Color;
 
@@ -11,9 +12,9 @@ import java.util.LinkedList;
 import java.util.List;
 import java.util.stream.Collectors;
 
-public class ObservablePage implements Observable{
+public class ObservablePage{
     private Page inner;
-    private List<Observer> observers;
+    private List<PageObserver> observers;
 
     public ObservablePage(Page inner){
         this.inner = inner;
@@ -116,19 +117,19 @@ public class ObservablePage implements Observable{
 
     public double getDuration(){return inner.getDuration();}
 
-    @Override
-    public void addObserver(Observer obs) {
+
+    public void addObserver(PageObserver obs) {
         this.observers.add(obs);
     }
 
-    @Override
-    public void removeObserver(Observer obs) {
+
+    public void removeObserver(PageObserver obs) {
         this.observers.remove(obs);
     }
 
-    @Override
+
     public void notifyObservers() {
-        for(Observer obs : this.observers){
+        for(PageObserver obs : this.observers){
             obs.update(this);
         }
     }

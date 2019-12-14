@@ -3,15 +3,20 @@ package New.Model.ObservableModel;
 import New.CustomControls.Annotation.AnnotationRectangle;
 import New.CustomControls.TimeLine.SelectableTimeLinePane;
 import New.Interfaces.Observable;
-import New.Interfaces.Observer;
+import New.Interfaces.Observer.Observer;
+import New.Interfaces.Observer.TimeLineObserver;
 
 import java.util.LinkedList;
 import java.util.List;
 import java.util.stream.Collectors;
 
-public class ObservableTimeLine implements Observable {
+public class ObservableTimeLine {
     private SelectableTimeLinePane selectedTimeLine;
-    private List<Observer> observers;
+    private List<TimeLineObserver> observers;
+
+    public ObservableTimeLine(){
+        observers = new LinkedList<>();
+    }
 
     public ObservableTimeLine(SelectableTimeLinePane timeLine){
         this.selectedTimeLine = timeLine;
@@ -34,19 +39,16 @@ public class ObservableTimeLine implements Observable {
         return selectedTimeLine == timeLinePane;
     }
 
-    @Override
-    public void addObserver(Observer obs) {
+    public void addObserver(TimeLineObserver obs) {
         this.observers.add(obs);
     }
 
-    @Override
-    public void removeObserver(Observer obs) {
+    public void removeObserver(TimeLineObserver obs) {
         this.observers.remove(obs);
     }
 
-    @Override
     public void notifyObservers() {
-        for(Observer observer : observers){
+        for(TimeLineObserver observer : observers){
             observer.update(this);
         }
     }

@@ -4,7 +4,8 @@ import New.Controllers.SelectableTimeLineController;
 import New.CustomControls.Annotation.AnnotationRectangle;
 import New.CustomControls.TimeLineContainer;
 import New.Interfaces.Observable;
-import New.Interfaces.Observer;
+import New.Interfaces.Observer.Observer;
+import New.Interfaces.Observer.TimeLineObserver;
 import New.Model.ObservableModel.ObservableTimeLine;
 import javafx.beans.property.BooleanProperty;
 import javafx.beans.property.DoubleProperty;
@@ -12,7 +13,7 @@ import javafx.beans.property.SimpleBooleanProperty;
 import javafx.beans.property.StringProperty;
 import javafx.scene.Node;
 
-public abstract class SelectableTimeLinePane extends TimeLinePane implements Observer {
+public abstract class SelectableTimeLinePane extends TimeLinePane implements TimeLineObserver {
 
     private SelectableTimeLineController selectableTimeLineController;
     private BooleanProperty timeLineSelectedProperty;
@@ -47,9 +48,8 @@ public abstract class SelectableTimeLinePane extends TimeLinePane implements Obs
     }
 
     @Override
-    public void update(Observable sender){
-        //TODO: Is this check necessary? The annotation already checks if the parent is the selected timeline.
-        if(!((ObservableTimeLine)sender).equals(this)){
+    public void update(ObservableTimeLine sender){
+        if(!sender.equals(this)){
             deselectAllElements();
         }
     }

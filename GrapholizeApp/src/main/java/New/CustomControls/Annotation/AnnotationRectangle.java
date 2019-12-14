@@ -48,6 +48,7 @@ public abstract class AnnotationRectangle extends Rectangle {
     }
 
     private void onColorChange(){
+        System.out.println("Color change has been called");
         setFill(annotationColor.get());
     }
 

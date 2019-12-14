@@ -1,8 +1,9 @@
 package New.CustomControls;
 
+import New.Interfaces.Observer.PageObserver;
 import New.Model.Entities.Dot;
 import New.Interfaces.Observable;
-import New.Interfaces.Observer;
+import New.Interfaces.Observer.Observer;
 import New.Model.ObservableModel.ObservablePage;
 import New.Model.ObservableModel.ObservableStroke;
 import javafx.scene.canvas.Canvas;
@@ -14,7 +15,7 @@ import javafx.scene.paint.Color;
 
 import java.util.List;
 
-public class MainCanvas extends VBox implements Observer {
+public class MainCanvas extends VBox implements PageObserver {
     private HBox hbox_Controls;
     private ScrollPane canvasContainer;
     private final Canvas canvas;
@@ -64,8 +65,8 @@ public class MainCanvas extends VBox implements Observer {
 
 
     @Override
-    public void update(Observable sender) {
-        this.strokes = ((ObservablePage)sender).getObservableStrokes();
+    public void update(ObservablePage sender) {
+        this.strokes = sender.getObservableStrokes();
         resetCanvas();
     }
 

@@ -1,8 +1,7 @@
 package New.Model.ObservableModel;
 
 import New.Interfaces.Observable;
-import New.Interfaces.Observer;
-import New.Model.Entities.SimpleColor;
+import New.Interfaces.Observer.Observer;
 import New.Model.Entities.Dot;
 import New.Model.Entities.Stroke;
 import javafx.beans.property.BooleanProperty;

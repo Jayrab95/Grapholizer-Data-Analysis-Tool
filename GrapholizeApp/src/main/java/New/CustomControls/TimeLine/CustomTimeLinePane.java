@@ -5,7 +5,8 @@ import New.CustomControls.TimeLineContainer;
 import New.CustomControls.Annotation.AnnotationRectangle;
 import New.CustomControls.Annotation.MovableAnnotationRectangle;
 import New.Interfaces.Observable;
-import New.Interfaces.Observer;
+import New.Interfaces.Observer.Observer;
+import New.Interfaces.Observer.PageObserver;
 import New.Model.Entities.Annotation;
 import New.Model.ObservableModel.ObservableAnnotation;
 import New.Model.ObservableModel.ObservablePage;
@@ -24,7 +25,7 @@ import javafx.scene.shape.Rectangle;
 import java.util.List;
 import java.util.Optional;
 
-public class CustomTimeLinePane extends SelectableTimeLinePane implements Observer {
+public class CustomTimeLinePane extends SelectableTimeLinePane implements PageObserver {
 
     public static final String TXT_COPYANNOTATION_TITLE = "Copy selected annotations";
     public static final String TXT_COPYANNOTATION_HEADER = "Copy selected annotations into timeline %s";
@@ -55,7 +56,7 @@ public class CustomTimeLinePane extends SelectableTimeLinePane implements Observ
 
         this.contextMenu = generateContextMenu();
 
-        this.setOnMouseClicked(event -> handleMouseClick(event));
+        //this.setOnMouseClicked(event -> handleMouseClick(event));
         this.setOnMousePressed(event -> handleTimelineMousePress(event));
         this.setOnMouseDragged(event -> handleTimelineMouseDrag(event));
         this.setOnMouseReleased(event -> handleTimelineMouseRelease(event));
@@ -136,13 +137,20 @@ public class CustomTimeLinePane extends SelectableTimeLinePane implements Observ
     }
 
     private void handleMouseClick(MouseEvent event){
+        System.out.println("HandleMouseClick on CustomeTimeLinePane");
         if(event.getButton() == MouseButton.SECONDARY){
+            System.out.println("Pressed secondary on CustomTimeLinepane");
             contextMenu.show(this, event.getScreenX(), event.getScreenY());
         }
     }
     //Source: https://coderanch.com/t/689100/java/rectangle-dragging-image
     private void handleTimelineMousePress(MouseEvent event){
-        //TODO: Check if a comment was clicked.
+
+        if(event.getButton() == MouseButton.SECONDARY){
+            contextMenu.show(this, event.getScreenX(), event.getScreenY());
+            event.consume();
+        }
+
         //If an element was clicked => set Selected Element. The element can now be dragged.
         //Reset selection
 
@@ -203,7 +211,7 @@ public class CustomTimeLinePane extends SelectableTimeLinePane implements Observ
     }
 
     @Override
-    public void update(Observable sender) {
+    public void update(ObservablePage sender) {
         getChildren().clear();
         reloadTimeLine(((ObservablePage)sender).getTimeLineAnnotations(timeLineTag.getTag()));
     }

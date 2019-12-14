@@ -1,7 +1,7 @@
 package New.Model.ObservableModel;
 
 import New.Interfaces.Observable;
-import New.Interfaces.Observer;
+import New.Interfaces.Observer.Observer;
 import New.Model.Entities.Dot;
 import javafx.beans.property.BooleanProperty;
 import javafx.beans.property.SimpleBooleanProperty;
