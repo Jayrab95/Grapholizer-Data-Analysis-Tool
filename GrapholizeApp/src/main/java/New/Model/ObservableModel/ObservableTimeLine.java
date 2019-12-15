@@ -2,8 +2,6 @@ package New.Model.ObservableModel;
 
 import New.CustomControls.Annotation.AnnotationRectangle;
 import New.CustomControls.TimeLine.SelectableTimeLinePane;
-import New.Interfaces.Observable;
-import New.Interfaces.Observer.Observer;
 import New.Interfaces.Observer.TimeLineObserver;
 
 import java.util.LinkedList;

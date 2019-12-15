@@ -1,6 +1,7 @@
 package New.Model.ObservableModel;
 
 import New.Interfaces.Observable;
+import New.Interfaces.Observer.DotObserver;
 import New.Interfaces.Observer.Observer;
 import New.Model.Entities.Dot;
 import javafx.beans.property.BooleanProperty;
@@ -10,10 +11,10 @@ import New.util.Import.CompressedDot;
 import java.util.ArrayList;
 import java.util.List;
 
-public class ObservableDot extends Dot implements Observable {
+public class ObservableDot extends Dot {
 
     private BooleanProperty selected = new SimpleBooleanProperty(false);
-    private List<Observer> observers = new ArrayList<>();
+    private List<DotObserver> observers = new ArrayList<>();
 
     public ObservableDot(float x, float y, float force, long timeStamp) {
         super(x, y, force, timeStamp);
@@ -34,19 +35,16 @@ public class ObservableDot extends Dot implements Observable {
         return selected;
     }
 
-    @Override
-    public void addObserver(Observer obs) {
+    public void addObserver(DotObserver obs) {
         observers.add(obs);
     }
 
-    @Override
-    public void removeObserver(Observer obs) {
+    public void removeObserver(DotObserver obs) {
         observers.remove(obs);
     }
 
-    @Override
     public void notifyObservers() {
-        for(Observer obs : observers){
+        for(DotObserver obs : observers){
             obs.update(this);
         }
     }

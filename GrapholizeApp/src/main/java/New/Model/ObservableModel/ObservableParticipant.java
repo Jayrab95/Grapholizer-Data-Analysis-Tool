@@ -2,15 +2,16 @@ package New.Model.ObservableModel;
 
 import New.Interfaces.Observable;
 import New.Interfaces.Observer.Observer;
+import New.Interfaces.Observer.ParticipantObserver;
 import New.Model.Entities.Participant;
 
 import java.util.LinkedList;
 import java.util.List;
 
-public class ObservableParticipant implements Observable {
+public class ObservableParticipant {
 
     private Participant inner;
-    private List<Observer>observers;
+    private List<ParticipantObserver>observers;
 
     public ObservableParticipant(Participant inner){
         this.inner = inner;
@@ -31,19 +32,16 @@ public class ObservableParticipant implements Observable {
         return new ObservablePage(inner.getPage(index));
     }
 
-    @Override
-    public void addObserver(Observer obs) {
+    public void addObserver(ParticipantObserver obs) {
         observers.add(obs);
     }
 
-    @Override
-    public void removeObserver(Observer obs) {
+    public void removeObserver(ParticipantObserver obs) {
         observers.remove(obs);
     }
 
-    @Override
     public void notifyObservers() {
-        for(Observer obs : observers){
+        for(ParticipantObserver obs : observers){
             obs.update(this);
         }
     }
