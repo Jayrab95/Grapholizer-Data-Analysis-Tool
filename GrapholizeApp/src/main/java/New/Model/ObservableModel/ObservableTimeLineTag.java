@@ -44,8 +44,8 @@ public class ObservableTimeLineTag {
         return colorProperty;
     }
 
-    public void setSimpleColor(Color colorProperty) {
-        this.colorProperty.set(colorProperty);
+    public void setColor(Color color) {
+        this.colorProperty.set(color);
     }
 
 }

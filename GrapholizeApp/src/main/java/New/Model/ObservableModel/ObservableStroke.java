@@ -1,8 +1,8 @@
 package New.Model.ObservableModel;
 
 import New.Interfaces.Observable;
-import New.Interfaces.Observer;
-import New.Model.Entities.SimpleColor;
+import New.Interfaces.Observer.Observer;
+import New.Interfaces.Observer.StrokeObserver;
 import New.Model.Entities.Dot;
 import New.Model.Entities.Stroke;
 import javafx.beans.property.BooleanProperty;
@@ -23,11 +23,11 @@ import java.util.List;
  * Additionally, the ObservableStroke is used for drawing and therefore manages the stroke color.
  * The Observers become notified if the selected property is changed or a filter is applied.
  */
-public class ObservableStroke implements Observable {
+public class ObservableStroke{
 
     //region Private fields
     //Idea: the strokes/Dots implement a method called draw. This way, they can be wrapped with different filters. => DEcorator DesignPattern
-    private final List<Observer> observers;
+    private final List<StrokeObserver> observers;
     private final Stroke stroke;
     private BooleanProperty selected;
     private ObjectProperty<Color> color;
@@ -44,6 +44,11 @@ public class ObservableStroke implements Observable {
         this.color = new SimpleObjectProperty<>(Color.BLACK);
         observers = new ArrayList<>();
         selected = new SimpleBooleanProperty(false);
+        selected.addListener((observable, oldValue, newValue) -> {
+            if(oldValue != newValue){
+                notifyObservers();
+            }
+        });
     }
 
     /**
@@ -51,7 +56,7 @@ public class ObservableStroke implements Observable {
      * @param s Stroke to be wrapped in this object
      * @param o Initial Observer which should be added.
      */
-    public ObservableStroke(Stroke s, Observer o){
+    public ObservableStroke(Stroke s, StrokeObserver o){
         this(s);
         addObserver(o);
     }
@@ -62,7 +67,7 @@ public class ObservableStroke implements Observable {
         this.color = new SimpleObjectProperty<>(c);
     }
 
-    public ObservableStroke(Stroke s, Observer o, Color c){
+    public ObservableStroke(Stroke s, StrokeObserver o, Color c){
         this(s, o);
         this.color = new SimpleObjectProperty<>(c);
     }
@@ -121,20 +126,17 @@ public class ObservableStroke implements Observable {
 
     //region Observable logic
 
-    @Override
-    public void addObserver(Observer obs) {
+    public void addObserver(StrokeObserver obs) {
         observers.add(obs);
     }
 
-    @Override
-    public void removeObserver(Observer obs) {
+    public void removeObserver(StrokeObserver obs) {
         observers.remove(obs);
     }
 
 
-    @Override
     public void notifyObservers() {
-        for(Observer o : observers){
+        for(StrokeObserver o : observers){
             o.update(this);
         }
     }

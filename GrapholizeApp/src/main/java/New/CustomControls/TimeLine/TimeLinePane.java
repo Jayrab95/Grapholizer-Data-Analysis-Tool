@@ -1,9 +1,6 @@
 package New.CustomControls.TimeLine;
 
 
-import New.CustomControls.TimeLineContainer;
-
-import New.Model.ObservableModel.ObservablePage;
 import javafx.beans.property.DoubleProperty;
 import javafx.beans.property.SimpleDoubleProperty;
 import javafx.beans.property.SimpleStringProperty;

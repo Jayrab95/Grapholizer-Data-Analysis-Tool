@@ -2,8 +2,12 @@ package New.Model.ObservableModel;
 
 import New.CustomControls.Annotation.AnnotationRectangle;
 import New.Interfaces.Observable;
-import New.Interfaces.Observer;
+import New.Interfaces.Observer.Observer;
+import New.Interfaces.Observer.PageObserver;
+import New.Interfaces.Observer.StrokeObserver;
 import New.Model.Entities.*;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import javafx.scene.paint.Color;
 
 import java.util.Collections;
@@ -11,18 +15,27 @@ import java.util.LinkedList;
 import java.util.List;
 import java.util.stream.Collectors;
 
-public class ObservablePage implements Observable{
+public class ObservablePage{
     private Page inner;
-    private List<Observer> observers;
+    private ObservableList<ObservableStroke> strokes;
+    private List<PageObserver> observers;
 
     public ObservablePage(Page inner){
         this.inner = inner;
+        strokes = FXCollections.observableList(generateStrokes());
         observers = new LinkedList<>();
     }
 
     public void setPage(Page newPage){
         this.inner = newPage;
+        strokes = FXCollections.observableList(generateStrokes());
         notifyObservers();
+    }
+
+    public void registerStrokeObserver(StrokeObserver strokeObserver){
+        for(ObservableStroke s : strokes){
+            s.addObserver(strokeObserver);
+        }
     }
 
     public void setPage(ObservablePage p){
@@ -95,12 +108,16 @@ public class ObservablePage implements Observable{
         return Collections.emptyList();
     }
 
-    public List<ObservableStroke> getObservableStrokes(){
+    public List<ObservableStroke> generateStrokes(){
         List<ObservableStroke> observableStrokes = new LinkedList<>();
         for(Stroke s : inner.getStrokes()){
             observableStrokes.add(new ObservableStroke(s, Color.BLACK));
         }
         return observableStrokes;
+    }
+
+    public ObservableList<ObservableStroke> getObservableStrokes(){
+        return this.strokes;
     }
 
     public List<ObservableAnnotation>getTimeLineAnnotations(String timeLineKey){
@@ -116,19 +133,19 @@ public class ObservablePage implements Observable{
 
     public double getDuration(){return inner.getDuration();}
 
-    @Override
-    public void addObserver(Observer obs) {
+
+    public void addObserver(PageObserver obs) {
         this.observers.add(obs);
     }
 
-    @Override
-    public void removeObserver(Observer obs) {
+
+    public void removeObserver(PageObserver obs) {
         this.observers.remove(obs);
     }
 
-    @Override
+
     public void notifyObservers() {
-        for(Observer obs : this.observers){
+        for(PageObserver obs : this.observers){
             obs.update(this);
         }
     }

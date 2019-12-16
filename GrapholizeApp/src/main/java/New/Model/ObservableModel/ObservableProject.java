@@ -3,6 +3,7 @@ package New.Model.ObservableModel;
 import New.Execptions.TimeLineTagEmptyException;
 import New.Execptions.TimeLineTagException;
 import New.Execptions.TimelineTagNotUniqueException;
+import New.Interfaces.Observer.ProjectObserver;
 import New.Model.Entities.SimpleColor;
 import New.Model.Entities.Participant;
 import New.Model.Entities.Project;
@@ -11,13 +12,17 @@ import New.util.ColorConverter;
 import javafx.scene.paint.Color;
 
 import java.util.Collections;
+import java.util.LinkedList;
+import java.util.List;
 import java.util.Set;
 
 public class ObservableProject {
     private Project inner;
+    private List<ProjectObserver> observers;
 
     public ObservableProject(Project inner){
         this.inner = inner;
+        this.observers = new LinkedList<>();
     }
 
     public Set<String> getParticipantIDs(){
@@ -107,5 +112,17 @@ public class ObservableProject {
 
     public TimeLineTag removeTimeLineTag(String key){
         return inner.getProjectTagsMap().remove(key);
+    }
+
+    public void addObserver(ProjectObserver obs){
+        observers.add(obs);
+    }
+    public void removeObserver(ProjectObserver obs){
+        observers.remove(obs);
+    }
+    public void notifyObservers(){
+        for(ProjectObserver obs : observers){
+            obs.update(this);
+        }
     }
 }

@@ -1,11 +1,11 @@
 package New.CustomControls.TimeLine;
 
 import New.Controllers.CustomTimeLineController;
-import New.CustomControls.TimeLineContainer;
+import New.CustomControls.Containers.TimeLineContainer;
 import New.CustomControls.Annotation.AnnotationRectangle;
 import New.CustomControls.Annotation.MovableAnnotationRectangle;
-import New.Interfaces.Observable;
-import New.Interfaces.Observer;
+import New.Execptions.NoTimeLineSelectedException;
+import New.Interfaces.Observer.PageObserver;
 import New.Model.Entities.Annotation;
 import New.Model.ObservableModel.ObservableAnnotation;
 import New.Model.ObservableModel.ObservablePage;
@@ -24,7 +24,7 @@ import javafx.scene.shape.Rectangle;
 import java.util.List;
 import java.util.Optional;
 
-public class CustomTimeLinePane extends TimeLinePane implements Observer {
+public class CustomTimeLinePane extends SelectableTimeLinePane implements PageObserver {
 
     public static final String TXT_COPYANNOTATION_TITLE = "Copy selected annotations";
     public static final String TXT_COPYANNOTATION_HEADER = "Copy selected annotations into timeline %s";
@@ -46,7 +46,7 @@ public class CustomTimeLinePane extends TimeLinePane implements Observer {
     private ContextMenu contextMenu;
 
     public CustomTimeLinePane(double width, double height, DoubleProperty scaleProp, ObservableTimeLineTag tag, ObservablePage p, TimeLineContainer parent) {
-        super(width, height, scaleProp, tag.getTagProperty());
+        super(width, height, scaleProp, tag.getTagProperty(), parent);
         this.timeLineTag = tag;
         customTimeLineController = new CustomTimeLineController(tag, p, parent);
         anchor = new Light.Point();
@@ -55,7 +55,7 @@ public class CustomTimeLinePane extends TimeLinePane implements Observer {
 
         this.contextMenu = generateContextMenu();
 
-        this.setOnMouseClicked(event -> handleMouseClick(event));
+        //this.setOnMouseClicked(event -> handleMouseClick(event));
         this.setOnMousePressed(event -> handleTimelineMousePress(event));
         this.setOnMouseDragged(event -> handleTimelineMouseDrag(event));
         this.setOnMouseReleased(event -> handleTimelineMouseRelease(event));
@@ -125,9 +125,9 @@ public class CustomTimeLinePane extends TimeLinePane implements Observer {
 
     private ContextMenu generateContextMenu(){
         MenuItem item_createNewTimeLine = new MenuItem("Create new time line out of selected elements");
-        item_createNewTimeLine.setOnAction(event -> customTimeLineController.createNewTimeLine());
+        item_createNewTimeLine.setOnAction(event -> handleContextCreateNewTimeLineClick());
         MenuItem item_copyAnnotations = new MenuItem("Copy selected annotations into this timeline");
-        item_copyAnnotations.setOnAction(event -> createCopyAnnotationDialogue());
+        item_copyAnnotations.setOnAction(event -> handleContextCopyAnnotationsClick());
         MenuItem item_editTimeLine = new MenuItem("Edit timeline tag");
         item_editTimeLine.setOnAction(event -> customTimeLineController.editTimeLine());
         MenuItem item_removeTimeLine = new MenuItem("Remove this timeline");
@@ -135,14 +135,27 @@ public class CustomTimeLinePane extends TimeLinePane implements Observer {
         return new ContextMenu(item_createNewTimeLine, item_editTimeLine, item_copyAnnotations, item_removeTimeLine);
     }
 
-    private void handleMouseClick(MouseEvent event){
-        if(event.getButton() == MouseButton.SECONDARY){
-            contextMenu.show(this, event.getScreenX(), event.getScreenY());
+    private void handleContextCreateNewTimeLineClick(){
+        try{
+            customTimeLineController.createNewTimeLine();
+        }
+        catch(NoTimeLineSelectedException ex){
+            DialogGenerator.simpleErrorDialog("Creation Error","Error while creating timeline", ex.toString());
         }
     }
+
+    private void handleContextCopyAnnotationsClick(){
+        createCopyAnnotationDialogue();
+    }
+
     //Source: https://coderanch.com/t/689100/java/rectangle-dragging-image
     private void handleTimelineMousePress(MouseEvent event){
-        //TODO: Check if a comment was clicked.
+
+        if(event.getButton() == MouseButton.SECONDARY){
+            contextMenu.show(this, event.getScreenX(), event.getScreenY());
+            event.consume();
+        }
+
         //If an element was clicked => set Selected Element. The element can now be dragged.
         //Reset selection
 
@@ -203,12 +216,12 @@ public class CustomTimeLinePane extends TimeLinePane implements Observer {
     }
 
     @Override
-    public void update(Observable sender) {
+    public void update(ObservablePage sender) {
         getChildren().clear();
-        reloadTimeLine(((ObservablePage)sender).getTimeLineAnnotations(timeLineTag.getTag()));
+        reloadTimeLine(sender.getTimeLineAnnotations(timeLineTag.getTag()));
     }
 
-    public void createCopyAnnotationDialogue(){
+    public void createCopyAnnotationDialogue()  {
         Dialog dialog = new Dialog<>();
         dialog.setTitle(TXT_COPYANNOTATION_TITLE);
         dialog.setHeaderText(String.format(TXT_COPYANNOTATION_HEADER, timeLineTag.getTag()));
@@ -245,7 +258,11 @@ public class CustomTimeLinePane extends TimeLinePane implements Observer {
                     Optional<Annotation> annotation = cbox_joinedAnnotation.isSelected() ?
                             Optional.of(new Annotation(textField_annotationText.getText(), boundaries.get()[0], boundaries.get()[1])) :
                             Optional.empty();
-                    customTimeLineController.createNewTimeLine(annotation);
+                    try {
+                        customTimeLineController.createNewTimeLine(annotation);
+                    } catch (NoTimeLineSelectedException ex) {
+                        DialogGenerator.simpleErrorDialog("Creation Error","Error while creating timeline", ex.toString());
+                    }
                 }
                 else{
                     //If no collisions were detected, copy the annotations into this timeline.
