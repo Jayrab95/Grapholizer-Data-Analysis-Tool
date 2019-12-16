@@ -2,9 +2,7 @@ package New.CustomControls.TimeLine;
 
 import New.Controllers.SelectableTimeLineController;
 import New.CustomControls.Annotation.AnnotationRectangle;
-import New.CustomControls.TimeLineContainer;
-import New.Interfaces.Observable;
-import New.Interfaces.Observer.Observer;
+import New.CustomControls.Containers.TimeLineContainer;
 import New.Interfaces.Observer.TimeLineObserver;
 import New.Model.ObservableModel.ObservableTimeLine;
 import javafx.beans.property.BooleanProperty;
@@ -26,9 +24,12 @@ public abstract class SelectableTimeLinePane extends TimeLinePane implements Tim
         parent.getSelectedTimeLine().addObserver(this);
     }
 
-    public void deselectAllElements(){
+    public void deselectAllElements(AnnotationRectangle selected){
         for(Node n : getChildren()){
-            ((AnnotationRectangle)n).setSelected(false);
+            AnnotationRectangle ar = (AnnotationRectangle)n;
+            if(ar != selected){
+                ar.setSelected(false);
+            }
         }
     }
 
@@ -50,7 +51,8 @@ public abstract class SelectableTimeLinePane extends TimeLinePane implements Tim
     @Override
     public void update(ObservableTimeLine sender){
         if(!sender.equals(this)){
-            deselectAllElements();
+            this.timeLineSelectedProperty.set(false);
+            deselectAllElements(null);
         }
     }
 }

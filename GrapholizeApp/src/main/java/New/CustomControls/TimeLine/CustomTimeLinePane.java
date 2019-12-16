@@ -1,11 +1,10 @@
 package New.CustomControls.TimeLine;
 
 import New.Controllers.CustomTimeLineController;
-import New.CustomControls.TimeLineContainer;
+import New.CustomControls.Containers.TimeLineContainer;
 import New.CustomControls.Annotation.AnnotationRectangle;
 import New.CustomControls.Annotation.MovableAnnotationRectangle;
-import New.Interfaces.Observable;
-import New.Interfaces.Observer.Observer;
+import New.Execptions.NoTimeLineSelectedException;
 import New.Interfaces.Observer.PageObserver;
 import New.Model.Entities.Annotation;
 import New.Model.ObservableModel.ObservableAnnotation;
@@ -126,9 +125,9 @@ public class CustomTimeLinePane extends SelectableTimeLinePane implements PageOb
 
     private ContextMenu generateContextMenu(){
         MenuItem item_createNewTimeLine = new MenuItem("Create new time line out of selected elements");
-        item_createNewTimeLine.setOnAction(event -> customTimeLineController.createNewTimeLine());
+        item_createNewTimeLine.setOnAction(event -> handleContextCreateNewTimeLineClick());
         MenuItem item_copyAnnotations = new MenuItem("Copy selected annotations into this timeline");
-        item_copyAnnotations.setOnAction(event -> createCopyAnnotationDialogue());
+        item_copyAnnotations.setOnAction(event -> handleContextCopyAnnotationsClick());
         MenuItem item_editTimeLine = new MenuItem("Edit timeline tag");
         item_editTimeLine.setOnAction(event -> customTimeLineController.editTimeLine());
         MenuItem item_removeTimeLine = new MenuItem("Remove this timeline");
@@ -136,13 +135,19 @@ public class CustomTimeLinePane extends SelectableTimeLinePane implements PageOb
         return new ContextMenu(item_createNewTimeLine, item_editTimeLine, item_copyAnnotations, item_removeTimeLine);
     }
 
-    private void handleMouseClick(MouseEvent event){
-        System.out.println("HandleMouseClick on CustomeTimeLinePane");
-        if(event.getButton() == MouseButton.SECONDARY){
-            System.out.println("Pressed secondary on CustomTimeLinepane");
-            contextMenu.show(this, event.getScreenX(), event.getScreenY());
+    private void handleContextCreateNewTimeLineClick(){
+        try{
+            customTimeLineController.createNewTimeLine();
+        }
+        catch(NoTimeLineSelectedException ex){
+            DialogGenerator.simpleErrorDialog("Creation Error","Error while creating timeline", ex.toString());
         }
     }
+
+    private void handleContextCopyAnnotationsClick(){
+        createCopyAnnotationDialogue();
+    }
+
     //Source: https://coderanch.com/t/689100/java/rectangle-dragging-image
     private void handleTimelineMousePress(MouseEvent event){
 
@@ -213,10 +218,10 @@ public class CustomTimeLinePane extends SelectableTimeLinePane implements PageOb
     @Override
     public void update(ObservablePage sender) {
         getChildren().clear();
-        reloadTimeLine(((ObservablePage)sender).getTimeLineAnnotations(timeLineTag.getTag()));
+        reloadTimeLine(sender.getTimeLineAnnotations(timeLineTag.getTag()));
     }
 
-    public void createCopyAnnotationDialogue(){
+    public void createCopyAnnotationDialogue()  {
         Dialog dialog = new Dialog<>();
         dialog.setTitle(TXT_COPYANNOTATION_TITLE);
         dialog.setHeaderText(String.format(TXT_COPYANNOTATION_HEADER, timeLineTag.getTag()));
@@ -253,7 +258,11 @@ public class CustomTimeLinePane extends SelectableTimeLinePane implements PageOb
                     Optional<Annotation> annotation = cbox_joinedAnnotation.isSelected() ?
                             Optional.of(new Annotation(textField_annotationText.getText(), boundaries.get()[0], boundaries.get()[1])) :
                             Optional.empty();
-                    customTimeLineController.createNewTimeLine(annotation);
+                    try {
+                        customTimeLineController.createNewTimeLine(annotation);
+                    } catch (NoTimeLineSelectedException ex) {
+                        DialogGenerator.simpleErrorDialog("Creation Error","Error while creating timeline", ex.toString());
+                    }
                 }
                 else{
                     //If no collisions were detected, copy the annotations into this timeline.

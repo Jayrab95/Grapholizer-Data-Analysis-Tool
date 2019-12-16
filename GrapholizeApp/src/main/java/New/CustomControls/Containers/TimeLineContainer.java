@@ -1,10 +1,12 @@
-package New.CustomControls;
+package New.CustomControls.Containers;
 
 import New.Controllers.TimeLineContainerController;
 import New.CustomControls.TimeLine.CustomTimeLinePane;
+import New.CustomControls.TimeLine.SelectableTimeLinePane;
 import New.CustomControls.TimeLine.StrokeDurationTimeLinePane;
 import New.CustomControls.TimeLine.TimeLinePane;
 import New.CustomControls.Annotation.AnnotationRectangle;
+import New.Execptions.NoTimeLineSelectedException;
 import New.Execptions.TimeLineTagException;
 import New.Interfaces.Observer.Observer;
 import New.Model.Entities.Annotation;
@@ -68,7 +70,7 @@ public class TimeLineContainer extends VBox {
         btn_CreateNewTimeLine = new Button("Create new timeline");
         btn_CreateNewTimeLine.setOnAction(event -> createNewTimeLine());
         btn_CreateNewTimeLineOutOfSelected = new Button("Create new Timeline out of selected annotations");
-        btn_CreateNewTimeLineOutOfSelected.setOnAction(event -> createNewTimeLineOutOfSelectedElements());
+        btn_CreateNewTimeLineOutOfSelected.setOnAction(event -> handleCreateTLOutOfSelectedClick());
         hbox_buttonHBox = new HBox(btn_CreateNewTimeLine, btn_CreateNewTimeLineOutOfSelected);
     }
 
@@ -77,8 +79,8 @@ public class TimeLineContainer extends VBox {
         //Step 2: For each tag, create a new timeline and pass over the observble Tag and the page. Then create the annotations.
         totalWidth = page.getDuration();
         StrokeDurationTimeLinePane strokePane = new StrokeDurationTimeLinePane(totalWidth,timeLinesHeight, scale, timeLineContainerController.getPage(), this);
-        selectedTimeLine = new ObservableTimeLine(strokePane);
-        getChildren().add(strokePane);
+        addTimeLinePane(strokePane);
+        //getChildren().add(strokePane);
 
         for(String tag : project.getTimeLineTagNames()){
 
@@ -94,7 +96,7 @@ public class TimeLineContainer extends VBox {
     }
 
     private void addTimeLinePane(TimeLinePane timeLinePane){
-        getChildren().add(timeLinePane);
+        getChildren().add(new TimeLineWrapper(timeLinePane));
     }
 
     public void createNewTimeLine(){
@@ -113,7 +115,10 @@ public class TimeLineContainer extends VBox {
         }
     }
 
-    public void createNewTimeLineOutOfSelectedElements(){
+    public void createNewTimeLineOutOfSelectedElements() throws NoTimeLineSelectedException {
+        if(!selectedTimeLine.timeLineSelected()){
+            throw new NoTimeLineSelectedException();
+        }
         Optional<DialogResult> tag = openTimeLineCreationDialog(
                 TXT_TL_CREATION_TITLE,
                 TXT_TL_CREATION_HEADER,
@@ -197,6 +202,14 @@ public class TimeLineContainer extends VBox {
         return false;
     }
 
+    private void handleCreateTLOutOfSelectedClick(){
+        try{
+            createNewTimeLineOutOfSelectedElements();
+        }
+        catch(NoTimeLineSelectedException ex){
+            DialogGenerator.simpleErrorDialog(TXT_TL_CREATION_ERROR_TITLE, TXT_TL_CREATION_ERROR_HEADER, ex.toString());
+        }
+    }
 
     //region CreateNewTimeLineDialogue
     //https://code.makery.ch/blog/javafx-dialogs-official/
@@ -308,13 +321,18 @@ public class TimeLineContainer extends VBox {
             hBox_EditAndDeleteContainer = new HBox(btn_editTimeLine, btn_deleteTimeLine);
             vBox_EditButtons = new VBox(hBox_EditAndDeleteContainer, btn_addNewTimeline);
             hBox_ButtonsContainer = new HBox(vBox_UpDownButtonContainer, vBox_EditButtons);
-            getChildren().addAll(lbl_timeLineName, hBox_ButtonsContainer);
+            getChildren().addAll(lbl_timeLineName);
         }
     }
 
     private class TimeLineWrapper extends HBox{
         private final TimeLinePane tl;
         private final TimeLineInformation tli;
+        TimeLineWrapper(TimeLinePane tl){
+            this.tl = tl;
+            this.tli = new TimeLineInformation(tl);
+            getChildren().addAll(tli, tl);
+        }
         TimeLineWrapper(TimeLinePane tl, TimeLineInformation tli){
             this.tl = tl;
             this.tli = tli;

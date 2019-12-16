@@ -1,9 +1,7 @@
 package New.CustomControls.TimeLine;
 
 import New.CustomControls.Annotation.StrokeAnnotationRectangle;
-import New.CustomControls.TimeLineContainer;
-import New.Interfaces.Observable;
-import New.Interfaces.Observer.Observer;
+import New.CustomControls.Containers.TimeLineContainer;
 import New.Interfaces.Observer.PageObserver;
 import New.Model.ObservableModel.ObservablePage;
 import New.Model.ObservableModel.ObservableStroke;
@@ -29,11 +27,7 @@ public class StrokeDurationTimeLinePane extends SelectableTimeLinePane implement
 
     @Override
     public void update(ObservablePage sender) {
-        if(sender.getClass() == ObservablePage.class){
-            getChildren().clear();
-            ObservablePage p = (ObservablePage)sender;
-            setUpTimeLine(p.getObservableStrokes());
-        }
-
+        getChildren().clear();
+        setUpTimeLine(sender.getObservableStrokes());
     }
 }

@@ -1,8 +1,9 @@
 package New.Controllers;
 
 import New.CustomControls.TimeLine.CustomTimeLinePane;
-import New.CustomControls.TimeLineContainer;
+import New.CustomControls.Containers.TimeLineContainer;
 import New.CustomControls.Annotation.AnnotationRectangle;
+import New.Execptions.NoTimeLineSelectedException;
 import New.Model.Entities.Annotation;
 import New.Model.ObservableModel.ObservablePage;
 import New.Model.ObservableModel.ObservableTimeLine;
@@ -69,10 +70,10 @@ public class CustomTimeLineController {
         return page.collidesWithOtherElements(timeLineTag.getTag(), timeStart, timeStop);
     }
 
-    public void createNewTimeLine(){
+    public void createNewTimeLine() throws NoTimeLineSelectedException {
         parent.createNewTimeLineOutOfSelectedElements();
     }
-    public void createNewTimeLine(Optional<Annotation> combined){
+    public void createNewTimeLine(Optional<Annotation> combined) throws NoTimeLineSelectedException {
         if(combined.isPresent()){
             parent.createNewTimeLineOutOfCombinedElement(combined.get());
         }

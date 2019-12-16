@@ -88,7 +88,7 @@ public abstract class AnnotationRectangle extends Rectangle {
 
     protected void handleMouseClick(MouseEvent e){
         System.out.println("HandleMouseClick in AnnotationRectangle Base has been called");
-        annotationSelectionController.selectTimeLine(e.isControlDown());
+        annotationSelectionController.selectTimeLine(e.isControlDown(), this);
         toggleSelected();
     }
 }

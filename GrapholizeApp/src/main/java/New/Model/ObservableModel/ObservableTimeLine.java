@@ -21,6 +21,10 @@ public class ObservableTimeLine {
         observers = new LinkedList<>();
     }
 
+    public boolean timeLineSelected(){
+        return selectedTimeLine != null;
+    }
+
     public List<AnnotationRectangle> getSelectedElements(){
         return selectedTimeLine.getChildren().stream()
                 .map(node -> (AnnotationRectangle)node)
@@ -29,8 +33,10 @@ public class ObservableTimeLine {
     }
 
     public void setSelectedTimeLine(SelectableTimeLinePane timeLine){
-        this.selectedTimeLine = timeLine;
-        notifyObservers();
+        if(this.selectedTimeLine != timeLine){
+            this.selectedTimeLine = timeLine;
+            notifyObservers();
+        }
     }
 
     public boolean equals(SelectableTimeLinePane timeLinePane){

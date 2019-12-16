@@ -2,17 +2,23 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="f9c9e85c-b6d3-4a2f-99c7-3350288aea5b" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/src/main/java/New/Interfaces/Observer/AnnotationObserver.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/New/Interfaces/Observer/DotObserver.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/New/Interfaces/Observer/ParticipantObserver.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/New/Interfaces/Observer/ProjectObserver.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/New/Interfaces/Observer/StrokeObserver.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/New/Interfaces/Observer/TimeLineTagObserver.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/New/Model/ObservableModel/DotLine.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/New/CustomControls/Containers/ContentSwitcher.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/New/Execptions/NoTimeLineSelectedException.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/New/Model/ObservableModel/ObservableDot.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/New/Model/ObservableModel/ObservableDot.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/New/Model/ObservableModel/ObservableParticipant.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/New/Model/ObservableModel/ObservableParticipant.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/New/Model/ObservableModel/ObservableProject.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/New/Model/ObservableModel/ObservableProject.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/New/Controllers/AnnotationSelectionController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/New/Controllers/AnnotationSelectionController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/New/Controllers/CustomTimeLineController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/New/Controllers/CustomTimeLineController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/New/Controllers/MainSceneController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/New/Controllers/MainSceneController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/New/Controllers/SelectableTimeLineController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/New/Controllers/SelectableTimeLineController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/New/CustomControls/Annotation/AnnotationRectangle.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/New/CustomControls/Annotation/AnnotationRectangle.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/New/CustomControls/Annotation/StrokeAnnotationRectangle.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/New/CustomControls/Annotation/StrokeAnnotationRectangle.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/New/CustomControls/MainCanvas.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/New/CustomControls/Containers/MainCanvas.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/New/CustomControls/TimeLine/CustomTimeLinePane.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/New/CustomControls/TimeLine/CustomTimeLinePane.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/New/CustomControls/TimeLine/SelectableTimeLinePane.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/New/CustomControls/TimeLine/SelectableTimeLinePane.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/New/CustomControls/TimeLine/StrokeDurationTimeLinePane.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/New/CustomControls/TimeLine/StrokeDurationTimeLinePane.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/New/CustomControls/TimeLine/TimeLinePane.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/New/CustomControls/TimeLine/TimeLinePane.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/New/CustomControls/TimeLineContainer.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/New/CustomControls/Containers/TimeLineContainer.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/New/Model/ObservableModel/DotLine.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/New/Model/ObservableModel/DotLine.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/New/Model/ObservableModel/ObservablePage.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/New/Model/ObservableModel/ObservablePage.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/New/Model/ObservableModel/ObservableStroke.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/New/Model/ObservableModel/ObservableStroke.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/New/Model/ObservableModel/ObservableTimeLine.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/New/Model/ObservableModel/ObservableTimeLine.java" afterDir="false" />
     </list>
@@ -292,7 +298,8 @@
       <workItem from="1575645422355" duration="2508000" />
       <workItem from="1575712386641" duration="2967000" />
       <workItem from="1576265885664" duration="14110000" />
-      <workItem from="1576404363681" duration="7366000" />
+      <workItem from="1576404363681" duration="7967000" />
+      <workItem from="1576477471200" duration="13564000" />
     </task>
     <servers />
   </component>
@@ -339,21 +346,31 @@
           <option name="timeStamp" value="9" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="java-line">
-          <url>file://$PROJECT_DIR$/src/main/java/New/Model/Entities/Page.java</url>
-          <line>47</line>
-          <option name="timeStamp" value="11" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" type="java-line">
           <url>file://$PROJECT_DIR$/src/main/java/Controls/Container/TimeLineContainer.java</url>
           <line>239</line>
           <option name="timeStamp" value="33" />
         </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/src/main/java/New/CustomControls/TimeLine/SelectableTimeLinePane.java</url>
+          <line>54</line>
+          <option name="timeStamp" value="34" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/src/main/java/New/Controllers/AnnotationSelectionController.java</url>
+          <line>19</line>
+          <option name="timeStamp" value="37" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/src/main/java/New/CustomControls/TimeLine/SelectableTimeLinePane.java</url>
+          <line>46</line>
+          <option name="timeStamp" value="38" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/src/main/java/New/CustomControls/Annotation/AnnotationRectangle.java</url>
+          <line>90</line>
+          <option name="timeStamp" value="40" />
+        </line-breakpoint>
       </breakpoints>
     </breakpoint-manager>
-    <watches-manager>
-      <configuration name="Remote">
-        <watch expression="s" />
-      </configuration>
-    </watches-manager>
   </component>
 </project>

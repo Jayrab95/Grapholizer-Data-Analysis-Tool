@@ -1,7 +1,7 @@
 package New.Controllers;
 
-import New.CustomControls.MainCanvas;
-import New.CustomControls.TimeLineContainer;
+import New.CustomControls.Containers.MainCanvas;
+import New.CustomControls.Containers.TimeLineContainer;
 import New.Interfaces.*;
 import New.Model.Entities.*;
 import New.Model.Session;
@@ -10,19 +10,14 @@ import New.util.*;
 
 import javafx.fxml.FXML;
 import javafx.scene.canvas.Canvas;
-import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.control.ScrollPane;
 import javafx.scene.layout.AnchorPane;
-import javafx.scene.paint.Color;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
 
 import java.io.File;
 import java.io.IOException;
 import java.net.URL;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Random;
 import java.util.ResourceBundle;
 
 public class MainSceneController {

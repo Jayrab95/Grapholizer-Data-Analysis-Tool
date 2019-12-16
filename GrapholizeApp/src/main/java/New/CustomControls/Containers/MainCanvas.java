@@ -1,11 +1,13 @@
-package New.CustomControls;
+package New.CustomControls.Containers;
 
 import New.Interfaces.Observer.PageObserver;
+import New.Interfaces.Observer.StrokeObserver;
 import New.Model.Entities.Dot;
 import New.Interfaces.Observable;
 import New.Interfaces.Observer.Observer;
 import New.Model.ObservableModel.ObservablePage;
 import New.Model.ObservableModel.ObservableStroke;
+import javafx.collections.ListChangeListener;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.control.ScrollPane;
@@ -15,23 +17,24 @@ import javafx.scene.paint.Color;
 
 import java.util.List;
 
-public class MainCanvas extends VBox implements PageObserver {
+public class MainCanvas extends VBox implements PageObserver, StrokeObserver {
     private HBox hbox_Controls;
     private ScrollPane canvasContainer;
     private final Canvas canvas;
     private final double canvasWidth;
     private final double canvasHeight;
     private double canvasScale;
-    private List<ObservableStroke> strokes;
+    private ObservablePage p;
 
 
     public MainCanvas(double initWidth, double initHeight, double initScale, ObservablePage obsPage){
         this.canvasWidth = initWidth;
         this.canvasHeight = initHeight;
         this.canvasScale = initScale;
-        this.strokes = obsPage.getObservableStrokes();
+        this.p = obsPage;
         canvas = new Canvas(initWidth * canvasScale, initHeight * canvasScale);
         obsPage.addObserver(this);
+        obsPage.registerStrokeObserver(this);
         initializeCanvas();
     }
 
@@ -43,7 +46,7 @@ public class MainCanvas extends VBox implements PageObserver {
 
     private void drawStrokes(){
         GraphicsContext gc = canvas.getGraphicsContext2D();
-        for(ObservableStroke s : strokes){
+        for(ObservableStroke s : p.getObservableStrokes()){
 
             for(int i = 0; i < s.getDots().size() - 1; i++){
 
@@ -64,11 +67,7 @@ public class MainCanvas extends VBox implements PageObserver {
     }
 
 
-    @Override
-    public void update(ObservablePage sender) {
-        this.strokes = sender.getObservableStrokes();
-        resetCanvas();
-    }
+
 
     private void resetCanvas(){
         canvas.getGraphicsContext2D().clearRect(0,0,canvas.getWidth(), canvas.getHeight());
@@ -95,6 +94,18 @@ public class MainCanvas extends VBox implements PageObserver {
         }
         canvas.setWidth(canvasWidth* canvasScale);
         canvas.setHeight(canvasHeight * canvasScale);
+        resetCanvas();
+    }
+
+
+    @Override
+    public void update(ObservablePage sender) {
+        p.registerStrokeObserver(this);
+        resetCanvas();
+    }
+
+    @Override
+    public void update(ObservableStroke sender) {
         resetCanvas();
     }
 }
