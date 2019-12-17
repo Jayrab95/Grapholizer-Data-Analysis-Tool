@@ -47,6 +47,7 @@ public abstract class TimeLinePane extends Pane {
 
     protected void resizeTimeLine(){
         setWidth(totalLength.get() * scale.get());
+        setPrefWidth(totalLength.get() * scale.get());
         setStyle(style);
     }
 

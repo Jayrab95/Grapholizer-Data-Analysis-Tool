@@ -14,7 +14,7 @@ public class StrokeAnnotationRectangle extends AnnotationRectangle {
 
     private ObservableStroke s;
     public StrokeAnnotationRectangle(ObjectProperty<Color> c, DoubleProperty scale, ObservableStroke s, SelectableTimeLinePane parent) {
-        super(c, new SimpleStringProperty("Stroke"), scale, s.getDuration() * scale.get(), parent.getHeight(), s.getTimeStart() * scale.get(), parent);
+        super(c, new SimpleStringProperty("Stroke"), scale, s.getDuration(), parent.getHeight(), s.getTimeStart(), parent);
         this.s = s;
         s.getSelectedBooleanProperty().bindBidirectional(this.selected);
     }

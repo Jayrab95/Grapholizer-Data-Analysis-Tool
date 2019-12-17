@@ -22,7 +22,7 @@ public class MovableAnnotationRectangle extends AnnotationRectangle {
     private MovableAnnotationController movableAnnotationController;
 
     public MovableAnnotationRectangle(ObjectProperty<Color> c, DoubleProperty scale, ObservableAnnotation t, CustomTimeLinePane parent) {
-        super(c, t.getAnnotationTextProperty(), scale, t.getDuration() * scale.get(), parent.getHeight(), t.getTimeStart() * scale.get(), parent);
+        super(c, t.getAnnotationTextProperty(), scale, t.getDuration(), parent.getHeight(), t.getTimeStart(), parent);
 
         this.movableAnnotationController = new MovableAnnotationController(t,parent);
 

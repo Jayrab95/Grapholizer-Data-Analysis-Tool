@@ -23,7 +23,11 @@ public abstract class AnnotationRectangle extends Rectangle {
 
     public AnnotationRectangle(ObjectProperty<Color> c, StringProperty text, DoubleProperty scale, double width, double height, double start, SelectableTimeLinePane parent){
         this.annotationColor = new SimpleObjectProperty<>(c.get());
+        this.annotationColor.bind(c);
+        this.annotationColor.addListener((observable, oldValue, newValue) -> onColorChange());
+
         this.selected = new SimpleBooleanProperty(false);
+        this.selected.addListener((observable, oldValue, newValue) -> onSelectionChange());
 
         this.annotationText = new SimpleStringProperty(text.get());
         this.annotationText.bind(text);
@@ -32,21 +36,17 @@ public abstract class AnnotationRectangle extends Rectangle {
         this.scale.bind(scale);
         this.scale.addListener((observable, oldValue, newValue) -> onValueChange());
 
-        this.annotationColor.bind(c);
-        this.annotationColor.addListener((observable, oldValue, newValue) -> onColorChange());
-
         this.annotationSelectionController = new AnnotationSelectionController(parent);
 
         this.duration = width;
         this.start = start;
 
         setHeight(height);
-        setWidth(width);
-        setX(start);
+        setWidth(width * scale.get());
+        setX(start * scale.get());
         setY(0);
 
         setOnMouseClicked(e -> handleMouseClick(e));
-
 
         if(this.getWidth() > 0) {
             setFill(c.get());
@@ -56,6 +56,16 @@ public abstract class AnnotationRectangle extends Rectangle {
     private void onColorChange(){
         System.out.println("Color change has been called");
         setFill(annotationColor.get());
+    }
+
+    private void onSelectionChange(){
+        if (selected.get()) {
+            setStroke(Color.GREEN);
+            setStrokeWidth(5);
+        }
+        else {
+            setStroke(annotationColor.get());
+        }
     }
 
 
