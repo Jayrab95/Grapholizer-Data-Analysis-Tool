@@ -36,8 +36,8 @@
             </MenuBar>
             <SplitPane dividerPositions="0.4992" prefHeight="675.0" prefWidth="1252.0">
               <items>
-                <AnchorPane fx:id="anchorPane_canvasContainer" minHeight="0.0" minWidth="0.0">
-                </AnchorPane>
+                <VBox fx:id="anchorPane_canvasContainer" minHeight="0.0" minWidth="0.0">
+                </VBox>
                 <AnchorPane minHeight="0.0" minWidth="0.0">
                      <children>
                         <SplitPane dividerPositions="0.5" orientation="VERTICAL" prefHeight="672.0" prefWidth="604.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="10.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">

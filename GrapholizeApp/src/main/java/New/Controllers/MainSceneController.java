@@ -1,5 +1,6 @@
 package New.Controllers;
 
+import New.CustomControls.Containers.ContentSwitcher;
 import New.CustomControls.Containers.MainCanvas;
 import New.CustomControls.Containers.TimeLineContainer;
 import New.Interfaces.*;
@@ -12,6 +13,7 @@ import javafx.fxml.FXML;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.control.ScrollPane;
 import javafx.scene.layout.AnchorPane;
+import javafx.scene.layout.VBox;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
 
@@ -35,13 +37,7 @@ public class MainSceneController {
     private ScrollPane scrollPane_TimeLines;
 
     @FXML
-    private Canvas canvas_mainCanvas;
-
-    @FXML
-    private AnchorPane anchorPane_canvasContainer;
-
-    //private TimeLineContainer timeLineContainer;
-
+    private VBox anchorPane_canvasContainer;
 
 
     public MainSceneController(){
@@ -55,7 +51,9 @@ public class MainSceneController {
         loadThatShitBoy();
         PageMetaData pmd = _session.getActivePage().getPageMetaData();
         _session.setZ_Helper(loader.getZipHelper());
-        anchorPane_canvasContainer.getChildren().add(new MainCanvas(pmd.getPageWidth(), pmd.getPageHeight(), 10, _session.getActivePage()));
+        anchorPane_canvasContainer.getChildren().addAll(
+                new MainCanvas(pmd.getPageWidth(), pmd.getPageHeight(), 10, _session.getActivePage()),
+                new ContentSwitcher(_session.getActiveProject(),_session.getActiveParticipant(), _session.getActivePage()));
         scrollPane_TimeLines.setContent(new TimeLineContainer(_session.getActiveProject(), _session.getActivePage(), 0.05));
 
     }

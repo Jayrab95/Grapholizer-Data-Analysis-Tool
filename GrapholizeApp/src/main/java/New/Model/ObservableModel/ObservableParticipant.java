@@ -27,6 +27,9 @@ public class ObservableParticipant {
         this.setParticipant(p.inner);
     }
 
+    public String getParticipantID(){return inner.getID();}
+
+    public int getNumberOfPages(){return inner.getPages().size();}
 
     public ObservablePage getPage(int index) throws IndexOutOfBoundsException{
         return new ObservablePage(inner.getPage(index));
