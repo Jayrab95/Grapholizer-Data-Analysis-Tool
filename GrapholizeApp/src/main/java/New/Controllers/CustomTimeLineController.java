@@ -5,9 +5,9 @@ import New.CustomControls.Containers.TimeLineContainer;
 import New.CustomControls.Annotation.AnnotationRectangle;
 import New.Execptions.NoTimeLineSelectedException;
 import New.Model.Entities.Annotation;
-import New.Model.ObservableModel.ObservablePage;
-import New.Model.ObservableModel.ObservableTimeLine;
-import New.Model.ObservableModel.ObservableTimeLineTag;
+import New.Observables.ObservablePage;
+import New.Observables.ObservableTimeLine;
+import New.Observables.ObservableTimeLineTag;
 
 import java.util.Collections;
 import java.util.Comparator;

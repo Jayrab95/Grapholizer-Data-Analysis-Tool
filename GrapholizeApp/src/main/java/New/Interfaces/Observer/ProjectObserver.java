@@ -1,6 +1,6 @@
 package New.Interfaces.Observer;
 
-import New.Model.ObservableModel.ObservableProject;
+import New.Observables.ObservableProject;
 
 public interface ProjectObserver {
     void update(ObservableProject sender);

@@ -3,19 +3,14 @@ package New.CustomControls.Containers;
 import New.Interfaces.Observer.PageObserver;
 import New.Interfaces.Observer.StrokeObserver;
 import New.Model.Entities.Dot;
-import New.Interfaces.Observable;
-import New.Interfaces.Observer.Observer;
-import New.Model.ObservableModel.ObservablePage;
-import New.Model.ObservableModel.ObservableStroke;
-import javafx.collections.ListChangeListener;
+import New.Observables.ObservablePage;
+import New.Observables.ObservableStroke;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.control.ScrollPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
-
-import java.util.List;
 
 public class MainCanvas extends VBox implements PageObserver, StrokeObserver {
     private HBox hbox_Controls;

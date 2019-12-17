@@ -2,14 +2,10 @@ package New.Model;
 
 
 import New.Model.Entities.Project;
-import New.Model.ObservableModel.ObservablePage;
-import New.Model.ObservableModel.ObservableParticipant;
-import New.Model.ObservableModel.ObservableProject;
+import New.Observables.ObservablePage;
+import New.Observables.ObservableParticipant;
+import New.Observables.ObservableProject;
 import New.util.ZipHelper;
-import javafx.beans.property.ObjectProperty;
-
-import java.util.HashMap;
-import java.util.Map;
 
 public class Session {
 

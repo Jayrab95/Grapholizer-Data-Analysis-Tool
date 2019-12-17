@@ -1,4 +1,4 @@
-package New.Model.ObservableModel;
+package New.Observables;
 
 import New.CustomControls.Annotation.AnnotationRectangle;
 import New.CustomControls.TimeLine.SelectableTimeLinePane;

@@ -3,8 +3,8 @@ package New.CustomControls.TimeLine;
 import New.CustomControls.Annotation.StrokeAnnotationRectangle;
 import New.CustomControls.Containers.TimeLineContainer;
 import New.Interfaces.Observer.PageObserver;
-import New.Model.ObservableModel.ObservablePage;
-import New.Model.ObservableModel.ObservableStroke;
+import New.Observables.ObservablePage;
+import New.Observables.ObservableStroke;
 import javafx.beans.property.DoubleProperty;
 import javafx.beans.property.SimpleStringProperty;
 

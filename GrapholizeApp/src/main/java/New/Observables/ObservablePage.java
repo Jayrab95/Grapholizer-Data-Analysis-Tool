@@ -1,8 +1,6 @@
-package New.Model.ObservableModel;
+package New.Observables;
 
 import New.CustomControls.Annotation.AnnotationRectangle;
-import New.Interfaces.Observable;
-import New.Interfaces.Observer.Observer;
 import New.Interfaces.Observer.PageObserver;
 import New.Interfaces.Observer.StrokeObserver;
 import New.Model.Entities.*;

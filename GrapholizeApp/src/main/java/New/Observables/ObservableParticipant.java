@@ -1,7 +1,5 @@
-package New.Model.ObservableModel;
+package New.Observables;
 
-import New.Interfaces.Observable;
-import New.Interfaces.Observer.Observer;
 import New.Interfaces.Observer.ParticipantObserver;
 import New.Model.Entities.Participant;
 

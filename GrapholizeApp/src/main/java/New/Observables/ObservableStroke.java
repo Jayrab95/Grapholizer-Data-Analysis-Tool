@@ -1,4 +1,4 @@
-package New.Model.ObservableModel;
+package New.Observables;
 
 import New.Interfaces.Observable;
 import New.Interfaces.Observer.Observer;
