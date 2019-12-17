@@ -15,6 +15,9 @@ public abstract class AnnotationRectangle extends Rectangle {
     protected StringProperty annotationText;
     protected BooleanProperty selected;
     protected DoubleProperty scale;
+    protected double duration;
+    protected double start;
+
     protected AnnotationSelectionController annotationSelectionController;
 
 
@@ -33,6 +36,9 @@ public abstract class AnnotationRectangle extends Rectangle {
         this.annotationColor.addListener((observable, oldValue, newValue) -> onColorChange());
 
         this.annotationSelectionController = new AnnotationSelectionController(parent);
+
+        this.duration = width;
+        this.start = start;
 
         setHeight(height);
         setWidth(width);
@@ -54,8 +60,8 @@ public abstract class AnnotationRectangle extends Rectangle {
 
 
     protected void rescaleElement(){
-        setX(getX() * scale.get());
-        setWidth(getWidth() * scale.get());
+        setX(start * scale.get());
+        setWidth(duration * scale.get());
     }
 
     protected void onValueChange(){

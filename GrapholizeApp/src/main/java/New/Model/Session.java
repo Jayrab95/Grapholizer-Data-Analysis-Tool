@@ -36,6 +36,9 @@ public class Session {
         return activePage;
     }
 
+
+    //TODO: Are these needed? The content switcher now does the switching.
+    //Should content switcher receive a reference to the session instead? Or keep it the way it is?
     public void switchParticipant(String participantKey){
         activeParticipant.setParticipant(activeProject.getParticipant(participantKey));
         activePage.setPage(activeParticipant.getPage(0));

@@ -45,7 +45,7 @@ public class CustomTimeLinePane extends SelectableTimeLinePane implements PageOb
     private CustomTimeLineController customTimeLineController;
     private ContextMenu contextMenu;
 
-    public CustomTimeLinePane(double width, double height, DoubleProperty scaleProp, ObservableTimeLineTag tag, ObservablePage p, TimeLineContainer parent) {
+    public CustomTimeLinePane(DoubleProperty width, double height, DoubleProperty scaleProp, ObservableTimeLineTag tag, ObservablePage p, TimeLineContainer parent) {
         super(width, height, scaleProp, tag.getTagProperty(), parent);
         this.timeLineTag = tag;
         customTimeLineController = new CustomTimeLineController(tag, p, parent);
@@ -61,17 +61,18 @@ public class CustomTimeLinePane extends SelectableTimeLinePane implements PageOb
         this.setOnMouseReleased(event -> handleTimelineMouseRelease(event));
     }
 
-    public CustomTimeLinePane(double width, double height, DoubleProperty scaleProp, ObservableTimeLineTag tag, ObservablePage p, TimeLineContainer parent, List<AnnotationRectangle> annotations) {
+    public CustomTimeLinePane(DoubleProperty width, double height, DoubleProperty scaleProp, ObservableTimeLineTag tag, ObservablePage p, TimeLineContainer parent, List<AnnotationRectangle> annotations) {
         this(width, height, scaleProp, tag, p, parent);
         addAnnotations(annotations);
     }
 
-    public CustomTimeLinePane(double width, double height, DoubleProperty scaleProp, ObservableTimeLineTag tag, ObservablePage p, TimeLineContainer parent, Annotation a) {
+    public CustomTimeLinePane(DoubleProperty width, double height, DoubleProperty scaleProp, ObservableTimeLineTag tag, ObservablePage p, TimeLineContainer parent, Annotation a) {
         this(width, height, scaleProp, tag, p, parent);
         addAnnotation(a);
     }
 
-    private void reloadTimeLine(List<ObservableAnnotation> annotations){
+    private void reloadTimeLine(List<ObservableAnnotation> annotations, double newWidth){
+        setWidth(newWidth * scale.get());
         for(ObservableAnnotation a : annotations){
             getChildren().add(new MovableAnnotationRectangle(
                     timeLineTag.getColorProperty(),
@@ -99,6 +100,10 @@ public class CustomTimeLinePane extends SelectableTimeLinePane implements PageOb
             Annotation newAnnotation = new Annotation(a.getText(), a.getTimeStart(), a.getTimeStop());
             addAnnotation(newAnnotation);
         }
+    }
+
+    private void removeAnnotation(AnnotationRectangle rect, ObservableAnnotation a){
+        getChildren().remove(rect);
     }
 
     /**
@@ -215,12 +220,6 @@ public class CustomTimeLinePane extends SelectableTimeLinePane implements PageOb
         getChildren().remove(selection);
     }
 
-    @Override
-    public void update(ObservablePage sender) {
-        getChildren().clear();
-        reloadTimeLine(sender.getTimeLineAnnotations(timeLineTag.getTag()));
-    }
-
     public void createCopyAnnotationDialogue()  {
         Dialog dialog = new Dialog<>();
         dialog.setTitle(TXT_COPYANNOTATION_TITLE);
@@ -279,5 +278,12 @@ public class CustomTimeLinePane extends SelectableTimeLinePane implements PageOb
         });
 
         dialog.showAndWait();
+    }
+
+    @Override
+    public void update(ObservablePage sender) {
+        getChildren().clear();
+        totalLength.set(sender.getDuration());
+        reloadTimeLine(sender.getTimeLineAnnotations(timeLineTag.getTag()), sender.getDuration());
     }
 }

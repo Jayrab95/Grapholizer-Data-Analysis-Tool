@@ -5,10 +5,6 @@ import New.Interfaces.Observer.ProjectObserver;
 import New.Model.ObservableModel.ObservablePage;
 import New.Model.ObservableModel.ObservableParticipant;
 import New.Model.ObservableModel.ObservableProject;
-import javafx.beans.property.IntegerProperty;
-import javafx.beans.property.SimpleIntegerProperty;
-import javafx.beans.property.SimpleStringProperty;
-import javafx.beans.property.StringProperty;
 import javafx.scene.control.ComboBox;
 import javafx.scene.layout.HBox;
 

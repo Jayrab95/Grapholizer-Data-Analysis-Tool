@@ -5,6 +5,7 @@ import New.CustomControls.Containers.TimeLineContainer;
 import New.CustomControls.Annotation.AnnotationRectangle;
 import New.Execptions.NoTimeLineSelectedException;
 import New.Model.Entities.Annotation;
+import New.Model.ObservableModel.ObservableAnnotation;
 import New.Model.ObservableModel.ObservablePage;
 import New.Model.ObservableModel.ObservableTimeLine;
 import New.Model.ObservableModel.ObservableTimeLineTag;
@@ -82,6 +83,8 @@ public class CustomTimeLineController {
         }
     }
 
-
+    public void removeAnnotation(ObservableAnnotation a){
+        page.removeAnnotation(timeLineTag.getTag(), a.getAnnotation());
+    }
 
 }

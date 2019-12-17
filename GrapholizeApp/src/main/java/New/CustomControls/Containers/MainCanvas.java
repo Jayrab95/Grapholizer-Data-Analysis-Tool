@@ -7,10 +7,14 @@ import New.Interfaces.Observable;
 import New.Interfaces.Observer.Observer;
 import New.Model.ObservableModel.ObservablePage;
 import New.Model.ObservableModel.ObservableStroke;
+import javafx.beans.property.DoubleProperty;
+import javafx.beans.property.SimpleDoubleProperty;
 import javafx.collections.ListChangeListener;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
+import javafx.scene.control.Button;
 import javafx.scene.control.ScrollPane;
+import javafx.scene.control.Slider;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
@@ -18,21 +22,27 @@ import javafx.scene.paint.Color;
 import java.util.List;
 
 public class MainCanvas extends VBox implements PageObserver, StrokeObserver {
-    private HBox hbox_Controls;
+    private Slider scaleSlider;
     private ScrollPane canvasContainer;
     private final Canvas canvas;
     private final double canvasWidth;
     private final double canvasHeight;
-    private double canvasScale;
+    private DoubleProperty canvasScale;
     private ObservablePage p;
 
 
     public MainCanvas(double initWidth, double initHeight, double initScale, ObservablePage obsPage){
         this.canvasWidth = initWidth;
         this.canvasHeight = initHeight;
-        this.canvasScale = initScale;
+        this.canvasScale = new SimpleDoubleProperty(initScale);
         this.p = obsPage;
-        canvas = new Canvas(initWidth * canvasScale, initHeight * canvasScale);
+
+        scaleSlider = initializeSlider(initScale);
+
+        canvasScale.bind(scaleSlider.valueProperty());
+        canvasScale.addListener((observable, oldValue, newValue) -> resetCanvas());
+
+        canvas = new Canvas(initWidth * canvasScale.get(), initHeight * canvasScale.get());
         obsPage.addObserver(this);
         obsPage.registerStrokeObserver(this);
         initializeCanvas();
@@ -40,8 +50,21 @@ public class MainCanvas extends VBox implements PageObserver, StrokeObserver {
 
     private void initializeCanvas(){
         canvasContainer = new ScrollPane(canvas);
-        getChildren().add(canvasContainer);
+
+        getChildren().addAll(scaleSlider, canvasContainer);
         drawStrokes();
+    }
+
+    private Slider initializeSlider(double init){
+        //40 is the max scale. Anything above can cause a bug with the graphics object.
+        //https://bugs.openjdk.java.net/browse/JDK-8174077
+        Slider slider = new Slider(1, 40, init);
+        return slider;
+    }
+
+    private void resizeCanvas(){
+        canvas.setWidth(canvasWidth * canvasScale.get());
+        canvas.setHeight(canvasHeight * canvasScale.get());
     }
 
     private void drawStrokes(){
@@ -57,11 +80,11 @@ public class MainCanvas extends VBox implements PageObserver, StrokeObserver {
                 if(s.isSelected()){
                     gc.setLineWidth((fAvg) + 2);
                     gc.setStroke(new Color(0,1, 0, 1));
-                    gc.strokeLine(d1.getX() * canvasScale, d1.getY() * canvasScale, d2.getX() * canvasScale, d2.getY() * canvasScale);
+                    gc.strokeLine(d1.getX() * canvasScale.get(), d1.getY() * canvasScale.get(), d2.getX() * canvasScale.get(), d2.getY() * canvasScale.get());
                 }
                 gc.setLineWidth((fAvg + 0.5));
                 gc.setStroke(s.getColor());
-                gc.strokeLine(d1.getX() * canvasScale, d1.getY() * canvasScale, d2.getX() * canvasScale, d2.getY() * canvasScale);
+                gc.strokeLine(d1.getX() * canvasScale.get(), d1.getY() * canvasScale.get(), d2.getX() * canvasScale.get(), d2.getY() * canvasScale.get());
             }
         }
     }
@@ -71,31 +94,37 @@ public class MainCanvas extends VBox implements PageObserver, StrokeObserver {
 
     private void resetCanvas(){
         canvas.getGraphicsContext2D().clearRect(0,0,canvas.getWidth(), canvas.getHeight());
+        resizeCanvas();
         drawStrokes();
     }
 
+    /*
+    //40 is the max scale. Anything above can cause a bug with the graphics object.
+    //
     private void scaleUp(float step){
-        if(canvasScale + step < 40){
-            canvasScale += step;
+        if(canvasScale.get() + step < 40){
+            canvasScale.get() += step;
         }
         else {
-            canvasScale = 40;}
-        canvas.setWidth(canvasWidth* canvasScale);
-        canvas.setHeight(canvasHeight * canvasScale);
+            canvasScale.get() = 40;}
+        canvas.setWidth(canvasWidth* canvasScale.get());
+        canvas.setHeight(canvasHeight * canvasScale.get());
         resetCanvas();
     }
 
     private void scaleDown(float step){
-        if(canvasScale -step > 1){
-            canvasScale -= step;
+        if(canvasScale.get() -step > 1){
+            canvasScale.get() -= step;
         }
         else{
-            canvasScale = 1;
+            canvasScale.get() = 1;
         }
-        canvas.setWidth(canvasWidth* canvasScale);
-        canvas.setHeight(canvasHeight * canvasScale);
+        canvas.setWidth(canvasWidth* canvasScale.get());
+        canvas.setHeight(canvasHeight * canvasScale.get());
         resetCanvas();
     }
+
+     */
 
 
     @Override

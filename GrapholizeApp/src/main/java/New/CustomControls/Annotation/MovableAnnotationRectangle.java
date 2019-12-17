@@ -9,6 +9,7 @@ import javafx.beans.property.DoubleProperty;
 import javafx.beans.property.ObjectProperty;
 import javafx.scene.control.ContextMenu;
 import javafx.scene.control.MenuItem;
+import javafx.scene.input.MouseButton;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.paint.Color;
 
@@ -76,15 +77,20 @@ public class MovableAnnotationRectangle extends AnnotationRectangle {
                 "Delete annotation?",
                 "Are you sure you want to delete the annotation \"" + annotationText.get() + "\"? This action cannot be undone."))
         {
-            movableAnnotationController.removeElement();
+            movableAnnotationController.removeElement(this);
         }
     }
 
     //region TimeLineElement handlers
 
     private void handleMousePress(MouseEvent event){
-        mouseDelta = event.getX() - getX();
-        dragBounds = movableAnnotationController.getBounds(event.getX());
+        if(event.getButton() == MouseButton.SECONDARY){
+            getElementSpecificContextMenu().show(this, event.getScreenX(), event.getScreenY());
+        }
+        else{
+            mouseDelta = event.getX() - getX();
+            dragBounds = movableAnnotationController.getBounds(event.getX());
+        }
         event.consume();
     }
 

@@ -34,7 +34,7 @@ public class MainSceneController {
     Session _session;
 
     @FXML
-    private ScrollPane scrollPane_TimeLines;
+    private AnchorPane scrollPane_TimeLines;
 
     @FXML
     private VBox anchorPane_canvasContainer;
@@ -54,7 +54,7 @@ public class MainSceneController {
         anchorPane_canvasContainer.getChildren().addAll(
                 new MainCanvas(pmd.getPageWidth(), pmd.getPageHeight(), 10, _session.getActivePage()),
                 new ContentSwitcher(_session.getActiveProject(),_session.getActiveParticipant(), _session.getActivePage()));
-        scrollPane_TimeLines.setContent(new TimeLineContainer(_session.getActiveProject(), _session.getActivePage(), 0.05));
+        scrollPane_TimeLines.getChildren().add(new TimeLineContainer(_session.getActiveProject(), _session.getActivePage(), 0.05));
 
     }
 

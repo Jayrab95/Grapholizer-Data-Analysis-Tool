@@ -18,7 +18,9 @@ import New.util.DialogGenerator;
 import javafx.beans.property.DoubleProperty;
 import javafx.beans.property.SimpleDoubleProperty;
 import javafx.event.ActionEvent;
+import javafx.geometry.Insets;
 import javafx.scene.control.*;
+import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
@@ -47,7 +49,7 @@ public class TimeLineContainer extends VBox {
     private final static String TXT_TL_CREATION_ERROR_TITLE = "Timeline creation error";
     private final static String TXT_TL_CREATION_ERROR_HEADER = "Error while creating timeline";
 
-    private double totalWidth;
+    private DoubleProperty totalWidth;
     private double timeLinesHeight = 50;
     private DoubleProperty scale;
 
@@ -55,13 +57,35 @@ public class TimeLineContainer extends VBox {
 
     private TimeLineContainerController timeLineContainerController;
 
+    private ScrollPane scrollPane_timeLineScrollPane;
+    private VBox vBox_TimeLineBox;
+
     private Button btn_CreateNewTimeLine;
     private Button btn_CreateNewTimeLineOutOfSelected;
     private HBox hbox_buttonHBox;
 
+    private Slider scaleSlider;
+
     public TimeLineContainer(ObservableProject project, ObservablePage page, double initialScale){
+
+        AnchorPane.setBottomAnchor(this, 0.0);
+        AnchorPane.setLeftAnchor(this, 0.0);
+        AnchorPane.setRightAnchor(this, 0.0);
+        AnchorPane.setTopAnchor(this, 0.0);
+
         timeLineContainerController = new TimeLineContainerController(project, page);
+
+        totalWidth = new SimpleDoubleProperty(page.getDuration());
         scale = new SimpleDoubleProperty(initialScale);
+
+        scaleSlider = initializeSlider(initialScale);
+        scale.bind(scaleSlider.valueProperty());
+
+        vBox_TimeLineBox = new VBox();
+        vBox_TimeLineBox.setPadding(new Insets(5, 0, 10, 0));
+        scrollPane_timeLineScrollPane = new ScrollPane();
+        scrollPane_timeLineScrollPane.setContent(vBox_TimeLineBox);
+
         InitializeButtonHBox();
         InitializeContainer(project, page);
     }
@@ -77,15 +101,22 @@ public class TimeLineContainer extends VBox {
     private void InitializeContainer(ObservableProject project, ObservablePage page){
         //Step 1: Create the stroke timeline
         //Step 2: For each tag, create a new timeline and pass over the observble Tag and the page. Then create the annotations.
-        totalWidth = page.getDuration();
-        StrokeDurationTimeLinePane strokePane = new StrokeDurationTimeLinePane(totalWidth,timeLinesHeight, scale, timeLineContainerController.getPage(), this);
+        getChildren().add(scaleSlider);
+        getChildren().add(hbox_buttonHBox);
+        getChildren().add(scrollPane_timeLineScrollPane);
+        StrokeDurationTimeLinePane strokePane = new StrokeDurationTimeLinePane(totalWidth, timeLinesHeight, scale, timeLineContainerController.getPage(), this);
         addTimeLinePane(strokePane);
         //getChildren().add(strokePane);
 
         for(String tag : project.getTimeLineTagNames()){
 
         }
-        getChildren().add(hbox_buttonHBox);
+
+    }
+
+    private Slider initializeSlider(double initScale){
+        Slider slider = new Slider(0.001, 1, initScale);
+        return slider;
     }
 
     public ObservableTimeLine getSelectedTimeLine() {
@@ -96,7 +127,7 @@ public class TimeLineContainer extends VBox {
     }
 
     private void addTimeLinePane(TimeLinePane timeLinePane){
-        getChildren().add(new TimeLineWrapper(timeLinePane));
+        vBox_TimeLineBox.getChildren().add(new TimeLineWrapper(timeLinePane));
     }
 
     public void createNewTimeLine(){
@@ -332,6 +363,7 @@ public class TimeLineContainer extends VBox {
             this.tl = tl;
             this.tli = new TimeLineInformation(tl);
             getChildren().addAll(tli, tl);
+            setPadding(new Insets(5,0,5,0));
         }
         TimeLineWrapper(TimeLinePane tl, TimeLineInformation tli){
             this.tl = tl;

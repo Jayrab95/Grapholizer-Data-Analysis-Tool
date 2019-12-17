@@ -2,11 +2,21 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="f9c9e85c-b6d3-4a2f-99c7-3350288aea5b" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/src/main/java/New/Controllers/ContentSwitcherController.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/New/Controllers/CustomTimeLineController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/New/Controllers/CustomTimeLineController.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/New/Controllers/MainSceneController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/New/Controllers/MainSceneController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/New/Controllers/MovableAnnotationController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/New/Controllers/MovableAnnotationController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/New/CustomControls/Annotation/AnnotationRectangle.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/New/CustomControls/Annotation/AnnotationRectangle.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/New/CustomControls/Annotation/MovableAnnotationRectangle.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/New/CustomControls/Annotation/MovableAnnotationRectangle.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/New/CustomControls/Containers/ContentSwitcher.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/New/CustomControls/Containers/ContentSwitcher.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/New/Model/ObservableModel/ObservableParticipant.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/New/Model/ObservableModel/ObservableParticipant.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/New/CustomControls/Containers/MainCanvas.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/New/CustomControls/Containers/MainCanvas.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/New/CustomControls/Containers/TimeLineContainer.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/New/CustomControls/Containers/TimeLineContainer.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/New/CustomControls/TimeLine/CustomTimeLinePane.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/New/CustomControls/TimeLine/CustomTimeLinePane.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/New/CustomControls/TimeLine/SelectableTimeLinePane.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/New/CustomControls/TimeLine/SelectableTimeLinePane.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/New/CustomControls/TimeLine/StrokeDurationTimeLinePane.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/New/CustomControls/TimeLine/StrokeDurationTimeLinePane.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/New/CustomControls/TimeLine/TimeLinePane.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/New/CustomControls/TimeLine/TimeLinePane.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/New/Model/ObservableModel/ObservablePage.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/New/Model/ObservableModel/ObservablePage.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/New/Model/Session.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/New/Model/Session.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/resources/fxml/views/MainScene.fxml" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/fxml/views/MainScene.fxml" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
@@ -338,24 +348,19 @@
           <option name="timeStamp" value="33" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="java-line">
-          <url>file://$PROJECT_DIR$/src/main/java/New/CustomControls/TimeLine/SelectableTimeLinePane.java</url>
-          <line>54</line>
-          <option name="timeStamp" value="34" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" type="java-line">
           <url>file://$PROJECT_DIR$/src/main/java/New/Controllers/AnnotationSelectionController.java</url>
           <line>19</line>
           <option name="timeStamp" value="37" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="java-line">
-          <url>file://$PROJECT_DIR$/src/main/java/New/CustomControls/TimeLine/SelectableTimeLinePane.java</url>
-          <line>46</line>
-          <option name="timeStamp" value="38" />
+          <url>file://$PROJECT_DIR$/src/main/java/New/CustomControls/Annotation/AnnotationRectangle.java</url>
+          <line>96</line>
+          <option name="timeStamp" value="40" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="java-line">
-          <url>file://$PROJECT_DIR$/src/main/java/New/CustomControls/Annotation/AnnotationRectangle.java</url>
-          <line>90</line>
-          <option name="timeStamp" value="40" />
+          <url>file://$PROJECT_DIR$/src/main/java/New/Controllers/MainSceneController.java</url>
+          <line>56</line>
+          <option name="timeStamp" value="47" />
         </line-breakpoint>
       </breakpoints>
     </breakpoint-manager>

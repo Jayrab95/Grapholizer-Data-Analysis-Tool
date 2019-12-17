@@ -46,7 +46,7 @@ public class ObservablePage{
         inner.getTimeLine(key).add(a);
     }
 
-    public void removeAnnotation(TimeLineTag key, Annotation a){
+    public void removeAnnotation(String key, Annotation a){
         inner.getTimeLines().get(key).remove(a);
     }
 
