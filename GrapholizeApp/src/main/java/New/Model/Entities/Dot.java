@@ -54,7 +54,7 @@ public class Dot {
      * @param x
      * @param y
      */
-    public Dot(int tiltX, int tiltY, int twist, int force, long timeStamp, DotType dotType, float x, float y) {
+    public Dot(int tiltX, int tiltY, int twist, float force, long timeStamp, DotType dotType, float x, float y) {
         this.tiltX = tiltX;
         this.tiltY = tiltY;
         this.twist = twist;

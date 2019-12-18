@@ -27,7 +27,8 @@ public class ObservableStroke{
 
     //region Private fields
     //Idea: the strokes/Dots implement a method called draw. This way, they can be wrapped with different filters. => DEcorator DesignPattern
-    private final List<StrokeObserver> observers;
+    private List<StrokeObserver> observers;
+    private List<ObservableDot> observableDots;
     private final Stroke stroke;
     private BooleanProperty selected;
     private ObjectProperty<Color> color;
@@ -49,6 +50,7 @@ public class ObservableStroke{
                 notifyObservers();
             }
         });
+        this.observableDots = generateObservableDots();
     }
 
     /**
@@ -77,6 +79,18 @@ public class ObservableStroke{
     //Todo: Perhaps return a clone of dots. Dots should not be modifiable. Depending on the size of the list, this could hurt the performance however.
     public List<Dot> getDots() {
         return stroke.getDots();
+    }
+
+    private List<ObservableDot> generateObservableDots(){
+        List<ObservableDot> res = new ArrayList<>(stroke.getDots().size());
+        for(Dot d : stroke.getDots()){
+            res.add(new ObservableDot(d));
+        }
+        return res;
+    }
+
+    public List<ObservableDot> getObservableDots(){
+        return observableDots;
     }
 
     public long getTimeStart() {
