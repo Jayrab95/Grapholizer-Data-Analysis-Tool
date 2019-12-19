@@ -3,6 +3,7 @@ package New.Observables;
 import New.Filters.Filter;
 import New.Interfaces.Observer.FilterObserver;
 
+import java.util.LinkedList;
 import java.util.List;
 
 public class ObservableFilterCollection {
@@ -11,9 +12,14 @@ public class ObservableFilterCollection {
 
     public ObservableFilterCollection(Filter... filters){
         this.filters = filters;
+        this.observers = new LinkedList<>();
         for (Filter filter : filters) {
             filter.getFilterActiveProperty().addListener((observable, oldValue, newValue) -> notifyObservers());
         }
+    }
+
+    public Filter[] getFilters() {
+        return filters;
     }
 
     public void addObserver(FilterObserver obs){
