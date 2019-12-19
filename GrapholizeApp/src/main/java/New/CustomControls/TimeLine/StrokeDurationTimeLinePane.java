@@ -12,7 +12,7 @@ import java.util.List;
 
 public class StrokeDurationTimeLinePane extends SelectableTimeLinePane implements PageObserver {
 
-    public StrokeDurationTimeLinePane(DoubleProperty width, double height, DoubleProperty scaleProp, ObservablePage page, TimeLineContainer parent) {
+    public StrokeDurationTimeLinePane(double width, double height, DoubleProperty scaleProp, ObservablePage page, TimeLineContainer parent) {
         super(width, height, scaleProp, new SimpleStringProperty("Stroke duration"), parent);
         page.addObserver(this);
         setUpTimeLine(page.getObservableStrokes());

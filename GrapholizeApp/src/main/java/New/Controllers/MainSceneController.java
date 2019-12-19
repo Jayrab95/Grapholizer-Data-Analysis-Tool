@@ -48,11 +48,12 @@ public class MainSceneController {
     public void initialize() throws Exception{
 
         ProjectLoader loader = new ProjectLoader();
-        loadThatShitBoy();
+        //loadThatShitBoy();
+        _session = new Session(new JsonLoader().load("src\\main\\resources\\data\\lukas_test_1.json"));
         PageMetaData pmd = _session.getActivePage().getPageMetaData();
         _session.setZ_Helper(loader.getZipHelper());
         anchorPane_canvasContainer.getChildren().addAll(
-                new MainCanvas(pmd.getPageWidth(), pmd.getPageHeight(), 10, _session.getActivePage()),
+                new MainCanvas(pmd.getPageWidth(), pmd.getPageHeight(), 5, _session.getActivePage()),
                 new ContentSwitcher(_session.getActiveProject(),_session.getActiveParticipant(), _session.getActivePage()));
         scrollPane_TimeLines.getChildren().add(new TimeLineContainer(_session.getActiveProject(), _session.getActivePage(), 0.05));
 

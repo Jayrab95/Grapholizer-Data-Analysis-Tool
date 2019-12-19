@@ -28,6 +28,7 @@ public class Page {
         for (CompressedStroke cstroke : cp.Strokes) {
             strokes.add(new Stroke(cstroke, initialTimestamp));
         }
+        timeLines = new HashMap<>();
     }
 
     public PageMetaData getPageMetaData() {

@@ -104,7 +104,7 @@ public class TimeLineContainer extends VBox {
         getChildren().add(scaleSlider);
         getChildren().add(hbox_buttonHBox);
         getChildren().add(scrollPane_timeLineScrollPane);
-        StrokeDurationTimeLinePane strokePane = new StrokeDurationTimeLinePane(totalWidth, timeLinesHeight, scale, timeLineContainerController.getPage(), this);
+        StrokeDurationTimeLinePane strokePane = new StrokeDurationTimeLinePane(timeLineContainerController.getPage().getDuration(), timeLinesHeight, scale, timeLineContainerController.getPage(), this);
         addTimeLinePane(strokePane);
         //getChildren().add(strokePane);
 
@@ -184,8 +184,8 @@ public class TimeLineContainer extends VBox {
 
     private TimeLinePane createNewTimeLinePane(ObservableTimeLineTag tag, ObservablePage page, Optional<List<AnnotationRectangle>> annotations){
         CustomTimeLinePane newTimeLine = annotations.isPresent() ?
-                new CustomTimeLinePane(totalWidth, timeLinesHeight, scale, tag, page, this, annotations.get()) :
-                new CustomTimeLinePane(totalWidth, timeLinesHeight, scale, tag, page, this);
+                new CustomTimeLinePane(timeLineContainerController.getPage().getDuration(), timeLinesHeight, scale, tag, page, this, annotations.get()) :
+                new CustomTimeLinePane(timeLineContainerController.getPage().getDuration(), timeLinesHeight, scale, tag, page, this);
         return newTimeLine;
     }
 
@@ -194,7 +194,7 @@ public class TimeLineContainer extends VBox {
     }
 
     private TimeLinePane createNewTimeLinePaneOutOfCombined(ObservableTimeLineTag tag, ObservablePage page, Annotation annotation){
-        CustomTimeLinePane newTimeLine = new CustomTimeLinePane(totalWidth, timeLinesHeight, scale, tag, page, this, annotation);
+        CustomTimeLinePane newTimeLine = new CustomTimeLinePane(timeLineContainerController.getPage().getDuration(), timeLinesHeight, scale, tag, page, this, annotation);
         return newTimeLine;
     }
 
@@ -364,11 +364,6 @@ public class TimeLineContainer extends VBox {
             this.tli = new TimeLineInformation(tl);
             getChildren().addAll(tli, tl);
             setPadding(new Insets(5,0,5,0));
-        }
-        TimeLineWrapper(TimeLinePane tl, TimeLineInformation tli){
-            this.tl = tl;
-            this.tli = tli;
-            getChildren().addAll(tli, tl);
         }
         TimeLinePane getTimeLinePane(){return tl;}
         TimeLineInformation getTimelineInformation(){return tli;}

@@ -45,7 +45,7 @@ public class CustomTimeLinePane extends SelectableTimeLinePane implements PageOb
     private CustomTimeLineController customTimeLineController;
     private ContextMenu contextMenu;
 
-    public CustomTimeLinePane(DoubleProperty width, double height, DoubleProperty scaleProp, ObservableTimeLineTag tag, ObservablePage p, TimeLineContainer parent) {
+    public CustomTimeLinePane(double width, double height, DoubleProperty scaleProp, ObservableTimeLineTag tag, ObservablePage p, TimeLineContainer parent) {
         super(width, height, scaleProp, tag.getTagProperty(), parent);
         this.timeLineTag = tag;
         customTimeLineController = new CustomTimeLineController(tag, p, parent);
@@ -59,14 +59,16 @@ public class CustomTimeLinePane extends SelectableTimeLinePane implements PageOb
         this.setOnMousePressed(event -> handleTimelineMousePress(event));
         this.setOnMouseDragged(event -> handleTimelineMouseDrag(event));
         this.setOnMouseReleased(event -> handleTimelineMouseRelease(event));
+
+        p.addObserver(this);
     }
 
-    public CustomTimeLinePane(DoubleProperty width, double height, DoubleProperty scaleProp, ObservableTimeLineTag tag, ObservablePage p, TimeLineContainer parent, List<AnnotationRectangle> annotations) {
+    public CustomTimeLinePane(double width, double height, DoubleProperty scaleProp, ObservableTimeLineTag tag, ObservablePage p, TimeLineContainer parent, List<AnnotationRectangle> annotations) {
         this(width, height, scaleProp, tag, p, parent);
         addAnnotations(annotations);
     }
 
-    public CustomTimeLinePane(DoubleProperty width, double height, DoubleProperty scaleProp, ObservableTimeLineTag tag, ObservablePage p, TimeLineContainer parent, Annotation a) {
+    public CustomTimeLinePane(double width, double height, DoubleProperty scaleProp, ObservableTimeLineTag tag, ObservablePage p, TimeLineContainer parent, Annotation a) {
         this(width, height, scaleProp, tag, p, parent);
         addAnnotation(a);
     }

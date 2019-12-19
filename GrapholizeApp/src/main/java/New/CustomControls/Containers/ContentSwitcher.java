@@ -16,8 +16,8 @@ public class ContentSwitcher extends HBox implements ProjectObserver {
 
     private ContentSwitcherController contentSwitcherController;
 
-    private ComboBox<String> participants;
-    private ComboBox<Integer> pages;
+    private ComboBox<String> comboBox_Participants;
+    private ComboBox<Integer> comboBox_Pages;
 
     public ContentSwitcher(ObservableProject project, ObservableParticipant activeParticipant, ObservablePage activePage){
         project.addObserver(this);
@@ -27,12 +27,16 @@ public class ContentSwitcher extends HBox implements ProjectObserver {
         this.participant = activeParticipant;
         this.page = activePage;
 
-        this.participants = new ComboBox<>();
-        this.pages = new ComboBox<>();
+        this.comboBox_Participants = new ComboBox<>();
+        this.comboBox_Pages = new ComboBox<>();
 
 
-        this.participants.valueProperty().addListener((observable, oldValue, newValue) -> handleComboBoxParticipantChange(newValue));
-        this.pages.valueProperty().addListener((observable, oldValue, newValue) -> handleComboBoxPageChange(newValue));
+        this.comboBox_Participants.valueProperty().addListener((observable, oldValue, newValue) -> handleComboBoxParticipantChange(newValue));
+        this.comboBox_Pages.valueProperty().addListener((observable, oldValue, newValue) -> {
+            if(newValue != null){
+                handleComboBoxPageChange(newValue);
+            }
+        });
 
         initializeComboBoxes();
     }
@@ -41,23 +45,24 @@ public class ContentSwitcher extends HBox implements ProjectObserver {
         this.getChildren().clear();
         initializeParticipants();
         //InitializeParticipants will implicitly also call IntitializePages
-        this.getChildren().addAll(participants, pages);
+        this.getChildren().addAll(comboBox_Participants, comboBox_Pages);
     }
 
     private void initializeParticipants(){
-        participants.getItems().clear();
+        comboBox_Participants.getItems().clear();
         for(String s : project.getParticipantIDs()){
-            participants.getItems().add(s);
+            comboBox_Participants.getItems().add(s);
         }
-        participants.getSelectionModel().select(0);
+        comboBox_Participants.getSelectionModel().select(0);
     }
 
     private void initializePages(){
-        pages.getItems().clear();
+        comboBox_Pages.getItems().clear();
         for(int i = 0; i < participant.getNumberOfPages(); i++){
-            pages.getItems().add(i + 1);
+            comboBox_Pages.getItems().add(i + 1);
         }
-        pages.getSelectionModel().select(0);
+        comboBox_Pages.getSelectionModel().select(0);
+
     }
 
     private void handleComboBoxParticipantChange(String newVal){
