@@ -1,6 +1,6 @@
 package New.Interfaces.Observer;
 
-import New.Model.ObservableModel.ObservableAnnotation;
+import New.Observables.ObservableAnnotation;
 
 public interface AnnotationObserver {
     void update(ObservableAnnotation sender);

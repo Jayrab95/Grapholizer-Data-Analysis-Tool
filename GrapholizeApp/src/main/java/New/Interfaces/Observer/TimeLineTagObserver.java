@@ -1,6 +1,6 @@
 package New.Interfaces.Observer;
 
-import New.Model.ObservableModel.ObservableTimeLineTag;
+import New.Observables.ObservableTimeLineTag;
 
 public interface TimeLineTagObserver {
     void update(ObservableTimeLineTag sender);

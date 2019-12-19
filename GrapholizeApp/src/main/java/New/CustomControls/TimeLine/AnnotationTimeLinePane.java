@@ -3,7 +3,6 @@ package New.CustomControls.TimeLine;
 import New.CustomControls.Annotation.AnnotationRectangle;
 import New.CustomControls.Annotation.MovableAnnotationRectangle;
 import New.Model.Entities.Annotation;
-import New.Model.ObservableModel.ObservableAnnotation;
 import javafx.beans.property.DoubleProperty;
 import javafx.beans.property.ObjectProperty;
 import javafx.beans.property.SimpleStringProperty;

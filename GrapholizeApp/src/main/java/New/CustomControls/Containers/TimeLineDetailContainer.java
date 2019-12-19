@@ -6,12 +6,15 @@ import New.CustomControls.TimeLine.CustomTimeLinePane;
 import New.CustomControls.TimeLine.SelectableTimeLinePane;
 import New.CustomControls.TimeLine.SubTimeLines.PressureTimeLine;
 import New.CustomControls.TimeLine.TimeLinePane;
-import New.Model.ObservableModel.ObservablePage;
 import javafx.beans.property.DoubleProperty;
 import javafx.beans.property.SimpleDoubleProperty;
 import javafx.beans.property.SimpleObjectProperty;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.scene.control.ScrollPane;
+
+
+import New.Observables.ObservablePage;
+
 import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
 

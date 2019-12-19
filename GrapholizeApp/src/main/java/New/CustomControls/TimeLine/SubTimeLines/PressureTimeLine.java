@@ -3,8 +3,8 @@ package New.CustomControls.TimeLine.SubTimeLines;
 import New.CustomControls.TimeLine.SelectableTimeLinePane;
 import New.CustomControls.TimeLine.TimeLinePane;
 import New.Model.Entities.Dot;
-import New.Model.ObservableModel.ObservablePage;
-import com.sun.org.apache.bcel.internal.generic.Select;
+import New.Observables.ObservablePage;
+
 import javafx.beans.property.DoubleProperty;
 import javafx.beans.property.StringProperty;
 import javafx.scene.shape.Line;

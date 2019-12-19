@@ -2,9 +2,9 @@ package New.CustomControls.Containers;
 
 import New.Controllers.ContentSwitcherController;
 import New.Interfaces.Observer.ProjectObserver;
-import New.Model.ObservableModel.ObservablePage;
-import New.Model.ObservableModel.ObservableParticipant;
-import New.Model.ObservableModel.ObservableProject;
+import New.Observables.ObservablePage;
+import New.Observables.ObservableParticipant;
+import New.Observables.ObservableProject;
 import javafx.scene.control.ComboBox;
 import javafx.scene.layout.HBox;
 

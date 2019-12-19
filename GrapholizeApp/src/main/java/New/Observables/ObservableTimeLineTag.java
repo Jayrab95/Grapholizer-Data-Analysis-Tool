@@ -1,4 +1,4 @@
-package New.Model.ObservableModel;
+package New.Observables;
 
 import New.Model.Entities.SimpleColor;
 import New.Model.Entities.TimeLineTag;

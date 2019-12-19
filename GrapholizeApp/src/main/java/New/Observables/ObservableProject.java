@@ -1,10 +1,9 @@
-package New.Model.ObservableModel;
+package New.Observables;
 
 import New.Execptions.TimeLineTagEmptyException;
 import New.Execptions.TimeLineTagException;
 import New.Execptions.TimelineTagNotUniqueException;
 import New.Interfaces.Observer.ProjectObserver;
-import New.Model.Entities.SimpleColor;
 import New.Model.Entities.Participant;
 import New.Model.Entities.Project;
 import New.Model.Entities.TimeLineTag;

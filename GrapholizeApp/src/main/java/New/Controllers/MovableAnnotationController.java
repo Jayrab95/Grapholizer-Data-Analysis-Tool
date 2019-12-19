@@ -2,9 +2,8 @@ package New.Controllers;
 
 import New.CustomControls.Annotation.AnnotationRectangle;
 import New.CustomControls.TimeLine.CustomTimeLinePane;
-import New.CustomControls.TimeLine.TimeLinePane;
 import New.Model.Entities.Annotation;
-import New.Model.ObservableModel.ObservableAnnotation;
+import New.Observables.ObservableAnnotation;
 
 public class MovableAnnotationController {
     private final ObservableAnnotation annotation;

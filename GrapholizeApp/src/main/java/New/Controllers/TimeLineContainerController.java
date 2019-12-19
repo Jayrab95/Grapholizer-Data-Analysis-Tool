@@ -3,9 +3,9 @@ package New.Controllers;
 
 import New.Execptions.TimeLineTagException;
 import New.Model.Entities.TimeLineTag;
-import New.Model.ObservableModel.ObservablePage;
-import New.Model.ObservableModel.ObservableProject;
-import New.Model.ObservableModel.ObservableTimeLineTag;
+import New.Observables.ObservablePage;
+import New.Observables.ObservableProject;
+import New.Observables.ObservableTimeLineTag;
 import New.util.ColorConverter;
 import javafx.scene.paint.Color;
 

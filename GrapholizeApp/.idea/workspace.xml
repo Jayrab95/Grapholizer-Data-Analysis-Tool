@@ -2,22 +2,48 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="f9c9e85c-b6d3-4a2f-99c7-3350288aea5b" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/src/main/java/New/CustomControls/Annotation/SelectableAnnotationRectangle.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/New/CustomControls/Containers/SimpleTimeLineWrapper.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/New/CustomControls/TimeLine/AnnotationTimeLinePane.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/New/CustomControls/Containers/FilterContainer.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/New/Filters/Filter.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/New/Filters/StrokeDifferentiationFilter.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/New/Interfaces/Observer/FilterObserver.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/New/Observables/Observable.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/New/Observables/ObservableFilterCollection.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/New/Controllers/AnnotationSelectionController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/New/Controllers/AnnotationSelectionController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/New/Controllers/MainSceneController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/New/Controllers/MainSceneController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/New/CustomControls/Annotation/AnnotationRectangle.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/New/CustomControls/Annotation/AnnotationRectangle.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/New/Controllers/ContentSwitcherController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/New/Controllers/ContentSwitcherController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/New/Controllers/CustomTimeLineController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/New/Controllers/CustomTimeLineController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/New/Controllers/MovableAnnotationController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/New/Controllers/MovableAnnotationController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/New/Controllers/SelectableTimeLineController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/New/Controllers/SelectableTimeLineController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/New/Controllers/TimeLineContainerController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/New/Controllers/TimeLineContainerController.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/New/CustomControls/Annotation/MovableAnnotationRectangle.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/New/CustomControls/Annotation/MovableAnnotationRectangle.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/New/CustomControls/Annotation/StrokeAnnotationRectangle.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/New/CustomControls/Annotation/StrokeAnnotationRectangle.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/New/CustomControls/Containers/ContentSwitcher.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/New/CustomControls/Containers/ContentSwitcher.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/New/CustomControls/Containers/MainCanvas.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/New/CustomControls/Containers/MainCanvas.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/New/CustomControls/Containers/TimeLineContainer.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/New/CustomControls/Containers/TimeLineContainer.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/New/CustomControls/Containers/TimeLineDetailContainer.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/New/CustomControls/Containers/TimeLineDetailContainer.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/New/CustomControls/Containers/TimeLineWrapper.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/New/CustomControls/TimeLine/AnnotationTimeLinePane.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/New/CustomControls/TimeLine/AnnotationTimeLinePane.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/New/CustomControls/TimeLine/CustomTimeLinePane.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/New/CustomControls/TimeLine/CustomTimeLinePane.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/New/CustomControls/TimeLine/SelectableTimeLinePane.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/New/CustomControls/TimeLine/SelectableTimeLinePane.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/New/CustomControls/TimeLine/StrokeDurationTimeLinePane.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/New/CustomControls/TimeLine/StrokeDurationTimeLinePane.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/New/CustomControls/TimeLine/SubTimeLines/PressureTimeLine.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/New/CustomControls/TimeLine/SubTimeLines/PressureTimeLine.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/New/Model/ObservableModel/ObservablePage.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/New/Model/ObservableModel/ObservablePage.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/New/Model/ObservableModel/ObservableTimeLine.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/New/Model/ObservableModel/ObservableTimeLine.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/New/Interfaces/Observer/AnnotationObserver.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/New/Interfaces/Observer/AnnotationObserver.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/New/Interfaces/Observer/DotObserver.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/New/Interfaces/Observer/DotObserver.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/New/Interfaces/Observer/PageObserver.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/New/Interfaces/Observer/PageObserver.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/New/Interfaces/Observer/ParticipantObserver.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/New/Interfaces/Observer/ParticipantObserver.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/New/Interfaces/Observer/ProjectObserver.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/New/Interfaces/Observer/ProjectObserver.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/New/Interfaces/Observer/StrokeObserver.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/New/Interfaces/Observer/StrokeObserver.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/New/Interfaces/Observer/TimeLineObserver.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/New/Interfaces/Observer/TimeLineObserver.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/New/Interfaces/Observer/TimeLineTagObserver.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/New/Interfaces/Observer/TimeLineTagObserver.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/New/Model/Entities/Dot.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/New/Model/Entities/Dot.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/New/Model/ObservableModel/DotLine.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/New/Observables/DotLine.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/New/Model/ObservableModel/ObservableAnnotation.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/New/Observables/ObservableAnnotation.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/New/Model/ObservableModel/ObservableDot.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/New/Observables/ObservableDot.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/New/Model/ObservableModel/ObservablePage.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/New/Observables/ObservablePage.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/New/Model/ObservableModel/ObservableParticipant.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/New/Observables/ObservableParticipant.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/New/Model/ObservableModel/ObservableProject.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/New/Observables/ObservableProject.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/New/Model/ObservableModel/ObservableStroke.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/New/Observables/ObservableStroke.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/New/Model/ObservableModel/ObservableTimeLine.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/New/Observables/ObservableTimeLine.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/New/Model/ObservableModel/ObservableTimeLineTag.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/New/Observables/ObservableTimeLineTag.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/New/Model/Session.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/New/Model/Session.java" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
