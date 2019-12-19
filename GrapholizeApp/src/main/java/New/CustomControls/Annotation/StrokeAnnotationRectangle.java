@@ -10,7 +10,7 @@ import javafx.beans.property.ObjectProperty;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.scene.paint.Color;
 
-public class StrokeAnnotationRectangle extends AnnotationRectangle {
+public class StrokeAnnotationRectangle extends SelectableAnnotationRectangle {
 
     private ObservableStroke s;
     public StrokeAnnotationRectangle(ObjectProperty<Color> c, DoubleProperty scale, ObservableStroke s, SelectableTimeLinePane parent) {

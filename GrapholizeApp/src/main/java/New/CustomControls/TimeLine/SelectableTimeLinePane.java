@@ -2,6 +2,7 @@ package New.CustomControls.TimeLine;
 
 import New.Controllers.SelectableTimeLineController;
 import New.CustomControls.Annotation.AnnotationRectangle;
+import New.CustomControls.Annotation.SelectableAnnotationRectangle;
 import New.CustomControls.Containers.TimeLineContainer;
 import New.Interfaces.Observer.TimeLineObserver;
 import New.Model.ObservableModel.ObservableTimeLine;
@@ -10,6 +11,9 @@ import javafx.beans.property.DoubleProperty;
 import javafx.beans.property.SimpleBooleanProperty;
 import javafx.beans.property.StringProperty;
 import javafx.scene.Node;
+
+import java.util.List;
+import java.util.stream.Collectors;
 
 public abstract class SelectableTimeLinePane extends TimeLinePane implements TimeLineObserver {
 
@@ -24,13 +28,19 @@ public abstract class SelectableTimeLinePane extends TimeLinePane implements Tim
         parent.getSelectedTimeLine().addObserver(this);
     }
 
-    public void deselectAllElements(AnnotationRectangle selected){
+    public void deselectAllElements(SelectableAnnotationRectangle selected){
         for(Node n : getChildren()){
-            AnnotationRectangle ar = (AnnotationRectangle)n;
+            SelectableAnnotationRectangle ar = (SelectableAnnotationRectangle)n;
             if(ar != selected){
                 ar.setSelected(false);
             }
         }
+    }
+
+    public List<AnnotationRectangle> getAnnotations(){
+        return getChildren().stream()
+                .map(n -> (AnnotationRectangle)n)
+                .collect(Collectors.toList());
     }
 
     public boolean isSelected(){
