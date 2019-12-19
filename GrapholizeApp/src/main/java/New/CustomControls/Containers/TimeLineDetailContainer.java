@@ -1,7 +1,8 @@
 package New.CustomControls.Containers;
 
 import New.CustomControls.TimeLine.SelectableTimeLinePane;
-import New.Model.ObservableModel.ObservablePage;
+
+import New.Observables.ObservablePage;
 import javafx.scene.layout.VBox;
 
 public class TimeLineDetailContainer extends VBox {

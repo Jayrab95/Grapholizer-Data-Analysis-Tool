@@ -1,7 +1,7 @@
 package New.CustomControls.TimeLine.SubTimeLines;
 
 import New.CustomControls.TimeLine.TimeLinePane;
-import New.Model.ObservableModel.ObservablePage;
+import New.Observables.ObservablePage;
 import javafx.beans.property.DoubleProperty;
 import javafx.beans.property.StringProperty;
 

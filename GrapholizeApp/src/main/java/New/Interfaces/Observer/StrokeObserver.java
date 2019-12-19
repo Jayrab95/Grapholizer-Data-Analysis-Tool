@@ -1,6 +1,6 @@
 package New.Interfaces.Observer;
 
-import New.Model.ObservableModel.ObservableStroke;
+import New.Observables.ObservableStroke;
 
 public interface StrokeObserver {
     void update(ObservableStroke sender);

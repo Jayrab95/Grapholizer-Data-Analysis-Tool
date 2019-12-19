@@ -1,7 +1,7 @@
 package New.Controllers;
 
 import New.CustomControls.TimeLine.SelectableTimeLinePane;
-import New.Model.ObservableModel.ObservableTimeLine;
+import New.Observables.ObservableTimeLine;
 
 public class SelectableTimeLineController {
 

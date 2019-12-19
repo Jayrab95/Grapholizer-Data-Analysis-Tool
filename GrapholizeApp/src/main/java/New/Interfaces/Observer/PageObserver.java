@@ -1,6 +1,6 @@
 package New.Interfaces.Observer;
 
-import New.Model.ObservableModel.ObservablePage;
+import New.Observables.ObservablePage;
 
 public interface PageObserver{
     void update(ObservablePage sender);

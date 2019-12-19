@@ -3,8 +3,7 @@ package New.CustomControls.Annotation;
 
 
 import New.CustomControls.TimeLine.SelectableTimeLinePane;
-import New.CustomControls.TimeLine.TimeLinePane;
-import New.Model.ObservableModel.ObservableStroke;
+import New.Observables.ObservableStroke;
 import javafx.beans.property.DoubleProperty;
 import javafx.beans.property.ObjectProperty;
 import javafx.beans.property.SimpleStringProperty;

@@ -1,4 +1,4 @@
-package New.Model.ObservableModel;
+package New.Observables;
 
 import New.Model.Entities.Annotation;
 import javafx.beans.property.DoubleProperty;

@@ -1,8 +1,9 @@
 package New.Controllers;
 
-import New.Model.ObservableModel.ObservablePage;
-import New.Model.ObservableModel.ObservableParticipant;
-import New.Model.ObservableModel.ObservableProject;
+
+import New.Observables.ObservablePage;
+import New.Observables.ObservableParticipant;
+import New.Observables.ObservableProject;
 
 public class ContentSwitcherController {
 

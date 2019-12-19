@@ -17,8 +17,11 @@
       <change beforePath="$PROJECT_DIR$/src/main/java/New/CustomControls/TimeLine/SelectableTimeLinePane.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/New/CustomControls/TimeLine/SelectableTimeLinePane.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/New/CustomControls/TimeLine/StrokeDurationTimeLinePane.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/New/CustomControls/TimeLine/StrokeDurationTimeLinePane.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/New/CustomControls/TimeLine/TimeLinePane.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/New/CustomControls/TimeLine/TimeLinePane.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/New/Model/Entities/Dot.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/New/Model/Entities/Dot.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/New/Model/Entities/Page.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/New/Model/Entities/Page.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/New/Model/ObservableModel/ObservablePage.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/New/Model/ObservableModel/ObservablePage.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/New/Observables/ObservableDot.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/New/Observables/ObservableDot.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/New/Observables/ObservableStroke.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/New/Observables/ObservableStroke.java" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />

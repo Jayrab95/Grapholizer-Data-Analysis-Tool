@@ -3,7 +3,7 @@ package New.CustomControls.Annotation;
 
 import New.Controllers.MovableAnnotationController;
 import New.CustomControls.TimeLine.CustomTimeLinePane;
-import New.Model.ObservableModel.ObservableAnnotation;
+import New.Observables.ObservableAnnotation;
 import New.util.DialogGenerator;
 import javafx.beans.property.DoubleProperty;
 import javafx.beans.property.ObjectProperty;
