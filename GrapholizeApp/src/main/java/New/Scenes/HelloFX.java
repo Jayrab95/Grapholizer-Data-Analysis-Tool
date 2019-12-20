@@ -15,7 +15,7 @@ public class HelloFX extends Application {
 
         Scene scene = new Scene(root, 300, 275);
 
-        stage.setTitle("FXML Welcome");
+        stage.setTitle("Grapholizer");
         stage.setScene(scene);
         stage.show();
 
