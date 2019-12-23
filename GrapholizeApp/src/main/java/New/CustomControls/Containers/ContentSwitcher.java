@@ -2,16 +2,17 @@ package New.CustomControls.Containers;
 
 import New.Controllers.ContentSwitcherController;
 import New.Interfaces.Observer.ProjectObserver;
+import New.Interfaces.structure.IContextOperationsObservable;
+import New.Interfaces.structure.listener.IContextOperationListener;
+import New.Interfaces.structure.listener.ISelectOperationListener;
+import New.Model.Entities.Page;
 import New.Observables.ObservablePage;
-import New.Observables.ObservableParticipant;
 import New.Observables.ObservableProject;
 import javafx.scene.control.ComboBox;
 import javafx.scene.layout.HBox;
 
-public class ContentSwitcher extends HBox implements ProjectObserver {
-
-    private ObservableProject project;
-    private ObservableParticipant participant;
+public class ContentSwitcher extends HBox implements IContextOperationListener {
+    private IContextOperationsObservable contextOperations;
     private ObservablePage page;
 
     private ContentSwitcherController contentSwitcherController;
@@ -19,12 +20,10 @@ public class ContentSwitcher extends HBox implements ProjectObserver {
     private ComboBox<String> comboBox_Participants;
     private ComboBox<Integer> comboBox_Pages;
 
-    public ContentSwitcher(ObservableProject project, ObservableParticipant activeParticipant, ObservablePage activePage){
+    public ContentSwitcher(IContextOperationsObservable contextOperations, ObservablePage activePage){
+        this.contextOperations = contextOperations;
         project.addObserver(this);
         this.contentSwitcherController = new ContentSwitcherController(project, activeParticipant, activePage);
-
-        this.project = project;
-        this.participant = activeParticipant;
         this.page = activePage;
 
         this.comboBox_Participants = new ComboBox<>();
@@ -77,7 +76,7 @@ public class ContentSwitcher extends HBox implements ProjectObserver {
     }
 
     @Override
-    public void update(ObservableProject sender) {
+    public void update(Page sender) {
         initializeComboBoxes();
     }
 }

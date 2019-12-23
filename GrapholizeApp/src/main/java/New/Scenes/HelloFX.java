@@ -2,9 +2,13 @@ package New.Scenes;
 
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
+import javafx.geometry.Point2D;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.shape.Polygon;
 import javafx.stage.Stage;
+
+import java.awt.*;
 
 public class HelloFX extends Application {
 

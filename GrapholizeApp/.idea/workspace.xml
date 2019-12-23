@@ -129,11 +129,13 @@
     <key name="CreateTestDialog.Recents.Supers">
       <recent name="" />
     </key>
+    <key name="MoveFile.RECENT_KEYS">
+      <recent name="C:\Users\jarab\Documents\FHNW\Semester 7\Projekt\IP6_Grapholize\GrapholizeApp\src\main\resources\data" />
+      <recent name="C:\Users\jarab\Documents\FHNW\Semester 7\Projekt\IP6_Grapholize\GrapholizeApp\src\main\resources\fxml" />
+      <recent name="C:\Users\jarab\Documents\FHNW\Semester 7\Projekt\IP6_Grapholize\GrapholizeApp\src\main\resources\views" />
+    </key>
     <key name="MoveClassesOrPackagesDialog.RECENTS_KEY">
       <recent name="" />
-    </key>
-    <key name="CopyFile.RECENT_KEYS">
-      <recent name="C:\Users\jarab\Documents\FHNW\Semester 7\Projekt\IP6_Grapholize\GrapholizeApp\src\main\resources\data" />
     </key>
     <key name="CopyClassDialog.RECENTS_KEY">
       <recent name="New.CustomControls" />
@@ -142,10 +144,8 @@
       <recent name="New.CustomControls.TimeLine" />
       <recent name="New.Scenes" />
     </key>
-    <key name="MoveFile.RECENT_KEYS">
+    <key name="CopyFile.RECENT_KEYS">
       <recent name="C:\Users\jarab\Documents\FHNW\Semester 7\Projekt\IP6_Grapholize\GrapholizeApp\src\main\resources\data" />
-      <recent name="C:\Users\jarab\Documents\FHNW\Semester 7\Projekt\IP6_Grapholize\GrapholizeApp\src\main\resources\fxml" />
-      <recent name="C:\Users\jarab\Documents\FHNW\Semester 7\Projekt\IP6_Grapholize\GrapholizeApp\src\main\resources\views" />
     </key>
   </component>
   <component name="RunDashboard">
@@ -305,6 +305,7 @@
       <workItem from="1576265885664" duration="14110000" />
       <workItem from="1576404363681" duration="7967000" />
       <workItem from="1576477471200" duration="13564000" />
+      <workItem from="1577112825771" duration="7039000" />
     </task>
     <servers />
   </component>
