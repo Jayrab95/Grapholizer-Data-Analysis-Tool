@@ -9,9 +9,11 @@ import New.Model.Session;
 import New.util.*;
 
 
+import New.util.Export.JsonSerializer;
+import New.util.Import.JsonLoader;
+import New.util.Import.PageDataReader;
+import New.util.Import.ProjectLoader;
 import javafx.fxml.FXML;
-import javafx.scene.canvas.Canvas;
-import javafx.scene.control.ScrollPane;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.VBox;
 import javafx.stage.FileChooser;
@@ -30,15 +32,14 @@ public class MainSceneController {
     @FXML
     private ResourceBundle resources;
 
-    /* Internal State Of Application */
-    Session _session;
-
     @FXML
     private AnchorPane scrollPane_TimeLines;
 
     @FXML
     private VBox anchorPane_canvasContainer;
 
+    /* Internal State Of Application */
+    Session _session;
 
     public MainSceneController(){
 
@@ -84,12 +85,33 @@ public class MainSceneController {
 
     @FXML
     private void saveProject() {
-        //Session.save
+
     }
 
     @FXML
     private void saveProjectTo() {
         //session.saveto
+    }
+
+    private void save() {
+        try {
+            ZipHelper zHelper = _session.getZ_Helper();
+            if (zHelper != null) {
+                //Serialize Timelines
+                //String content = new JsonSerializer().serialize();
+                zHelper.writeTimelines("content");
+                //replace old timeline files in project folder with new ones in temp
+                zHelper.replaceTimelines();
+            } else {
+                new DialogGenerator().simpleErrorDialog("Save Error"
+                        , "No Project File"
+                        , "You have not defined a project folder for saving yet");
+            }
+        }catch(Exception e) {
+            new DialogGenerator().simpleErrorDialog("Save Error"
+                    , "While writing the file an Error Occured"
+                    , "This might be a problem with the format of the file, or the file has been moved");
+        }
     }
     //Replace with openFileDialogue after testing.
     private void loadDataFromFiles(Loader loader) {

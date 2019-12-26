@@ -5,10 +5,15 @@ import net.lingala.zip4j.ZipFile;
 import net.lingala.zip4j.exception.ZipException;
 import net.lingala.zip4j.model.ZipParameters;
 
+import java.awt.font.OpenType;
+import java.io.BufferedWriter;
 import java.io.File;
 import java.io.IOException;
+import java.io.Writer;
 import java.nio.file.Files;
+import java.nio.file.OpenOption;
 import java.nio.file.Path;
+import java.nio.file.StandardOpenOption;
 import java.util.List;
 
 
@@ -40,24 +45,21 @@ public class ZipHelper {
         pathTempTimelines = Path.of(absPathTempDir, File.separator, TIMELINE_FILE_NAME);
         isInitialized = true;
     }
-
-    /*
-    public void saveTimelines(List<TimeLinesModel> timeLines) throws IOException{
-        String serData = new JsonSerializer().serialize(timeLines);
-        //TODO output to file
-    }
-
-     */
-
     /*
     Cleans up the temporary files created by init(). Should always be called after using ZipHelper
      */
     public void cleanUp() throws IOException {
+        replaceData();
+        replaceTimelines();
         Files.delete(pathTempData);
         Files.delete(pathTempTimelines);
         Files.delete(tempDirPath);
         isInitialized = false;
-        replaceData();
+    }
+
+    public void writeTimelines(String content) throws IOException {
+        BufferedWriter buffWriter = Files.newBufferedWriter(pathTempTimelines, StandardOpenOption.WRITE);
+        buffWriter.write(content);
         replaceTimelines();
     }
 
@@ -93,6 +95,10 @@ public class ZipHelper {
 
     public void setPathTempTimelines(Path pathTempTimelines) {
         this.pathTempTimelines = pathTempTimelines;
+    }
+
+    public String getZipFolderPath() {
+        return zipFile.getFile().getAbsolutePath();
     }
 
 }

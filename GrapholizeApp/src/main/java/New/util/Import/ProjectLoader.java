@@ -1,12 +1,12 @@
-package New.util;
+package New.util.Import;
 
 import New.Interfaces.Loader;
-import New.Model.Entities.Participant;
 import New.Model.Entities.Project;
+import New.util.Import.JsonLoader;
+import New.util.ZipHelper;
 import net.lingala.zip4j.exception.ZipException;
 
 import java.io.IOException;
-import java.util.HashMap;
 
 public class ProjectLoader implements Loader {
     ZipHelper zipHelper;
