@@ -13,27 +13,18 @@ import javafx.scene.layout.HBox;
 
 public class ContentSwitcher extends HBox implements IContextOperationListener {
     private IContextOperationsObservable contextOperations;
-    private ObservablePage page;
-
-    private ContentSwitcherController contentSwitcherController;
-
     private ComboBox<String> comboBox_Participants;
     private ComboBox<Integer> comboBox_Pages;
 
-    public ContentSwitcher(IContextOperationsObservable contextOperations, ObservablePage activePage){
+    public ContentSwitcher(IContextOperationsObservable contextOperations){
         this.contextOperations = contextOperations;
-        project.addObserver(this);
-        this.contentSwitcherController = new ContentSwitcherController(project, activeParticipant, activePage);
-        this.page = activePage;
 
         this.comboBox_Participants = new ComboBox<>();
         this.comboBox_Pages = new ComboBox<>();
-
-
-        this.comboBox_Participants.valueProperty().addListener((observable, oldValue, newValue) -> handleComboBoxParticipantChange(newValue));
+        this.comboBox_Participants.valueProperty().addListener((observable, oldValue, newValue) -> contextOperations.changeParticipant(newValue));
         this.comboBox_Pages.valueProperty().addListener((observable, oldValue, newValue) -> {
             if(newValue != null){
-                handleComboBoxPageChange(newValue);
+                contextOperations.changePage(newValue);
             }
         });
 
@@ -72,11 +63,12 @@ public class ContentSwitcher extends HBox implements IContextOperationListener {
     private void handleComboBoxPageChange(int newVal){
         //The internal indexing of pages is 0-based, however the combo box entries start at 1.
         //Therefore, to pick the right page when switching, newVal needs to be subtracted by 1.
-        contentSwitcherController.setPage(newVal - 1);
+        contextOperations.changePage(newVal - 1);
     }
 
     @Override
     public void update(Page sender) {
+        contentSwitcherController.setPage(sender);
         initializeComboBoxes();
     }
 }

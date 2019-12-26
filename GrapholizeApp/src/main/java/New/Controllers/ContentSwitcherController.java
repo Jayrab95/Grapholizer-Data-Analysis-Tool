@@ -1,6 +1,7 @@
 package New.Controllers;
 
 
+import New.Observables.Observable;
 import New.Observables.ObservablePage;
 import New.Observables.ObservableParticipant;
 import New.Observables.ObservableProject;
