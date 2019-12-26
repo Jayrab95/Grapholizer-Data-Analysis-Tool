@@ -10,6 +10,7 @@ import New.util.*;
 
 
 import New.util.Export.JsonSerializer;
+import New.util.Export.ProjectSerializer;
 import New.util.Import.JsonLoader;
 import New.util.Import.PageDataReader;
 import New.util.Import.ProjectLoader;
@@ -47,12 +48,9 @@ public class MainSceneController {
 
     @FXML
     public void initialize() throws Exception{
-
-        ProjectLoader loader = new ProjectLoader();
         //loadThatShitBoy();
         _session = new Session(new JsonLoader().load("src\\main\\resources\\data\\lukas_test_1.json"));
         PageMetaData pmd = _session.getActivePage().getPageMetaData();
-        _session.setZ_Helper(loader.getZipHelper());
         anchorPane_canvasContainer.getChildren().addAll(
                 new MainCanvas(pmd.getPageWidth(), pmd.getPageHeight(), 5, _session.getActivePage()),
                 new ContentSwitcher(_session.getActiveProject(),_session.getActiveParticipant(), _session.getActivePage()));
@@ -74,18 +72,16 @@ public class MainSceneController {
     @FXML
     private void loadProjectZip() {
         ProjectLoader pLoader = new ProjectLoader();
-        _session.setZ_Helper(pLoader.getZipHelper());
         loadDataFromFiles(pLoader);
+        _session.setZ_Helper(pLoader.getZipHelper());
     }
 
     @FXML
-    private void loadNeoNotesFile() {
-        loadDataFromFiles(new PageDataReader());
-    }
+    private void loadNeoNotesFile() { loadDataFromFiles(new PageDataReader());}
 
     @FXML
     private void saveProject() {
-
+        save();
     }
 
     @FXML
@@ -98,8 +94,8 @@ public class MainSceneController {
             ZipHelper zHelper = _session.getZ_Helper();
             if (zHelper != null) {
                 //Serialize Timelines
-                //String content = new JsonSerializer().serialize();
-                zHelper.writeTimelines("content");
+                String content = new ProjectSerializer().serialize(_session.getActiveProject().getInner());
+                zHelper.writeTimelines(content);
                 //replace old timeline files in project folder with new ones in temp
                 zHelper.replaceTimelines();
             } else {
@@ -126,7 +122,7 @@ public class MainSceneController {
             File sFile = fileChooser.showOpenDialog(stage);
             if (sFile != null) {
                 String absFilePath = sFile.getAbsolutePath();
-                _session = new Session(loader.load(absFilePath));
+                _session.setProject(loader.load(absFilePath));
             }
 
         }catch(IOException ex) {

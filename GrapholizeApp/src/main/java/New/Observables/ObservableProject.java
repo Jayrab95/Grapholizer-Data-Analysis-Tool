@@ -24,6 +24,10 @@ public class ObservableProject {
         this.observers = new LinkedList<>();
     }
 
+    public Project getInner(){
+        return inner;
+    }
+
     public Set<String> getParticipantIDs(){
         return Collections.unmodifiableSet(inner.getParticipantIDs());
     }
@@ -38,6 +42,11 @@ public class ObservableProject {
 
     public ObservableTimeLineTag getTimeLineTag(String tag){
         return new ObservableTimeLineTag(inner.getTimeLineTag(tag));
+    }
+
+    public void setInnerProject(Project p){
+        this.inner = p;
+        notifyObservers();
     }
 
     //region Participant Modification and insertion

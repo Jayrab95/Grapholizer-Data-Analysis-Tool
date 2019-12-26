@@ -31,7 +31,12 @@ public class ContentSwitcher extends HBox implements ProjectObserver {
         this.comboBox_Pages = new ComboBox<>();
 
 
-        this.comboBox_Participants.valueProperty().addListener((observable, oldValue, newValue) -> handleComboBoxParticipantChange(newValue));
+        this.comboBox_Participants.valueProperty().addListener((observable, oldValue, newValue) -> {
+            if(newValue != null){
+                handleComboBoxParticipantChange(newValue);
+            }
+        });
+
         this.comboBox_Pages.valueProperty().addListener((observable, oldValue, newValue) -> {
             if(newValue != null){
                 handleComboBoxPageChange(newValue);

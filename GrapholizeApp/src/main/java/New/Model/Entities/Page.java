@@ -6,8 +6,8 @@ import New.util.Import.CompressedStroke;
 import java.util.*;
 
 public class Page {
-    private final PageMetaData pageMetaData;
-    private final List<Stroke> strokes;
+    private transient final PageMetaData pageMetaData;
+    private transient final List<Stroke> strokes;
 
     private Map<String, List<Annotation>> timeLines;
 

@@ -60,7 +60,6 @@ public class ZipHelper {
     public void writeTimelines(String content) throws IOException {
         BufferedWriter buffWriter = Files.newBufferedWriter(pathTempTimelines, StandardOpenOption.WRITE);
         buffWriter.write(content);
-        replaceTimelines();
     }
 
     public void replaceTimelines() throws ZipException {
