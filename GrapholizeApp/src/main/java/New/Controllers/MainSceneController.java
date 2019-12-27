@@ -24,6 +24,7 @@ import javafx.stage.Stage;
 import java.io.File;
 import java.io.IOException;
 import java.net.URL;
+import java.nio.file.Files;
 import java.nio.file.Path;
 import java.util.ResourceBundle;
 
@@ -72,19 +73,19 @@ public class MainSceneController {
 
     @FXML
     private void loadRawJson(){
-        loadDataFromFiles(new JsonLoader());
+        loadDataFromFiles(new JsonLoader(), "*.json");
     }
 
     @FXML
     private void loadProjectZip() {
         ProjectLoader pLoader = new ProjectLoader();
-        loadDataFromFiles(pLoader);
+        loadDataFromFiles(pLoader, "*.zip", "*.grapholizer");
         raw_data_file = pLoader.getZipHelper().getPathTempData();
         _session.setZ_Helper(pLoader.getZipHelper());
     }
 
     @FXML
-    private void loadNeoNotesFile() { loadDataFromFiles(new PageDataReader());}
+    private void loadNeoNotesFile() { loadDataFromFiles(new PageDataReader(), "*.data");}
 
     @FXML
     private void saveProject() {
@@ -94,17 +95,18 @@ public class MainSceneController {
     @FXML
     private void saveProjectTo() {
         try {
-            FileChooser fileChooser = new FileChooser();
-            fileChooser.setTitle("Choose a directory");
-            fileChooser.getExtensionFilters().add(
-                    new FileChooser.ExtensionFilter("Data Files",  "*.zip", "*.grapholizer")
-            );
-            Stage stage = new Stage();
-            stage.setTitle("Project File Save");
-            File sFile = fileChooser.showSaveDialog(stage);
-            if (sFile != null) {
+            File sFile = openFileDialog("Save Dialog"
+                    , "Save Project"
+                    , true
+                    , "*.zip", "*.grapholizer");
+            if (sFile != null && raw_data_file != null) {
                 String path = sFile.getCanonicalPath();
-                _session.setZ_Helper(new ZipHelper(path));
+                _session.setZ_Helper(new ZipHelper(path, false));
+
+                StringBuilder sBuilder = new StringBuilder();
+                Files.newBufferedReader(raw_data_file).lines().forEach(l -> sBuilder.append(l));
+
+                _session.getZ_Helper().writeRawData(sBuilder.toString());
                 save();
             } else {
                 throw new IOException("No directory or file has been entered");
@@ -112,8 +114,7 @@ public class MainSceneController {
         }catch(IOException ex) {
             new DialogGenerator().simpleErrorDialog("Input Error"
                     , "Directory could not be loaded"
-                    , "Either no directory was chosen or the directory can't be read opened" +
-                            "or contains corrupted data");
+                    , ex.getMessage());
         }
     }
 
@@ -131,26 +132,26 @@ public class MainSceneController {
                         , "You have not defined a project folder for saving yet");
             }
         }catch(Exception e) {
-            e.printStackTrace();
             new DialogGenerator().simpleErrorDialog("Save Error"
                     , "While writing the file an error occured"
                     , "This might be a problem with the format of the file, or the file has been moved");
         }
     }
     //Replace with openFileDialogue after testing.
-    private void loadDataFromFiles(Loader loader) {
+    private void loadDataFromFiles(Loader loader, String ... fileExtensions) {
         try {
-            FileChooser fileChooser = new FileChooser();
-            fileChooser.setTitle("Open Resource File");
-            fileChooser.getExtensionFilters().add(
-                    new FileChooser.ExtensionFilter("Data Files", "*.json", "*.zip", "*.data")
-            );
-            Stage stage = new Stage();
-            stage.setTitle("Load File");
-            File sFile = fileChooser.showOpenDialog(stage);
+            File sFile = openFileDialog("Load Dialog"
+                    , "Load Data"
+                    , false
+                    , fileExtensions);
             if (sFile != null) {
                 String absFilePath = sFile.getAbsolutePath();
                 _session.setProject(loader.load(absFilePath));
+                if( loader instanceof ProjectLoader){
+                    raw_data_file = ((ProjectLoader) loader).getZipHelper().getPathTempData();
+                }else {
+                    raw_data_file = Path.of(absFilePath);
+                }
             }
         }catch(IOException ex) {
             new DialogGenerator().simpleErrorDialog("Input Error"
@@ -158,5 +159,19 @@ public class MainSceneController {
                     , "The File you tried to open might not be in the right format or " +
                             "or contains corrupted data");
         }
+    }
+
+    private File openFileDialog(String windowTitle , String chooserTitle, boolean isSaveMode, String ... fileFilters) {
+        FileChooser fileChooser = new FileChooser();
+        fileChooser.setTitle(chooserTitle);
+        fileChooser.getExtensionFilters().add(
+                new FileChooser.ExtensionFilter("Supported Formats", fileFilters)
+        );
+        Stage stage = new Stage();
+        stage.setTitle(windowTitle);
+        File sFile;
+        if(isSaveMode) sFile = fileChooser.showSaveDialog(stage);
+        else sFile = fileChooser.showOpenDialog(stage);
+        return sFile;
     }
 }

@@ -18,7 +18,6 @@ import java.util.List;
 
 
 public class ZipHelper {
-    private enum FileStructure{RAWDATA,TIMELINES}
     private final String RAW_DATA_FILE_NAME = "data.json";
     private final String TIMELINE_FILE_NAME = "timelines.json";
     private ZipFile zipFile;
@@ -26,33 +25,41 @@ public class ZipHelper {
     private Path tempDirPath;
     private Path pathTempData;
     private Path pathTempTimelines;
-    private boolean isInitialized;
 
-    public ZipHelper(String filePath){
+    public ZipHelper(String filePath, boolean doesExist) throws IOException{
         parameters = new ZipParameters();
         zipFile = new ZipFile(filePath);
-        isInitialized = false;
+        if(doesExist) extract();
+        else init();
     }
 
     public void init() throws IOException {
-        if(!isInitialized) {
-            tempDirPath = Files.createTempDirectory("grapholizer");
-            String absPathTempDir = tempDirPath.toAbsolutePath().toString();
+        tempDirPath = Files.createTempDirectory("grapholizer");
+        String absPathTempDir = tempDirPath.toAbsolutePath().toString();
 
-            pathTempData = Path.of(absPathTempDir, File.separator, RAW_DATA_FILE_NAME);
-            pathTempTimelines = Path.of(absPathTempDir, File.separator, TIMELINE_FILE_NAME);
+        pathTempData = Path.of(absPathTempDir, File.separator, RAW_DATA_FILE_NAME);
+        pathTempTimelines = Path.of(absPathTempDir, File.separator, TIMELINE_FILE_NAME);
 
-            File fileTempData = new File(pathTempData.toString());
-            fileTempData.createNewFile();
-            File fileTempTimelines = new File(pathTempTimelines.toString());
-            fileTempTimelines.createNewFile();
+        File fileTempData = new File(pathTempData.toString());
+        fileTempData.createNewFile();
+        File fileTempTimelines = new File(pathTempTimelines.toString());
+        fileTempTimelines.createNewFile();
 
-            add(fileTempData);
-            add(fileTempTimelines);
-
-            isInitialized = true;
-        }
+        add(fileTempData);
+        add(fileTempTimelines);
     }
+
+    public void extract() throws IOException{
+        tempDirPath = Files.createTempDirectory("grapholizer");
+        String absPathTempDir = tempDirPath.toAbsolutePath().toString();
+
+        zipFile.extractFile(RAW_DATA_FILE_NAME, absPathTempDir);
+        zipFile.extractFile(TIMELINE_FILE_NAME, absPathTempDir);
+
+        pathTempData = Path.of(absPathTempDir, File.separator, RAW_DATA_FILE_NAME);
+        pathTempTimelines = Path.of(absPathTempDir, File.separator, TIMELINE_FILE_NAME);
+    }
+
     /*
     Cleans up the temporary files created by init(). Should always be called after using ZipHelper
      */
@@ -62,7 +69,6 @@ public class ZipHelper {
         Files.delete(pathTempData);
         Files.delete(pathTempTimelines);
         Files.delete(tempDirPath);
-        isInitialized = false;
     }
 
     public void writeTimelines(String content) throws IOException {
