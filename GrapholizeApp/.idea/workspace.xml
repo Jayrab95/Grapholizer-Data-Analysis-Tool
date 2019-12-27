@@ -306,7 +306,7 @@
       <workItem from="1576404363681" duration="7967000" />
       <workItem from="1576477471200" duration="13564000" />
       <workItem from="1577385297961" duration="675000" />
-      <workItem from="1577449000463" duration="1306000" />
+      <workItem from="1577449000463" duration="1805000" />
     </task>
     <servers />
   </component>
@@ -356,11 +356,6 @@
           <url>file://$PROJECT_DIR$/src/main/java/Controls/Container/TimeLineContainer.java</url>
           <line>239</line>
           <option name="timeStamp" value="33" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" type="java-line">
-          <url>file://$PROJECT_DIR$/src/main/java/New/util/ZipHelper.java</url>
-          <line>62</line>
-          <option name="timeStamp" value="68" />
         </line-breakpoint>
       </breakpoints>
     </breakpoint-manager>
