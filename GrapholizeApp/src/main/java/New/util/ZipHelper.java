@@ -61,7 +61,7 @@ public class ZipHelper {
     }
 
     /*
-    Cleans up the temporary files created by init(). Should always be called after using ZipHelper
+    Cleans up the temporary files created by init() and extract(). Should always be called after using ZipHelper
      */
     public void cleanUp() throws IOException {
         replaceData();

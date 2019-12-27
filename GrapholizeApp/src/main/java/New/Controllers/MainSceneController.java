@@ -105,8 +105,9 @@ public class MainSceneController {
 
                 StringBuilder sBuilder = new StringBuilder();
                 Files.newBufferedReader(raw_data_file).lines().forEach(l -> sBuilder.append(l));
-
                 _session.getZ_Helper().writeRawData(sBuilder.toString());
+                _session.getZ_Helper().replaceData();
+
                 save();
             } else {
                 throw new IOException("No directory or file has been entered");
@@ -121,7 +122,6 @@ public class MainSceneController {
     private void save() {
         try {
             ZipHelper zHelper = _session.getZ_Helper();
-            zHelper.init();
             if (zHelper != null) {
                 String content = new ProjectSerializer().serialize(_session.getActiveProject().getInner());
                 zHelper.writeTimelines(content);
@@ -161,7 +161,7 @@ public class MainSceneController {
         }
     }
 
-    private File openFileDialog(String windowTitle , String chooserTitle, boolean isSaveMode, String ... fileFilters) {
+    private File openFileDialog(String windowTitle , String chooserTitle, boolean isSaveDialog, String ... fileFilters) {
         FileChooser fileChooser = new FileChooser();
         fileChooser.setTitle(chooserTitle);
         fileChooser.getExtensionFilters().add(
@@ -170,7 +170,7 @@ public class MainSceneController {
         Stage stage = new Stage();
         stage.setTitle(windowTitle);
         File sFile;
-        if(isSaveMode) sFile = fileChooser.showSaveDialog(stage);
+        if(isSaveDialog) sFile = fileChooser.showSaveDialog(stage);
         else sFile = fileChooser.showOpenDialog(stage);
         return sFile;
     }
