@@ -17,14 +17,17 @@ public class ProjectSerializer implements Serializer<Project> {
         String s =  new GsonBuilder()
                 .excludeFieldsWithModifiers(Modifier.TRANSIENT)
                 .setPrettyPrinting()
-                .create().toJson(project);
+                .create()
+                .toJson(project);
         System.out.println(s);
         return s;
     }
 
-
     @Override
     public Object deserialize(String s, Project p) {
-        return null;
+        return new GsonBuilder()
+                .excludeFieldsWithModifiers(Modifier.TRANSIENT)
+                .create()
+                .fromJson(s,p.getClass());
     }
 }

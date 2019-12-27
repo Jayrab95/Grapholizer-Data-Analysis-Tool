@@ -305,6 +305,8 @@
       <workItem from="1576265885664" duration="14110000" />
       <workItem from="1576404363681" duration="7967000" />
       <workItem from="1576477471200" duration="13564000" />
+      <workItem from="1577385297961" duration="675000" />
+      <workItem from="1577449000463" duration="1306000" />
     </task>
     <servers />
   </component>
@@ -356,16 +358,16 @@
           <option name="timeStamp" value="33" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="java-line">
-          <url>file://$PROJECT_DIR$/src/main/java/New/Model/Entities/Page.java</url>
-          <line>48</line>
-          <option name="timeStamp" value="48" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" type="java-line">
-          <url>file://$PROJECT_DIR$/src/main/java/New/CustomControls/TimeLine/TimeLinePane.java</url>
-          <line>48</line>
-          <option name="timeStamp" value="58" />
+          <url>file://$PROJECT_DIR$/src/main/java/New/util/ZipHelper.java</url>
+          <line>62</line>
+          <option name="timeStamp" value="68" />
         </line-breakpoint>
       </breakpoints>
     </breakpoint-manager>
+    <watches-manager>
+      <configuration name="Remote">
+        <watch expression="pathTempTimelines" language="JAVA" />
+      </configuration>
+    </watches-manager>
   </component>
 </project>

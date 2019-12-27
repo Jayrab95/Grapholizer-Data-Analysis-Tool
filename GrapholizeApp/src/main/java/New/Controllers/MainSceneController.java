@@ -97,7 +97,6 @@ public class MainSceneController {
                 String content = new ProjectSerializer().serialize(_session.getActiveProject().getInner());
                 zHelper.writeTimelines(content);
                 //replace old timeline files in project folder with new ones in temp
-                zHelper.replaceTimelines();
             } else {
                 new DialogGenerator().simpleErrorDialog("Save Error"
                         , "No Project File"
