@@ -45,7 +45,7 @@ public class MainSceneController {
     /* Internal State Of Application */
     Session _session;
 
-    Path raw_data_file;
+    Path raw_data_file; //TODO Lukas there should be a better way than keeping it here
 
     public MainSceneController(){
 
@@ -64,7 +64,7 @@ public class MainSceneController {
         scrollPane_TimeLines.getChildren().add(new TimeLineContainer(_session.getActiveProject(), _session.getActivePage(), 0.05));
 
     }
-    
+
     @FXML
     private void loadRawJson(){
         loadDataFromFiles(new JsonLoader(), "*.json");
@@ -72,10 +72,16 @@ public class MainSceneController {
 
     @FXML
     private void loadProjectZip() {
-        ProjectLoader pLoader = new ProjectLoader();
-        loadDataFromFiles(pLoader, "*.zip", "*.grapholizer");
-        raw_data_file = pLoader.getZipHelper().getPathTempData();
-        _session.setZ_Helper(pLoader.getZipHelper());
+        try {
+            ProjectLoader pLoader = new ProjectLoader();
+            loadDataFromFiles(pLoader, "*.zip", "*.grapholizer");
+            raw_data_file = pLoader.getZipHelper().getPathTempData();
+            _session.setZ_Helper(pLoader.getZipHelper());
+        }catch(IOException ex) {
+            new DialogGenerator().simpleErrorDialog("Load Error"
+                    , "While temp-file cleanup an error occured."
+                    , ex.getMessage());
+        }
     }
 
     @FXML
@@ -121,14 +127,12 @@ public class MainSceneController {
                 zHelper.writeTimelines(content);
                 zHelper.replaceTimelines();
             } else {
-                new DialogGenerator().simpleErrorDialog("Save Error"
-                        , "No Project File"
-                        , "You have not defined a project folder for saving yet");
+                throw new IOException("You have not yet saved to a project folder");
             }
         }catch(Exception e) {
             new DialogGenerator().simpleErrorDialog("Save Error"
                     , "While writing the file an error occured"
-                    , "This might be a problem with the format of the file, or the file has been moved");
+                    , e.getMessage());
         }
     }
     //Replace with openFileDialogue after testing.
@@ -150,8 +154,7 @@ public class MainSceneController {
         }catch(IOException ex) {
             new DialogGenerator().simpleErrorDialog("Input Error"
                     , "File could not be loaded"
-                    , "The File you tried to open might not be in the right format or " +
-                            "or contains corrupted data");
+                    , ex.getMessage());
         }
     }
 

@@ -309,6 +309,7 @@
       <workItem from="1577449000463" duration="1900000" />
       <workItem from="1577451317759" duration="17047000" />
       <workItem from="1577481762156" duration="1158000" />
+      <workItem from="1577487979803" duration="1374000" />
     </task>
     <servers />
   </component>
@@ -358,11 +359,6 @@
           <url>file://$PROJECT_DIR$/src/main/java/Controls/Container/TimeLineContainer.java</url>
           <line>239</line>
           <option name="timeStamp" value="33" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" type="java-line">
-          <url>file://$PROJECT_DIR$/src/main/java/New/Controllers/MainSceneController.java</url>
-          <line>108</line>
-          <option name="timeStamp" value="64" />
         </line-breakpoint>
       </breakpoints>
     </breakpoint-manager>
