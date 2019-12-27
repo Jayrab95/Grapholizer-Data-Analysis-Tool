@@ -5,7 +5,6 @@ using System.Text;
 
 namespace Neosmartpen.Net
 {
-
     /* author:: Lukas Müller
      * e-mail:: lukatoni_mueller@hotmail.com
      * last-update:: 23.10.2019
