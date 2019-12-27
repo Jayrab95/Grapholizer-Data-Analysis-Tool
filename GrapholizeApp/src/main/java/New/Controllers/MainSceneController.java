@@ -88,16 +88,20 @@ public class MainSceneController {
     @FXML
     private void saveProjectTo() {
         try {
-            DirectoryChooser dirChooser = new DirectoryChooser();
-            dirChooser.setTitle("Choose a directory");
+            FileChooser fileChooser = new FileChooser();
+            fileChooser.setTitle("Choose a directory");
+            fileChooser.getExtensionFilters().add(
+                    new FileChooser.ExtensionFilter("Data Files",  "*.zip", "*.grapholizer")
+            );
             Stage stage = new Stage();
-            stage.setTitle("Project Directory");
-            File sFile = dirChooser.showDialog(stage);
-            if (sFile != null && sFile.isDirectory()) {
-                String path = sFile.getAbsolutePath();
-                _session.setZ_Helper(new ZipHelper(path,false));
+            stage.setTitle("Project File Save");
+            File sFile = fileChooser.showSaveDialog(stage);
+            if (sFile != null) {
+                String path = sFile.getCanonicalPath();
+                _session.setZ_Helper(new ZipHelper(path));
+                save();
             } else {
-                throw new IOException("No directory has been chosen");
+                throw new IOException("No directory or file has been entered");
             }
         }catch(IOException ex) {
             new DialogGenerator().simpleErrorDialog("Input Error"
@@ -110,6 +114,7 @@ public class MainSceneController {
     private void save() {
         try {
             ZipHelper zHelper = _session.getZ_Helper();
+            zHelper.init();
             if (zHelper != null) {
                 String content = new ProjectSerializer().serialize(_session.getActiveProject().getInner());
                 zHelper.writeTimelines(content);
@@ -120,8 +125,9 @@ public class MainSceneController {
                         , "You have not defined a project folder for saving yet");
             }
         }catch(Exception e) {
+            e.printStackTrace();
             new DialogGenerator().simpleErrorDialog("Save Error"
-                    , "While writing the file an Error Occured"
+                    , "While writing the file an error occured"
                     , "This might be a problem with the format of the file, or the file has been moved");
         }
     }
