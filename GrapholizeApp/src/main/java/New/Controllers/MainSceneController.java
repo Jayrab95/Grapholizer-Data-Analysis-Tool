@@ -64,13 +64,7 @@ public class MainSceneController {
         scrollPane_TimeLines.getChildren().add(new TimeLineContainer(_session.getActiveProject(), _session.getActivePage(), 0.05));
 
     }
-
-    //TODO Lukas Replace with openFileDialogue after testing.
-    private void loadThatShitBoy() throws Exception{
-        raw_data_file = Path.of("src\\main\\resources\\data\\page.data");
-        _session= new Session(new PageDataReader().load(raw_data_file.toString()));
-    }
-
+    
     @FXML
     private void loadRawJson(){
         loadDataFromFiles(new JsonLoader(), "*.json");
