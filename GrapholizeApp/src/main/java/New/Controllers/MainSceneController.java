@@ -24,6 +24,7 @@ import javafx.stage.Stage;
 import java.io.File;
 import java.io.IOException;
 import java.net.URL;
+import java.nio.file.Path;
 import java.util.ResourceBundle;
 
 public class MainSceneController {
@@ -43,6 +44,8 @@ public class MainSceneController {
     /* Internal State Of Application */
     Session _session;
 
+    Path raw_data_file;
+
     public MainSceneController(){
 
     }
@@ -52,17 +55,19 @@ public class MainSceneController {
         //loadThatShitBoy();
         _session = new Session(new JsonLoader().load("src\\main\\resources\\data\\lukas_test_1.json"));
         PageMetaData pmd = _session.getActivePage().getPageMetaData();
+
         anchorPane_canvasContainer.getChildren().addAll(
                 new MainCanvas(pmd.getPageWidth(), pmd.getPageHeight(), 5, _session.getActivePage()),
                 new ContentSwitcher(_session.getActiveProject(),_session.getActiveParticipant(), _session.getActivePage()));
+
         scrollPane_TimeLines.getChildren().add(new TimeLineContainer(_session.getActiveProject(), _session.getActivePage(), 0.05));
 
     }
 
     //TODO Lukas Replace with openFileDialogue after testing.
     private void loadThatShitBoy() throws Exception{
-        String path = "src\\main\\resources\\data\\page.data";
-        _session= new Session(new PageDataReader().load(path));
+        raw_data_file = Path.of("src\\main\\resources\\data\\page.data");
+        _session= new Session(new PageDataReader().load(raw_data_file.toString()));
     }
 
     @FXML
@@ -74,6 +79,7 @@ public class MainSceneController {
     private void loadProjectZip() {
         ProjectLoader pLoader = new ProjectLoader();
         loadDataFromFiles(pLoader);
+        raw_data_file = pLoader.getZipHelper().getPathTempData();
         _session.setZ_Helper(pLoader.getZipHelper());
     }
 

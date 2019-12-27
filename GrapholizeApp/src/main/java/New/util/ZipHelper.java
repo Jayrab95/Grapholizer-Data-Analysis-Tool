@@ -18,7 +18,7 @@ import java.util.List;
 
 
 public class ZipHelper {
-
+    private enum FileStructure{RAWDATA,TIMELINES}
     private final String RAW_DATA_FILE_NAME = "data.json";
     private final String TIMELINE_FILE_NAME = "timelines.json";
     private ZipFile zipFile;
@@ -67,6 +67,12 @@ public class ZipHelper {
 
     public void writeTimelines(String content) throws IOException {
         BufferedWriter buffWriter = Files.newBufferedWriter(pathTempTimelines, StandardOpenOption.WRITE);
+        buffWriter.write(content);
+        buffWriter.flush();
+    }
+
+    public void writeRawData(String content) throws IOException {
+        BufferedWriter buffWriter = Files.newBufferedWriter(pathTempData, StandardOpenOption.WRITE);
         buffWriter.write(content);
         buffWriter.flush();
     }

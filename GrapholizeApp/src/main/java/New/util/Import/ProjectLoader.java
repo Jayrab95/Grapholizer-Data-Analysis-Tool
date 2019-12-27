@@ -12,7 +12,7 @@ public class ProjectLoader implements Loader {
     ZipHelper zipHelper;
     @Override
     public Project load(String path) throws IOException {
-        zipHelper = new ZipHelper(path,true);
+        zipHelper = new ZipHelper(path);
         try{
             zipHelper.init();
             Loader jsonLoader = new JsonLoader();
