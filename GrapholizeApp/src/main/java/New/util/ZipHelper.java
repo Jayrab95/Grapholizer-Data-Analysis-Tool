@@ -28,22 +28,28 @@ public class ZipHelper {
     private Path pathTempTimelines;
     private boolean isInitialized;
 
-    public ZipHelper(String filePath){
+    public ZipHelper(String filePath, boolean doesExist) throws ZipException{
         parameters = new ZipParameters();
         zipFile = new ZipFile(filePath);
         isInitialized = false;
+        if(!doesExist) {
+            zipFile.addFile(RAW_DATA_FILE_NAME);
+            zipFile.addFile(TIMELINE_FILE_NAME);
+        }
     }
 
     public void init() throws IOException {
-        tempDirPath = Files.createTempDirectory("grapholizer");
-        String absPathTempDir = tempDirPath.toAbsolutePath().toString();
+        if(!isInitialized) {
+            tempDirPath = Files.createTempDirectory("grapholizer");
+            String absPathTempDir = tempDirPath.toAbsolutePath().toString();
 
-        zipFile.extractFile(RAW_DATA_FILE_NAME, absPathTempDir);
-        zipFile.extractFile(TIMELINE_FILE_NAME, absPathTempDir);
+            zipFile.extractFile(RAW_DATA_FILE_NAME, absPathTempDir);
+            zipFile.extractFile(TIMELINE_FILE_NAME, absPathTempDir);
 
-        pathTempData = Path.of(absPathTempDir, File.separator, RAW_DATA_FILE_NAME);
-        pathTempTimelines = Path.of(absPathTempDir, File.separator, TIMELINE_FILE_NAME);
-        isInitialized = true;
+            pathTempData = Path.of(absPathTempDir, File.separator, RAW_DATA_FILE_NAME);
+            pathTempTimelines = Path.of(absPathTempDir, File.separator, TIMELINE_FILE_NAME);
+            isInitialized = true;
+        }
     }
     /*
     Cleans up the temporary files created by init(). Should always be called after using ZipHelper

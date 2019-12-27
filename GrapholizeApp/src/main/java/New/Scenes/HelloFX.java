@@ -12,13 +12,11 @@ public class HelloFX extends Application {
     public void start(Stage stage) throws Exception{
 
         Parent root = FXMLLoader.load(getClass().getClassLoader().getResource("fxml/views/MainScene.fxml"));
-
         Scene scene = new Scene(root, 300, 275);
 
         stage.setTitle("FXML Welcome");
         stage.setScene(scene);
         stage.show();
-
     }
 
     public static void main(String[] args) {

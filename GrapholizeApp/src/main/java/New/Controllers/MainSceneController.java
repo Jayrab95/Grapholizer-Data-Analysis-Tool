@@ -17,6 +17,7 @@ import New.util.Import.ProjectLoader;
 import javafx.fxml.FXML;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.VBox;
+import javafx.stage.DirectoryChooser;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
 
@@ -58,7 +59,7 @@ public class MainSceneController {
 
     }
 
-    //Replace with openFileDialogue after testing.
+    //TODO Lukas Replace with openFileDialogue after testing.
     private void loadThatShitBoy() throws Exception{
         String path = "src\\main\\resources\\data\\page.data";
         _session= new Session(new PageDataReader().load(path));
@@ -86,17 +87,32 @@ public class MainSceneController {
 
     @FXML
     private void saveProjectTo() {
-        //session.saveto
+        try {
+            DirectoryChooser dirChooser = new DirectoryChooser();
+            dirChooser.setTitle("Choose a directory");
+            Stage stage = new Stage();
+            stage.setTitle("Project Directory");
+            File sFile = dirChooser.showDialog(stage);
+            if (sFile != null && sFile.isDirectory()) {
+                String path = sFile.getAbsolutePath();
+                _session.setZ_Helper(new ZipHelper(path,false));
+            } else {
+                throw new IOException("No directory has been chosen");
+            }
+        }catch(IOException ex) {
+            new DialogGenerator().simpleErrorDialog("Input Error"
+                    , "Directory could not be loaded"
+                    , "Either no directory was chosen or the directory can't be read opened" +
+                            "or contains corrupted data");
+        }
     }
 
     private void save() {
         try {
             ZipHelper zHelper = _session.getZ_Helper();
             if (zHelper != null) {
-                //Serialize Timelines
                 String content = new ProjectSerializer().serialize(_session.getActiveProject().getInner());
                 zHelper.writeTimelines(content);
-                //replace old timeline files in project folder with new ones in temp
                 zHelper.replaceTimelines();
             } else {
                 new DialogGenerator().simpleErrorDialog("Save Error"
@@ -124,14 +140,11 @@ public class MainSceneController {
                 String absFilePath = sFile.getAbsolutePath();
                 _session.setProject(loader.load(absFilePath));
             }
-
         }catch(IOException ex) {
             new DialogGenerator().simpleErrorDialog("Input Error"
                     , "File could not be loaded"
                     , "The File you tried to open might not be in the right format or " +
                             "or contains corrupted data");
-            System.out.println("File could not be loaded");
         }
-
     }
 }
