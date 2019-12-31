@@ -18,12 +18,14 @@ import javafx.beans.property.DoubleProperty;
 import javafx.beans.property.SimpleDoubleProperty;
 import javafx.event.ActionEvent;
 import javafx.geometry.Insets;
+import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
+import javafx.stage.Stage;
 
 import java.util.List;
 import java.util.Optional;
@@ -351,7 +353,19 @@ public class TimeLineContainer extends VBox {
             hBox_EditAndDeleteContainer = new HBox(btn_editTimeLine, btn_deleteTimeLine);
             vBox_EditButtons = new VBox(hBox_EditAndDeleteContainer, btn_addNewTimeline);
             hBox_ButtonsContainer = new HBox(vBox_UpDownButtonContainer, vBox_EditButtons);
-            getChildren().addAll(lbl_timeLineName);
+
+            Button b = new Button("Detail view");
+            b.setOnAction(event -> showDetailView());
+
+
+            getChildren().addAll(lbl_timeLineName, b);
+        }
+
+        void showDetailView(){
+            Stage stage = new Stage();
+            stage.setTitle("My New Stage Title");
+            stage.setScene(new Scene(new TimeLineDetailContainer(tl, timeLineContainerController.getPage()), 450, 450));
+            stage.show();
         }
     }
 

@@ -1,8 +1,12 @@
 package New.CustomControls.Containers;
 
+import New.Filters.Filter;
+import New.Filters.StrokeDifferentiationFilter;
+import New.Interfaces.Observer.FilterObserver;
 import New.Interfaces.Observer.PageObserver;
 import New.Interfaces.Observer.StrokeObserver;
 import New.Model.Entities.Dot;
+import New.Observables.ObservableFilterCollection;
 import javafx.beans.property.DoubleProperty;
 import javafx.beans.property.SimpleDoubleProperty;
 
@@ -21,23 +25,30 @@ import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
 
-public class MainCanvas extends VBox implements PageObserver, StrokeObserver {
+public class MainCanvas extends VBox implements PageObserver, StrokeObserver, FilterObserver {
     private Slider scaleSlider;
     private ScrollPane canvasContainer;
+    private FilterContainer filterContainer;
     private final Canvas canvas;
     private final double canvasWidth;
     private final double canvasHeight;
     private DoubleProperty canvasScale;
     private ObservablePage p;
 
+
     private Light.Point anchor;
     private Rectangle selection;
+
+    private ObservableFilterCollection ofc;
+
 
     public MainCanvas(double initWidth, double initHeight, double initScale, ObservablePage obsPage){
         this.canvasWidth = initWidth;
         this.canvasHeight = initHeight;
         this.canvasScale = new SimpleDoubleProperty(initScale);
         this.p = obsPage;
+        this.ofc = new ObservableFilterCollection(new StrokeDifferentiationFilter("Stroke differentiation", Color.GREEN, Color.RED));
+        this.ofc.addObserver(this);
 
         scaleSlider = initializeSlider(initScale);
 
@@ -58,8 +69,8 @@ public class MainCanvas extends VBox implements PageObserver, StrokeObserver {
 
     private void initializeCanvas(){
         canvasContainer = new ScrollPane(canvas);
-
-        getChildren().addAll(scaleSlider, canvasContainer);
+        filterContainer = new FilterContainer(ofc);
+        getChildren().addAll(scaleSlider, filterContainer,canvasContainer);
         drawStrokes();
     }
 
@@ -78,6 +89,12 @@ public class MainCanvas extends VBox implements PageObserver, StrokeObserver {
     private void drawStrokes(){
         GraphicsContext gc = canvas.getGraphicsContext2D();
         for(ObservableStroke s : p.getObservableStrokes()){
+            Color c = s.getColor();
+            for(Filter f : ofc.getFilters()){
+                if(f.isActive()){
+                    c = f.applyFilter(c);
+                }
+            }
 
             for(int i = 0; i < s.getDots().size() - 1; i++){
 
@@ -91,7 +108,7 @@ public class MainCanvas extends VBox implements PageObserver, StrokeObserver {
                     gc.strokeLine(d1.getX() * canvasScale.get(), d1.getY() * canvasScale.get(), d2.getX() * canvasScale.get(), d2.getY() * canvasScale.get());
                 }
                 gc.setLineWidth((fAvg + 0.5));
-                gc.setStroke(s.getColor());
+                gc.setStroke(c);
                 gc.strokeLine(d1.getX() * canvasScale.get(), d1.getY() * canvasScale.get(), d2.getX() * canvasScale.get(), d2.getY() * canvasScale.get());
             }
         }
@@ -155,6 +172,11 @@ public class MainCanvas extends VBox implements PageObserver, StrokeObserver {
 
     @Override
     public void update(ObservableStroke sender) {
+        resetCanvas();
+    }
+
+    @Override
+    public void update(ObservableFilterCollection sender) {
         resetCanvas();
     }
 }

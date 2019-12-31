@@ -46,9 +46,9 @@ public class MainSceneController {
 
     @FXML
     public void initialize() throws Exception{
-
+        /*
         ProjectLoader loader = new ProjectLoader();
-        //loadThatShitBoy();
+        loadThatShitBoy();
         _session = new Session(new JsonLoader().load("src\\main\\resources\\data\\lukas_test_1.json"));
         PageMetaData pmd = _session.getActivePage().getPageMetaData();
         _session.setZ_Helper(loader.getZipHelper());
@@ -57,6 +57,7 @@ public class MainSceneController {
                 new ContentSwitcher(_session.getActiveProject(),_session.getActiveParticipant(), _session.getActivePage()));
         scrollPane_TimeLines.getChildren().add(new TimeLineContainer(_session.getActiveProject(), _session.getActivePage(), 0.05));
 
+         */
     }
 
     //Replace with openFileDialogue after testing.
@@ -105,6 +106,7 @@ public class MainSceneController {
             if (sFile != null) {
                 String absFilePath = sFile.getAbsolutePath();
                 _session = new Session(loader.load(absFilePath));
+                temp();
             }
 
         }catch(IOException ex) {
@@ -115,5 +117,15 @@ public class MainSceneController {
             System.out.println("File could not be loaded");
         }
 
+    }
+
+    void temp(){
+        //_session = new Session(new JsonLoader().load("src\\main\\resources\\data\\lukas_test_1.json"));
+        PageMetaData pmd = _session.getActivePage().getPageMetaData();
+        //_session.setZ_Helper(loader.getZipHelper());
+        anchorPane_canvasContainer.getChildren().addAll(
+                new MainCanvas(pmd.getPageWidth(), pmd.getPageHeight(), 5, _session.getActivePage()),
+                new ContentSwitcher(_session.getActiveProject(),_session.getActiveParticipant(), _session.getActivePage()));
+        scrollPane_TimeLines.getChildren().add(new TimeLineContainer(_session.getActiveProject(), _session.getActivePage(), 0.05));
     }
 }

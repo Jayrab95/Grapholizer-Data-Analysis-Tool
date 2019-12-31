@@ -15,7 +15,7 @@ import javafx.scene.paint.Color;
 
 import java.util.Optional;
 
-public class MovableAnnotationRectangle extends AnnotationRectangle {
+public class MovableAnnotationRectangle extends SelectableAnnotationRectangle {
 
     private double[] dragBounds;
     private double mouseDelta;

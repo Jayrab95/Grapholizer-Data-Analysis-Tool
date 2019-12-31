@@ -67,7 +67,7 @@ public class ObservablePage{
      * @param elements the timeline elements for which the relevant dots should be searched.
      * @return A list of dot sections or an empty list if no suitable dots were found.
      */
-    public List<List<Dot>> getDotSectionsForElements(List<Annotation> elements){
+    public List<List<Dot>> getDotSectionsForElements(List<AnnotationRectangle> elements){
         //Only proceed with filtering if even necessary.
         if(inner.getStrokes().size() > 0 && elements.size() > 0){
 
@@ -89,7 +89,7 @@ public class ObservablePage{
             //If no dots were found, abort and return an empty list.
             if(allRequiredDots.size() > 0){
                 List<List<Dot>> dotSections = new LinkedList<>();
-                for(Annotation elem : elements){
+                for(AnnotationRectangle elem : elements){
                     /* This lambda statement filters for all dots within the total dot list that lie within
                      * the iterated element's time range and puts them into a new list (dot section for this element)
                      */
