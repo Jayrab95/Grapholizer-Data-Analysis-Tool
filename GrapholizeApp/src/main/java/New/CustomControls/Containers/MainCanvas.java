@@ -14,9 +14,12 @@ import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.control.Button;
 import javafx.scene.control.ScrollPane;
 import javafx.scene.control.Slider;
+import javafx.scene.effect.Light;
+import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
+import javafx.scene.shape.Rectangle;
 
 public class MainCanvas extends VBox implements PageObserver, StrokeObserver {
     private Slider scaleSlider;
@@ -27,6 +30,8 @@ public class MainCanvas extends VBox implements PageObserver, StrokeObserver {
     private DoubleProperty canvasScale;
     private ObservablePage p;
 
+    private Light.Point anchor;
+    private Rectangle selection;
 
     public MainCanvas(double initWidth, double initHeight, double initScale, ObservablePage obsPage){
         this.canvasWidth = initWidth;
@@ -42,6 +47,12 @@ public class MainCanvas extends VBox implements PageObserver, StrokeObserver {
         canvas = new Canvas(initWidth * canvasScale.get(), initHeight * canvasScale.get());
         obsPage.addObserver(this);
         obsPage.registerStrokeObserver(this);
+
+        initializeSelector();
+        canvas.setOnMousePressed(this::startSelection);
+        canvas.setOnMouseDragged(this::moveSelection);
+        canvas.setOnMouseReleased(this::endSelection);
+
         initializeCanvas();
     }
 
@@ -84,10 +95,11 @@ public class MainCanvas extends VBox implements PageObserver, StrokeObserver {
                 gc.strokeLine(d1.getX() * canvasScale.get(), d1.getY() * canvasScale.get(), d2.getX() * canvasScale.get(), d2.getY() * canvasScale.get());
             }
         }
+        gc.setFill(new Color(0, 0, 1, 0.33));
+        gc.setStroke(Color.BLACK);
+        gc.setLineWidth(10);
+        gc.fillRect(selection.getX(), selection.getY(), selection.getWidth(), selection.getHeight());
     }
-
-
-
 
     private void resetCanvas(){
         canvas.getGraphicsContext2D().clearRect(0,0,canvas.getWidth(), canvas.getHeight());
@@ -95,34 +107,45 @@ public class MainCanvas extends VBox implements PageObserver, StrokeObserver {
         drawStrokes();
     }
 
-    /*
-    //40 is the max scale. Anything above can cause a bug with the graphics object.
-    //
-    private void scaleUp(float step){
-        if(canvasScale.get() + step < 40){
-            canvasScale.get() += step;
-        }
-        else {
-            canvasScale.get() = 40;}
-        canvas.setWidth(canvasWidth* canvasScale.get());
-        canvas.setHeight(canvasHeight * canvasScale.get());
+    private void initializeSelector(){
+        anchor = new Light.Point();
+        selection = new Rectangle();
+        selection.setFill(Color.TRANSPARENT);
+        selection.setStroke(Color.BLACK); // border
+        selection.setStrokeWidth(10);
+        selection.getStrokeDashArray().add(10.0);
+
+    }
+
+    //Source: https://coderanch.com/t/689100/java/rectangle-dragging-image
+    private void startSelection(MouseEvent event){
+        System.out.println("Start Selection called");
+        System.out.println("X:" + event.getX() + " Y:" + event.getY());
+        anchor.setX(event.getX());
+        anchor.setY(event.getY());
+        selection.setX(event.getX());
+        selection.setY(event.getY());
+        selection.setStroke(Color.BLACK); // border
+        selection.getStrokeDashArray().add(10.0);
+    }
+
+    //Source: https://coderanch.com/t/689100/java/rectangle-dragging-image
+    private void moveSelection(MouseEvent event){
+        selection.setWidth(Math.abs(event.getX() - anchor.getX()));
+        selection.setHeight(Math.abs(event.getY() - anchor.getY()));
+        selection.setX(Math.min(anchor.getX(), event.getX()));
+        selection.setY(Math.min(anchor.getY(), event.getY()));
+        System.out.println(selection);
         resetCanvas();
     }
 
-    private void scaleDown(float step){
-        if(canvasScale.get() -step > 1){
-            canvasScale.get() -= step;
-        }
-        else{
-            canvasScale.get() = 1;
-        }
-        canvas.setWidth(canvasWidth* canvasScale.get());
-        canvas.setHeight(canvasHeight * canvasScale.get());
+    private void endSelection(MouseEvent event){
+        System.out.println("End selection called");
+        selection.setWidth(0);
+        selection.setHeight(0);
+
         resetCanvas();
     }
-
-     */
-
 
     @Override
     public void update(ObservablePage sender) {

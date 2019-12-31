@@ -162,27 +162,27 @@ public class CustomTimeLinePane extends SelectableTimeLinePane implements PageOb
             contextMenu.show(this, event.getScreenX(), event.getScreenY());
             event.consume();
         }
+        else{
+            //If an element was clicked => set Selected Element. The element can now be dragged.
+            //Reset selection
 
-        //If an element was clicked => set Selected Element. The element can now be dragged.
-        //Reset selection
+            dragBounds = getBounds(event.getX());
 
-        dragBounds = getBounds(event.getX());
+            //Prepare selection
+            getChildren().add(selection);
+            selection.setWidth(0);
+            selection.setHeight(getHeight());
 
-        //Prepare selection
-        getChildren().add(selection);
-        selection.setWidth(0);
-        selection.setHeight(getHeight());
+            anchor.setX(event.getX());
+            anchor.setY(0);
 
-        anchor.setX(event.getX());
-        anchor.setY(0);
+            selection.setX(event.getX());
+            selection.setY(0);
 
-        selection.setX(event.getX());
-        selection.setY(0);
-
-        selection.setFill(null); // transparent
-        selection.setStroke(Color.BLACK); // border
-        selection.getStrokeDashArray().add(10.0);
-
+            selection.setFill(null); // transparent
+            selection.setStroke(Color.BLACK); // border
+            selection.getStrokeDashArray().add(10.0);
+        }
     }
 
     private void handleTimelineMouseDrag(MouseEvent event){
