@@ -4,12 +4,18 @@ import New.CustomControls.Annotation.AnnotationRectangle;
 import New.CustomControls.Annotation.SelectableAnnotationRectangle;
 import New.CustomControls.TimeLine.CustomTimeLinePane;
 import New.CustomControls.TimeLine.SelectableTimeLinePane;
+import New.Interfaces.Selector;
+import New.Observables.DotSelector;
+import com.sun.org.apache.bcel.internal.generic.Select;
 
 public class AnnotationSelectionController {
+
     private SelectableTimeLinePane parent;
+    private Selector selector;
 
     public AnnotationSelectionController(SelectableTimeLinePane parent){
         this.parent = parent;
+        //this.selector = s;
     }
 
     /**
@@ -23,5 +29,9 @@ public class AnnotationSelectionController {
         if(!CtrlHeld){
             parent.deselectAllElements(selected);
         }
+    }
+
+    public void selectDots(double timeStart, double timeEnd){
+        selector.select(timeStart, timeEnd);
     }
 }

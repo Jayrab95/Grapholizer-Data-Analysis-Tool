@@ -32,6 +32,7 @@ import java.util.Optional;
 
 public class TimeLineContainer extends VBox {
 
+    //region static strings
     private final static String TXT_TL_CREATION_TITLE = "Create a new timeline";
     private final static String TXT_TL_CREATION_HEADER = "Creation of a new timeline";
     private final static String TXT_TL_CREATION_TEXT = "Create a new timeline by entering a tag. The tag must be unique and cannot be empty.";
@@ -49,6 +50,7 @@ public class TimeLineContainer extends VBox {
 
     private final static String TXT_TL_CREATION_ERROR_TITLE = "Timeline creation error";
     private final static String TXT_TL_CREATION_ERROR_HEADER = "Error while creating timeline";
+    //endregion
 
     private DoubleProperty totalWidth;
     private double timeLinesHeight = 50;

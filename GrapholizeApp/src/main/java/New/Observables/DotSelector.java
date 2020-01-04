@@ -10,6 +10,11 @@ public class DotSelector implements Selector, PageObserver {
 
     private List<ObservableStroke> strokes;
 
+    public DotSelector(ObservablePage p){
+        p.addObserver(this);
+        strokes = p.getObservableStrokes();
+    }
+
     @Override
     public void select(double timeStart, double timeEnd) {
         strokes.stream()
