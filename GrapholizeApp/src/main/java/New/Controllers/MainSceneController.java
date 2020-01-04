@@ -53,7 +53,6 @@ public class MainSceneController {
 
     @FXML
     public void initialize() throws Exception{
-        //loadThatShitBoy();
         _session = new Session(new JsonLoader().load("src\\main\\resources\\data\\lukas_test_1.json"));
         PageMetaData pmd = _session.getActivePage().getPageMetaData();
 
