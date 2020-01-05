@@ -3,8 +3,10 @@ package New.Observables;
 import New.CustomControls.Annotation.AnnotationRectangle;
 import New.Interfaces.Observer.PageObserver;
 import New.Interfaces.Observer.StrokeObserver;
+import New.Interfaces.Selector;
 import New.Model.Entities.*;
 import javafx.beans.property.DoubleProperty;
+import javafx.beans.property.ObjectProperty;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.scene.paint.Color;
@@ -14,13 +16,18 @@ import java.util.LinkedList;
 import java.util.List;
 import java.util.stream.Collectors;
 
-public class ObservablePage{
+public class ObservablePage implements Selector {
     private Page inner;
+
     private ObservableList<ObservableStroke> strokes;
     private List<PageObserver> observers;
 
+    private ObjectProperty<Page> innerPage;
+    private ObservableList<Dot> selectedDots;
+
     public ObservablePage(Page inner){
         this.inner = inner;
+        this.innerPage.set(inner);
         strokes = FXCollections.observableList(generateStrokes());
         observers = new LinkedList<>();
     }
@@ -147,5 +154,15 @@ public class ObservablePage{
         for(PageObserver obs : this.observers){
             obs.update(this);
         }
+    }
+
+    @Override
+    public void select(double timeStart, double timeEnd) {
+
+    }
+
+    @Override
+    public void deselect(double timeStart, double timeEnd) {
+
     }
 }
