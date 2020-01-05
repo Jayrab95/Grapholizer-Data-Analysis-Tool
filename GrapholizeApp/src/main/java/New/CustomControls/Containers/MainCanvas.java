@@ -6,12 +6,9 @@ import New.Interfaces.Observer.FilterObserver;
 import New.Interfaces.Observer.PageObserver;
 import New.Interfaces.Observer.StrokeObserver;
 import New.Model.Entities.Dot;
-import New.Observables.ObservableFilterCollection;
+import New.Observables.*;
 import javafx.beans.property.DoubleProperty;
 import javafx.beans.property.SimpleDoubleProperty;
-
-import New.Observables.ObservablePage;
-import New.Observables.ObservableStroke;
 
 import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
@@ -21,15 +18,20 @@ import javafx.scene.control.Slider;
 import javafx.scene.effect.Light;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.HBox;
+import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
+
+import java.util.List;
+import java.util.stream.Collectors;
 
 public class MainCanvas extends VBox implements PageObserver, StrokeObserver, FilterObserver {
     private Slider scaleSlider;
     private ScrollPane canvasContainer;
     private FilterContainer filterContainer;
-    private final Canvas canvas;
+    //private final Canvas canvas;
+    private final Pane canvas;
     private final double canvasWidth;
     private final double canvasHeight;
     private DoubleProperty canvasScale;
@@ -55,7 +57,10 @@ public class MainCanvas extends VBox implements PageObserver, StrokeObserver, Fi
         canvasScale.bind(scaleSlider.valueProperty());
         canvasScale.addListener((observable, oldValue, newValue) -> resetCanvas());
 
-        canvas = new Canvas(initWidth * canvasScale.get(), initHeight * canvasScale.get());
+        canvas = new Pane();
+        canvas.setPrefWidth(initWidth * canvasScale.get());
+        canvas.setPrefHeight(initHeight * canvasScale.get());
+
         obsPage.addObserver(this);
         obsPage.registerStrokeObserver(this);
 
@@ -71,6 +76,7 @@ public class MainCanvas extends VBox implements PageObserver, StrokeObserver, Fi
         canvasContainer = new ScrollPane(canvas);
         filterContainer = new FilterContainer(ofc);
         getChildren().addAll(scaleSlider, filterContainer,canvasContainer);
+        addStrokes();
         drawStrokes();
     }
 
@@ -82,11 +88,24 @@ public class MainCanvas extends VBox implements PageObserver, StrokeObserver, Fi
     }
 
     private void resizeCanvas(){
-        canvas.setWidth(canvasWidth * canvasScale.get());
-        canvas.setHeight(canvasHeight * canvasScale.get());
+        canvas.setPrefWidth(canvasWidth * canvasScale.get());
+        canvas.setPrefHeight(canvasHeight * canvasScale.get());
+    }
+
+    private void addStrokes(){
+        canvas.getChildren().clear();
+        for(ObservableStroke s : p.getObservableStrokes()){
+            List<ObservableDot> dots = s.getObservableDots();
+            for (int i = 0; i < dots.size() - 1; i++) {
+                canvas.getChildren().add(new DotLine(dots.get(i), dots.get(i+1), canvasScale));
+            }
+        }
+        //List<ObservableDot> dots = p.getObservableStrokes().stream().flatMap(s -> s.getObservableDots().stream()).collect(Collectors.toList());
+
     }
 
     private void drawStrokes(){
+        /*
         GraphicsContext gc = canvas.getGraphicsContext2D();
         for(ObservableStroke s : p.getObservableStrokes()){
             Color c = s.getColor();
@@ -116,12 +135,17 @@ public class MainCanvas extends VBox implements PageObserver, StrokeObserver, Fi
         gc.setStroke(Color.BLACK);
         gc.setLineWidth(10);
         gc.fillRect(selection.getX(), selection.getY(), selection.getWidth(), selection.getHeight());
+
+         */
     }
 
     private void resetCanvas(){
+        /*
         canvas.getGraphicsContext2D().clearRect(0,0,canvas.getWidth(), canvas.getHeight());
         resizeCanvas();
         drawStrokes();
+
+         */
     }
 
     private void initializeSelector(){
@@ -166,13 +190,14 @@ public class MainCanvas extends VBox implements PageObserver, StrokeObserver, Fi
 
     @Override
     public void update(ObservablePage sender) {
-        p.registerStrokeObserver(this);
+        //p.registerStrokeObserver(this);
+        addStrokes();
         resetCanvas();
     }
 
     @Override
     public void update(ObservableStroke sender) {
-        resetCanvas();
+        //resetCanvas();
     }
 
     @Override

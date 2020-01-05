@@ -23,12 +23,8 @@ public class DotLine  extends Line {
     private ObservableList<BooleanProperty> dotsSelectedProperties;
 
 
-    public DotLine(ObservableDot dot1, ObservableDot dot2, BooleanProperty strokeSelected){
+    public DotLine(ObservableDot dot1, ObservableDot dot2, DoubleProperty scale){
         this.lineSelected = new SimpleBooleanProperty(false);
-
-        this.strokeSelected = new SimpleBooleanProperty(strokeSelected.get());
-        this.strokeSelected.bind(strokeSelected);
-        this.strokeSelected.addListener((observable, oldValue, newValue) -> lineSelected.setValue(newValue));
 
         this.dot1 = dot1;
         this.dot2 = dot2;
@@ -40,9 +36,22 @@ public class DotLine  extends Line {
                 () -> dotsSelectedProperties.stream().allMatch(BooleanProperty::get),
                 dotsSelectedProperties
         );
+        this.dotBinding.addListener(observable -> lineSelected.set(dotBinding.getValue()));
 
+        setCoordinates(scale.get());
 
+        scale.addListener((observable, oldValue, newValue) -> {
+            if(newValue != null){
+                setCoordinates(newValue.doubleValue());
+            }
+        });
+    }
 
+    private void setCoordinates(double scale){
+        setStartX(dot1.getX() * scale);
+        setStartY(dot1.getY() * scale);
+        setEndX(dot2.getX() * scale);
+        setEndY(dot2.getY() * scale);
     }
 
 }

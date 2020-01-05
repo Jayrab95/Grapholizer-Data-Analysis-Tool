@@ -6,7 +6,6 @@ import New.CustomControls.TimeLine.CustomTimeLinePane;
 import New.CustomControls.TimeLine.SelectableTimeLinePane;
 import New.Interfaces.Selector;
 import New.Observables.DotSelector;
-import com.sun.org.apache.bcel.internal.generic.Select;
 
 public class AnnotationSelectionController {
 

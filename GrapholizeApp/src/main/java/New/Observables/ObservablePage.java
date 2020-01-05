@@ -27,7 +27,7 @@ public class ObservablePage implements Selector {
 
     public ObservablePage(Page inner){
         this.inner = inner;
-        this.innerPage.set(inner);
+        //this.innerPage.set(inner);
         strokes = FXCollections.observableList(generateStrokes());
         observers = new LinkedList<>();
     }

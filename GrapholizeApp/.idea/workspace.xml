@@ -2,7 +2,12 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="f9c9e85c-b6d3-4a2f-99c7-3350288aea5b" name="Default Changelist" comment="">
-
+      <change afterPath="$PROJECT_DIR$/src/main/resources/data/bloat_test1.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/New/Controllers/AnnotationSelectionController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/New/Controllers/AnnotationSelectionController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/New/CustomControls/Containers/MainCanvas.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/New/CustomControls/Containers/MainCanvas.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/New/Observables/DotLine.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/New/Observables/DotLine.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/New/Observables/ObservablePage.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/New/Observables/ObservablePage.java" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -286,11 +291,6 @@
       <workItem from="1576265885664" duration="14110000" />
       <workItem from="1576404363681" duration="7967000" />
       <workItem from="1576477471200" duration="13564000" />
-<<<<<<< HEAD
-      <workItem from="1577727225385" duration="6673000" />
-=======
-      <workItem from="1576793593301" duration="1157000" />
->>>>>>> TimeLineDetailView
     </task>
     <servers />
   </component>
