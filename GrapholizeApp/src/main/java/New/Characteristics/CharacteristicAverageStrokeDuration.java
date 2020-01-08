@@ -11,6 +11,6 @@ public class CharacteristicAverageStrokeDuration extends Characteristic<Double, 
     }
 
     @Override
-    public Double calculate(List<Dot> dots) {return 0d;}
+    public Double calculate(List<Dot> dots) {throw new UnsupportedOperationException();}
 
 }

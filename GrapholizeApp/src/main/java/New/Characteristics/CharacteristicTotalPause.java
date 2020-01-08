@@ -4,13 +4,13 @@ import New.Model.Entities.Dot;
 
 import java.util.List;
 
-public class CharacteristicTotalPause extends Characteristic<Double, List<Dot>> {
+public class CharacteristicTotalPause extends Characteristic<Integer, List<Dot>> {
 
     public CharacteristicTotalPause(String name) {
         super(name);
     }
 
     @Override
-    public Double calculate(List<Dot> dots) {return 0d;}
+    public Integer calculate(List<Dot> dots) {throw new UnsupportedOperationException();}
 
 }

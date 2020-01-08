@@ -4,9 +4,9 @@ import New.Model.Entities.Dot;
 
 import java.util.List;
 
-public class CharacteristicPenUpPause extends Characteristic<Double, List<Dot>> {
+public class CharacteristicTotalDurartionStrokes extends Characteristic<Double, List<Dot>> {
 
-    public CharacteristicPenUpPause(String name) {
+    public CharacteristicTotalDurartionStrokes(String name) {
         super(name);
     }
 

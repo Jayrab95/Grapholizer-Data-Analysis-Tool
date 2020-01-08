@@ -11,6 +11,6 @@ public class CharacteristicAveragePressure extends Characteristic<Integer, List<
     }
 
     @Override
-    public Integer calculate(List<Dot> dots) {return 0;}
+    public Integer calculate(List<Dot> dots) {throw new UnsupportedOperationException();}
 
 }

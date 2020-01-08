@@ -13,6 +13,6 @@ public class CharacteristicPenDownPause extends Characteristic<Double, List<Dot>
     }
 
     @Override
-    public Double calculate(List<Dot> dots) {return 0d;}
+    public Double calculate(List<Dot> dots) {throw new UnsupportedOperationException();}
 
 }

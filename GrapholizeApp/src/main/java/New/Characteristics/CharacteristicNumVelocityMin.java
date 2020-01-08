@@ -11,6 +11,6 @@ public class CharacteristicNumVelocityMin extends Characteristic<Integer, List<D
     }
 
     @Override
-    public Integer calculate(List<Dot> dots) {throw new UnsupportedOperationException()}
+    public Integer calculate(List<Dot> dots) {throw new UnsupportedOperationException();}
 
 }

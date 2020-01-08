@@ -11,6 +11,6 @@ public class CharacteristicAverageLengthOfStrokes extends Characteristic<Integer
     }
 
     @Override
-    public Integer calculate(List<Dot> dots) {return 0;}
+    public Integer calculate(List<Dot> dots) {throw new UnsupportedOperationException();}
 
 }
