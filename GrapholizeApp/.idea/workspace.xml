@@ -129,23 +129,23 @@
     <key name="CreateTestDialog.Recents.Supers">
       <recent name="" />
     </key>
-    <key name="MoveClassesOrPackagesDialog.RECENTS_KEY">
-      <recent name="" />
-    </key>
-    <key name="CopyFile.RECENT_KEYS">
-      <recent name="C:\Users\jarab\Documents\FHNW\Semester 7\Projekt\IP6_Grapholize\GrapholizeApp\src\main\resources\data" />
-    </key>
-    <key name="CopyClassDialog.RECENTS_KEY">
-      <recent name="New.CustomControls" />
-      <recent name="New.Controllers" />
-      <recent name="New.CustomControls.TimeLineElement" />
-      <recent name="New.CustomControls.TimeLine" />
-      <recent name="New.Scenes" />
-    </key>
     <key name="MoveFile.RECENT_KEYS">
       <recent name="C:\Users\jarab\Documents\FHNW\Semester 7\Projekt\IP6_Grapholize\GrapholizeApp\src\main\resources\data" />
       <recent name="C:\Users\jarab\Documents\FHNW\Semester 7\Projekt\IP6_Grapholize\GrapholizeApp\src\main\resources\fxml" />
       <recent name="C:\Users\jarab\Documents\FHNW\Semester 7\Projekt\IP6_Grapholize\GrapholizeApp\src\main\resources\views" />
+    </key>
+    <key name="MoveClassesOrPackagesDialog.RECENTS_KEY">
+      <recent name="" />
+    </key>
+    <key name="CopyClassDialog.RECENTS_KEY">
+      <recent name="New.Characteristics" />
+      <recent name="New.CustomControls" />
+      <recent name="New.Controllers" />
+      <recent name="New.CustomControls.TimeLineElement" />
+      <recent name="New.CustomControls.TimeLine" />
+    </key>
+    <key name="CopyFile.RECENT_KEYS">
+      <recent name="C:\Users\jarab\Documents\FHNW\Semester 7\Projekt\IP6_Grapholize\GrapholizeApp\src\main\resources\data" />
     </key>
   </component>
   <component name="RunDashboard">
@@ -312,6 +312,8 @@
       <workItem from="1577487979803" duration="1748000" />
       <workItem from="1578147860537" duration="593000" />
       <workItem from="1578238632535" duration="35000" />
+      <workItem from="1578257646827" duration="70000" />
+      <workItem from="1578500943704" duration="1271000" />
     </task>
     <servers />
   </component>
