@@ -1,42 +1,64 @@
 package New.Observables;
 
+import javafx.beans.InvalidationListener;
 import javafx.beans.binding.Bindings;
 import javafx.beans.binding.BooleanBinding;
-import javafx.beans.property.BooleanProperty;
-import javafx.beans.property.DoubleProperty;
-import javafx.beans.property.SimpleBooleanProperty;
+import javafx.beans.property.*;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import javafx.scene.paint.Color;
+import javafx.scene.paint.CycleMethod;
+import javafx.scene.paint.LinearGradient;
+import javafx.scene.paint.Stop;
 import javafx.scene.shape.Line;
 
 public class DotLine  extends Line {
 
     private BooleanProperty lineSelected;
-    private BooleanProperty strokeSelected;
-    private BooleanBinding dotBinding;
-
-    private DoubleProperty canvasScale;
+    private ObjectProperty<Color> lineColor;
+    //private BooleanProperty strokeSelected;
+    //private BooleanBinding dotBinding;
 
     private ObservableDot dot1;
     private ObservableDot dot2;
 
-    private ObservableList<BooleanProperty> dotsSelectedProperties;
+    //private ObservableList<BooleanProperty> dotsSelectedProperties;
 
 
     public DotLine(ObservableDot dot1, ObservableDot dot2, DoubleProperty scale){
         this.lineSelected = new SimpleBooleanProperty(false);
+        this.lineColor = new SimpleObjectProperty<>(Color.BLACK);
 
         this.dot1 = dot1;
         this.dot2 = dot2;
 
-        this.dotsSelectedProperties = FXCollections.observableArrayList(dot1.getSelectedProperty(), dot2.getSelectedProperty());
+        this.lineSelected.bind(dot1.getSelectedProperty());
+        this.lineColor.bind(dot1.getColorProperty());
 
+        /*dot2.getSelectedProperty().addListener(observable -> lineSelected.set(dot1.isSelected() && dot2.isSelected()));
+
+
+
+        this.dotsSelectedProperties = FXCollections.observableArrayList(dot1.getSelectedProperty(), dot2.getSelectedProperty());
+        this.dotsSelectedProperties.addListener((InvalidationListener) observable -> {
+            lineSelected.set(dotsSelectedProperties.stream().allMatch(BooleanProperty::get));
+            System.out.println("Line selected!!!");
+        });
         //Source: http://andresalmiray.com/creating-aggregate-javafx-bindings/
         this.dotBinding = Bindings.createBooleanBinding(
                 () -> dotsSelectedProperties.stream().allMatch(BooleanProperty::get),
                 dotsSelectedProperties
         );
-        this.dotBinding.addListener(observable -> lineSelected.set(dotBinding.getValue()));
+
+        //this.dotBinding.addListener(observable -> lineSelected.set(dotBinding.getValue()));
+
+         */
+
+        this.lineSelected.addListener(observable -> setStyle());
+
+        setStyle();
+
+        this.lineColor.addListener(observable -> setStyle());
 
         setCoordinates(scale.get());
 
@@ -46,6 +68,25 @@ public class DotLine  extends Line {
             }
         });
     }
+
+    private void setStyle(){
+        //setStrokeWidth(1);
+        if(!lineSelected.get()){
+            setStroke(lineColor.get());
+        }
+        else{
+            //Source: https://stackoverflow.com/questions/28764190/javafx-line-fill-color?noredirect=1&lq=1
+            setStroke(new LinearGradient(0d, -5d, 0d, 5d, false,
+                    CycleMethod.NO_CYCLE, new Stop(0,Color.BLACK),
+                    new Stop(0.199,Color.GREEN),
+                    new Stop(0.2,lineColor.get()),
+                    new Stop(0.799,lineColor.get()),
+                    new Stop(0.8,Color.GREEN)));
+        }
+
+    }
+
+    //https://stackoverflow.com/questions/28764190/javafx-line-fill-color?noredirect=1&lq=1
 
     private void setCoordinates(double scale){
         setStartX(dot1.getX() * scale);

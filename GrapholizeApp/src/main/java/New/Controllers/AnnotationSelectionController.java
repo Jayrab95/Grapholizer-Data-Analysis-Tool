@@ -12,9 +12,9 @@ public class AnnotationSelectionController {
     private SelectableTimeLinePane parent;
     private Selector selector;
 
-    public AnnotationSelectionController(SelectableTimeLinePane parent){
+    public AnnotationSelectionController(SelectableTimeLinePane parent, Selector s){
         this.parent = parent;
-        //this.selector = s;
+        this.selector = s;
     }
 
     /**
@@ -33,4 +33,5 @@ public class AnnotationSelectionController {
     public void selectDots(double timeStart, double timeEnd){
         selector.select(timeStart, timeEnd);
     }
+    public void deselectDots(double timeStart, double timeEnd){selector.deselect(timeStart, timeEnd);}
 }

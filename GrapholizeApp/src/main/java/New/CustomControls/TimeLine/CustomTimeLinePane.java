@@ -8,6 +8,7 @@ import New.Execptions.NoTimeLineSelectedException;
 import New.Interfaces.Observer.PageObserver;
 import New.Model.Entities.Annotation;
 import New.Observables.ObservableAnnotation;
+import New.Observables.ObservableDot;
 import New.Observables.ObservablePage;
 import New.Observables.ObservableTimeLineTag;
 import New.util.DialogGenerator;
@@ -42,6 +43,7 @@ public class CustomTimeLinePane extends SelectableTimeLinePane implements PageOb
     private Rectangle selection;
     private double[] dragBounds;
     private ObservableTimeLineTag timeLineTag;
+    private ObservablePage p;
     private CustomTimeLineController customTimeLineController;
     private ContextMenu contextMenu;
 
@@ -52,6 +54,7 @@ public class CustomTimeLinePane extends SelectableTimeLinePane implements PageOb
         anchor = new Light.Point();
         selection = new Rectangle();
         dragBounds = new double[2];
+        this.p = p;
 
         this.contextMenu = generateContextMenu();
 
@@ -61,6 +64,11 @@ public class CustomTimeLinePane extends SelectableTimeLinePane implements PageOb
         this.setOnMouseReleased(event -> handleTimelineMouseRelease(event));
 
         p.addObserver(this);
+    }
+
+    public CustomTimeLinePane(double width, double height, DoubleProperty scaleProp, ObservableTimeLineTag tag, ObservablePage p, TimeLineContainer parent, Annotation[] annotations) {
+        this(width, height, scaleProp, tag, p, parent);
+        addAnnotations(annotations);
     }
 
     public CustomTimeLinePane(double width, double height, DoubleProperty scaleProp, ObservableTimeLineTag tag, ObservablePage p, TimeLineContainer parent, List<AnnotationRectangle> annotations) {
@@ -80,7 +88,8 @@ public class CustomTimeLinePane extends SelectableTimeLinePane implements PageOb
                     timeLineTag.getColorProperty(),
                     scale,
                     a,
-                    this));
+                    this,
+                    p));
         }
     }
 
@@ -94,13 +103,20 @@ public class CustomTimeLinePane extends SelectableTimeLinePane implements PageOb
                 timeLineTag.getColorProperty(),
                 scale,
                 new ObservableAnnotation(a),
-                this));
+                this,
+                p));
     }
 
     private void addAnnotations(List<AnnotationRectangle> annotations){
         for(AnnotationRectangle a : annotations){
             Annotation newAnnotation = new Annotation(a.getText(), a.getTimeStart(), a.getTimeStop());
             addAnnotation(newAnnotation);
+        }
+    }
+
+    private void addAnnotations(Annotation[] annotations){
+        for(Annotation a : annotations){
+            addAnnotation(a);
         }
     }
 
@@ -117,29 +133,36 @@ public class CustomTimeLinePane extends SelectableTimeLinePane implements PageOb
         double lowerBounds = 0;
         double upperBounds = getWidth();
         for(Node n : getChildren()){
-            AnnotationRectangle rect = (AnnotationRectangle)n;
-            double nTimeStart = rect.getX();
-            double nTimeStop = rect.getX() + rect.getWidth();
-            if(nTimeStop < xPosition && nTimeStop > lowerBounds) {
-                lowerBounds = nTimeStop;
+            if(n instanceof AnnotationRectangle){
+                System.out.println("yep");
+                AnnotationRectangle rect = (AnnotationRectangle)n;
+                double nTimeStart = rect.getX();
+                double nTimeStop = rect.getX() + rect.getWidth();
+                if(nTimeStop < xPosition && nTimeStop > lowerBounds) {
+                    lowerBounds = nTimeStop;
+                }
+                if(nTimeStart > xPosition && nTimeStart < upperBounds) {
+                    upperBounds = nTimeStart;
+                }
             }
-            if(nTimeStart > xPosition && nTimeStart < upperBounds) {
-                upperBounds = nTimeStart;
-            }
+
         }
         return new double[]{lowerBounds, upperBounds};
     }
 
     private ContextMenu generateContextMenu(){
+        //TODO: Find better way to extend context menu functionality
         MenuItem item_createNewTimeLine = new MenuItem("Create new time line out of selected elements");
         item_createNewTimeLine.setOnAction(event -> handleContextCreateNewTimeLineClick());
         MenuItem item_copyAnnotations = new MenuItem("Copy selected annotations into this timeline");
         item_copyAnnotations.setOnAction(event -> handleContextCopyAnnotationsClick());
+        MenuItem item_createAnnotationsOutOfDots = new MenuItem("Create annotations out of selected dots");
+        item_createAnnotationsOutOfDots.setOnAction(event -> createAnnotationFromDotsDialogue());
         MenuItem item_editTimeLine = new MenuItem("Edit timeline tag");
         item_editTimeLine.setOnAction(event -> customTimeLineController.editTimeLine());
         MenuItem item_removeTimeLine = new MenuItem("Remove this timeline");
         item_removeTimeLine.setOnAction(event -> customTimeLineController.removeTimeLine(this));
-        return new ContextMenu(item_createNewTimeLine, item_editTimeLine, item_copyAnnotations, item_removeTimeLine);
+        return new ContextMenu(item_createNewTimeLine, item_editTimeLine, item_copyAnnotations, item_createAnnotationsOutOfDots, item_removeTimeLine);
     }
 
     private void handleContextCreateNewTimeLineClick(){
@@ -222,7 +245,11 @@ public class CustomTimeLinePane extends SelectableTimeLinePane implements PageOb
         getChildren().remove(selection);
     }
 
+
+
     public void createCopyAnnotationDialogue()  {
+        //Dialog dialog = annotationCopyDialog(TXT_COPYANNOTATION_TITLE, String.format(TXT_COPYANNOTATION_HEADER, timeLineTag.getTag()), String.format(TXT_COPYANNOTATION_TEXT, timeLineTag.getTag()));
+
         Dialog dialog = new Dialog<>();
         dialog.setTitle(TXT_COPYANNOTATION_TITLE);
         dialog.setHeaderText(String.format(TXT_COPYANNOTATION_HEADER, timeLineTag.getTag()));
@@ -255,7 +282,7 @@ public class CustomTimeLinePane extends SelectableTimeLinePane implements PageOb
                 //collidesWithOtherElements is executed with the boundaries if they are available or with all selected elements otherwise.
                 //If a collision was detected, a dialog is prompted which asks the user if they want to create a new timeline.
                 //should they decline, the entire procees is aborted.
-                if(customTimeLineController.collidesWithOtherElements(boundaries) && DialogGenerator.confirmationDialogue(TXT_COLLIDEHANDLER_TITLE, TXT_COLLIDEHANDLER_HEADER, TXT_COLLIDEHANDLER_MSG)){
+                if(customTimeLineController.copiedAnnotationsCollideWithOtherAnnotations(boundaries) && DialogGenerator.confirmationDialogue(TXT_COLLIDEHANDLER_TITLE, TXT_COLLIDEHANDLER_HEADER, TXT_COLLIDEHANDLER_MSG)){
                     Optional<Annotation> annotation = cbox_joinedAnnotation.isSelected() ?
                             Optional.of(new Annotation(textField_annotationText.getText(), boundaries.get()[0], boundaries.get()[1])) :
                             Optional.empty();
@@ -272,6 +299,74 @@ public class CustomTimeLinePane extends SelectableTimeLinePane implements PageOb
                     }
                     else {
                         addAnnotations(customTimeLineController.getSelectedAnnotations());
+                    }
+                }
+            }
+
+            return null;
+        });
+
+        dialog.showAndWait();
+    }
+
+    public void createAnnotationFromDotsDialogue()  {
+        //TODO: Extract reusable logic into separate method or even class.
+        //Dialog dialog = annotationCopyDialog(TXT_COPYANNOTATION_TITLE, String.format(TXT_COPYANNOTATION_HEADER, timeLineTag.getTag()), String.format(TXT_COPYANNOTATION_TEXT, timeLineTag.getTag()));
+
+        Dialog dialog = new Dialog<>();
+        dialog.setTitle(TXT_COPYANNOTATION_TITLE);
+        dialog.setHeaderText(String.format(TXT_COPYANNOTATION_HEADER, timeLineTag.getTag()));
+        dialog.setContentText(String.format(TXT_COPYANNOTATION_TEXT, timeLineTag.getTag()));
+
+        CheckBox cbox_joinedAnnotation = new CheckBox("Combine selected elements into one annotation");
+
+        Label label_AnnotationText = new Label("Annotation text: (Only applied if combine option is selected.)");
+        TextField textField_annotationText = new TextField(TXT_COPYANNOTATION_DEFAULTVAL);
+        textField_annotationText.disableProperty().bind(cbox_joinedAnnotation.selectedProperty().not());
+
+
+        GridPane grid = new GridPane();
+        grid.add(cbox_joinedAnnotation, 1, 1);
+        grid.add(label_AnnotationText, 1, 2);
+        grid.add(textField_annotationText, 2, 2);
+        dialog.getDialogPane().setContent(grid);
+
+        ButtonType buttonTypeOk = new ButtonType("Okay", ButtonBar.ButtonData.OK_DONE);
+        ButtonType buttonTypeCancel = new ButtonType("Cancel", ButtonBar.ButtonData.CANCEL_CLOSE);
+
+        dialog.getDialogPane().getButtonTypes().addAll(buttonTypeOk, buttonTypeCancel);
+
+        dialog.setResultConverter(b -> {
+            if (b == buttonTypeOk) {
+                //If the cbox is selected, a new optional containing the boundaries of the new combined annotation is created.
+                Optional<double[]> boundaries = cbox_joinedAnnotation.isSelected() ?
+                        Optional.of(customTimeLineController.getCombinedDotAnnotationBoundaries()) :
+                        Optional.empty();
+                //collidesWithOtherElements is executed with the boundaries if they are available or with all selected elements otherwise.
+                //If a collision was detected, a dialog is prompted which asks the user if they want to create a new timeline.
+                //should they decline, the entire procees is aborted.
+                if(customTimeLineController.dotSegmentsCollideWithOtherAnnotations(boundaries) && DialogGenerator.confirmationDialogue(TXT_COLLIDEHANDLER_TITLE, TXT_COLLIDEHANDLER_HEADER, TXT_COLLIDEHANDLER_MSG)){
+                    Optional<Annotation> annotation = cbox_joinedAnnotation.isSelected() ?
+                            Optional.of(new Annotation(textField_annotationText.getText(), boundaries.get()[0], boundaries.get()[1])) :
+                            Optional.empty();
+                    try {
+                        customTimeLineController.createNewTimeLine(annotation);
+                    } catch (NoTimeLineSelectedException ex) {
+                        DialogGenerator.simpleErrorDialog("Creation Error","Error while creating timeline", ex.toString());
+                    }
+                }
+                else{
+                    //If no collisions were detected, copy the annotations into this timeline.
+                    if (cbox_joinedAnnotation.isSelected()) {
+                        addAnnotation(new Annotation(textField_annotationText.getText(), boundaries.get()[0], boundaries.get()[1]));
+                    }
+                    else {
+                        for(List<ObservableDot> segment : p.getSelectedDotSegments()){
+                            addAnnotation(new Annotation(
+                                    "Generated Annotation",
+                                    segment.get(0).getTimeStamp(),
+                                    segment.get(segment.size()-1).getTimeStamp()));
+                        }
                     }
                 }
             }

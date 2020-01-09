@@ -30,9 +30,11 @@ public abstract class SelectableTimeLinePane extends TimeLinePane implements Tim
 
     public void deselectAllElements(SelectableAnnotationRectangle selected){
         for(Node n : getChildren()){
-            SelectableAnnotationRectangle ar = (SelectableAnnotationRectangle)n;
-            if(ar != selected){
-                ar.setSelected(false);
+            if(n instanceof AnnotationRectangle){
+                SelectableAnnotationRectangle ar = (SelectableAnnotationRectangle)n;
+                if(ar != selected){
+                    ar.setSelected(false);
+                }
             }
         }
     }

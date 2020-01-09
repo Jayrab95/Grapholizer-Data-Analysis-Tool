@@ -3,6 +3,7 @@ package New.CustomControls.Annotation;
 
 import New.Controllers.MovableAnnotationController;
 import New.CustomControls.TimeLine.CustomTimeLinePane;
+import New.Interfaces.Selector;
 import New.Model.Entities.Annotation;
 import New.Observables.ObservableAnnotation;
 import New.util.DialogGenerator;
@@ -27,8 +28,8 @@ public class MovableAnnotationRectangle extends SelectableAnnotationRectangle {
     private DragRectangle right;
 
 
-    public MovableAnnotationRectangle(ObjectProperty<Color> c, DoubleProperty scale, ObservableAnnotation t, CustomTimeLinePane parent) {
-        super(c, t.getAnnotationTextProperty(), scale, t.getDuration(), parent.getHeight(), t.getTimeStart(), parent);
+    public MovableAnnotationRectangle(ObjectProperty<Color> c, DoubleProperty scale, ObservableAnnotation t, CustomTimeLinePane parent, Selector s) {
+        super(c, t.getAnnotationTextProperty(), scale, t.getDuration(), parent.getHeight(), t.getTimeStart(), parent, s);
 
         this.movableAnnotationController = new MovableAnnotationController(t,parent);
 
@@ -45,10 +46,10 @@ public class MovableAnnotationRectangle extends SelectableAnnotationRectangle {
 
         selected.addListener((observable, oldValue, newValue) -> {
             if(newValue){
-                //movableAnnotationController.enableResize(left, right);
+                movableAnnotationController.enableResize(left, right);
             }
             else{
-                //movableAnnotationController.disableResize(left, right);
+                movableAnnotationController.disableResize(left, right);
             }
         });
 

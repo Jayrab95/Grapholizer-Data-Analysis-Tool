@@ -62,7 +62,7 @@ public class Annotation {
          * _____[----]____ other
          */
         boolean otherIsContainedInThis =
-                otherTimeStart >= getTimeStop()
+                otherTimeStart >= getTimeStart()
                         && otherTimeStop <= getTimeStop();
 
         return startCollidesWithOther || endCollidesWithOther || otherIsContainedInThis;

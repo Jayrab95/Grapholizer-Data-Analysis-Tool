@@ -10,6 +10,7 @@ import javafx.beans.property.ObjectProperty;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.scene.paint.Color;
+import javafx.scene.shape.Rectangle;
 
 import java.util.Collections;
 import java.util.LinkedList;
@@ -56,13 +57,19 @@ public class ObservablePage implements Selector {
         inner.getTimeLines().get(key).remove(a);
     }
 
-    public boolean collidesWithOtherElements(String timeLineKey, double timestart, double timeStop){
+    public boolean collidesWithOtherElements(String timeLineKey, double timeStart, double timeStop){
+        List debug = inner.getTimeLine(timeLineKey).stream()
+                .filter(annotation -> annotation.collidesWith(timeStart, timeStop))
+                .collect(Collectors.toList());
         return inner.getTimeLine(timeLineKey).stream()
-                .filter(annotation -> annotation.collidesWith(timestart, timeStop))
+                .filter(annotation -> annotation.collidesWith(timeStart, timeStop))
                 .count() > 0;
     }
 
-    public boolean listCollidesWithOtherElements(String key, List<AnnotationRectangle> annotations){
+    public boolean listCollidesWithOtherAnnotations(String key, List<AnnotationRectangle> annotations){
+        List debug = annotations.stream()
+                .filter(a -> collidesWithOtherElements(key, a.getTimeStart(), a.getTimeStop()))
+                .collect(Collectors.toList());
         return annotations.stream()
                 .filter(a -> collidesWithOtherElements(key, a.getTimeStart(), a.getTimeStop()))
                 .count() > 0;
@@ -114,6 +121,23 @@ public class ObservablePage implements Selector {
         return Collections.emptyList();
     }
 
+    /**
+     * Creates a list of all selected dot segments.
+     * @return a list of segments of dots which are currently selected.
+     */
+    public List<List<ObservableDot>> getSelectedDotSegments(){
+        List<List<ObservableDot>> res = new LinkedList<>();
+        for (ObservableStroke s : getObservableStrokes()){
+            List<ObservableDot> dotSegment = s.getObservableDots().stream()
+                    .filter(d -> d.isSelected())
+                    .collect(Collectors.toList());
+            if(!dotSegment.isEmpty()){
+                res.add(dotSegment);
+            }
+        }
+        return res;
+    }
+
     public List<ObservableStroke> generateStrokes(){
         List<ObservableStroke> observableStrokes = new LinkedList<>();
         for(Stroke s : inner.getStrokes()){
@@ -158,11 +182,73 @@ public class ObservablePage implements Selector {
 
     @Override
     public void select(double timeStart, double timeEnd) {
+        strokes.stream()
+                .flatMap(s -> s.getObservableDots().stream())
+                .forEach(d -> {
+                    if(d.getTimeStamp() >= timeStart && d.getTimeStamp() <= timeEnd){
+                        d.setSelected(true);
+                    }
+                });
+    }
 
+    @Override
+    public void selectOnlyTimeFrame(double timeStart, double timeEnd) {
+        strokes.stream()
+                .flatMap(s -> s.getObservableDots().stream())
+                .forEach(d -> {
+                    if(d.getTimeStamp() >= timeStart && d.getTimeStamp() <= timeEnd){
+                        d.setSelected(true);
+                    }
+                    else{
+                        d.setSelected(false);
+                    }
+                });
+    }
+
+    @Override
+    public void selectRect(double x, double y, double width, double height) {
+        Rectangle rect = new Rectangle(x, y, width, height);
+        strokes.stream()
+                .flatMap(s -> s.getObservableDots().stream())
+                .filter(d -> rect.contains(d.getX(), d.getY()))
+                .forEach(d -> d.setSelected(true));
+    }
+
+    @Override
+    public void selectRectUnscaled(double x, double y, double width, double height, double scale) {
+        selectRect(x/scale, y/scale, width/scale, height/scale);
     }
 
     @Override
     public void deselect(double timeStart, double timeEnd) {
+        strokes.stream()
+                .flatMap(s -> s.getObservableDots().stream())
+                .filter(d -> d.getTimeStamp() >= timeStart && d.getTimeStamp() <= timeEnd)
+                .forEach(d -> d.setSelected(false));
+    }
 
+    @Override
+    public void deselectAll() {
+        strokes.stream()
+                .flatMap(s -> s.getObservableDots().stream())
+                .forEach(d -> d.setSelected(false));
+    }
+
+    @Override
+    public void deselectRect(double x, double y, double width, double height) {
+        Rectangle rect = new Rectangle(x, y, width, height);
+        strokes.stream()
+                .flatMap(s -> s.getObservableDots().stream())
+                .filter(d -> d.isSelected())
+                .forEach(d -> {
+                    if(!rect.contains(d.getX(), d.getY())){
+                        d.setSelected(false);
+                    }
+                });
+    }
+
+    @Override
+    public void deselectRectUnscaled(double x, double y, double width, double height, double scale) {
+        deselectRect(x/scale, y/scale, width/scale, height/scale);
     }
 }

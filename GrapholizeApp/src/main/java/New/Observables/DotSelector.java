@@ -26,10 +26,40 @@ public class DotSelector implements Selector, PageObserver {
     }
 
     @Override
+    public void selectOnlyTimeFrame(double timeStart, double timeEnd) {
+
+    }
+
+    @Override
+    public void selectRect(double x, double y, double width, double height) {
+
+    }
+
+    @Override
+    public void selectRectUnscaled(double x, double y, double width, double height, double scale) {
+
+    }
+
+    @Override
     public void deselect(double timeStart, double timeEnd) {
         strokes.stream()
                 .filter(observableStroke -> observableStroke.getTimeStart() >= timeStart && observableStroke.getTimeEnd() <= timeEnd)
                 .forEach(observableStroke -> observableStroke.setSelected(false));
+    }
+
+    @Override
+    public void deselectAll() {
+
+    }
+
+    @Override
+    public void deselectRect(double x, double y, double width, double height) {
+
+    }
+
+    @Override
+    public void deselectRectUnscaled(double x, double y, double width, double height, double scale) {
+
     }
 
     public List<List<ObservableDot>> getSelectedDots(){

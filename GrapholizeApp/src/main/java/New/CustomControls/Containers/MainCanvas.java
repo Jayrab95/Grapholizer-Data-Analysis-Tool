@@ -55,7 +55,7 @@ public class MainCanvas extends VBox implements PageObserver, StrokeObserver, Fi
         scaleSlider = initializeSlider(initScale);
 
         canvasScale.bind(scaleSlider.valueProperty());
-        canvasScale.addListener((observable, oldValue, newValue) -> resetCanvas());
+        canvasScale.addListener((observable, oldValue, newValue) -> resizeCanvas());
 
         canvas = new Pane();
         canvas.setPrefWidth(initWidth * canvasScale.get());
@@ -77,7 +77,7 @@ public class MainCanvas extends VBox implements PageObserver, StrokeObserver, Fi
         filterContainer = new FilterContainer(ofc);
         getChildren().addAll(scaleSlider, filterContainer,canvasContainer);
         addStrokes();
-        drawStrokes();
+        //drawStrokes();
     }
 
     private Slider initializeSlider(double init){
@@ -148,18 +148,20 @@ public class MainCanvas extends VBox implements PageObserver, StrokeObserver, Fi
          */
     }
 
+
     private void initializeSelector(){
         anchor = new Light.Point();
         selection = new Rectangle();
         selection.setFill(Color.TRANSPARENT);
         selection.setStroke(Color.BLACK); // border
-        selection.setStrokeWidth(10);
+        selection.setStrokeWidth(1);
         selection.getStrokeDashArray().add(10.0);
-
     }
 
     //Source: https://coderanch.com/t/689100/java/rectangle-dragging-image
     private void startSelection(MouseEvent event){
+        p.deselectAll();
+
         System.out.println("Start Selection called");
         System.out.println("X:" + event.getX() + " Y:" + event.getY());
         anchor.setX(event.getX());
@@ -168,6 +170,7 @@ public class MainCanvas extends VBox implements PageObserver, StrokeObserver, Fi
         selection.setY(event.getY());
         selection.setStroke(Color.BLACK); // border
         selection.getStrokeDashArray().add(10.0);
+        canvas.getChildren().add(selection);
     }
 
     //Source: https://coderanch.com/t/689100/java/rectangle-dragging-image
@@ -176,16 +179,20 @@ public class MainCanvas extends VBox implements PageObserver, StrokeObserver, Fi
         selection.setHeight(Math.abs(event.getY() - anchor.getY()));
         selection.setX(Math.min(anchor.getX(), event.getX()));
         selection.setY(Math.min(anchor.getY(), event.getY()));
-        System.out.println(selection);
-        resetCanvas();
+        //System.out.println(selection);
+        //resetCanvas();
     }
 
     private void endSelection(MouseEvent event){
         System.out.println("End selection called");
+        p.selectRectUnscaled(selection.getX(), selection.getY(), selection.getWidth(), selection.getHeight(), canvasScale.get());
         selection.setWidth(0);
         selection.setHeight(0);
+        canvas.getChildren().remove(selection);
 
-        resetCanvas();
+
+
+        //resetCanvas();
     }
 
     @Override

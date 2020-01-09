@@ -8,18 +8,18 @@ import javafx.beans.property.BooleanProperty;
 import javafx.beans.property.ObjectProperty;
 import javafx.beans.property.SimpleBooleanProperty;
 import New.util.Import.CompressedDot;
+import javafx.beans.property.SimpleObjectProperty;
 import javafx.scene.paint.Color;
 
 import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
 
-public class ObservableDot extends Dot {
+public class ObservableDot extends Dot implements Comparable<Dot>{
 
     //TODO: Scrap this class and make an observable object that has the same structure as the other observables
     private BooleanProperty selected = new SimpleBooleanProperty(false);
-    private ObjectProperty<Color> color;
-    private List<DotObserver> observers = new LinkedList<>();
+    private ObjectProperty<Color>  color = new SimpleObjectProperty(Color.BLACK);
 
     public ObservableDot(float x, float y, float force, long timeStamp) {
         super(x, y, force, timeStamp);
@@ -44,17 +44,19 @@ public class ObservableDot extends Dot {
         return selected;
     }
 
-    public void addObserver(DotObserver obs) {
-        observers.add(obs);
-    }
+    public ObjectProperty<Color> getColorProperty() {return color;}
 
-    public void removeObserver(DotObserver obs) {
-        observers.remove(obs);
-    }
-
-    public void notifyObservers() {
-        for(DotObserver obs : observers){
-            obs.update(this);
+    @Override
+    public int compareTo(Dot o) {
+        long res = this.getTimeStamp() - o.getTimeStamp();
+        if(res > Integer.MAX_VALUE){
+            return Integer.MAX_VALUE;
+        }
+        else if(res < Integer.MIN_VALUE){
+            return Integer.MIN_VALUE;
+        }
+        else{
+            return (int)res;
         }
     }
 }

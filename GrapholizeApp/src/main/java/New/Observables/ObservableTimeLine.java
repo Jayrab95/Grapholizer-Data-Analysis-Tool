@@ -26,7 +26,7 @@ public class ObservableTimeLine {
         return selectedTimeLine != null;
     }
 
-    public List<AnnotationRectangle> getSelectedElements(){
+    public List<AnnotationRectangle> getSelectedAnnotations(){
         return selectedTimeLine.getChildren().stream()
                 .map(node -> (SelectableAnnotationRectangle)node)
                 .filter(SelectableAnnotationRectangle::isSelected)

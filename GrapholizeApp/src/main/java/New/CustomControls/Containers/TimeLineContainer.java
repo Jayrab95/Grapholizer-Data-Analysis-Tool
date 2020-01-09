@@ -9,10 +9,7 @@ import New.Execptions.NoTimeLineSelectedException;
 import New.Execptions.TimeLineTagException;
 import New.Interfaces.Observer.Observer;
 import New.Model.Entities.Annotation;
-import New.Observables.ObservablePage;
-import New.Observables.ObservableProject;
-import New.Observables.ObservableTimeLine;
-import New.Observables.ObservableTimeLineTag;
+import New.Observables.*;
 import New.util.DialogGenerator;
 import javafx.beans.property.DoubleProperty;
 import javafx.beans.property.SimpleDoubleProperty;
@@ -27,6 +24,7 @@ import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
 import javafx.stage.Stage;
 
+import java.util.LinkedList;
 import java.util.List;
 import java.util.Optional;
 
@@ -168,6 +166,22 @@ public class TimeLineContainer extends VBox {
         }
     }
 
+    public void createNewTimeLineOutOfSelectedDots() throws NoTimeLineSelectedException {
+        Optional<DialogResult> tag = openTimeLineCreationDialog(
+                TXT_TL_CREATION_TITLE,
+                TXT_TL_CREATION_HEADER,
+                TXT_TL_CREATION_TEXT,
+                TXT_TL_TIMELINETAG_LABEL,
+                TXT_TL_TAG_DEFAULTVAL,
+                COLOR_TL_TAG_DEFAULTVAL,
+                false);
+        if(tag.isPresent()){
+            ObservableTimeLineTag newTag = timeLineContainerController.createNewTimeLineTag(tag.get().timeLinename, tag.get().timeLineColor);
+            TimeLinePane timeLinePane = createNewTimeLinePaneOutOfSelectedDots(newTag, timeLineContainerController.getPage());
+            addTimeLinePane(timeLinePane);
+        }
+    }
+
     public void createNewTimeLineOutOfCombinedElement(Annotation a){
         Optional<DialogResult> tag = openTimeLineCreationDialog(
                 TXT_TL_CREATION_TITLE,
@@ -193,7 +207,18 @@ public class TimeLineContainer extends VBox {
     }
 
     private TimeLinePane createNewTimeLineTagOutOfSelected(ObservableTimeLineTag newTimeLineTag, ObservablePage page){
-        return createNewTimeLinePane(newTimeLineTag, page, Optional.of(selectedTimeLine.getSelectedElements()));
+        return createNewTimeLinePane(newTimeLineTag, page, Optional.of(selectedTimeLine.getSelectedAnnotations()));
+    }
+
+    private TimeLinePane createNewTimeLinePaneOutOfSelectedDots(ObservableTimeLineTag newTimeLineTag, ObservablePage page){
+        List<Annotation> annotations = new LinkedList();
+        for(List<ObservableDot> segment : page.getSelectedDotSegments()){
+            annotations.add(new Annotation(
+                    "Generated Annotation",
+                    segment.get(0).getTimeStamp(),
+                    segment.get(segment.size()-1).getTimeStamp()));
+        }
+        return new CustomTimeLinePane(timeLineContainerController.getPage().getDuration(), timeLinesHeight, scale, newTimeLineTag, page, this, annotations.toArray(new Annotation[annotations.size()]));
     }
 
     private TimeLinePane createNewTimeLinePaneOutOfCombined(ObservableTimeLineTag tag, ObservablePage page, Annotation annotation){

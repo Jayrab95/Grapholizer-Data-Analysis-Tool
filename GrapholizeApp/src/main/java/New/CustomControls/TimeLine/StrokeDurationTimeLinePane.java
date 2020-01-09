@@ -12,16 +12,19 @@ import java.util.List;
 
 public class StrokeDurationTimeLinePane extends SelectableTimeLinePane implements PageObserver {
 
+    private ObservablePage p;
+
     public StrokeDurationTimeLinePane(double width, double height, DoubleProperty scaleProp, ObservablePage page, TimeLineContainer parent) {
         super(width, height, scaleProp, new SimpleStringProperty("Stroke duration"), parent);
         page.addObserver(this);
+        this.p = page;
         setUpTimeLine(page.getObservableStrokes());
     }
 
     //TODO: Adjust witdh via binding?
     private void setUpTimeLine(List<ObservableStroke> strokes){
         for(ObservableStroke s : strokes){
-            StrokeAnnotationRectangle sa = new StrokeAnnotationRectangle(s.getColorProperty(), scale, s, this);
+            StrokeAnnotationRectangle sa = new StrokeAnnotationRectangle(s.getColorProperty(), scale, s, this, p);
             getChildren().add(sa);
         }
     }
