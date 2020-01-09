@@ -5,15 +5,19 @@ import net.lingala.zip4j.ZipFile;
 import net.lingala.zip4j.exception.ZipException;
 import net.lingala.zip4j.model.ZipParameters;
 
+import java.awt.font.OpenType;
+import java.io.BufferedWriter;
 import java.io.File;
 import java.io.IOException;
+import java.io.Writer;
 import java.nio.file.Files;
+import java.nio.file.OpenOption;
 import java.nio.file.Path;
+import java.nio.file.StandardOpenOption;
 import java.util.List;
 
 
 public class ZipHelper {
-
     private final String RAW_DATA_FILE_NAME = "data.json";
     private final String TIMELINE_FILE_NAME = "timelines.json";
     private ZipFile zipFile;
@@ -21,15 +25,31 @@ public class ZipHelper {
     private Path tempDirPath;
     private Path pathTempData;
     private Path pathTempTimelines;
-    private boolean isInitialized;
 
-    public ZipHelper(String filePath){
+    public ZipHelper(String filePath, boolean doesExist) throws IOException{
         parameters = new ZipParameters();
         zipFile = new ZipFile(filePath);
-        isInitialized = false;
+        if(doesExist) extract();
+        else init();
     }
 
     public void init() throws IOException {
+        tempDirPath = Files.createTempDirectory("grapholizer");
+        String absPathTempDir = tempDirPath.toAbsolutePath().toString();
+
+        pathTempData = Path.of(absPathTempDir, File.separator, RAW_DATA_FILE_NAME);
+        pathTempTimelines = Path.of(absPathTempDir, File.separator, TIMELINE_FILE_NAME);
+
+        File fileTempData = new File(pathTempData.toString());
+        fileTempData.createNewFile();
+        File fileTempTimelines = new File(pathTempTimelines.toString());
+        fileTempTimelines.createNewFile();
+
+        add(fileTempData);
+        add(fileTempTimelines);
+    }
+
+    public void extract() throws IOException{
         tempDirPath = Files.createTempDirectory("grapholizer");
         String absPathTempDir = tempDirPath.toAbsolutePath().toString();
 
@@ -38,27 +58,29 @@ public class ZipHelper {
 
         pathTempData = Path.of(absPathTempDir, File.separator, RAW_DATA_FILE_NAME);
         pathTempTimelines = Path.of(absPathTempDir, File.separator, TIMELINE_FILE_NAME);
-        isInitialized = true;
     }
 
     /*
-    public void saveTimelines(List<TimeLinesModel> timeLines) throws IOException{
-        String serData = new JsonSerializer().serialize(timeLines);
-        //TODO output to file
-    }
-
-     */
-
-    /*
-    Cleans up the temporary files created by init(). Should always be called after using ZipHelper
+    Cleans up the temporary files created by init() and extract(). Should always be called after using ZipHelper
      */
     public void cleanUp() throws IOException {
+        replaceData();
+        replaceTimelines();
         Files.delete(pathTempData);
         Files.delete(pathTempTimelines);
         Files.delete(tempDirPath);
-        isInitialized = false;
-        replaceData();
-        replaceTimelines();
+    }
+
+    public void writeTimelines(String content) throws IOException {
+        BufferedWriter buffWriter = Files.newBufferedWriter(pathTempTimelines, StandardOpenOption.WRITE);
+        buffWriter.write(content);
+        buffWriter.flush();
+    }
+
+    public void writeRawData(String content) throws IOException {
+        BufferedWriter buffWriter = Files.newBufferedWriter(pathTempData, StandardOpenOption.WRITE);
+        buffWriter.write(content);
+        buffWriter.flush();
     }
 
     public void replaceTimelines() throws ZipException {
@@ -93,6 +115,10 @@ public class ZipHelper {
 
     public void setPathTempTimelines(Path pathTempTimelines) {
         this.pathTempTimelines = pathTempTimelines;
+    }
+
+    public String getZipFolderPath() {
+        return zipFile.getFile().getAbsolutePath();
     }
 
 }

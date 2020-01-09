@@ -305,9 +305,10 @@
       <workItem from="1576265885664" duration="14110000" />
       <workItem from="1576404363681" duration="7967000" />
       <workItem from="1576477471200" duration="13564000" />
-      <workItem from="1578405047439" duration="28076000" />
-      <workItem from="1578574382895" duration="17450000" />
-      <workItem from="1578602005000" duration="1096000" />
+      <workItem from="1577385297961" duration="675000" />
+      <workItem from="1577449000463" duration="1900000" />
+      <workItem from="1577451317759" duration="17047000" />
+      <workItem from="1577481762156" duration="1158000" />
     </task>
     <servers />
   </component>
@@ -370,5 +371,10 @@
         </line-breakpoint>
       </breakpoints>
     </breakpoint-manager>
+    <watches-manager>
+      <configuration name="Remote">
+        <watch expression="pathTempTimelines" language="JAVA" />
+      </configuration>
+    </watches-manager>
   </component>
 </project>

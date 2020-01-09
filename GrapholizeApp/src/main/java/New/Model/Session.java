@@ -32,6 +32,11 @@ public class Session {
         return activePage;
     }
 
+    public void setProject(Project p){
+        activeProject.setInnerProject(p);
+        activeParticipant.setParticipant(p.getParticipant(p.getParticipantIDs().iterator().next()));
+        activePage.setPage(activeParticipant.getPage(0));
+    }
 
     //TODO: Are these needed? The content switcher now does the switching.
     //Should content switcher receive a reference to the session instead? Or keep it the way it is?
