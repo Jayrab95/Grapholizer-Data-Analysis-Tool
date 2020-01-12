@@ -180,7 +180,7 @@ public class CustomTimeLinePane extends SelectableTimeLinePane implements PageOb
 
     //Source: https://coderanch.com/t/689100/java/rectangle-dragging-image
     private void handleTimelineMousePress(MouseEvent event){
-
+        System.out.println("Mousepress in CTLP");
         if(event.getButton() == MouseButton.SECONDARY){
             contextMenu.show(this, event.getScreenX(), event.getScreenY());
             event.consume();

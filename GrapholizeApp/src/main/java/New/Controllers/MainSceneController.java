@@ -153,8 +153,8 @@ public class MainSceneController {
 
                 //TODO: @Lukas, these 2 lines were remainder of a merge conflict.
                 // They can probably just be deleted but I left them in here just in case.
-                //_session = new Session(loader.load(absFilePath));
-                //temp();
+                _session = new Session(loader.load(absFilePath));
+                temp();
 
                 //TODO: Perhaps do a nullcheck before loading.
                 // If null, then create new session. Otherwise, use setProject, so that the observers are notified.

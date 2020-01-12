@@ -33,12 +33,29 @@ public class MovableAnnotationRectangle extends SelectableAnnotationRectangle {
 
         this.movableAnnotationController = new MovableAnnotationController(t,parent);
 
+        /*
+        xProperty().bind(t.getTimeStartProperty().multiply(scale));
+        widthProperty().bind(t.getTimeStopProperty().subtract(t.getTimeStart()).multiply(scale));
+
+        t.getTimeStartProperty().bind(this.xProperty().divide(scale));
+        t.getTimeStopProperty().bind(this.xProperty().add(this.widthProperty()).divide(scale));
+
+         */
+
+        t.getTimeStartProperty().bind(this.xProperty().divide(scale));
+        t.getTimeStopProperty().bind(this.xProperty().add(this.widthProperty()).divide(scale));
+
+        /*
         t.getTimeStartProperty().addListener((observable, oldValue, newValue) -> {
             this.setX(newValue.doubleValue() * scale.get());
+            this.setWidth((newValue.doubleValue() * scale.get()));
         });
         t.getTimeStopProperty().addListener((observable, oldValue, newValue) -> {
-            this.setWidth((newValue.doubleValue() * scale.get()) - getX());
+
         });
+
+         */
+
 
         this.left = new LeftDragRectangle(this);
         this.right = new RightDragRectangle(this);
@@ -64,7 +81,7 @@ public class MovableAnnotationRectangle extends SelectableAnnotationRectangle {
     private void move(double newTimeStart){
         double delta = (newTimeStart - getX()) / scale.get();
         this.setX(newTimeStart);
-        movableAnnotationController.moveElement(delta);
+        //movableAnnotationController.moveElement(delta);
     }
 
     /**
@@ -112,7 +129,10 @@ public class MovableAnnotationRectangle extends SelectableAnnotationRectangle {
 
     //region TimeLineElement handlers
 
-    private void handleMousePress(MouseEvent event){
+    @Override
+    protected void handleMousePress(MouseEvent event){
+        super.handleMousePress(event);
+        System.out.println("MousePress in Movable");
         if(event.getButton() == MouseButton.SECONDARY){
             getElementSpecificContextMenu().show(this, event.getScreenX(), event.getScreenY());
         }
@@ -150,7 +170,11 @@ public class MovableAnnotationRectangle extends SelectableAnnotationRectangle {
         }
     }
 
-    private void handleMouseRelease(MouseEvent event){
+    @Override
+    protected void handleMouseRelease(MouseEvent event){
+        super.handleMouseRelease(event);
+        System.out.println("HandleMouseRelease in Movable");
+        //annotationSelectionController.selectOnlyDotsWithinTimeFrame(getTimeStart(), getTimeStop());
         event.consume();
     }
     //endregion
@@ -169,10 +193,13 @@ public class MovableAnnotationRectangle extends SelectableAnnotationRectangle {
             parent.scale.addListener((observable, oldValue, newValue) -> {
                 setWidth(calculateWidth());
             });
+            this.setOnMousePressed(this::handleMousePress);
+            this.setOnMouseDragged(this::handleMouseDrag);
+            this.setOnMouseReleased(this::handleMouseRelease);
         }
 
         private double calculateWidth(){
-            return parent.getWidth() > 10 ? 2.5 : parent.getWidth() / 4;
+            return parent.getWidth() > 20 ? 5 : parent.getWidth() / 4;
         }
 
 
@@ -187,55 +214,59 @@ public class MovableAnnotationRectangle extends SelectableAnnotationRectangle {
 
         private LeftDragRectangle(AnnotationRectangle parent) {
             super(parent);
-            adjustPos();
-            parent.scale.addListener((observable, oldValue, newValue) -> {
-                adjustPos();
-            });
-            //setY(parent.getHeight()/2);
-        }
-
-        private void adjustPos(){
-            setX(parent.getX());
+            this.xProperty().bind(parent.xProperty());
         }
 
         @Override
         protected void handleMousePress(MouseEvent e) {
-            startX = e.getScreenX();
+            System.out.println("HandleMousePress of left handle has been called.");
+            startX = e.getSceneX() * scale.get();
             dragBounds = movableAnnotationController.getBounds(getX());
             dragBounds[1] = parent.getX() + parent.getWidth() - 0.5;
             //Calculate dragobounds
-            //delta = e.getX() > getWidth() / 2 ? e.getX() - (getWidth() / 2) : e.getX() + (getWidth() / 2);
             e.consume();
         }
 
         @Override
         protected void handleMouseDrag(MouseEvent e) {
-            double traveledDistance = startX - e.getScreenX();
-            double newPos = 0;
-            if(e.getScreenX() < startX){
+            double timeStop = parent.getTimeStop();
+            double traveledDistance = startX - (e.getSceneX() * scale.get());
+
+            System.out.println("------handleMouseDrag of LeftHandle-----");
+            if(e.getSceneX() * scale.get() < startX){
+                System.out.println("Direction: left");
+                System.out.println("e.screenX: " + e.getSceneX() + ";\n startX: " + startX + "; \ntraveledDistance: " + traveledDistance);
                 //traveldirection: left. traveledDistance is positive
                 if((parent.getX() - traveledDistance) > dragBounds[0]){
-                    movableAnnotationController.adjustTimeStart(getTimeStart() - (traveledDistance / scale.get()));
+                    parent.setX(parent.getX() - traveledDistance);
+                    parent.setWidth(parent.getWidth() + traveledDistance);
                 }
                 else{
-                    movableAnnotationController.adjustTimeStart((dragBounds[0]/scale.get()) + 0.5);
+                    parent.setX((dragBounds[0]/scale.get()) + 0.5);
                 }
             }
             else{
+                System.out.println("Direction: right");
+                System.out.println("e.screenX: " + e.getSceneX() + ";\n startX: " + startX + "; \ntraveledDistance: " + traveledDistance);
                 //traveldirection: right. traveled distance is negative
-                if((parent.getX() + traveledDistance) < dragBounds[1]){
-                    movableAnnotationController.adjustTimeStart(getTimeStart() - (traveledDistance / scale.get()));
+                if((parent.getX() - traveledDistance) < dragBounds[1]){
+                    parent.setX(parent.getX() - traveledDistance);
+                    parent.setWidth(parent.getWidth() + traveledDistance);
                 }
                 else{
-                    movableAnnotationController.adjustTimeStart((dragBounds[1]/scale.get()) - 0.5);
+                    parent.setX((dragBounds[1]/scale.get()) - 0.5);
+                    //movableAnnotationController.adjustTimeStart((dragBounds[1]/scale.get()) - 0.5);
                 }
             }
-            setX(e.getScreenX());
+            //movableAnnotationController.adjustTimeStop(timeStop);
+
+            //setX(e.getSceneX());
 
         }
 
         @Override
         protected void handleMouseRelease(MouseEvent e) {
+            //annotationSelectionController.selectOnlyDotsWithinTimeFrame(parent.getTimeStart(), parent.getTimeStop());
             e.consume();
             //movableAnnotationController.adjustTimeStart();
         }
@@ -245,8 +276,9 @@ public class MovableAnnotationRectangle extends SelectableAnnotationRectangle {
 
         private RightDragRectangle(AnnotationRectangle parent) {
             super(parent);
-            adjustPos();
-            parent.scale.addListener((observable, oldValue, newValue) -> adjustPos());
+            this.xProperty().bind(parent.xProperty().add(parent.widthProperty()));
+            //adjustPos();
+            //parent.scale.addListener((observable, oldValue, newValue) -> adjustPos());
             //setY(parent.getHeight()/2);
         }
 
@@ -256,7 +288,8 @@ public class MovableAnnotationRectangle extends SelectableAnnotationRectangle {
 
         @Override
         protected void handleMousePress(MouseEvent e) {
-            startX = e.getScreenX();
+            System.out.println("AAAAAAAAAAA");
+            startX = e.getSceneX();
             dragBounds = movableAnnotationController.getBounds(parent.getX() + parent.getWidth());
             dragBounds[0] = parent.getX() + 0.5;
             e.consume();
@@ -264,9 +297,9 @@ public class MovableAnnotationRectangle extends SelectableAnnotationRectangle {
 
         @Override
         protected void handleMouseDrag(MouseEvent e) {
-            double traveledDistance = startX - e.getScreenX();
+            double traveledDistance = startX - e.getSceneX();
             double newPos = 0;
-            if(e.getScreenX() < startX){
+            if(e.getSceneX() < startX){
                 //traveldirection: left (travelDistance is positive)
                 if((parent.getX() - traveledDistance) > dragBounds[0]){
                     movableAnnotationController.adjustTimeStop(getTimeStart() - (traveledDistance / scale.get()));
@@ -286,7 +319,7 @@ public class MovableAnnotationRectangle extends SelectableAnnotationRectangle {
 
 
             }
-            setX(e.getScreenX());
+            //setX(e.getSceneX());
 
         }
 

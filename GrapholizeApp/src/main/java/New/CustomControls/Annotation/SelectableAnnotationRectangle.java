@@ -11,6 +11,9 @@ public class SelectableAnnotationRectangle extends AnnotationRectangle {
     protected BooleanProperty selected;
     protected AnnotationSelectionController annotationSelectionController;
 
+    private double temporaryPreviousStart;
+    private double temporaryPreviousStop;
+
     public SelectableAnnotationRectangle(ObjectProperty<Color> c, StringProperty text, DoubleProperty scale, double width, double height, double start, SelectableTimeLinePane parent, Selector s ) {
         super(c, text, scale, width, height, start);
 
@@ -19,7 +22,11 @@ public class SelectableAnnotationRectangle extends AnnotationRectangle {
 
         this.annotationSelectionController = new AnnotationSelectionController(parent, s);
 
-        setOnMouseClicked(e -> handleMouseClick(e));
+        //setOnMouseClicked(e -> handleMouseClick(e));
+        setOnMousePressed(this::handleMousePress);
+        setOnMouseMoved(e -> e.consume());
+        setOnMouseReleased(this::handleMouseRelease);
+        //setOnMouseClicked(e)
     }
 
     public BooleanProperty getSelectedBooleanProperty(){return this.selected;}
@@ -34,10 +41,32 @@ public class SelectableAnnotationRectangle extends AnnotationRectangle {
         this.selected.set(!selected.get());
     }
 
+
     protected void handleMouseClick(MouseEvent e){
-        System.out.println("HandleMouseClick in AnnotationRectangle Base has been called");
+        System.out.println("HandleMouseClick in SelectionAnnotationRectangle has been called");
         annotationSelectionController.selectTimeLine(e.isControlDown(), this);
+        annotationSelectionController.selectOnlyDotsWithinTimeFrame(getTimeStart(), getTimeStop());
         toggleSelected();
+    }
+
+    protected void handleMousePress(MouseEvent e){
+        System.out.println("Mouse Down on selectionRect");
+        annotationSelectionController.selectTimeLine(e.isControlDown(), this);
+        temporaryPreviousStart = getTimeStart();
+        temporaryPreviousStop = getTimeStop();
+    }
+
+    //TODO: Selection state is inconsistent at the moment
+    //
+    protected void handleMouseRelease(MouseEvent e){
+        System.out.println("Handlerelease in selectionRectangle called");
+
+        if(getTimeStart() == temporaryPreviousStart && getTimeStop() == temporaryPreviousStop){
+            toggleSelected();
+        }
+        else{
+            annotationSelectionController.selectOnlyDotsWithinTimeFrame(getTimeStart(), getTimeStop());
+        }
     }
 
 

@@ -33,5 +33,10 @@ public class AnnotationSelectionController {
     public void selectDots(double timeStart, double timeEnd){
         selector.select(timeStart, timeEnd);
     }
+
+    public void selectOnlyDotsWithinTimeFrame(double timeStart, double timeEnd){
+        selector.selectOnlyTimeFrame(timeStart, timeEnd);
+    }
+
     public void deselectDots(double timeStart, double timeEnd){selector.deselect(timeStart, timeEnd);}
 }
