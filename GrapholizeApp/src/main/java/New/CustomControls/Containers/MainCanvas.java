@@ -1,7 +1,9 @@
 package New.CustomControls.Containers;
 
 import New.Filters.Filter;
+import New.Filters.StrokeColorFilter;
 import New.Filters.StrokeDifferentiationFilter;
+import New.Filters.StrokeFilter;
 import New.Interfaces.Observer.FilterObserver;
 import New.Interfaces.Observer.PageObserver;
 import New.Interfaces.Observer.StrokeObserver;
@@ -49,7 +51,7 @@ public class MainCanvas extends VBox implements PageObserver, StrokeObserver, Fi
         this.canvasHeight = initHeight;
         this.canvasScale = new SimpleDoubleProperty(initScale);
         this.p = obsPage;
-        this.ofc = new ObservableFilterCollection(new StrokeDifferentiationFilter("Stroke differentiation", Color.GREEN, Color.RED));
+        this.ofc = new ObservableFilterCollection(new StrokeColorFilter("Stroke differentiation", Color.GREEN, Color.RED));
         this.ofc.addObserver(this);
 
         scaleSlider = initializeSlider(initScale);
@@ -209,6 +211,22 @@ public class MainCanvas extends VBox implements PageObserver, StrokeObserver, Fi
 
     @Override
     public void update(ObservableFilterCollection sender) {
-        resetCanvas();
+        //resetCanvas();
+        //TODO: QUick hack, this obviously needs to be reworked.
+        // work with the FX Bindings to automatically update the stroke/dot colors.
+        for(Filter f : sender.getFilters()){
+            if(f instanceof StrokeFilter){
+                for(ObservableStroke s : p.getObservableStrokes()){
+                    if(f.isActive()){
+                        ((StrokeFilter) f).applyFilter(s);
+                    }
+                    else{
+                        for(ObservableDot d : s.getObservableDots()){
+                            d.setColor(Color.BLACK);
+                        }
+                    }
+                }
+            }
+        }
     }
 }

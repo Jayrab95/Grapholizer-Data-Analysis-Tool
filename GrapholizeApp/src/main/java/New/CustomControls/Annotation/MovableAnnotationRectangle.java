@@ -61,6 +61,7 @@ public class MovableAnnotationRectangle extends SelectableAnnotationRectangle {
         this.right = new RightDragRectangle(this);
 
 
+        /*
         selected.addListener((observable, oldValue, newValue) -> {
             if(newValue){
                 movableAnnotationController.enableResize(left, right);
@@ -69,6 +70,8 @@ public class MovableAnnotationRectangle extends SelectableAnnotationRectangle {
                 movableAnnotationController.disableResize(left, right);
             }
         });
+
+         */
 
 
 

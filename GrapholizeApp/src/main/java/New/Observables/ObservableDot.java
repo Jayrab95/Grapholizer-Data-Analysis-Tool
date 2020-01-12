@@ -46,6 +46,10 @@ public class ObservableDot extends Dot implements Comparable<Dot>{
 
     public ObjectProperty<Color> getColorProperty() {return color;}
 
+    public void setColor(Color c){
+        color.set(c);
+    }
+
     @Override
     public int compareTo(Dot o) {
         long res = this.getTimeStamp() - o.getTimeStamp();
