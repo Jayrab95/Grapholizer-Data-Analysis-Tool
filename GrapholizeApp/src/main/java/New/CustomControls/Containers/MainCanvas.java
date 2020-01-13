@@ -51,7 +51,7 @@ public class MainCanvas extends VBox implements PageObserver, StrokeObserver, Fi
         this.canvasHeight = initHeight;
         this.canvasScale = new SimpleDoubleProperty(initScale);
         this.p = obsPage;
-        this.ofc = new ObservableFilterCollection(new StrokeColorFilter("Stroke differentiation", Color.GREEN, Color.RED));
+        this.ofc = new ObservableFilterCollection(new StrokeColorFilter("Stroke differentiation", Color.BLUE, Color.RED));
         this.ofc.addObserver(this);
 
         scaleSlider = initializeSlider(initScale);
