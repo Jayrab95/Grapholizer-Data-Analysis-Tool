@@ -2,15 +2,8 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="f9c9e85c-b6d3-4a2f-99c7-3350288aea5b" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/src/main/resources/data/testProject.zip" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/resources/data/testProject2.zip" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/New/Controllers/ContentSwitcherController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/New/Controllers/ContentSwitcherController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/New/Controllers/MainSceneController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/New/Controllers/MainSceneController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/New/Controllers/TimeLineContainerController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/New/Controllers/TimeLineContainerController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/New/CustomControls/Containers/ContentSwitcher.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/New/CustomControls/Containers/ContentSwitcher.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/New/CustomControls/Containers/TimeLineContainer.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/New/CustomControls/Containers/TimeLineContainer.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/New/Observables/ObservablePage.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/New/Observables/ObservablePage.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/New/Observables/ObservableProject.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/New/Observables/ObservableProject.java" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
@@ -365,11 +358,6 @@
           <url>file://$PROJECT_DIR$/src/main/java/New/Observables/ObservablePage.java</url>
           <line>72</line>
           <option name="timeStamp" value="73" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" type="java-line">
-          <url>file://$PROJECT_DIR$/src/main/java/New/CustomControls/Containers/TimeLineContainer.java</url>
-          <line>117</line>
-          <option name="timeStamp" value="74" />
         </line-breakpoint>
       </breakpoints>
     </breakpoint-manager>

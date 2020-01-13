@@ -15,10 +15,7 @@ import javafx.collections.ListChangeListener;
 import javafx.collections.ObservableList;
 import javafx.scene.paint.Color;
 
-import java.util.Collections;
-import java.util.LinkedList;
-import java.util.List;
-import java.util.Set;
+import java.util.*;
 
 public class ObservableProject {
     private ObjectProperty<Project> innerProjectProperty;
@@ -57,12 +54,16 @@ public class ObservableProject {
         for(String s : p.getTimeLineTagNames()){
             ObservableTimeLineTag tag = new ObservableTimeLineTag(p.getTimeLineTag(s));
             timeLineTags.add(tag);
-            observableTimeLineTags.add(tag);
+            //observableTimeLineTags.add(tag);
         }
     }
 
     public List<ObservableTimeLineTag> getObservableTimeLineTags(){
         return timeLineTags;
+    }
+
+    public List<TimeLineTag> getTimeLineTags(){
+        return new LinkedList<>(inner.getProjectTagsMap().values());
     }
 
     public Project getInner(){
