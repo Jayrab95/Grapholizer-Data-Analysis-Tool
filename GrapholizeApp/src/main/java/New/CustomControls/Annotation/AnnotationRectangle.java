@@ -1,10 +1,6 @@
 package New.CustomControls.Annotation;
 
-import New.Controllers.AnnotationSelectionController;
-import New.CustomControls.TimeLine.CustomTimeLinePane;
-import New.CustomControls.TimeLine.SelectableTimeLinePane;
 import javafx.beans.property.*;
-import javafx.scene.input.MouseEvent;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
 
@@ -14,6 +10,10 @@ public class AnnotationRectangle extends Rectangle {
     protected ObjectProperty<Color> annotationColor;
     protected StringProperty annotationText;
     protected DoubleProperty scale;
+
+    protected DoubleProperty startProperty;
+    protected DoubleProperty durationProperty;
+
     protected double duration;
     protected double start;
 
@@ -29,7 +29,13 @@ public class AnnotationRectangle extends Rectangle {
 
         this.scale = new SimpleDoubleProperty(scale.get());
         this.scale.bind(scale);
-        this.scale.addListener((observable, oldValue, newValue) -> onValueChange());
+        this.scale.addListener((observable, oldValue, newValue) -> onScaleChange());
+
+        this.durationProperty = new SimpleDoubleProperty(width);
+        this.startProperty = new SimpleDoubleProperty(start);
+
+        this.durationProperty.bind(this.widthProperty().divide(this.scale));
+        this.startProperty.bind(this.xProperty().divide(this.scale));
 
         this.duration = width;
         this.start = start;
@@ -55,7 +61,7 @@ public class AnnotationRectangle extends Rectangle {
         setWidth(duration * scale.get());
     }
 
-    protected void onValueChange(){
+    protected void onScaleChange(){
         rescaleElement();
     }
 
