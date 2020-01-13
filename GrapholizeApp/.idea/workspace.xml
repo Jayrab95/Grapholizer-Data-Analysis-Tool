@@ -357,11 +357,17 @@
           <line>49</line>
           <option name="timeStamp" value="69" />
         </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/src/main/java/New/util/Import/ProjectLoader.java</url>
+          <line>22</line>
+          <option name="timeStamp" value="71" />
+        </line-breakpoint>
       </breakpoints>
     </breakpoint-manager>
     <watches-manager>
       <configuration name="Remote">
         <watch expression="pathTempTimelines" language="JAVA" />
+        <watch expression="((HashMap)_session.activePage.inner.timeLines).entrySet().toArray()[3]" custom="java.util.HashMap" />
       </configuration>
     </watches-manager>
   </component>

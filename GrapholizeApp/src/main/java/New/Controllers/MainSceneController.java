@@ -150,20 +150,19 @@ public class MainSceneController {
                     , fileExtensions);
             if (sFile != null) {
                 String absFilePath = sFile.getAbsolutePath();
+                if(_session == null){
+                    _session = new Session(loader.load(absFilePath));
+                }else {
+                    _session.setProject(loader.load(absFilePath));
+                }
 
-                //TODO: @Lukas, these 2 lines were remainder of a merge conflict.
-                // They can probably just be deleted but I left them in here just in case.
-                _session = new Session(loader.load(absFilePath));
-                temp();
-
-                //TODO: Perhaps do a nullcheck before loading.
-                // If null, then create new session. Otherwise, use setProject, so that the observers are notified.
-                _session.setProject(loader.load(absFilePath));
                 if( loader instanceof ProjectLoader){
                     raw_data_file = ((ProjectLoader) loader).getZipHelper().getPathTempData();
                 }else {
                     raw_data_file = Path.of(absFilePath);
                 }
+
+                initializeProject();
             }
         }catch(IOException ex) {
             new DialogGenerator().simpleErrorDialog("Input Error"
@@ -187,7 +186,7 @@ public class MainSceneController {
         return sFile;
     }
 
-    void temp(){
+    void initializeProject(){
         //_session = new Session(new JsonLoader().load("src\\main\\resources\\data\\lukas_test_1.json"));
         PageMetaData pmd = _session.getActivePage().getPageMetaData();
         //_session.setZ_Helper(loader.getZipHelper());
