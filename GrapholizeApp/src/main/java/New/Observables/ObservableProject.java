@@ -8,6 +8,11 @@ import New.Model.Entities.Participant;
 import New.Model.Entities.Project;
 import New.Model.Entities.TimeLineTag;
 import New.util.ColorConverter;
+import javafx.beans.property.ObjectProperty;
+import javafx.beans.property.SimpleObjectProperty;
+import javafx.collections.FXCollections;
+import javafx.collections.ListChangeListener;
+import javafx.collections.ObservableList;
 import javafx.scene.paint.Color;
 
 import java.util.Collections;
@@ -16,12 +21,48 @@ import java.util.List;
 import java.util.Set;
 
 public class ObservableProject {
+    private ObjectProperty<Project> innerProjectProperty;
     private Project inner;
     private List<ProjectObserver> observers;
+    private List<ObservableTimeLineTag> timeLineTags;
+    private ObservableList<ObservableTimeLineTag> observableTimeLineTags;
 
     public ObservableProject(Project inner){
+        innerProjectProperty = new SimpleObjectProperty<>(inner);
         this.inner = inner;
+        observableTimeLineTags = FXCollections.emptyObservableList();
         this.observers = new LinkedList<>();
+        generateTimeLineTags(inner);
+
+        //https://docs.oracle.com/javase/8/javafx/api/javafx/collections/ListChangeListener.Change.html
+        //https://dzone.com/articles/javafx-collections-observablelist-and-observablema
+        //http://what-when-how.com/javafx-2/understanding-observable-collections-collections-and-concurrency-javafx-2-part-2/
+        observableTimeLineTags.addListener(new ListChangeListener<ObservableTimeLineTag>() {
+            @Override
+            public void onChanged(Change<? extends ObservableTimeLineTag> c) {
+                while(c.next()){
+                    for(ObservableTimeLineTag t : c.getAddedSubList()){
+
+                    }
+                    for(ObservableTimeLineTag t : c.getRemoved()){
+
+                    }
+                }
+            }
+        });
+    }
+
+    private void generateTimeLineTags(Project p){
+        timeLineTags = new LinkedList<>();
+        for(String s : p.getTimeLineTagNames()){
+            ObservableTimeLineTag tag = new ObservableTimeLineTag(p.getTimeLineTag(s));
+            timeLineTags.add(tag);
+            observableTimeLineTags.add(tag);
+        }
+    }
+
+    public List<ObservableTimeLineTag> getObservableTimeLineTags(){
+        return timeLineTags;
     }
 
     public Project getInner(){
@@ -40,12 +81,19 @@ public class ObservableProject {
         return new ObservableParticipant(inner.getParticipant(key));
     }
 
+    public ObjectProperty<Project> getProjectProperty(){
+        return innerProjectProperty;
+    }
+
     public ObservableTimeLineTag getTimeLineTag(String tag){
         return new ObservableTimeLineTag(inner.getTimeLineTag(tag));
     }
 
     public void setInnerProject(Project p){
         this.inner = p;
+        generateTimeLineTags(p);
+        this.innerProjectProperty.set(p);
+
         notifyObservers();
     }
 

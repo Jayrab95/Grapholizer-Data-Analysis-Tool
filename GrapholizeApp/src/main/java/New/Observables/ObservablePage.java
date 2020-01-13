@@ -7,6 +7,7 @@ import New.Interfaces.Selector;
 import New.Model.Entities.*;
 import javafx.beans.property.DoubleProperty;
 import javafx.beans.property.ObjectProperty;
+import javafx.beans.property.SimpleObjectProperty;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.scene.paint.Color;
@@ -15,6 +16,7 @@ import javafx.scene.shape.Rectangle;
 import java.util.Collections;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 public class ObservablePage implements Selector {
@@ -28,14 +30,20 @@ public class ObservablePage implements Selector {
 
     public ObservablePage(Page inner){
         this.inner = inner;
-        //this.innerPage.set(inner);
+        this.innerPage = new SimpleObjectProperty();
+        this.innerPage.set(inner);
         strokes = FXCollections.observableList(generateStrokes());
         observers = new LinkedList<>();
+    }
+
+    public ObjectProperty getPageProperty(){
+        return innerPage;
     }
 
     public void setPage(Page newPage){
         this.inner = newPage;
         strokes = FXCollections.observableList(generateStrokes());
+        this.innerPage.set(newPage);
         notifyObservers();
     }
 
@@ -55,6 +63,17 @@ public class ObservablePage implements Selector {
 
     public void removeAnnotation(String key, Annotation a){
         inner.getTimeLines().get(key).remove(a);
+    }
+
+    public boolean containsTag(String tag){
+        return inner.getTimeLines().containsKey(tag);
+    }
+
+    public Optional<List<Annotation>> getAnnotationSet(String tag){
+        if(containsTag(tag)){
+            return Optional.of(inner.getTimeLine(tag));
+        }
+        return Optional.empty();
     }
 
     public boolean collidesWithOtherElements(String timeLineKey, double timeStart, double timeStop){

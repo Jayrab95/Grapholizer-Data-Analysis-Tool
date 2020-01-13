@@ -70,6 +70,7 @@ public class ContentSwitcher extends HBox implements ProjectObserver {
 
     }
 
+
     private void handleComboBoxParticipantChange(String newVal){
         contentSwitcherController.setParticipant(newVal);
         initializePages();

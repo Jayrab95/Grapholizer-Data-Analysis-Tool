@@ -21,11 +21,13 @@ import javafx.stage.DirectoryChooser;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
 
+import javax.swing.text.html.Option;
 import java.io.File;
 import java.io.IOException;
 import java.net.URL;
 import java.nio.file.Files;
 import java.nio.file.Path;
+import java.util.Optional;
 import java.util.ResourceBundle;
 
 public class MainSceneController {
@@ -42,17 +44,23 @@ public class MainSceneController {
     @FXML
     private VBox anchorPane_canvasContainer;
 
+    private Optional<MainCanvas> optionalCanvas;
+    private Optional<ContentSwitcher> optionalContentSwitcher;
+    private Optional<TimeLineContainer> optionalTimeLineContainer;
     /* Internal State Of Application */
     Session _session;
 
     Path raw_data_file;
 
     public MainSceneController(){
-
+        optionalCanvas = Optional.empty();
+        optionalContentSwitcher = Optional.empty();
+        optionalTimeLineContainer = Optional.empty();
     }
 
     @FXML
     public void initialize() throws Exception{
+
         /*
         ProjectLoader loader = new ProjectLoader();
         loadThatShitBoy();
@@ -190,9 +198,24 @@ public class MainSceneController {
         //_session = new Session(new JsonLoader().load("src\\main\\resources\\data\\lukas_test_1.json"));
         PageMetaData pmd = _session.getActivePage().getPageMetaData();
         //_session.setZ_Helper(loader.getZipHelper());
+        if(optionalCanvas.isEmpty()){
+            optionalCanvas = Optional.of(new MainCanvas(pmd.getPageWidth(), pmd.getPageHeight(), 5, _session.getActivePage()));
+            anchorPane_canvasContainer.getChildren().add(optionalCanvas.get());
+        }
+        if(optionalContentSwitcher.isEmpty()){
+            optionalContentSwitcher = Optional.of(new ContentSwitcher(_session.getActiveProject(),_session.getActiveParticipant(), _session.getActivePage()));
+            anchorPane_canvasContainer.getChildren().add(optionalContentSwitcher.get());
+        }
+        if(optionalTimeLineContainer.isEmpty()){
+            optionalTimeLineContainer = Optional.of(new TimeLineContainer(_session.getActiveProject(), _session.getActivePage(), 0.05));
+            scrollPane_TimeLines.getChildren().add(optionalTimeLineContainer.get());
+        }
+        /*
         anchorPane_canvasContainer.getChildren().addAll(
                 new MainCanvas(pmd.getPageWidth(), pmd.getPageHeight(), 5, _session.getActivePage()),
                 new ContentSwitcher(_session.getActiveProject(),_session.getActiveParticipant(), _session.getActivePage()));
         scrollPane_TimeLines.getChildren().add(new TimeLineContainer(_session.getActiveProject(), _session.getActivePage(), 0.05));
+
+         */
     }
 }

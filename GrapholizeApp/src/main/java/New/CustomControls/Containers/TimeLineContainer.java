@@ -9,6 +9,7 @@ import New.Execptions.NoTimeLineSelectedException;
 import New.Execptions.TimeLineTagException;
 import New.Interfaces.Observer.Observer;
 import New.Model.Entities.Annotation;
+import New.Model.Entities.TimeLineTag;
 import New.Observables.*;
 import New.util.DialogGenerator;
 import javafx.beans.property.DoubleProperty;
@@ -55,6 +56,7 @@ public class TimeLineContainer extends VBox {
     private DoubleProperty scale;
 
     private ObservableTimeLine selectedTimeLine;
+    private ObservablePage p;
 
     private TimeLineContainerController timeLineContainerController;
 
@@ -68,6 +70,9 @@ public class TimeLineContainer extends VBox {
     private Slider scaleSlider;
 
     public TimeLineContainer(ObservableProject project, ObservablePage page, double initialScale){
+
+        project.getProjectProperty().addListener(observable -> getChildren().clear());
+        //page.getPageProperty().addListener(observable -> InitializeContainer(project, page));
 
         AnchorPane.setBottomAnchor(this, 0.0);
         AnchorPane.setLeftAnchor(this, 0.0);
@@ -102,6 +107,7 @@ public class TimeLineContainer extends VBox {
     private void InitializeContainer(ObservableProject project, ObservablePage page){
         //Step 1: Create the stroke timeline
         //Step 2: For each tag, create a new timeline and pass over the observble Tag and the page. Then create the annotations.
+        getChildren().clear();
         getChildren().add(scaleSlider);
         getChildren().add(hbox_buttonHBox);
         getChildren().add(scrollPane_timeLineScrollPane);
@@ -109,8 +115,8 @@ public class TimeLineContainer extends VBox {
         addTimeLinePane(strokePane);
         //getChildren().add(strokePane);
 
-        for(String tag : project.getTimeLineTagNames()){
-
+        for(ObservableTimeLineTag t : project.getObservableTimeLineTags()){
+            loadTimeLine(t, page, page.getAnnotationSet(t.getTag()));
         }
 
     }
@@ -129,6 +135,18 @@ public class TimeLineContainer extends VBox {
 
     private void addTimeLinePane(TimeLinePane timeLinePane){
         vBox_TimeLineBox.getChildren().add(new TimeLineWrapper(timeLinePane));
+    }
+
+    private void loadTimeLine(ObservableTimeLineTag t, ObservablePage p, Optional<List<Annotation>> annotations){
+        if(annotations.isPresent()){
+            CustomTimeLinePane pane;
+            Annotation[] array = annotations.get().stream().toArray(n -> new Annotation[n]);
+            pane = new CustomTimeLinePane(totalWidth.get(), timeLinesHeight, scale, t, p, this, array);
+            addTimeLinePane(pane);
+        }
+        else{
+            addTimeLinePane(createNewTimeLinePane(t, p, Optional.empty()));
+        }
     }
 
     public void createNewTimeLine(){
