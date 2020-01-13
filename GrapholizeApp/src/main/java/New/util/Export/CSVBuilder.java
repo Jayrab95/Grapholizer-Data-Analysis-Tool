@@ -7,7 +7,7 @@ import java.util.Map;
 
 public class CSVBuilder{
     private final String elementSeparator = ";"; //TODO maybe make this choosable by user
-                                                //TODO Windows Excel uses the semicolon instead of comma (csv (comma seperated values^^ it's right there in the name))
+                                                 //TODO Windows Excel uses the semicolon instead of comma (csv (comma seperated values^^ it's right there in the name))
     private final String rowSeperator = "\n";
     private final String firstColumnTitel = "Participants";
     private List<String> columnHeaders;

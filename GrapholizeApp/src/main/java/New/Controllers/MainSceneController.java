@@ -15,6 +15,8 @@ import New.util.Import.JsonLoader;
 import New.util.Import.PageDataReader;
 import New.util.Import.ProjectLoader;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
+import javafx.scene.Parent;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.VBox;
 import javafx.stage.DirectoryChooser;
@@ -62,6 +64,17 @@ public class MainSceneController {
 
         scrollPane_TimeLines.getChildren().add(new TimeLineContainer(_session.getActiveProject(), _session.getActivePage(), 0.05));
 
+    }
+
+    @FXML
+    private void exportDataToCSV(){
+        try {
+            Parent root = FXMLLoader.load(getClass().getClassLoader().getResource("fxml/views/MainScene.fxml"));
+        } catch (IOException e) {
+            new DialogGenerator().simpleErrorDialog("Export Error"
+                    , "While exporting an error occured."
+                    , e.getMessage());
+        }
     }
 
     @FXML
