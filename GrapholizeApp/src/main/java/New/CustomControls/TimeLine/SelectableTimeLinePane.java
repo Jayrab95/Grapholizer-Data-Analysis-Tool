@@ -12,6 +12,7 @@ import javafx.beans.property.SimpleBooleanProperty;
 import javafx.beans.property.StringProperty;
 import javafx.scene.Node;
 
+import java.util.Comparator;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -41,7 +42,9 @@ public abstract class SelectableTimeLinePane extends TimeLinePane implements Tim
 
     public List<AnnotationRectangle> getAnnotations(){
         return getChildren().stream()
+                .filter(n -> n instanceof AnnotationRectangle)
                 .map(n -> (AnnotationRectangle)n)
+                .sorted(Comparator.comparing(a -> a.getTimeStart()))
                 .collect(Collectors.toList());
     }
 

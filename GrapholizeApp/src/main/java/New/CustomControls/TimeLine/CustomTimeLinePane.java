@@ -32,6 +32,11 @@ public class CustomTimeLinePane extends SelectableTimeLinePane implements PageOb
     public static final String TXT_COPYANNOTATION_TEXT =
             "The selected annotations will be copied into the timeline %s. \n"
             + "You may choose to combine the selected annotations into a single annotations. If so, you may enter a new Annotation text.";
+    public static final String TXT_DOTANNOTATION_TITLE = "Create annotations out of selected dots";
+    public static final String TXT_DOTANNOTATION_HEADER = "Create annotations out of selected dots into timeline %s";
+    public static final String TXT_DOTANNOTATION_TEXT = "This dialog will create new annotations out of the currently selected dots on the canvas and put them into the timeline %s.\n"
+            + "Per default, these annotations are separated according to the strokes that the selected dots belong to. "
+            + "You may choose to combine the selected annotations into a single annotations. If so, you may enter a new Annotation text.";
     public static final String TXT_COPYANNOTATION_DEFAULTVAL = "New combined annotation";
     public static final String TXT_COLLIDEHANDLER_TITLE = "Annotation copy error";
     public static final String TXT_COLLIDEHANDLER_HEADER = "Annotation copy error";
@@ -314,9 +319,9 @@ public class CustomTimeLinePane extends SelectableTimeLinePane implements PageOb
         //Dialog dialog = annotationCopyDialog(TXT_COPYANNOTATION_TITLE, String.format(TXT_COPYANNOTATION_HEADER, timeLineTag.getTag()), String.format(TXT_COPYANNOTATION_TEXT, timeLineTag.getTag()));
 
         Dialog dialog = new Dialog<>();
-        dialog.setTitle(TXT_COPYANNOTATION_TITLE);
-        dialog.setHeaderText(String.format(TXT_COPYANNOTATION_HEADER, timeLineTag.getTag()));
-        dialog.setContentText(String.format(TXT_COPYANNOTATION_TEXT, timeLineTag.getTag()));
+        dialog.setTitle(TXT_DOTANNOTATION_TITLE);
+        dialog.setHeaderText(String.format(TXT_DOTANNOTATION_HEADER, timeLineTag.getTag()));
+        dialog.setContentText(String.format(TXT_DOTANNOTATION_TEXT, timeLineTag.getTag()));
 
         CheckBox cbox_joinedAnnotation = new CheckBox("Combine selected elements into one annotation");
 

@@ -100,17 +100,39 @@ public class ObservablePage implements Selector {
                 .count() > 0;
     }
 
+
+    /**
+     * Returns a list of dot lists that represent the strokes which overlap with the given list of annotations.
+     * These dots are required for the detail timelines, in order to calculate the different characteristics for each timneline.
+     * @param rects the annotation rectangles of the timeline.
+     * @return a list of dot lists (dot sections)
+     */
+    public List<List<Dot>> getDotSectionsForAnnotations(List<AnnotationRectangle> rects){
+        List<List<Dot>> res = new LinkedList<>();
+
+        for(AnnotationRectangle ar : rects){
+            //reqStrokes contains all strokes that overlap with the bounds of this annotation.
+            List<Stroke> reqStrokes = inner.getStrokes().stream()
+                    .filter(observableStroke -> observableStroke.getTimeEnd() >= ar.getTimeStart() && observableStroke.getTimeStart() <= ar.getTimeStop())
+                    .collect(Collectors.toList());
+            for(Stroke s : reqStrokes){
+                res.add(s.getDotsWithinTimeRange(ar.getTimeStart(), ar.getTimeStop()));
+            }
+        }
+        return res;
+    }
+
     /**
      * Returns a list of individual dot sections that lie within each of the given Timeline elements. These dot sections are
      * required for the parameter timelines to only display the requierd values within each of the timeline element's timestamps.
      * @param elements the timeline elements for which the relevant dots should be searched.
      * @return A list of dot sections or an empty list if no suitable dots were found.
      */
+    @Deprecated
     public List<List<Dot>> getDotSectionsForElements(List<AnnotationRectangle> elements){
         //Only proceed with filtering if even necessary.
         if(inner.getStrokes().size() > 0 && elements.size() > 0){
 
-            //Define the time range for which to filter for.
             double lowerBound = elements.get(0).getTimeStart();
             double upperBound = elements.get(elements.size()-1).getTimeStop();
 
@@ -118,7 +140,7 @@ public class ObservablePage implements Selector {
              * The Lambda statement first filters for the relevant strokes.
              * Then it creates a flatmap of all dots within the strokes and filters for dots within the time range.
              */
-            List<Dot> allRequiredDots = inner.getStrokes().stream()
+            List<Dot> allDotsInTimeRange = inner.getStrokes().stream()
                     .filter(observableStroke -> observableStroke.getTimeStart() >= lowerBound && observableStroke.getTimeEnd() <= upperBound)
                     .map(observableStroke -> observableStroke.getDots())
                     .flatMap(dots -> dots.stream()
@@ -126,13 +148,13 @@ public class ObservablePage implements Selector {
                     .collect(Collectors.toList());
 
             //If no dots were found, abort and return an empty list.
-            if(allRequiredDots.size() > 0){
+            if(allDotsInTimeRange.size() > 0){
                 List<List<Dot>> dotSections = new LinkedList<>();
                 for(AnnotationRectangle elem : elements){
                     /* This lambda statement filters for all dots within the total dot list that lie within
                      * the iterated element's time range and puts them into a new list (dot section for this element)
                      */
-                    List<Dot> dotsForElement = allRequiredDots.stream()
+                    List<Dot> dotsForElement = allDotsInTimeRange.stream()
                             .filter(dot -> dot.getTimeStamp() >= elem.getTimeStart() && dot.getTimeStamp() <= elem.getTimeStop())
                             .collect(Collectors.toList());
                     //Add the filtered dot list to the result. (if there are any)
@@ -143,8 +165,11 @@ public class ObservablePage implements Selector {
                 return dotSections;
             }
         }
+        //The page contains no strokes whatsoever
         return Collections.emptyList();
     }
+
+
 
     /**
      * Creates a list of all selected dot segments.

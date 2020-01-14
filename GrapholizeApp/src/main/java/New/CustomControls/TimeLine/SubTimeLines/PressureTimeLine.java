@@ -24,13 +24,13 @@ public class PressureTimeLine extends TimeLinePane {
     }
 
     private void setUp(){
-        List<List<Dot>> dots = p.getDotSectionsForElements(parent.getAnnotations());
-        for(List<Dot> dotList : dots){
+        List<List<Dot>> dotSections = p.getDotSectionsForAnnotations(parent.getAnnotations());
+        for(List<Dot> dots : dotSections){
             //At least 2 dots are required so that a line can be drawn
-            if(dotList.size() >=2){
-                for(int i = 0; i < dotList.size() - 1; i++){
-                    Dot d1 = dotList.get(i);
-                    Dot d2 = dotList.get(i + 1);
+            if(dots.size() >=2){
+                for(int i = 0; i < dots.size() - 1; i++){
+                    Dot d1 = dots.get(i);
+                    Dot d2 = dots.get(i + 1);
                     Line l = new Line(
                             (d1.getTimeStamp()) * scale.get(),
                             getHeight() - (d1.getForce() * getHeight()),
