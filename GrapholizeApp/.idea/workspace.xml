@@ -2,13 +2,13 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="f9c9e85c-b6d3-4a2f-99c7-3350288aea5b" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/src/main/java/New/CustomControls/TimeLine/SubTimeLines/DetailTimeLine.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/New/util/PageUtil.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/New/CustomControls/Containers/TimeLineDetailContainer.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/New/CustomControls/Containers/TimeLineDetailContainer.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/New/CustomControls/TimeLine/SubTimeLines/PressureTimeLine.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/New/CustomControls/TimeLine/SubTimeLines/PressureTimeLine.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/New/CustomControls/TimeLine/SubTimeLines/VelocityTimeLine.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/New/CustomControls/TimeLine/SubTimeLines/VelocityTimeLine.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/New/Observables/ObservablePage.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/New/Observables/ObservablePage.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/New/CustomControls/Containers/MainCanvas.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/New/CustomControls/Containers/MainCanvas.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/New/Filters/Filter.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/New/Filters/Filter.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/New/Filters/StrokeColorFilter.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/New/Filters/StrokeColorFilter.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/New/Filters/StrokeDifferentiationFilter.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/New/Filters/StrokeFilter.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/New/Filters/VelocityFilter.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/New/Filters/VelocityFilter.java" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
