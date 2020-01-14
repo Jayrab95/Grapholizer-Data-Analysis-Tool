@@ -104,10 +104,10 @@
     <property name="nodejs_interpreter_path.stuck_in_default_project" value="undefined stuck path" />
     <property name="nodejs_npm_path_reset_for_default_project" value="true" />
     <property name="nodejs_package_manager_path" value="npm" />
-    <property name="project.structure.last.edited" value="Artifacts" />
+    <property name="project.structure.last.edited" value="Modules" />
     <property name="project.structure.proportion" value="0.15" />
     <property name="project.structure.side.proportion" value="0.31954023" />
-    <property name="settings.editor.selected.configurable" value="project.propCompiler" />
+    <property name="settings.editor.selected.configurable" value="preferences.keymap" />
   </component>
   <component name="RecentsManager">
     <key name="CreateTestDialog.RecentsKey">
@@ -139,6 +139,7 @@
   <component name="RunAnythingCache">
     <option name="myCommands">
       <command value="gradle build" />
+      <command value="jilink" />
     </option>
   </component>
   <component name="RunDashboard">
@@ -153,7 +154,7 @@
       </list>
     </option>
   </component>
-  <component name="RunManager" selected="JAR Application.GrapholizeAppAID-1.0-SNAPSHOT.jar">
+  <component name="RunManager" selected="Gradle.GrapholizeApp [jar]">
     <configuration default="true" type="Applet">
       <option name="POLICY_FILE" value="$APPLICATION_HOME_DIR$/bin/appletviewer.policy" />
       <method v="2">
@@ -163,10 +164,10 @@
     <configuration name="HelloFX" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
       <option name="MAIN_CLASS_NAME" value="New.Scenes.HelloFX" />
       <module name="GrapholizeAppAID.main" />
-      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$" />
+      <option name="VM_PARAMETERS" value="--module-path &quot;\path\to\javafx-sdk-13\lib&quot; --add-modules javafx.controls,javafx.fxml" />
       <extension name="coverage">
         <pattern>
-          <option name="PATTERN" value=".*" />
+          <option name="PATTERN" value="New.Scenes.*" />
           <option name="ENABLED" value="true" />
         </pattern>
       </extension>
@@ -180,7 +181,7 @@
         <option name="Make" enabled="true" />
       </method>
     </configuration>
-    <configuration name="GrapholizeApp [clean]" type="GradleRunConfiguration" factoryName="Gradle" temporary="true">
+    <configuration name="GrapholizeApp [build]" type="GradleRunConfiguration" factoryName="Gradle" temporary="true">
       <ExternalSystemSettings>
         <option name="executionName" />
         <option name="externalProjectPath" value="$PROJECT_DIR$" />
@@ -191,7 +192,7 @@
         </option>
         <option name="taskNames">
           <list>
-            <option value="clean" />
+            <option value="build" />
           </list>
         </option>
         <option name="vmOptions" />
@@ -199,7 +200,7 @@
       <GradleScriptDebugEnabled>true</GradleScriptDebugEnabled>
       <method v="2" />
     </configuration>
-    <configuration name="GrapholizeApp [jar]" type="GradleRunConfiguration" factoryName="Gradle" temporary="true">
+    <configuration name="GrapholizeApp [jar]" type="GradleRunConfiguration" factoryName="Gradle">
       <ExternalSystemSettings>
         <option name="executionName" />
         <option name="externalProjectPath" value="$PROJECT_DIR$" />
@@ -218,6 +219,63 @@
       <GradleScriptDebugEnabled>true</GradleScriptDebugEnabled>
       <method v="2" />
     </configuration>
+    <configuration name="GrapholizeApp [jlinkZip]" type="GradleRunConfiguration" factoryName="Gradle" temporary="true">
+      <ExternalSystemSettings>
+        <option name="executionName" />
+        <option name="externalProjectPath" value="$PROJECT_DIR$" />
+        <option name="externalSystemIdString" value="GRADLE" />
+        <option name="scriptParameters" />
+        <option name="taskDescriptions">
+          <list />
+        </option>
+        <option name="taskNames">
+          <list>
+            <option value="jlinkZip" />
+          </list>
+        </option>
+        <option name="vmOptions" />
+      </ExternalSystemSettings>
+      <GradleScriptDebugEnabled>true</GradleScriptDebugEnabled>
+      <method v="2" />
+    </configuration>
+    <configuration name="GrapholizeApp [jlink]" type="GradleRunConfiguration" factoryName="Gradle" temporary="true">
+      <ExternalSystemSettings>
+        <option name="executionName" />
+        <option name="externalProjectPath" value="$PROJECT_DIR$" />
+        <option name="externalSystemIdString" value="GRADLE" />
+        <option name="scriptParameters" />
+        <option name="taskDescriptions">
+          <list />
+        </option>
+        <option name="taskNames">
+          <list>
+            <option value="jlink" />
+          </list>
+        </option>
+        <option name="vmOptions" />
+      </ExternalSystemSettings>
+      <GradleScriptDebugEnabled>true</GradleScriptDebugEnabled>
+      <method v="2" />
+    </configuration>
+    <configuration name="GrapholizeApp [jpackage]" type="GradleRunConfiguration" factoryName="Gradle" temporary="true">
+      <ExternalSystemSettings>
+        <option name="executionName" />
+        <option name="externalProjectPath" value="$PROJECT_DIR$" />
+        <option name="externalSystemIdString" value="GRADLE" />
+        <option name="scriptParameters" />
+        <option name="taskDescriptions">
+          <list />
+        </option>
+        <option name="taskNames">
+          <list>
+            <option value="jpackage" />
+          </list>
+        </option>
+        <option name="vmOptions" />
+      </ExternalSystemSettings>
+      <GradleScriptDebugEnabled>true</GradleScriptDebugEnabled>
+      <method v="2" />
+    </configuration>
     <configuration default="true" type="JUnit" factoryName="JUnit">
       <option name="TEST_OBJECT" value="class" />
       <option name="WORKING_DIRECTORY" value="%MODULE_WORKING_DIR%" />
@@ -225,12 +283,10 @@
         <option name="Make" enabled="true" />
       </method>
     </configuration>
-    <configuration name="GrapholizeAppAID-1.0-SNAPSHOT.jar" type="JarApplication" temporary="true">
+    <configuration name="GrapholizeAppAID-1.0-SNAPSHOT.jar" type="JarApplication">
       <option name="JAR_PATH" value="$PROJECT_DIR$/build/libs/GrapholizeAppAID-1.0-SNAPSHOT.jar" />
-      <method v="2" />
-    </configuration>
-    <configuration name="GrapholizeAppAID.main.jar" type="JarApplication" temporary="true">
-      <option name="JAR_PATH" value="$PROJECT_DIR$/out/artifacts/GrapholizeAppAID_main_jar/GrapholizeAppAID.main.jar" />
+      <option name="ALTERNATIVE_JRE_PATH" />
+      <module name="GrapholizeAppAID.main" />
       <method v="2" />
     </configuration>
     <configuration default="true" type="TestNG">
@@ -251,13 +307,22 @@
         <option name="Make" enabled="true" />
       </method>
     </configuration>
+    <list>
+      <item itemvalue="Application.HelloFX" />
+      <item itemvalue="Gradle.GrapholizeApp [jar]" />
+      <item itemvalue="Gradle.GrapholizeApp [build]" />
+      <item itemvalue="Gradle.GrapholizeApp [jlinkZip]" />
+      <item itemvalue="Gradle.GrapholizeApp [jlink]" />
+      <item itemvalue="Gradle.GrapholizeApp [jpackage]" />
+      <item itemvalue="JAR Application.GrapholizeAppAID-1.0-SNAPSHOT.jar" />
+    </list>
     <recent_temporary>
       <list>
-        <item itemvalue="JAR Application.GrapholizeAppAID-1.0-SNAPSHOT.jar" />
-        <item itemvalue="Gradle.GrapholizeApp [jar]" />
-        <item itemvalue="Gradle.GrapholizeApp [clean]" />
-        <item itemvalue="JAR Application.GrapholizeAppAID.main.jar" />
         <item itemvalue="Application.HelloFX" />
+        <item itemvalue="Gradle.GrapholizeApp [jlink]" />
+        <item itemvalue="Gradle.GrapholizeApp [jlinkZip]" />
+        <item itemvalue="Gradle.GrapholizeApp [jpackage]" />
+        <item itemvalue="Gradle.GrapholizeApp [build]" />
       </list>
     </recent_temporary>
   </component>
@@ -315,6 +380,7 @@
       <workItem from="1578669226039" duration="20561000" />
       <workItem from="1578860236954" duration="3230000" />
       <workItem from="1578987763220" duration="5209000" />
+      <workItem from="1579023780568" duration="7748000" />
     </task>
     <servers />
   </component>
