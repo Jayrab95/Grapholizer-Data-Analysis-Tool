@@ -55,7 +55,18 @@ public class ObservablePage implements Selector {
     }
 
     public List<List<Dot>> getDotSectionsForAnnotations(String topic){
+        //TODO: DEfine a static string for this timeline.
+        if(topic.equals("Stroke duration"))
+        {
+            return inner.getStrokes().stream()
+                    .map(stroke -> stroke.getDots())
+                    .collect(Collectors.toList());
+        }
         return PageUtil.getDotSectionsForAnnotations(inner.getTimeLine(topic), inner.getStrokes());
+    }
+
+    public List<Stroke> getAllStrokes(){
+        return inner.getStrokes();
     }
 
     public void registerStrokeObserver(StrokeObserver strokeObserver){
@@ -172,11 +183,6 @@ public class ObservablePage implements Selector {
         }
         //The page contains no strokes whatsoever
         return Collections.emptyList();
-    }
-
-    public List<List<Dot>> replaceMe(){
-        System.out.println("REPLACE ME");
-        return List.of();
     }
 
 

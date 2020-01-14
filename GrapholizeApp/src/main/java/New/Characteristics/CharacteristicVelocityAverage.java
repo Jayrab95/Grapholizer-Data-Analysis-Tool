@@ -12,6 +12,24 @@ public class CharacteristicVelocityAverage extends Characteristic<Double, List<D
         super(name);
     }
 
+    public static List<Double> getVelocitySteps(List<Dot> dots){
+        List<Double> result = new LinkedList<>();
+        if(dots.size() >=2){
+            for (int i = 0; i < dots.size() - 1; i++) {
+                Dot lastDot = dots.get(i);
+                Dot nextDot = dots.get(i + 1);
+                result.add(New.util.math.VelocityMathUtil.calculateVelocityBetweenDots(
+                        lastDot.getX(),lastDot.getY()
+                        ,nextDot.getX(),nextDot.getY()
+                        , (int) (nextDot.getTimeStamp()- lastDot.getTimeStamp())
+                ));
+            }
+        }
+        return result;
+
+
+    }
+
     @Override
     public Double calculate(List<Dot> dots) {
         List<Double> result = new LinkedList<>();

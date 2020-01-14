@@ -22,6 +22,7 @@ public abstract class Filter {
         this.filterName = filterName;
         this.p = p;
         p.getPageProperty().addListener((observable, oldValue, newValue) -> calculateMetrics(p));
+        calculateMetrics(p);
     }
 
     public String getFilterName(){

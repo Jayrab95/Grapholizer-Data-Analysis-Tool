@@ -13,16 +13,14 @@ import java.util.List;
 
 public class PressureTimeLine extends DetailTimeLine {
 
-    SelectableTimeLinePane parent;
-
     public PressureTimeLine(double totalLength, double height, DoubleProperty scaleProp, StringProperty name, ObservablePage p, SelectableTimeLinePane parent, String topic) {
         super(totalLength, height, scaleProp, name, p, topic);
-        this.parent = parent;
-        setUp();
+        //setUp();
     }
 
+    @Override
     protected void setUp(){
-        List<List<Dot>> dotSections = page.getDotSectionsForAnnotations(parent.getAnnotations());
+        List<List<Dot>> dotSections = page.getDotSectionsForAnnotations(topic);
         for(List<Dot> dots : dotSections){
             //At least 2 dots are required so that a line can be drawn
             if(dots.size() >=2){

@@ -10,7 +10,7 @@ public abstract class DetailTimeLine extends TimeLinePane {
     protected String topic;
     public DetailTimeLine(double totalLength, double height, DoubleProperty scaleProp, StringProperty name, ObservablePage p, String topic) {
         super(totalLength, height, scaleProp, name);
-        this.page = page;
+        this.page = p;
         this.topic = topic;
         setUp();
     }

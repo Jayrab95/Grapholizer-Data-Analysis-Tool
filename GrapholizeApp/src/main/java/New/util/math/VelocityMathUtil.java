@@ -4,9 +4,9 @@ package New.util.math;
 
 public class VelocityMathUtil {
     //Dots-Per-Inch is a standard value that is used by NeoNotes for all their papersizes
-    private final static int DPI = 600;
+    private final static double DPI = 600;
     //Every NCode Cell on the paper has a number of pixels it can store
-    private final static int PIXEL_PER_NCODE_CELL = 56;
+    private final static double PIXEL_PER_NCODE_CELL = 56;
     private final static double  PIXEL_DPI_RATIO = PIXEL_PER_NCODE_CELL/DPI;
     private final static float CM_TO_INCH_RATIO = 2.54f;
 
@@ -17,14 +17,15 @@ public class VelocityMathUtil {
     ) {
         //Convert all points to mm coordinates
         double x1Mm = convertInchToCm(convertNeoCoordToInch(x1)) * 10;
-        double y1Mm = convertInchToCm(convertNeoCoordToInch(x1)) * 10;
-        double x2Mm = convertInchToCm(convertNeoCoordToInch(x1)) * 10;
-        double y2Mm = convertInchToCm(convertNeoCoordToInch(x1)) * 10;
+        double y1Mm = convertInchToCm(convertNeoCoordToInch(y1)) * 10;
+        double x2Mm = convertInchToCm(convertNeoCoordToInch(x2)) * 10;
+        double y2Mm = convertInchToCm(convertNeoCoordToInch(y2)) * 10;
         //calculate the distance of two points with euclidean norm
         double distanceVecX = x1Mm - x2Mm;
         double distanceVecY = y1Mm - y2Mm;
         double vecLenghtMm = vectorLengthMm(distanceVecX,distanceVecY);
-        return velocityMMPerMS(vecLenghtMm, timeDifference);
+        double res = velocityMMPerMS(vecLenghtMm, timeDifference);
+        return res >= 0 ? res : 0;
     }
 
     public static double vectorLengthMm(double xMm, double yMm) {
