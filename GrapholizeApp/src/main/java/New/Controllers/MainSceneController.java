@@ -10,6 +10,7 @@ import New.Model.Entities.*;
 import New.Model.Session;
 import New.util.*;
 
+import New.util.Export.CSVBuilder;
 import New.util.Export.ProjectSerializer;
 import New.util.Import.JsonLoader;
 import New.util.Import.PageDataReader;
@@ -27,10 +28,7 @@ import java.io.IOException;
 import java.net.URL;
 import java.nio.file.Files;
 import java.nio.file.Path;
-import java.util.HashSet;
-import java.util.Optional;
-import java.util.ResourceBundle;
-import java.util.Set;
+import java.util.*;
 
 public class MainSceneController {
 
@@ -79,6 +77,18 @@ public class MainSceneController {
                     , "While exporting an error occured." //TODO find better error description
                     , e.getMessage());
         }
+    }
+
+    public void exportWindowCallback(List<String> partID, List<String> topics, List<Characteristic> characteristics){
+        CSVBuilder csvBuilder = new CSVBuilder();
+        partID.forEach(part -> {
+           _session.getActiveProject().getParticipant(part).getAllPages().forEach(page -> {
+               page.getSelectedDotSegments().forEach(obsDots -> {
+                   //TODO lukas
+               });
+           });
+       });
+
     }
 
     @FXML

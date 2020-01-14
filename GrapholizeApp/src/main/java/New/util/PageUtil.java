@@ -14,7 +14,6 @@ public class PageUtil {
 
     public static List<List<Dot>> getDotSectionsForAnnotations(List<Annotation> annotations, List<Stroke> strokes){
         List<List<Dot>> res = new LinkedList<>();
-
         for(Annotation a : annotations) {
             for (List<Dot> dotSection : getDotSectionsForAnnotation(a, strokes)) {
                 res.add(dotSection);

@@ -59,19 +59,16 @@ public class ExportDialogController implements Controller {
 
     @FXML
     private void deselectParticipant() {
-        //selection_participantsID.getItems().remove(selection_participantsID.getSelectionModel().getSelectedIndex());
         removeWithNullCheck(selection_participantsID);
     }
 
     @FXML
     private void deselectTopic() {
-        //selection_timelineTopics.getItems().remove(selection_timelineTopics.getSelectionModel().getSelectedIndex());
         removeWithNullCheck(selection_timelineTopics);
     }
 
     @FXML
     private void deselectCharacteristic() {
-        //selection_characteristics.getItems().remove(selection_characteristics.getSelectionModel().getSelectedIndex());
         removeWithNullCheck(selection_characteristics);
     }
 
@@ -112,7 +109,10 @@ public class ExportDialogController implements Controller {
 
     @FXML
     private void exportAction() {
-
+        callback_reference.exportWindowCallback(
+                selection_participantsID.getItems()
+                ,selection_timelineTopics.getItems()
+                ,selection_characteristics.getItems());
     }
 
     private boolean addIfNotPresent(ListView listview, Object element) {
