@@ -6,6 +6,7 @@ import javafx.fxml.FXML;
 import javafx.scene.control.ListView;
 import javafx.stage.Stage;
 
+import java.lang.ref.Reference;
 import java.util.Set;
 
 public class ExportDialogController implements Controller {
@@ -27,15 +28,18 @@ public class ExportDialogController implements Controller {
     @FXML
     private ListView<Characteristic> selection_characteristics;
 
+    MainSceneController callback_reference;
 
     public ExportDialogController() { }
 
     public void initialize(Set<String> timelineTags
             , Set<String> participantIDs
-            , Set<Characteristic> characteristics) {
+            , Set<Characteristic> characteristics
+            , MainSceneController mainScene) {
         view_participantsID.getItems().addAll(participantIDs);
         view_timelineTopics.getItems().addAll(timelineTags);
         view_characteristics.getItems().addAll(characteristics);
+        this.callback_reference = mainScene;
     }
 
     @FXML
@@ -108,7 +112,7 @@ public class ExportDialogController implements Controller {
 
     @FXML
     private void exportAction() {
-        
+
     }
 
     private boolean addIfNotPresent(ListView listview, Object element) {

@@ -77,7 +77,8 @@ public class MainSceneController {
            ((ExportDialogController) loader.getController()).initialize(
                     _session.getActiveProject().getParticipantIDs()
                     ,_session.getActiveProject().getTimeLineTagNames()
-                    ,characteristicList);
+                    ,characteristicList
+                    ,this);
         } catch (IOException e) {
             new DialogGenerator().simpleErrorDialog("Export Error"
                     , "While exporting an error occured." //TODO find better error description
