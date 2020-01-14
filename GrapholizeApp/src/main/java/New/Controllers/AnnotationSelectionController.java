@@ -1,21 +1,27 @@
 package New.Controllers;
 
 import New.CustomControls.Annotation.AnnotationRectangle;
+import New.CustomControls.Annotation.SelectableAnnotationRectangle;
 import New.CustomControls.TimeLine.CustomTimeLinePane;
 import New.CustomControls.TimeLine.SelectableTimeLinePane;
+import New.Interfaces.Selector;
+import New.Observables.DotSelector;
 
 public class AnnotationSelectionController {
-    private SelectableTimeLinePane parent;
 
-    public AnnotationSelectionController(SelectableTimeLinePane parent){
+    private SelectableTimeLinePane parent;
+    private Selector selector;
+
+    public AnnotationSelectionController(SelectableTimeLinePane parent, Selector s){
         this.parent = parent;
+        this.selector = s;
     }
 
     /**
      * Selects the parent timeline if it is not currently selected and also deselects all elements if CTRL isn't held down.
      * @param CtrlHeld Is CTRL currently held down? (Multiselect)
      */
-    public void selectTimeLine(boolean CtrlHeld, AnnotationRectangle selected){
+    public void selectTimeLine(boolean CtrlHeld, SelectableAnnotationRectangle selected){
         if(!parent.isSelected()){
             parent.setTimeLineSelected(true);
         }
@@ -23,4 +29,14 @@ public class AnnotationSelectionController {
             parent.deselectAllElements(selected);
         }
     }
+
+    public void selectDots(double timeStart, double timeEnd){
+        selector.select(timeStart, timeEnd);
+    }
+
+    public void selectOnlyDotsWithinTimeFrame(double timeStart, double timeEnd){
+        selector.selectOnlyTimeFrame(timeStart, timeEnd);
+    }
+
+    public void deselectDots(double timeStart, double timeEnd){selector.deselect(timeStart, timeEnd);}
 }

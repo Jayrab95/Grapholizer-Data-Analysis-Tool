@@ -33,12 +33,14 @@ public class ContentSwitcher extends HBox implements ProjectObserver {
 
         this.comboBox_Participants.valueProperty().addListener((observable, oldValue, newValue) -> {
             if(newValue != null){
+                System.out.println("Content switcher has switched the participant");
                 handleComboBoxParticipantChange(newValue);
             }
         });
 
         this.comboBox_Pages.valueProperty().addListener((observable, oldValue, newValue) -> {
             if(newValue != null){
+                System.out.println("Content switcher has switched the page");
                 handleComboBoxPageChange(newValue);
             }
         });
@@ -69,6 +71,7 @@ public class ContentSwitcher extends HBox implements ProjectObserver {
         comboBox_Pages.getSelectionModel().select(0);
 
     }
+
 
     private void handleComboBoxParticipantChange(String newVal){
         contentSwitcherController.setParticipant(newVal);

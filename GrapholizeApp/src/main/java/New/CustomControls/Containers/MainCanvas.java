@@ -1,31 +1,49 @@
 package New.CustomControls.Containers;
 
+import New.Filters.Filter;
+import New.Filters.StrokeColorFilter;
+import New.Filters.StrokeDifferentiationFilter;
+import New.Filters.StrokeFilter;
+import New.Interfaces.Observer.FilterObserver;
 import New.Interfaces.Observer.PageObserver;
 import New.Interfaces.Observer.StrokeObserver;
 import New.Model.Entities.Dot;
+import New.Observables.*;
 import javafx.beans.property.DoubleProperty;
 import javafx.beans.property.SimpleDoubleProperty;
-
-import New.Observables.ObservablePage;
-import New.Observables.ObservableStroke;
 
 import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.control.Button;
 import javafx.scene.control.ScrollPane;
 import javafx.scene.control.Slider;
+import javafx.scene.effect.Light;
+import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.HBox;
+import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
+import javafx.scene.shape.Rectangle;
 
-public class MainCanvas extends VBox implements PageObserver, StrokeObserver {
+import java.util.List;
+import java.util.stream.Collectors;
+
+public class MainCanvas extends VBox implements PageObserver, StrokeObserver, FilterObserver {
     private Slider scaleSlider;
     private ScrollPane canvasContainer;
-    private final Canvas canvas;
+    private FilterContainer filterContainer;
+    //private final Canvas canvas;
+    private final Pane canvas;
     private final double canvasWidth;
     private final double canvasHeight;
     private DoubleProperty canvasScale;
     private ObservablePage p;
+
+
+    private Light.Point anchor;
+    private Rectangle selection;
+
+    private ObservableFilterCollection ofc;
 
 
     public MainCanvas(double initWidth, double initHeight, double initScale, ObservablePage obsPage){
@@ -33,23 +51,35 @@ public class MainCanvas extends VBox implements PageObserver, StrokeObserver {
         this.canvasHeight = initHeight;
         this.canvasScale = new SimpleDoubleProperty(initScale);
         this.p = obsPage;
+        this.ofc = new ObservableFilterCollection(new StrokeColorFilter("Stroke differentiation", Color.BLUE, Color.RED));
+        this.ofc.addObserver(this);
 
         scaleSlider = initializeSlider(initScale);
 
         canvasScale.bind(scaleSlider.valueProperty());
-        canvasScale.addListener((observable, oldValue, newValue) -> resetCanvas());
+        canvasScale.addListener((observable, oldValue, newValue) -> resizeCanvas());
 
-        canvas = new Canvas(initWidth * canvasScale.get(), initHeight * canvasScale.get());
+        canvas = new Pane();
+        canvas.setPrefWidth(initWidth * canvasScale.get());
+        canvas.setPrefHeight(initHeight * canvasScale.get());
+
         obsPage.addObserver(this);
         obsPage.registerStrokeObserver(this);
+
+        initializeSelector();
+        canvas.setOnMousePressed(this::startSelection);
+        canvas.setOnMouseDragged(this::moveSelection);
+        canvas.setOnMouseReleased(this::endSelection);
+
         initializeCanvas();
     }
 
     private void initializeCanvas(){
         canvasContainer = new ScrollPane(canvas);
-
-        getChildren().addAll(scaleSlider, canvasContainer);
-        drawStrokes();
+        filterContainer = new FilterContainer(ofc);
+        getChildren().addAll(scaleSlider, filterContainer,canvasContainer);
+        addStrokes();
+        //drawStrokes();
     }
 
     private Slider initializeSlider(double init){
@@ -60,13 +90,32 @@ public class MainCanvas extends VBox implements PageObserver, StrokeObserver {
     }
 
     private void resizeCanvas(){
-        canvas.setWidth(canvasWidth * canvasScale.get());
-        canvas.setHeight(canvasHeight * canvasScale.get());
+        canvas.setPrefWidth(canvasWidth * canvasScale.get());
+        canvas.setPrefHeight(canvasHeight * canvasScale.get());
+    }
+
+    private void addStrokes(){
+        canvas.getChildren().clear();
+        for(ObservableStroke s : p.getObservableStrokes()){
+            List<ObservableDot> dots = s.getObservableDots();
+            for (int i = 0; i < dots.size() - 1; i++) {
+                canvas.getChildren().add(new DotLine(dots.get(i), dots.get(i+1), canvasScale));
+            }
+        }
+        //List<ObservableDot> dots = p.getObservableStrokes().stream().flatMap(s -> s.getObservableDots().stream()).collect(Collectors.toList());
+
     }
 
     private void drawStrokes(){
+        /*
         GraphicsContext gc = canvas.getGraphicsContext2D();
         for(ObservableStroke s : p.getObservableStrokes()){
+            Color c = s.getColor();
+            for(Filter f : ofc.getFilters()){
+                if(f.isActive()){
+                    c = f.applyFilter(c);
+                }
+            }
 
             for(int i = 0; i < s.getDots().size() - 1; i++){
 
@@ -80,58 +129,104 @@ public class MainCanvas extends VBox implements PageObserver, StrokeObserver {
                     gc.strokeLine(d1.getX() * canvasScale.get(), d1.getY() * canvasScale.get(), d2.getX() * canvasScale.get(), d2.getY() * canvasScale.get());
                 }
                 gc.setLineWidth((fAvg + 0.5));
-                gc.setStroke(s.getColor());
+                gc.setStroke(c);
                 gc.strokeLine(d1.getX() * canvasScale.get(), d1.getY() * canvasScale.get(), d2.getX() * canvasScale.get(), d2.getY() * canvasScale.get());
             }
         }
+        gc.setFill(new Color(0, 0, 1, 0.33));
+        gc.setStroke(Color.BLACK);
+        gc.setLineWidth(10);
+        gc.fillRect(selection.getX(), selection.getY(), selection.getWidth(), selection.getHeight());
+
+         */
     }
 
-
-
-
     private void resetCanvas(){
+        /*
         canvas.getGraphicsContext2D().clearRect(0,0,canvas.getWidth(), canvas.getHeight());
         resizeCanvas();
         drawStrokes();
+
+         */
     }
 
-    /*
-    //40 is the max scale. Anything above can cause a bug with the graphics object.
-    //
-    private void scaleUp(float step){
-        if(canvasScale.get() + step < 40){
-            canvasScale.get() += step;
-        }
-        else {
-            canvasScale.get() = 40;}
-        canvas.setWidth(canvasWidth* canvasScale.get());
-        canvas.setHeight(canvasHeight * canvasScale.get());
-        resetCanvas();
+
+    private void initializeSelector(){
+        anchor = new Light.Point();
+        selection = new Rectangle();
+        selection.setFill(Color.TRANSPARENT);
+        selection.setStroke(Color.BLACK); // border
+        selection.setStrokeWidth(1);
+        selection.getStrokeDashArray().add(10.0);
     }
 
-    private void scaleDown(float step){
-        if(canvasScale.get() -step > 1){
-            canvasScale.get() -= step;
-        }
-        else{
-            canvasScale.get() = 1;
-        }
-        canvas.setWidth(canvasWidth* canvasScale.get());
-        canvas.setHeight(canvasHeight * canvasScale.get());
-        resetCanvas();
+    //Source: https://coderanch.com/t/689100/java/rectangle-dragging-image
+    private void startSelection(MouseEvent event){
+        p.deselectAll();
+
+        System.out.println("Start Selection called");
+        System.out.println("X:" + event.getX() + " Y:" + event.getY());
+        anchor.setX(event.getX());
+        anchor.setY(event.getY());
+        selection.setX(event.getX());
+        selection.setY(event.getY());
+        selection.setStroke(Color.BLACK); // border
+        selection.getStrokeDashArray().add(10.0);
+        canvas.getChildren().add(selection);
     }
 
-     */
+    //Source: https://coderanch.com/t/689100/java/rectangle-dragging-image
+    private void moveSelection(MouseEvent event){
+        selection.setWidth(Math.abs(event.getX() - anchor.getX()));
+        selection.setHeight(Math.abs(event.getY() - anchor.getY()));
+        selection.setX(Math.min(anchor.getX(), event.getX()));
+        selection.setY(Math.min(anchor.getY(), event.getY()));
+        //System.out.println(selection);
+        //resetCanvas();
+    }
 
+    private void endSelection(MouseEvent event){
+        System.out.println("End selection called");
+        p.selectRectUnscaled(selection.getX(), selection.getY(), selection.getWidth(), selection.getHeight(), canvasScale.get());
+        selection.setWidth(0);
+        selection.setHeight(0);
+        canvas.getChildren().remove(selection);
+
+
+
+        //resetCanvas();
+    }
 
     @Override
     public void update(ObservablePage sender) {
-        p.registerStrokeObserver(this);
+        //p.registerStrokeObserver(this);
+        addStrokes();
         resetCanvas();
     }
 
     @Override
     public void update(ObservableStroke sender) {
-        resetCanvas();
+        //resetCanvas();
+    }
+
+    @Override
+    public void update(ObservableFilterCollection sender) {
+        //resetCanvas();
+        //TODO: QUick hack, this obviously needs to be reworked.
+        // work with the FX Bindings to automatically update the stroke/dot colors.
+        for(Filter f : sender.getFilters()){
+            if(f instanceof StrokeFilter){
+                for(ObservableStroke s : p.getObservableStrokes()){
+                    if(f.isActive()){
+                        ((StrokeFilter) f).applyFilter(s);
+                    }
+                    else{
+                        for(ObservableDot d : s.getObservableDots()){
+                            d.setColor(Color.BLACK);
+                        }
+                    }
+                }
+            }
+        }
     }
 }

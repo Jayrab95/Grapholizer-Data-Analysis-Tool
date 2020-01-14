@@ -1,6 +1,7 @@
 package New.Observables;
 
 import New.CustomControls.Annotation.AnnotationRectangle;
+import New.CustomControls.Annotation.SelectableAnnotationRectangle;
 import New.CustomControls.TimeLine.SelectableTimeLinePane;
 import New.Interfaces.Observer.TimeLineObserver;
 
@@ -25,10 +26,10 @@ public class ObservableTimeLine {
         return selectedTimeLine != null;
     }
 
-    public List<AnnotationRectangle> getSelectedElements(){
+    public List<AnnotationRectangle> getSelectedAnnotations(){
         return selectedTimeLine.getChildren().stream()
-                .map(node -> (AnnotationRectangle)node)
-                .filter(AnnotationRectangle::isSelected)
+                .map(node -> (SelectableAnnotationRectangle)node)
+                .filter(SelectableAnnotationRectangle::isSelected)
                 .collect(Collectors.toList());
     }
 

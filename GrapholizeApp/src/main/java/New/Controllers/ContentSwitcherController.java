@@ -20,6 +20,7 @@ public class ContentSwitcherController {
     public void setParticipant(String participantKey){
         participant.setParticipant(project.getParticipant(participantKey));
     }
+
     public void setPage(int index){
         page.setPage(participant.getPage(index));
     }

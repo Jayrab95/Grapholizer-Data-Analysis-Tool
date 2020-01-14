@@ -30,8 +30,9 @@ public class TimeLineContainerController {
     //Reason for this: It allows the reusage of the dialog window for both create and edit.
     public ObservableTimeLineTag createNewTimeLineTag(String tag, Color c){
         TimeLineTag newTag = new TimeLineTag(tag, ColorConverter.convertJavaFXColorToModelColor(c));
+        ObservableTimeLineTag oTag = new ObservableTimeLineTag(newTag);
         project.insertTimeLineTag(newTag);
-        return new ObservableTimeLineTag(newTag);
+        return oTag;
     }
 
     public void editTimeLineTag(String oldTag, String newTag, Color newColor){

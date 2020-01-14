@@ -13,8 +13,7 @@ public class HelloFX extends Application {
 
         Parent root = FXMLLoader.load(getClass().getClassLoader().getResource("fxml/views/MainScene.fxml"));
         Scene scene = new Scene(root, 300, 275); //TODO choose sensible window size on basis of desktop size
-
-        stage.setTitle("Grapholizer Annotator");
+        stage.setTitle("Grapholizer");
         stage.setScene(scene);
         stage.show();
     }

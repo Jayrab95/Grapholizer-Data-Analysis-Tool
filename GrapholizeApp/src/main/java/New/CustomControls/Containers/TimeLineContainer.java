@@ -9,27 +9,29 @@ import New.Execptions.NoTimeLineSelectedException;
 import New.Execptions.TimeLineTagException;
 import New.Interfaces.Observer.Observer;
 import New.Model.Entities.Annotation;
-import New.Observables.ObservablePage;
-import New.Observables.ObservableProject;
-import New.Observables.ObservableTimeLine;
-import New.Observables.ObservableTimeLineTag;
+import New.Model.Entities.TimeLineTag;
+import New.Observables.*;
 import New.util.DialogGenerator;
 import javafx.beans.property.DoubleProperty;
 import javafx.beans.property.SimpleDoubleProperty;
 import javafx.event.ActionEvent;
 import javafx.geometry.Insets;
+import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
+import javafx.stage.Stage;
 
+import java.util.LinkedList;
 import java.util.List;
 import java.util.Optional;
 
 public class TimeLineContainer extends VBox {
 
+    //region static strings
     private final static String TXT_TL_CREATION_TITLE = "Create a new timeline";
     private final static String TXT_TL_CREATION_HEADER = "Creation of a new timeline";
     private final static String TXT_TL_CREATION_TEXT = "Create a new timeline by entering a tag. The tag must be unique and cannot be empty.";
@@ -47,12 +49,14 @@ public class TimeLineContainer extends VBox {
 
     private final static String TXT_TL_CREATION_ERROR_TITLE = "Timeline creation error";
     private final static String TXT_TL_CREATION_ERROR_HEADER = "Error while creating timeline";
+    //endregion
 
     private DoubleProperty totalWidth;
     private double timeLinesHeight = 50;
     private DoubleProperty scale;
 
     private ObservableTimeLine selectedTimeLine;
+    private ObservablePage p;
 
     private TimeLineContainerController timeLineContainerController;
 
@@ -66,6 +70,13 @@ public class TimeLineContainer extends VBox {
     private Slider scaleSlider;
 
     public TimeLineContainer(ObservableProject project, ObservablePage page, double initialScale){
+
+        this.p = page;
+
+        page.getPageProperty().addListener((observable, oldValue, newValue) -> {
+            System.out.println("TimeLineContainer has detected a page change");
+            InitializeContainer(project, page);
+        });
 
         AnchorPane.setBottomAnchor(this, 0.0);
         AnchorPane.setLeftAnchor(this, 0.0);
@@ -98,17 +109,23 @@ public class TimeLineContainer extends VBox {
     }
 
     private void InitializeContainer(ObservableProject project, ObservablePage page){
+        System.out.println("initialize container called");
         //Step 1: Create the stroke timeline
         //Step 2: For each tag, create a new timeline and pass over the observble Tag and the page. Then create the annotations.
+        getChildren().clear();
         getChildren().add(scaleSlider);
         getChildren().add(hbox_buttonHBox);
         getChildren().add(scrollPane_timeLineScrollPane);
+
+        vBox_TimeLineBox.getChildren().clear();
+
         StrokeDurationTimeLinePane strokePane = new StrokeDurationTimeLinePane(timeLineContainerController.getPage().getDuration(), timeLinesHeight, scale, timeLineContainerController.getPage(), this);
         addTimeLinePane(strokePane);
-        //getChildren().add(strokePane);
 
-        for(String tag : project.getTimeLineTagNames()){
-
+        //TODO: Observe if A: This actually works and B: if there are any memory leaks when chaning project.
+        for(String s : project.getTimeLineTagNames()){
+            ObservableTimeLineTag tag = project.getTimeLineTag(s);
+            loadTimeLine(tag, page, page.getAnnotationSet(s));
         }
 
     }
@@ -127,6 +144,18 @@ public class TimeLineContainer extends VBox {
 
     private void addTimeLinePane(TimeLinePane timeLinePane){
         vBox_TimeLineBox.getChildren().add(new TimeLineWrapper(timeLinePane));
+    }
+
+    private void loadTimeLine(ObservableTimeLineTag t, ObservablePage p, Optional<List<Annotation>> annotations){
+        if(annotations.isPresent()){
+            CustomTimeLinePane pane;
+            Annotation[] array = annotations.get().stream().toArray(n -> new Annotation[n]);
+            pane = new CustomTimeLinePane(totalWidth.get(), timeLinesHeight, scale, t, p, this, array);
+            addTimeLinePane(pane);
+        }
+        else{
+            addTimeLinePane(createNewTimeLinePane(t, p, Optional.empty()));
+        }
     }
 
     public void createNewTimeLine(){
@@ -164,6 +193,22 @@ public class TimeLineContainer extends VBox {
         }
     }
 
+    public void createNewTimeLineOutOfSelectedDots() throws NoTimeLineSelectedException {
+        Optional<DialogResult> tag = openTimeLineCreationDialog(
+                TXT_TL_CREATION_TITLE,
+                TXT_TL_CREATION_HEADER,
+                TXT_TL_CREATION_TEXT,
+                TXT_TL_TIMELINETAG_LABEL,
+                TXT_TL_TAG_DEFAULTVAL,
+                COLOR_TL_TAG_DEFAULTVAL,
+                false);
+        if(tag.isPresent()){
+            ObservableTimeLineTag newTag = timeLineContainerController.createNewTimeLineTag(tag.get().timeLinename, tag.get().timeLineColor);
+            TimeLinePane timeLinePane = createNewTimeLinePaneOutOfSelectedDots(newTag, timeLineContainerController.getPage());
+            addTimeLinePane(timeLinePane);
+        }
+    }
+
     public void createNewTimeLineOutOfCombinedElement(Annotation a){
         Optional<DialogResult> tag = openTimeLineCreationDialog(
                 TXT_TL_CREATION_TITLE,
@@ -189,7 +234,18 @@ public class TimeLineContainer extends VBox {
     }
 
     private TimeLinePane createNewTimeLineTagOutOfSelected(ObservableTimeLineTag newTimeLineTag, ObservablePage page){
-        return createNewTimeLinePane(newTimeLineTag, page, Optional.of(selectedTimeLine.getSelectedElements()));
+        return createNewTimeLinePane(newTimeLineTag, page, Optional.of(selectedTimeLine.getSelectedAnnotations()));
+    }
+
+    private TimeLinePane createNewTimeLinePaneOutOfSelectedDots(ObservableTimeLineTag newTimeLineTag, ObservablePage page){
+        List<Annotation> annotations = new LinkedList();
+        for(List<ObservableDot> segment : page.getSelectedDotSegments()){
+            annotations.add(new Annotation(
+                    "Generated Annotation",
+                    segment.get(0).getTimeStamp(),
+                    segment.get(segment.size()-1).getTimeStamp()));
+        }
+        return new CustomTimeLinePane(timeLineContainerController.getPage().getDuration(), timeLinesHeight, scale, newTimeLineTag, page, this, annotations.toArray(new Annotation[annotations.size()]));
     }
 
     private TimeLinePane createNewTimeLinePaneOutOfCombined(ObservableTimeLineTag tag, ObservablePage page, Annotation annotation){
@@ -351,7 +407,19 @@ public class TimeLineContainer extends VBox {
             hBox_EditAndDeleteContainer = new HBox(btn_editTimeLine, btn_deleteTimeLine);
             vBox_EditButtons = new VBox(hBox_EditAndDeleteContainer, btn_addNewTimeline);
             hBox_ButtonsContainer = new HBox(vBox_UpDownButtonContainer, vBox_EditButtons);
-            getChildren().addAll(lbl_timeLineName);
+
+            Button b = new Button("Detail view");
+            b.setOnAction(event -> showDetailView());
+
+
+            getChildren().addAll(lbl_timeLineName, b);
+        }
+
+        void showDetailView(){
+            Stage stage = new Stage();
+            stage.setTitle("My New Stage Title");
+            stage.setScene(new Scene(new TimeLineDetailContainer(tl, timeLineContainerController.getPage()), 450, 450));
+            stage.show();
         }
     }
 
