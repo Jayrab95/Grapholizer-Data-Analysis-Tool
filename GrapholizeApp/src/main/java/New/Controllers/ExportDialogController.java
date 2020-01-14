@@ -4,6 +4,8 @@ import New.Characteristics.Characteristic;
 import New.Interfaces.Controller;
 import javafx.fxml.FXML;
 import javafx.scene.control.ListView;
+import javafx.stage.Stage;
+
 import java.util.Set;
 
 public class ExportDialogController implements Controller {
@@ -97,6 +99,16 @@ public class ExportDialogController implements Controller {
     @FXML
     private void deselectAllCharacteristic() {
         selection_characteristics.getItems().clear();
+    }
+
+    @FXML
+    private void cancelAction() {
+        ((Stage)selection_participantsID.getScene().getWindow()).close();
+    }
+
+    @FXML
+    private void exportAction() {
+        
     }
 
     private boolean addIfNotPresent(ListView listview, Object element) {

@@ -140,8 +140,8 @@
             <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
         </rowConstraints>
          <children>
-            <Button mnemonicParsing="false" text="Export" GridPane.columnIndex="1" GridPane.halignment="RIGHT" GridPane.rowIndex="1" />
-            <Button mnemonicParsing="false" text="Cancel" GridPane.rowIndex="1" />
+            <Button mnemonicParsing="false" onAction="#exportAction" text="Export" GridPane.columnIndex="1" GridPane.halignment="RIGHT" GridPane.rowIndex="1" />
+            <Button mnemonicParsing="false" onAction="#cancelAction" text="Cancel" GridPane.rowIndex="1" />
          </children>
       </GridPane>
    </children>
