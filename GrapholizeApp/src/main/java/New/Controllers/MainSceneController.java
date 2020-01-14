@@ -1,5 +1,7 @@
 package New.Controllers;
 
+import New.Characteristics.*;
+import New.Characteristics.CharacteristicVelocityAverage;
 import New.CustomControls.Containers.ContentSwitcher;
 import New.CustomControls.Containers.MainCanvas;
 import New.CustomControls.Containers.TimeLineContainer;
@@ -8,30 +10,28 @@ import New.Model.Entities.*;
 import New.Model.Session;
 import New.util.*;
 
-
-import New.util.Export.JsonSerializer;
+import New.util.Export.CSVBuilder;
 import New.util.Export.ProjectSerializer;
 import New.util.Import.JsonLoader;
 import New.util.Import.PageDataReader;
 import New.util.Import.ProjectLoader;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
+import javafx.scene.Scene;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.VBox;
-import javafx.stage.DirectoryChooser;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
 
-import javax.swing.text.html.Option;
 import java.io.File;
 import java.io.IOException;
 import java.net.URL;
 import java.nio.file.Files;
 import java.nio.file.Path;
-import java.util.Optional;
-import java.util.ResourceBundle;
+import java.util.*;
 
 public class MainSceneController {
-    // location and resources will be automatically injected by the FXML loader
+
     @FXML
     private URL location;
 
@@ -50,37 +50,45 @@ public class MainSceneController {
     /* Internal State Of Application */
     Session _session;
 
-    Path raw_data_file;
+    Path raw_data_file; //TODO Lukas there should be a better way than keeping it here
+
+    final Set<Characteristic> characteristicList;
 
     public MainSceneController(){
         optionalCanvas = Optional.empty();
         optionalContentSwitcher = Optional.empty();
         optionalTimeLineContainer = Optional.empty();
+
+        characteristicList = new HashSet<>();
+        characteristicList.add(new CharacteristicVelocityAverage("Velocity Average"));
     }
 
     @FXML
-    public void initialize() throws Exception{
-
-        /*
-        ProjectLoader loader = new ProjectLoader();
-        loadThatShitBoy();
-
-        _session = new Session(new JsonLoader().load("src\\main\\resources\\data\\lukas_test_1.json"));
-        PageMetaData pmd = _session.getActivePage().getPageMetaData();
-
-        anchorPane_canvasContainer.getChildren().addAll(
-                new MainCanvas(pmd.getPageWidth(), pmd.getPageHeight(), 5, _session.getActivePage()),
-                new ContentSwitcher(_session.getActiveProject(),_session.getActiveParticipant(), _session.getActivePage()));
-
-        scrollPane_TimeLines.getChildren().add(new TimeLineContainer(_session.getActiveProject(), _session.getActivePage(), 0.05));
-
-         */
+    private void exportDataToCSV(){
+        try {
+           FXMLLoader loader = openWindowReturnController("fxml/views/ExportDialog.fxml",800,400);
+           ((ExportDialogController) loader.getController()).initialize(
+                    _session.getActiveProject().getParticipantIDs()
+                    ,_session.getActiveProject().getTimeLineTagNames()
+                    ,characteristicList
+                    ,this);
+        } catch (IOException e) {
+            new DialogGenerator().simpleErrorDialog("Export Error"
+                    , "While exporting an error occured." //TODO find better error description
+                    , e.getMessage());
+        }
     }
 
-    //TODO Lukas Replace with openFileDialogue after testing.
-    private void loadThatShitBoy() throws Exception{
-        raw_data_file = Path.of("src\\main\\resources\\data\\page.data");
-        _session= new Session(new PageDataReader().load(raw_data_file.toString()));
+    public void exportWindowCallback(List<String> partID, List<String> topics, List<Characteristic> characteristics){
+        CSVBuilder csvBuilder = new CSVBuilder();
+        partID.forEach(part -> {
+           _session.getActiveProject().getParticipant(part).getAllPages().forEach(page -> {
+               page.getSelectedDotSegments().forEach(obsDots -> {
+                   //TODO lukas
+               });
+           });
+       });
+
     }
 
     @FXML
@@ -90,19 +98,23 @@ public class MainSceneController {
 
     @FXML
     private void loadProjectZip() {
-        ProjectLoader pLoader = new ProjectLoader();
-        loadDataFromFiles(pLoader, "*.zip", "*.grapholizer");
-        raw_data_file = pLoader.getZipHelper().getPathTempData();
-        _session.setZ_Helper(pLoader.getZipHelper());
+        try {
+            ProjectLoader pLoader = new ProjectLoader();
+            loadDataFromFiles(pLoader, "*.zip", "*.grapholizer");
+            raw_data_file = pLoader.getZipHelper().getPathTempData();
+            _session.setZ_Helper(pLoader.getZipHelper());
+        }catch(IOException ex) {
+            new DialogGenerator().simpleErrorDialog("Load Error"
+                    , "While temp-file cleanup an error occured."
+                    , ex.getMessage());
+        }
     }
 
     @FXML
     private void loadNeoNotesFile() { loadDataFromFiles(new PageDataReader(), "*.data");}
 
     @FXML
-    private void saveProject() {
-        save();
-    }
+    private void saveProject() { save();}
 
     @FXML
     private void saveProjectTo() {
@@ -139,14 +151,12 @@ public class MainSceneController {
                 zHelper.writeTimelines(content);
                 zHelper.replaceTimelines();
             } else {
-                new DialogGenerator().simpleErrorDialog("Save Error"
-                        , "No Project File"
-                        , "You have not defined a project folder for saving yet");
+                throw new IOException("You have not yet saved to a project folder");
             }
         }catch(Exception e) {
             new DialogGenerator().simpleErrorDialog("Save Error"
                     , "While writing the file an error occured"
-                    , "This might be a problem with the format of the file, or the file has been moved");
+                    , e.getMessage());
         }
     }
     //Replace with openFileDialogue after testing.
@@ -169,14 +179,12 @@ public class MainSceneController {
                 }else {
                     raw_data_file = Path.of(absFilePath);
                 }
-
                 initializeProject();
             }
         }catch(IOException ex) {
             new DialogGenerator().simpleErrorDialog("Input Error"
                     , "File could not be loaded"
-                    , "The File you tried to open might not be in the right format or " +
-                            "or contains corrupted data");
+                    , ex.getMessage());
         }
     }
 
@@ -192,6 +200,18 @@ public class MainSceneController {
         if(isSaveDialog) sFile = fileChooser.showSaveDialog(stage);
         else sFile = fileChooser.showOpenDialog(stage);
         return sFile;
+    }
+    //@Parameters width, height:  window size in pixel
+    //@Parameter fxmlPath:  path to the fxml file in folder ressources
+    //@Returns The Fxmlloader of opened window
+    private FXMLLoader openWindowReturnController(String fxmlPath, int width, int height) throws IOException {
+            FXMLLoader loader = new FXMLLoader(getClass().getClassLoader().getResource(fxmlPath));
+            Scene scene = new Scene(loader.load(), width, height);
+            Stage stage = new Stage();
+            stage.setTitle("CSV Export");
+            stage.setScene(scene);
+            stage.show();
+            return loader;
     }
 
     void initializeProject(){

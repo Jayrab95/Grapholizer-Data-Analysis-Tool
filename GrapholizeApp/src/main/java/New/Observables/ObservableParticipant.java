@@ -5,6 +5,7 @@ import New.Model.Entities.Participant;
 
 import java.util.LinkedList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 public class ObservableParticipant {
 
@@ -31,6 +32,12 @@ public class ObservableParticipant {
 
     public ObservablePage getPage(int index) throws IndexOutOfBoundsException{
         return new ObservablePage(inner.getPage(index));
+    }
+
+    public List<ObservablePage> getAllPages(){
+        return inner.getPages().stream()
+                .map(p -> new ObservablePage(p))
+                .collect(Collectors.toList());
     }
 
     public void addObserver(ParticipantObserver obs) {

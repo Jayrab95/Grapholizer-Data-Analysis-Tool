@@ -5,6 +5,7 @@ import New.Interfaces.Observer.PageObserver;
 import New.Interfaces.Observer.StrokeObserver;
 import New.Interfaces.Selector;
 import New.Model.Entities.*;
+import New.util.PageUtil;
 import javafx.beans.property.DoubleProperty;
 import javafx.beans.property.ObjectProperty;
 import javafx.beans.property.SimpleObjectProperty;
@@ -51,6 +52,10 @@ public class ObservablePage implements Selector {
         strokes = FXCollections.observableList(generateStrokes());
         this.innerPage.set(newPage);
         notifyObservers();
+    }
+
+    public List<List<Dot>> getDotSectionsForAnnotations(String topic){
+        return PageUtil.getDotSectionsForAnnotations(inner.getTimeLine(topic), inner.getStrokes());
     }
 
     public void registerStrokeObserver(StrokeObserver strokeObserver){

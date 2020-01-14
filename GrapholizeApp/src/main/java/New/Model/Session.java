@@ -7,6 +7,8 @@ import New.Observables.ObservableParticipant;
 import New.Observables.ObservableProject;
 import New.util.ZipHelper;
 
+import java.io.IOException;
+
 public class Session {
 
     private final ObservableProject activeProject;
@@ -59,7 +61,8 @@ public class Session {
         return z_Helper;
     }
 
-    public void setZ_Helper(ZipHelper z_Helper) {
+    public void setZ_Helper(ZipHelper z_Helper) throws IOException {
+        z_Helper.cleanUp();
         this.z_Helper = z_Helper;
     }
 

@@ -33,10 +33,11 @@ public class JsonLoader implements Loader {
     private Project turnToInternalDataStructur(CompressedParticipant[] partics)
     {
         List<Participant> participants = new ArrayList<>();
-        List<TimeLineTag> tags;
         Arrays.stream(partics).parallel().forEach(cPar -> {
             Participant p = new Participant(cPar);
-            participants.add(p);
+            synchronized(participants) {
+                participants.add(p);
+            }
         });
         return new Project(participants, List.of());
     }

@@ -10,10 +10,8 @@ public class HelloFX extends Application {
 
     @Override
     public void start(Stage stage) throws Exception{
-
         Parent root = FXMLLoader.load(getClass().getClassLoader().getResource("fxml/views/MainScene.fxml"));
-        Scene scene = new Scene(root, 300, 275);
-
+        Scene scene = new Scene(root, 300, 275); //TODO choose sensible window size on basis of desktop size
         stage.setTitle("Grapholizer");
         stage.setScene(scene);
         stage.show();
@@ -22,8 +20,4 @@ public class HelloFX extends Application {
     public static void main(String[] args) {
         launch();
     }
-
-
-
-
 }
