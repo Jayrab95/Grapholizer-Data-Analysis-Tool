@@ -60,7 +60,8 @@ public class TimeLineDetailContainer extends ScrollPane {
                 detaiLScale,
                 new SimpleStringProperty("Pressure"),
                 activePage,
-                inspectedTimeLine
+                inspectedTimeLine,
+                inspectedTimeLine.getTimeLineName()
         );
         return new SimpleTimeLineWrapper(a);
     }

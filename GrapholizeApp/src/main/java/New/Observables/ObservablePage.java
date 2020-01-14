@@ -169,6 +169,10 @@ public class ObservablePage implements Selector {
         return Collections.emptyList();
     }
 
+    public List<List<Dot>> replaceMe(){
+        System.out.println("REPLACE ME");
+        return List.of();
+    }
 
 
     /**
