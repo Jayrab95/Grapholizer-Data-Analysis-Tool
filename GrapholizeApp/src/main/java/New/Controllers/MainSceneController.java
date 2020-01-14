@@ -1,5 +1,7 @@
 package New.Controllers;
 
+import New.Characteristics.*;
+import New.Characteristics.CharacteristicVelocityAverage;
 import New.CustomControls.Containers.ContentSwitcher;
 import New.CustomControls.Containers.MainCanvas;
 import New.CustomControls.Containers.TimeLineContainer;
@@ -8,18 +10,15 @@ import New.Model.Entities.*;
 import New.Model.Session;
 import New.util.*;
 
-
-import New.util.Export.JsonSerializer;
 import New.util.Export.ProjectSerializer;
 import New.util.Import.JsonLoader;
 import New.util.Import.PageDataReader;
 import New.util.Import.ProjectLoader;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
-import javafx.scene.Parent;
+import javafx.scene.Scene;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.VBox;
-import javafx.stage.DirectoryChooser;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
 
@@ -28,10 +27,13 @@ import java.io.IOException;
 import java.net.URL;
 import java.nio.file.Files;
 import java.nio.file.Path;
+import java.util.HashSet;
+import java.util.LinkedList;
 import java.util.ResourceBundle;
+import java.util.Set;
 
 public class MainSceneController {
-    // location and resources will be automatically injected by the FXML loader
+
     @FXML
     private URL location;
 
@@ -49,8 +51,11 @@ public class MainSceneController {
 
     Path raw_data_file; //TODO Lukas there should be a better way than keeping it here
 
-    public MainSceneController(){
+    final Set<Characteristic> characteristicList;
 
+    public MainSceneController(){
+        characteristicList = new HashSet<>();
+        characteristicList.add(new CharacteristicVelocityAverage("Velocity Average"));
     }
 
     @FXML
@@ -61,7 +66,6 @@ public class MainSceneController {
         anchorPane_canvasContainer.getChildren().addAll(
                 new MainCanvas(pmd.getPageWidth(), pmd.getPageHeight(), 5, _session.getActivePage()),
                 new ContentSwitcher(_session.getActiveProject(),_session.getActiveParticipant(), _session.getActivePage()));
-
         scrollPane_TimeLines.getChildren().add(new TimeLineContainer(_session.getActiveProject(), _session.getActivePage(), 0.05));
 
     }
@@ -69,10 +73,14 @@ public class MainSceneController {
     @FXML
     private void exportDataToCSV(){
         try {
-            Parent root = FXMLLoader.load(getClass().getClassLoader().getResource("fxml/views/MainScene.fxml"));
+           FXMLLoader loader = openWindowReturnController("fxml/views/ExportDialog.fxml",800,400);
+           ((ExportDialogController) loader.getController()).initialize(
+                    _session.getActiveProject().getParticipantIDs()
+                    ,_session.getActiveProject().getTimeLineTagNames()
+                    ,characteristicList);
         } catch (IOException e) {
             new DialogGenerator().simpleErrorDialog("Export Error"
-                    , "While exporting an error occured."
+                    , "While exporting an error occured." //TODO find better error description
                     , e.getMessage());
         }
     }
@@ -182,5 +190,18 @@ public class MainSceneController {
         if(isSaveDialog) sFile = fileChooser.showSaveDialog(stage);
         else sFile = fileChooser.showOpenDialog(stage);
         return sFile;
+    }
+
+    //@Parameters width, height:  window size in pixel
+    //@Parameter fxmlPath:  path to the fxml file in folder ressources
+    //@Returns The Fxmlloader of opened window
+    private FXMLLoader openWindowReturnController(String fxmlPath, int width, int height) throws IOException {
+        FXMLLoader loader = new  FXMLLoader(getClass().getClassLoader().getResource(fxmlPath));
+        Scene scene = new Scene(loader.load(), width, height);
+        Stage stage = new Stage();
+        stage.setTitle("CSV Export");
+        stage.setScene(scene);
+        stage.show();
+        return loader;
     }
 }

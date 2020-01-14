@@ -78,10 +78,10 @@
     <option name="RECENT_TEMPLATES">
       <list>
         <option value="JUnit5 Test Class" />
-        <option value="Interface" />
         <option value="FxmlFile" />
         <option value="FxmlFile" />
         <option value="Class" />
+        <option value="Interface" />
       </list>
     </option>
   </component>
@@ -315,6 +315,8 @@
       <workItem from="1578257646827" duration="70000" />
       <workItem from="1578500943704" duration="2941000" />
       <workItem from="1578504483070" duration="2248000" />
+      <workItem from="1578942500845" duration="1211000" />
+      <workItem from="1578988646313" duration="14091000" />
     </task>
     <servers />
   </component>

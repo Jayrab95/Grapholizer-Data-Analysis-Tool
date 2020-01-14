@@ -36,4 +36,9 @@ public class CharacteristicVelocityAverage extends Characteristic<Double, List<D
             return 0d;
         }
     }
+
+    @Override
+    public String toString() {
+        return getName();
+    }
 }
