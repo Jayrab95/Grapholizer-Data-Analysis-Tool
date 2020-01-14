@@ -15,9 +15,10 @@ public class Session {
     private ZipHelper z_Helper;
 
     public Session(Project p){
+        System.out.println("Session constructor called");
         this.activeProject = new ObservableProject(p);
         this.activeParticipant = new ObservableParticipant(p.getParticipant(p.getParticipantIDs().iterator().next()));
-        this.activePage = activeParticipant.getPage(0);
+        this.activePage = new ObservablePage(activeParticipant.getPage(0));
     }
 
     public ObservableProject getActiveProject() {
@@ -34,10 +35,12 @@ public class Session {
 
     public void setProject(Project p){
         activeProject.setInnerProject(p);
-        activeParticipant.setParticipant(p.getParticipant(p.getParticipantIDs().iterator().next()));
-        activePage.setPage(activeParticipant.getPage(0));
+        //The other changes are handled by content switcher
+        //activeParticipant.setParticipant(p.getParticipant(p.getParticipantIDs().iterator().next()));
+        //activePage.setPage(activeParticipant.getPage(0));
     }
 
+    /*
     //TODO: Are these needed? The content switcher now does the switching.
     //Should content switcher receive a reference to the session instead? Or keep it the way it is?
     public void switchParticipant(String participantKey){
@@ -49,6 +52,8 @@ public class Session {
         //TODO: Does there need to be a check if the index is legal?
         activePage.setPage(activeParticipant.getPage(pageIndex));
     }
+
+     */
 
     public ZipHelper getZ_Helper() {
         return z_Helper;

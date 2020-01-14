@@ -71,8 +71,12 @@ public class TimeLineContainer extends VBox {
 
     public TimeLineContainer(ObservableProject project, ObservablePage page, double initialScale){
 
-        //project.getProjectProperty().addListener(observable -> getChildren().clear());
-        page.getPageProperty().addListener(observable -> InitializeContainer(project, page));
+        this.p = page;
+
+        page.getPageProperty().addListener((observable, oldValue, newValue) -> {
+            System.out.println("TimeLineContainer has detected a page change");
+            InitializeContainer(project, page);
+        });
 
         AnchorPane.setBottomAnchor(this, 0.0);
         AnchorPane.setLeftAnchor(this, 0.0);
@@ -105,6 +109,7 @@ public class TimeLineContainer extends VBox {
     }
 
     private void InitializeContainer(ObservableProject project, ObservablePage page){
+        System.out.println("initialize container called");
         //Step 1: Create the stroke timeline
         //Step 2: For each tag, create a new timeline and pass over the observble Tag and the page. Then create the annotations.
         getChildren().clear();
@@ -112,15 +117,15 @@ public class TimeLineContainer extends VBox {
         getChildren().add(hbox_buttonHBox);
         getChildren().add(scrollPane_timeLineScrollPane);
 
-        //vBox_TimeLineBox.getChildren().clear();
+        vBox_TimeLineBox.getChildren().clear();
 
         StrokeDurationTimeLinePane strokePane = new StrokeDurationTimeLinePane(timeLineContainerController.getPage().getDuration(), timeLinesHeight, scale, timeLineContainerController.getPage(), this);
         addTimeLinePane(strokePane);
 
         //TODO: Observe if A: This actually works and B: if there are any memory leaks when chaning project.
-        for(TimeLineTag t : project.getTimeLineTags()){
-            ObservableTimeLineTag tag = new ObservableTimeLineTag(t);
-            loadTimeLine(tag, page, page.getAnnotationSet(t.getTag()));
+        for(String s : project.getTimeLineTagNames()){
+            ObservableTimeLineTag tag = project.getTimeLineTag(s);
+            loadTimeLine(tag, page, page.getAnnotationSet(s));
         }
 
     }

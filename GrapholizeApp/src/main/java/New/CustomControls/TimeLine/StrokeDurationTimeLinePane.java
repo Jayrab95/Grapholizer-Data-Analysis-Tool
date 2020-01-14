@@ -16,7 +16,7 @@ public class StrokeDurationTimeLinePane extends SelectableTimeLinePane implement
 
     public StrokeDurationTimeLinePane(double width, double height, DoubleProperty scaleProp, ObservablePage page, TimeLineContainer parent) {
         super(width, height, scaleProp, new SimpleStringProperty("Stroke duration"), parent);
-        page.addObserver(this);
+        //page.addObserver(this);
         this.p = page;
         setUpTimeLine(page.getObservableStrokes());
     }

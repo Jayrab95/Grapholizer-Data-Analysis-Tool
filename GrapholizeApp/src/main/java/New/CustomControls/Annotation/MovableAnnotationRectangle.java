@@ -79,10 +79,13 @@ public class MovableAnnotationRectangle extends SelectableAnnotationRectangle {
         setOnMouseDragged(e-> handleMouseDrag(e));
         setOnMouseReleased(e-> handleMouseRelease(e));
 
+        /*
         System.out.println("X:" + getX());
         System.out.println("LayoutX: " + getLayoutX());
         System.out.println("ScaleX: " + getScaleX());
         System.out.println("translateX: " + getTranslateX());
+
+         */
     }
 
 

@@ -30,10 +30,15 @@ public class ObservablePage implements Selector {
 
     public ObservablePage(Page inner){
         this.inner = inner;
+        strokes = FXCollections.observableList(generateStrokes());
         this.innerPage = new SimpleObjectProperty();
         this.innerPage.set(inner);
-        strokes = FXCollections.observableList(generateStrokes());
+
         observers = new LinkedList<>();
+    }
+
+    public ObservablePage(ObservablePage p){
+        this(p.inner);
     }
 
     public ObjectProperty getPageProperty(){
@@ -41,6 +46,7 @@ public class ObservablePage implements Selector {
     }
 
     public void setPage(Page newPage){
+        System.out.println("setPage in ObservabelPage called");
         this.inner = newPage;
         strokes = FXCollections.observableList(generateStrokes());
         this.innerPage.set(newPage);

@@ -22,15 +22,16 @@ public class ObservableProject {
     private Project inner;
     private List<ProjectObserver> observers;
     private List<ObservableTimeLineTag> timeLineTags;
-    private ObservableList<ObservableTimeLineTag> observableTimeLineTags;
+    //private ObservableList<ObservableTimeLineTag> observableTimeLineTags;
 
     public ObservableProject(Project inner){
         innerProjectProperty = new SimpleObjectProperty<>(inner);
         this.inner = inner;
-        observableTimeLineTags = FXCollections.emptyObservableList();
+        //observableTimeLineTags = FXCollections.emptyObservableList();
         this.observers = new LinkedList<>();
         generateTimeLineTags(inner);
 
+        /*
         //https://docs.oracle.com/javase/8/javafx/api/javafx/collections/ListChangeListener.Change.html
         //https://dzone.com/articles/javafx-collections-observablelist-and-observablema
         //http://what-when-how.com/javafx-2/understanding-observable-collections-collections-and-concurrency-javafx-2-part-2/
@@ -47,6 +48,8 @@ public class ObservableProject {
                 }
             }
         });
+
+         */
     }
 
     private void generateTimeLineTags(Project p){
@@ -91,8 +94,8 @@ public class ObservableProject {
     }
 
     public void setInnerProject(Project p){
+        System.out.println("setInnerProject in ObservableProject called");
         this.inner = p;
-        generateTimeLineTags(p);
         this.innerProjectProperty.set(p);
 
         notifyObservers();

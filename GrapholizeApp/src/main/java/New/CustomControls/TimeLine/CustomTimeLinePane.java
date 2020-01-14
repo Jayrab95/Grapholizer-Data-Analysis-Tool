@@ -63,7 +63,7 @@ public class CustomTimeLinePane extends SelectableTimeLinePane implements PageOb
         this.setOnMouseDragged(event -> handleTimelineMouseDrag(event));
         this.setOnMouseReleased(event -> handleTimelineMouseRelease(event));
 
-        p.addObserver(this);
+        //p.addObserver(this);
     }
 
     public CustomTimeLinePane(double width, double height, DoubleProperty scaleProp, ObservableTimeLineTag tag, ObservablePage p, TimeLineContainer parent, Annotation[] annotations) {
