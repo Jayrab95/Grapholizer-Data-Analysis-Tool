@@ -1,11 +1,8 @@
 package New.Controllers;
 
-import New.CustomControls.Annotation.AnnotationRectangle;
 import New.CustomControls.Annotation.SelectableAnnotationRectangle;
-import New.CustomControls.TimeLine.CustomTimeLinePane;
 import New.CustomControls.TimeLine.SelectableTimeLinePane;
 import New.Interfaces.Selector;
-import New.Observables.DotSelector;
 
 public class AnnotationSelectionController {
 

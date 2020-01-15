@@ -6,7 +6,6 @@ import New.Interfaces.Observer.StrokeObserver;
 import New.Interfaces.Selector;
 import New.Model.Entities.*;
 import New.util.PageUtil;
-import javafx.beans.property.DoubleProperty;
 import javafx.beans.property.ObjectProperty;
 import javafx.beans.property.SimpleObjectProperty;
 import javafx.collections.FXCollections;
@@ -21,88 +20,79 @@ import java.util.Optional;
 import java.util.stream.Collectors;
 
 public class ObservablePage implements Selector {
-    private Page inner;
+    //private Page inner;
 
     private ObservableList<ObservableStroke> strokes;
     private List<PageObserver> observers;
 
-    private ObjectProperty<Page> innerPage;
+    private final ObjectProperty<Page> inner;
     private ObservableList<Dot> selectedDots;
 
     public ObservablePage(Page inner){
-        this.inner = inner;
-        strokes = FXCollections.observableList(generateStrokes());
-        this.innerPage = new SimpleObjectProperty();
-        this.innerPage.set(inner);
+        strokes = FXCollections.observableList(generateStrokes(inner));
+        this.inner = new SimpleObjectProperty();
+        this.inner.set(inner);
 
         observers = new LinkedList<>();
     }
 
     public ObservablePage(ObservablePage p){
-        this(p.inner);
+        this(p.inner.get());
     }
 
     public ObjectProperty getPageProperty(){
-        return innerPage;
+        return inner;
     }
 
     public void setPage(Page newPage){
         System.out.println("setPage in ObservabelPage called");
-        this.inner = newPage;
-        strokes = FXCollections.observableList(generateStrokes());
-        this.innerPage.set(newPage);
-        notifyObservers();
+        strokes = FXCollections.observableList(generateStrokes(newPage));
+        this.inner.set(newPage);
     }
 
     public List<List<Dot>> getDotSectionsForAnnotations(String topic){
         //TODO: DEfine a static string for this timeline.
         if(topic.equals("Stroke duration"))
         {
-            return inner.getStrokes().stream()
+            return inner.get().getStrokes().stream()
                     .map(stroke -> stroke.getDots())
                     .collect(Collectors.toList());
         }
-        return PageUtil.getDotSectionsForAnnotations(inner.getTimeLine(topic), inner.getStrokes());
+        return PageUtil.getDotSectionsForAnnotations(inner.get().getTimeLine(topic), inner.get().getStrokes());
     }
 
     public List<Stroke> getAllStrokes(){
-        return inner.getStrokes();
-    }
-
-    public void registerStrokeObserver(StrokeObserver strokeObserver){
-        for(ObservableStroke s : strokes){
-            s.addObserver(strokeObserver);
-        }
+        return inner.get().getStrokes();
     }
 
     public void setPage(ObservablePage p){
-        this.setPage(p.inner);
+        this.setPage(p.inner.get());
     }
 
     public void addAnnotation(String key, Annotation a){
-        inner.getTimeLine(key).add(a);
+        inner.get().getTimeLine(key).add(a);
     }
 
     public void removeAnnotation(String key, Annotation a){
-        inner.getTimeLines().get(key).remove(a);
+        inner.get().getTimeLines().get(key).remove(a);
     }
 
     public boolean containsTag(String tag){
-        return inner.getTimeLines().containsKey(tag);
+        return inner.get().getTimeLines().containsKey(tag);
     }
 
     public Optional<List<Annotation>> getAnnotationSet(String tag){
         if(containsTag(tag)){
-            return Optional.of(inner.getTimeLine(tag));
+            return Optional.of(inner.get().getTimeLine(tag));
         }
         return Optional.empty();
     }
 
     public boolean collidesWithOtherElements(String timeLineKey, double timeStart, double timeStop){
-        List debug = inner.getTimeLine(timeLineKey).stream()
+        List debug = inner.get().getTimeLine(timeLineKey).stream()
                 .filter(annotation -> annotation.collidesWith(timeStart, timeStop))
                 .collect(Collectors.toList());
-        return inner.getTimeLine(timeLineKey).stream()
+        return inner.get().getTimeLine(timeLineKey).stream()
                 .filter(annotation -> annotation.collidesWith(timeStart, timeStop))
                 .count() > 0;
     }
@@ -128,7 +118,7 @@ public class ObservablePage implements Selector {
 
         for(AnnotationRectangle ar : rects){
             //reqStrokes contains all strokes that overlap with the bounds of this annotation.
-            List<Stroke> reqStrokes = inner.getStrokes().stream()
+            List<Stroke> reqStrokes = inner.get().getStrokes().stream()
                     .filter(observableStroke -> observableStroke.getTimeEnd() >= ar.getTimeStart() && observableStroke.getTimeStart() <= ar.getTimeStop())
                     .collect(Collectors.toList());
             for(Stroke s : reqStrokes){
@@ -147,7 +137,7 @@ public class ObservablePage implements Selector {
     @Deprecated
     public List<List<Dot>> getDotSectionsForElements(List<AnnotationRectangle> elements){
         //Only proceed with filtering if even necessary.
-        if(inner.getStrokes().size() > 0 && elements.size() > 0){
+        if(inner.get().getStrokes().size() > 0 && elements.size() > 0){
 
             double lowerBound = elements.get(0).getTimeStart();
             double upperBound = elements.get(elements.size()-1).getTimeStop();
@@ -156,7 +146,7 @@ public class ObservablePage implements Selector {
              * The Lambda statement first filters for the relevant strokes.
              * Then it creates a flatmap of all dots within the strokes and filters for dots within the time range.
              */
-            List<Dot> allDotsInTimeRange = inner.getStrokes().stream()
+            List<Dot> allDotsInTimeRange = inner.get().getStrokes().stream()
                     .filter(observableStroke -> observableStroke.getTimeStart() >= lowerBound && observableStroke.getTimeEnd() <= upperBound)
                     .map(observableStroke -> observableStroke.getDots())
                     .flatMap(dots -> dots.stream()
@@ -203,9 +193,9 @@ public class ObservablePage implements Selector {
         return res;
     }
 
-    public List<ObservableStroke> generateStrokes(){
+    private List<ObservableStroke> generateStrokes(Page p){
         List<ObservableStroke> observableStrokes = new LinkedList<>();
-        for(Stroke s : inner.getStrokes()){
+        for(Stroke s : p.getStrokes()){
             observableStrokes.add(new ObservableStroke(s, Color.BLACK));
         }
         return observableStrokes;
@@ -217,33 +207,16 @@ public class ObservablePage implements Selector {
 
     public List<ObservableAnnotation>getTimeLineAnnotations(String timeLineKey){
         List<ObservableAnnotation> res = new LinkedList<>();
-        for(Annotation a : inner.getTimeLine(timeLineKey)){
+        for(Annotation a : inner.get().getTimeLine(timeLineKey)){
             res.add(new ObservableAnnotation(a));
         }
         return res;
     }
     public PageMetaData getPageMetaData(){
-        return inner.getPageMetaData();
+        return inner.get().getPageMetaData();
     }
 
-    public double getDuration(){return inner.getDuration();}
-
-
-    public void addObserver(PageObserver obs) {
-        this.observers.add(obs);
-    }
-
-
-    public void removeObserver(PageObserver obs) {
-        this.observers.remove(obs);
-    }
-
-
-    public void notifyObservers() {
-        for(PageObserver obs : this.observers){
-            obs.update(this);
-        }
-    }
+    public double getDuration(){return inner.get().getDuration();}
 
     @Override
     public void select(double timeStart, double timeEnd) {

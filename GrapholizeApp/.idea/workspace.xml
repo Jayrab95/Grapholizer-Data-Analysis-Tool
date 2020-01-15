@@ -7,21 +7,13 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="f9c9e85c-b6d3-4a2f-99c7-3350288aea5b" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/src/main/java/New/Filters/DefaultFilter.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/New/Filters/PressureFilter.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/artifacts/GrapholizeAppAID_main_jar.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/artifacts/GrapholizeAppAID_jar.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/New/Characteristics/CharacteristicVelocityAverage.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/New/Characteristics/CharacteristicVelocityAverage.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/New/CustomControls/Containers/FilterContainer.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/New/CustomControls/Containers/FilterContainer.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/New/Controllers/AnnotationSelectionController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/New/Controllers/AnnotationSelectionController.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/New/CustomControls/Containers/MainCanvas.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/New/CustomControls/Containers/MainCanvas.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/New/CustomControls/Containers/TimeLineDetailContainer.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/New/CustomControls/Containers/TimeLineDetailContainer.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/New/CustomControls/TimeLine/SubTimeLines/DetailTimeLine.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/New/CustomControls/TimeLine/SubTimeLines/DetailTimeLine.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/New/CustomControls/TimeLine/SubTimeLines/PressureTimeLine.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/New/CustomControls/TimeLine/SubTimeLines/PressureTimeLine.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/New/CustomControls/TimeLine/SubTimeLines/VelocityTimeLine.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/New/CustomControls/TimeLine/SubTimeLines/VelocityTimeLine.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/New/Filters/Filter.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/New/Filters/Filter.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/New/Filters/VelocityFilter.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/New/Filters/VelocityFilter.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/New/Interfaces/Observer/DotSelectObserver.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/New/Model/Session.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/New/Model/Session.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/New/Observables/DotSelector.java" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/New/Observables/ObservablePage.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/New/Observables/ObservablePage.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/New/util/math/VelocityMathUtil.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/New/util/math/VelocityMathUtil.java" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -459,6 +451,21 @@
           <url>file://$PROJECT_DIR$/src/main/java/New/Filters/VelocityFilter.java</url>
           <line>34</line>
           <option name="timeStamp" value="87" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/src/main/java/New/Controllers/MainSceneController.java</url>
+          <line>147</line>
+          <option name="timeStamp" value="88" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/src/main/java/New/Controllers/MainSceneController.java</url>
+          <line>121</line>
+          <option name="timeStamp" value="89" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/src/main/java/New/util/ZipHelper.java</url>
+          <line>29</line>
+          <option name="timeStamp" value="91" />
         </line-breakpoint>
       </breakpoints>
     </breakpoint-manager>
