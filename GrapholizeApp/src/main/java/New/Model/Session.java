@@ -65,7 +65,6 @@ public class Session {
         if(this.z_Helper!=null){
             this.z_Helper.cleanUp();
         }
-
         this.z_Helper = z_Helper;
     }
 

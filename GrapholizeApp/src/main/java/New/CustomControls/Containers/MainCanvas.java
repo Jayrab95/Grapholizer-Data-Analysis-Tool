@@ -4,6 +4,7 @@ import New.Filters.*;
 import New.Interfaces.Observer.FilterObserver;
 import New.Interfaces.Observer.PageObserver;
 import New.Interfaces.Observer.StrokeObserver;
+import New.Interfaces.Selector;
 import New.Observables.*;
 import javafx.beans.property.DoubleProperty;
 import javafx.beans.property.SimpleDoubleProperty;
@@ -28,7 +29,7 @@ public class MainCanvas extends VBox implements PageObserver, StrokeObserver, Fi
     private final double canvasWidth;
     private final double canvasHeight;
     private DoubleProperty canvasScale;
-    private ObservablePage p;
+    private Selector selector;
 
 
     private Light.Point anchor;
@@ -41,8 +42,12 @@ public class MainCanvas extends VBox implements PageObserver, StrokeObserver, Fi
         this.canvasWidth = initWidth;
         this.canvasHeight = initHeight;
         this.canvasScale = new SimpleDoubleProperty(initScale);
-        this.p = obsPage;
-        this.ofc = new ObservableFilterCollection(new DefaultFilter(p),new StrokeColorFilter(p,Color.BLUE, Color.RED), new PressureFilter(p), new VelocityFilter(p));
+        this.selector = obsPage;
+        this.ofc = new ObservableFilterCollection(
+                new DefaultFilter(obsPage),
+                new StrokeColorFilter(obsPage,Color.BLUE, Color.RED),
+                new PressureFilter(obsPage),
+                new VelocityFilter(obsPage));
         this.ofc.addObserver(this);
 
         scaleSlider = initializeSlider(initScale);
@@ -54,23 +59,17 @@ public class MainCanvas extends VBox implements PageObserver, StrokeObserver, Fi
         canvas.setPrefWidth(initWidth * canvasScale.get());
         canvas.setPrefHeight(initHeight * canvasScale.get());
 
-        obsPage.addObserver(this);
-        obsPage.registerStrokeObserver(this);
+        obsPage.getPageProperty().addListener((observable, oldValue, newValue) -> addStrokes(obsPage));
 
         initializeSelector();
         canvas.setOnMousePressed(this::startSelection);
         canvas.setOnMouseDragged(this::moveSelection);
         canvas.setOnMouseReleased(this::endSelection);
 
-        initializeCanvas();
-    }
-
-    private void initializeCanvas(){
         canvasContainer = new ScrollPane(canvas);
         filterContainer = new FilterContainer(ofc);
         getChildren().addAll(scaleSlider, filterContainer,canvasContainer);
-        addStrokes();
-        //drawStrokes();
+        addStrokes(obsPage);
     }
 
     private Slider initializeSlider(double init){
@@ -85,7 +84,7 @@ public class MainCanvas extends VBox implements PageObserver, StrokeObserver, Fi
         canvas.setPrefHeight(canvasHeight * canvasScale.get());
     }
 
-    private void addStrokes(){
+    private void addStrokes(ObservablePage p){
         canvas.getChildren().clear();
         for(ObservableStroke s : p.getObservableStrokes()){
             List<ObservableDot> dots = s.getObservableDots();
@@ -93,8 +92,6 @@ public class MainCanvas extends VBox implements PageObserver, StrokeObserver, Fi
                 canvas.getChildren().add(new DotLine(dots.get(i), dots.get(i+1), canvasScale));
             }
         }
-        //List<ObservableDot> dots = p.getObservableStrokes().stream().flatMap(s -> s.getObservableDots().stream()).collect(Collectors.toList());
-
     }
 
     private void drawStrokes(){
@@ -153,7 +150,7 @@ public class MainCanvas extends VBox implements PageObserver, StrokeObserver, Fi
 
     //Source: https://coderanch.com/t/689100/java/rectangle-dragging-image
     private void startSelection(MouseEvent event){
-        p.deselectAll();
+        selector.deselectAll();
 
         System.out.println("Start Selection called");
         System.out.println("X:" + event.getX() + " Y:" + event.getY());
@@ -178,20 +175,16 @@ public class MainCanvas extends VBox implements PageObserver, StrokeObserver, Fi
 
     private void endSelection(MouseEvent event){
         System.out.println("End selection called");
-        p.selectRectUnscaled(selection.getX(), selection.getY(), selection.getWidth(), selection.getHeight(), canvasScale.get());
+        selector.selectRectUnscaled(selection.getX(), selection.getY(), selection.getWidth(), selection.getHeight(), canvasScale.get());
         selection.setWidth(0);
         selection.setHeight(0);
         canvas.getChildren().remove(selection);
-
-
-
-        //resetCanvas();
     }
 
     @Override
     public void update(ObservablePage sender) {
         //p.registerStrokeObserver(this);
-        addStrokes();
+        addStrokes(sender);
         resetCanvas();
     }
 
