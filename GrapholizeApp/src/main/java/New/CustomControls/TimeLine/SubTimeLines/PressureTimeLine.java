@@ -11,20 +11,16 @@ import javafx.scene.shape.Line;
 
 import java.util.List;
 
-public class PressureTimeLine extends TimeLinePane {
+public class PressureTimeLine extends DetailTimeLine {
 
-    ObservablePage p;
-    SelectableTimeLinePane parent;
-
-    public PressureTimeLine(double totalLength, double height, DoubleProperty scaleProp, StringProperty name, ObservablePage p, SelectableTimeLinePane parent) {
-        super(totalLength, height, scaleProp, name);
-        this.p = p;
-        this.parent = parent;
-        setUp();
+    public PressureTimeLine(double totalLength, double height, DoubleProperty scaleProp, StringProperty name, ObservablePage p, SelectableTimeLinePane parent, String topic) {
+        super(totalLength, height, scaleProp, name, p, topic);
+        //setUp();
     }
 
-    private void setUp(){
-        List<List<Dot>> dotSections = p.getDotSectionsForAnnotations(parent.getAnnotations());
+    @Override
+    protected void setUp(){
+        List<List<Dot>> dotSections = page.getDotSectionsForAnnotations(topic);
         for(List<Dot> dots : dotSections){
             //At least 2 dots are required so that a line can be drawn
             if(dots.size() >=2){

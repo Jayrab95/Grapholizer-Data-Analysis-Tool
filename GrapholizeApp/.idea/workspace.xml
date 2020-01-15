@@ -7,8 +7,21 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="f9c9e85c-b6d3-4a2f-99c7-3350288aea5b" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/src/main/java/New/util/PageUtil.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/New/Filters/DefaultFilter.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/New/Filters/PressureFilter.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/artifacts/GrapholizeAppAID_main_jar.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/artifacts/GrapholizeAppAID_jar.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/New/Characteristics/CharacteristicVelocityAverage.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/New/Characteristics/CharacteristicVelocityAverage.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/New/CustomControls/Containers/FilterContainer.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/New/CustomControls/Containers/FilterContainer.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/New/CustomControls/Containers/MainCanvas.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/New/CustomControls/Containers/MainCanvas.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/New/CustomControls/Containers/TimeLineDetailContainer.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/New/CustomControls/Containers/TimeLineDetailContainer.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/New/CustomControls/TimeLine/SubTimeLines/DetailTimeLine.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/New/CustomControls/TimeLine/SubTimeLines/DetailTimeLine.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/New/CustomControls/TimeLine/SubTimeLines/PressureTimeLine.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/New/CustomControls/TimeLine/SubTimeLines/PressureTimeLine.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/New/CustomControls/TimeLine/SubTimeLines/VelocityTimeLine.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/New/CustomControls/TimeLine/SubTimeLines/VelocityTimeLine.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/New/Filters/Filter.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/New/Filters/Filter.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/New/Filters/VelocityFilter.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/New/Filters/VelocityFilter.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/New/Observables/ObservablePage.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/New/Observables/ObservablePage.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/New/util/math/VelocityMathUtil.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/New/util/math/VelocityMathUtil.java" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -67,8 +80,8 @@
         <option value="JUnit5 Test Class" />
         <option value="FxmlFile" />
         <option value="FxmlFile" />
-        <option value="Class" />
         <option value="Interface" />
+        <option value="Class" />
       </list>
     </option>
   </component>
@@ -104,10 +117,10 @@
     <property name="nodejs_interpreter_path.stuck_in_default_project" value="undefined stuck path" />
     <property name="nodejs_npm_path_reset_for_default_project" value="true" />
     <property name="nodejs_package_manager_path" value="npm" />
-    <property name="project.structure.last.edited" value="Modules" />
+    <property name="project.structure.last.edited" value="Project" />
     <property name="project.structure.proportion" value="0.15" />
     <property name="project.structure.side.proportion" value="0.31954023" />
-    <property name="settings.editor.selected.configurable" value="preferences.keymap" />
+    <property name="settings.editor.selected.configurable" value="reference.projectsettings.compiler.javacompiler" />
   </component>
   <component name="RecentsManager">
     <key name="CreateTestDialog.RecentsKey">
@@ -154,7 +167,7 @@
       </list>
     </option>
   </component>
-  <component name="RunManager" selected="Gradle.GrapholizeApp [jar]">
+  <component name="RunManager" selected="JAR Application.GrapholizeAppAID-1.0-SNAPSHOT.jar">
     <configuration default="true" type="Applet">
       <option name="POLICY_FILE" value="$APPLICATION_HOME_DIR$/bin/appletviewer.policy" />
       <method v="2">
@@ -381,6 +394,7 @@
       <workItem from="1578860236954" duration="3230000" />
       <workItem from="1578987763220" duration="5209000" />
       <workItem from="1579023780568" duration="7748000" />
+      <workItem from="1579100938702" duration="620000" />
     </task>
     <servers />
   </component>
@@ -442,17 +456,11 @@
           <option name="timeStamp" value="69" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="java-line">
-          <url>file://$PROJECT_DIR$/src/main/java/New/CustomControls/TimeLine/SubTimeLines/PressureTimeLine.java</url>
-          <line>29</line>
-          <option name="timeStamp" value="74" />
+          <url>file://$PROJECT_DIR$/src/main/java/New/Filters/VelocityFilter.java</url>
+          <line>34</line>
+          <option name="timeStamp" value="87" />
         </line-breakpoint>
       </breakpoints>
     </breakpoint-manager>
-    <watches-manager>
-      <configuration name="Remote">
-        <watch expression="pathTempTimelines" language="JAVA" />
-        <watch expression="((HashMap)_session.activePage.inner.timeLines).entrySet().toArray()[3]" custom="java.util.HashMap" />
-      </configuration>
-    </watches-manager>
   </component>
 </project>

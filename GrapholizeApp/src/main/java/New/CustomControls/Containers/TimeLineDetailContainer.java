@@ -5,6 +5,7 @@ import New.CustomControls.TimeLine.AnnotationTimeLinePane;
 import New.CustomControls.TimeLine.CustomTimeLinePane;
 import New.CustomControls.TimeLine.SelectableTimeLinePane;
 import New.CustomControls.TimeLine.SubTimeLines.PressureTimeLine;
+import New.CustomControls.TimeLine.SubTimeLines.VelocityTimeLine;
 import New.CustomControls.TimeLine.TimeLinePane;
 import javafx.beans.property.DoubleProperty;
 import javafx.beans.property.SimpleDoubleProperty;
@@ -37,7 +38,7 @@ public class TimeLineDetailContainer extends ScrollPane {
     private void generateDetailContainer(){
         subTimeLines = new VBox();
         subTimeLines.getChildren().add(copy());
-        subTimeLines.getChildren().add(pressure());
+        subTimeLines.getChildren().addAll(pressure(), velocity());
         this.setContent(subTimeLines);
     }
 
@@ -60,7 +61,20 @@ public class TimeLineDetailContainer extends ScrollPane {
                 detaiLScale,
                 new SimpleStringProperty("Pressure"),
                 activePage,
-                inspectedTimeLine
+                inspectedTimeLine,
+                inspectedTimeLine.getTimeLineName()
+        );
+        return new SimpleTimeLineWrapper(a);
+    }
+
+    private SimpleTimeLineWrapper velocity(){
+        VelocityTimeLine a = new VelocityTimeLine(
+                getLength(),
+                inspectedTimeLine.getHeight(),
+                detaiLScale,
+                new SimpleStringProperty("Velocity"),
+                activePage,
+                inspectedTimeLine.getTimeLineName()
         );
         return new SimpleTimeLineWrapper(a);
     }

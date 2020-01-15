@@ -1,32 +1,23 @@
 package New.CustomControls.Containers;
 
-import New.Filters.Filter;
-import New.Filters.StrokeColorFilter;
-import New.Filters.StrokeDifferentiationFilter;
-import New.Filters.StrokeFilter;
+import New.Filters.*;
 import New.Interfaces.Observer.FilterObserver;
 import New.Interfaces.Observer.PageObserver;
 import New.Interfaces.Observer.StrokeObserver;
-import New.Model.Entities.Dot;
 import New.Observables.*;
 import javafx.beans.property.DoubleProperty;
 import javafx.beans.property.SimpleDoubleProperty;
 
-import javafx.scene.canvas.Canvas;
-import javafx.scene.canvas.GraphicsContext;
-import javafx.scene.control.Button;
 import javafx.scene.control.ScrollPane;
 import javafx.scene.control.Slider;
 import javafx.scene.effect.Light;
 import javafx.scene.input.MouseEvent;
-import javafx.scene.layout.HBox;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
 
 import java.util.List;
-import java.util.stream.Collectors;
 
 public class MainCanvas extends VBox implements PageObserver, StrokeObserver, FilterObserver {
     private Slider scaleSlider;
@@ -51,7 +42,7 @@ public class MainCanvas extends VBox implements PageObserver, StrokeObserver, Fi
         this.canvasHeight = initHeight;
         this.canvasScale = new SimpleDoubleProperty(initScale);
         this.p = obsPage;
-        this.ofc = new ObservableFilterCollection(new StrokeColorFilter("Stroke differentiation", Color.BLUE, Color.RED));
+        this.ofc = new ObservableFilterCollection(new DefaultFilter(p),new StrokeColorFilter(p,Color.BLUE, Color.RED), new PressureFilter(p), new VelocityFilter(p));
         this.ofc.addObserver(this);
 
         scaleSlider = initializeSlider(initScale);
@@ -214,6 +205,7 @@ public class MainCanvas extends VBox implements PageObserver, StrokeObserver, Fi
         //resetCanvas();
         //TODO: QUick hack, this obviously needs to be reworked.
         // work with the FX Bindings to automatically update the stroke/dot colors.
+        /*
         for(Filter f : sender.getFilters()){
             if(f instanceof StrokeFilter){
                 for(ObservableStroke s : p.getObservableStrokes()){
@@ -228,5 +220,7 @@ public class MainCanvas extends VBox implements PageObserver, StrokeObserver, Fi
                 }
             }
         }
+
+         */
     }
 }
