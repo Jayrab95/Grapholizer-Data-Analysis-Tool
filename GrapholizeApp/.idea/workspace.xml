@@ -7,13 +7,15 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="f9c9e85c-b6d3-4a2f-99c7-3350288aea5b" name="Default Changelist" comment="">
+      <change afterPath="$PROJECT_DIR$/src/main/resources/data/meeting.zip" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/New/Controllers/AnnotationSelectionController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/New/Controllers/AnnotationSelectionController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/New/CustomControls/Containers/MainCanvas.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/New/CustomControls/Containers/MainCanvas.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/New/Interfaces/Observer/DotSelectObserver.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/New/Model/Session.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/New/Model/Session.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/New/Observables/DotSelector.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/New/Observables/ObservablePage.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/New/Observables/ObservablePage.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/New/Controllers/CustomTimeLineController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/New/Controllers/CustomTimeLineController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/New/Controllers/MainSceneController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/New/Controllers/MainSceneController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/New/Controllers/TimeLineContainerController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/New/Controllers/TimeLineContainerController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/New/CustomControls/Containers/TimeLineContainer.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/New/CustomControls/Containers/TimeLineContainer.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/New/CustomControls/TimeLine/CustomTimeLinePane.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/New/CustomControls/TimeLine/CustomTimeLinePane.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/New/Filters/Filter.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/New/Filters/Filter.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/New/Observables/DotLine.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/New/Observables/DotLine.java" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -338,6 +340,9 @@
       <workItem from="1579034093120" duration="678000" />
       <workItem from="1579084114348" duration="37000" />
       <workItem from="1579084189753" duration="6016000" />
+      <workItem from="1579188384742" duration="865000" />
+      <workItem from="1579189637180" duration="11187000" />
+      <workItem from="1579692889743" duration="658000" />
     </task>
     <servers />
   </component>
@@ -414,11 +419,23 @@
           <option name="timeStamp" value="89" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="java-line">
-          <url>file://$PROJECT_DIR$/src/main/java/New/util/ZipHelper.java</url>
-          <line>29</line>
-          <option name="timeStamp" value="91" />
+          <url>file://$PROJECT_DIR$/src/main/java/New/Filters/StrokeColorFilter.java</url>
+          <line>22</line>
+          <option name="timeStamp" value="96" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/src/main/java/New/CustomControls/Containers/MainCanvas.java</url>
+          <line>87</line>
+          <option name="timeStamp" value="97" />
         </line-breakpoint>
       </breakpoints>
     </breakpoint-manager>
+    <watches-manager>
+      <configuration name="Remote">
+        <watch expression="canvas" language="JAVA" />
+        <watch expression="dots.get(0)" />
+        <watch expression="canvas.children.get(0)" />
+      </configuration>
+    </watches-manager>
   </component>
 </project>

@@ -218,27 +218,20 @@ public class MainSceneController {
         //_session = new Session(new JsonLoader().load("src\\main\\resources\\data\\lukas_test_1.json"));
         PageMetaData pmd = _session.getActivePage().getPageMetaData();
         //_session.setZ_Helper(loader.getZipHelper());
-        if(optionalCanvas.isEmpty()){
-            System.out.println("new canvas");
-            optionalCanvas = Optional.of(new MainCanvas(pmd.getPageWidth(), pmd.getPageHeight(), 5, _session.getActivePage()));
-            anchorPane_canvasContainer.getChildren().add(optionalCanvas.get());
-        }
         if(optionalContentSwitcher.isEmpty()){
             System.out.println("new switcher");
             optionalContentSwitcher = Optional.of(new ContentSwitcher(_session.getActiveProject(),_session.getActiveParticipant(), _session.getActivePage()));
             anchorPane_canvasContainer.getChildren().add(optionalContentSwitcher.get());
+        }
+        if(optionalCanvas.isEmpty()){
+            System.out.println("new canvas");
+            optionalCanvas = Optional.of(new MainCanvas(pmd.getPageWidth(), pmd.getPageHeight(), 5, _session.getActivePage()));
+            anchorPane_canvasContainer.getChildren().add(optionalCanvas.get());
         }
         if(optionalTimeLineContainer.isEmpty()){
             System.out.println("new container");
             optionalTimeLineContainer = Optional.of(new TimeLineContainer(_session.getActiveProject(), _session.getActivePage(), 0.05));
             scrollPane_TimeLines.getChildren().add(optionalTimeLineContainer.get());
         }
-        /*
-        anchorPane_canvasContainer.getChildren().addAll(
-                new MainCanvas(pmd.getPageWidth(), pmd.getPageHeight(), 5, _session.getActivePage()),
-                new ContentSwitcher(_session.getActiveProject(),_session.getActiveParticipant(), _session.getActivePage()));
-        scrollPane_TimeLines.getChildren().add(new TimeLineContainer(_session.getActiveProject(), _session.getActivePage(), 0.05));
-
-         */
     }
 }

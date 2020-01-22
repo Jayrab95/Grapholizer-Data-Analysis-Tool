@@ -9,7 +9,6 @@ import New.Execptions.NoTimeLineSelectedException;
 import New.Execptions.TimeLineTagException;
 import New.Interfaces.Observer.Observer;
 import New.Model.Entities.Annotation;
-import New.Model.Entities.TimeLineTag;
 import New.Observables.*;
 import New.util.DialogGenerator;
 import javafx.beans.property.DoubleProperty;
@@ -38,6 +37,13 @@ public class TimeLineContainer extends VBox {
     private final static String TXT_TL_TIMELINETAG_LABEL = "Timeline tag:";
     private final static String TXT_TL_TAG_DEFAULTVAL = "New Timeline";
     private final static Color COLOR_TL_TAG_DEFAULTVAL = Color.CADETBLUE;
+
+    private final static String TXT_TL_FILTER_TITLE = "Filter for annotations";
+    private final static String TXT_TL_FILTER_HEADER = "Filter for annotations with a specific text";
+    private final static String TXT_TL_FILTER_TEXT= "You may search other annotation sets on this page for annotations with a specific text."
+            + "\nYou may select a topic and filter the annotation set of this topic for annotations with the given text."
+            + "\nIf you leave the checkbox unselected, an empty annotation set will be created.";
+
 
     private final static String TXT_TL_EDIT_TITLE = "Edit timeline";
     private final static String TXT_TL_EDIT_HEADER = "Editing a timeline";
@@ -159,7 +165,7 @@ public class TimeLineContainer extends VBox {
     }
 
     public void createNewTimeLine(){
-        Optional<DialogResult> tag = openTimeLineCreationDialog(
+        Optional<TopicCreationDialogResult> tag = openTimeLineCreationDialog(
                 TXT_TL_CREATION_TITLE,
                 TXT_TL_CREATION_HEADER,
                 TXT_TL_CREATION_TEXT,
@@ -167,10 +173,24 @@ public class TimeLineContainer extends VBox {
                 TXT_TL_TAG_DEFAULTVAL,
                 COLOR_TL_TAG_DEFAULTVAL,
                 false);
+        Optional<AnnotationFilterDialogResult> filtered = Optional.empty();
+        if(timeLineContainerController.getTopics().size() > 0){
+            filtered = filterForAnnotationsDialog(
+                    TXT_TL_FILTER_TITLE,
+                    TXT_TL_FILTER_HEADER,
+                    TXT_TL_FILTER_TEXT);
+        }
         if(tag.isPresent()){
-            ObservableTimeLineTag newTag = timeLineContainerController.createNewTimeLineTag(tag.get().timeLinename, tag.get().timeLineColor);
-            TimeLinePane timeLinePane = createNewTimeLinePane(newTag, timeLineContainerController.getPage(),Optional.empty());
-            addTimeLinePane(timeLinePane);
+            if(filtered.isPresent()){
+                ObservableTimeLineTag newTag = timeLineContainerController.createNewTimeLineTag(tag.get().topicName, tag.get().topicColor);
+                TimeLinePane timeLinePane = createNewTimeLinePaneOutOfAnnotations(newTag, timeLineContainerController.getPage(), filtered.get().getFilteredAnnotations());
+                addTimeLinePane(timeLinePane);
+            }
+            else{
+                ObservableTimeLineTag newTag = timeLineContainerController.createNewTimeLineTag(tag.get().topicName, tag.get().topicColor);
+                TimeLinePane timeLinePane = createNewTimeLinePane(newTag, timeLineContainerController.getPage(),Optional.empty());
+                addTimeLinePane(timeLinePane);
+            }
         }
     }
 
@@ -178,7 +198,7 @@ public class TimeLineContainer extends VBox {
         if(!selectedTimeLine.timeLineSelected()){
             throw new NoTimeLineSelectedException();
         }
-        Optional<DialogResult> tag = openTimeLineCreationDialog(
+        Optional<TopicCreationDialogResult> tag = openTimeLineCreationDialog(
                 TXT_TL_CREATION_TITLE,
                 TXT_TL_CREATION_HEADER,
                 TXT_TL_CREATION_TEXT,
@@ -187,14 +207,14 @@ public class TimeLineContainer extends VBox {
                 COLOR_TL_TAG_DEFAULTVAL,
                 false);
         if(tag.isPresent()){
-            ObservableTimeLineTag newTag = timeLineContainerController.createNewTimeLineTag(tag.get().timeLinename, tag.get().timeLineColor);
+            ObservableTimeLineTag newTag = timeLineContainerController.createNewTimeLineTag(tag.get().topicName, tag.get().topicColor);
             TimeLinePane timeLinePane = createNewTimeLineTagOutOfSelected(newTag, timeLineContainerController.getPage());
             addTimeLinePane(timeLinePane);
         }
     }
 
     public void createNewTimeLineOutOfSelectedDots() throws NoTimeLineSelectedException {
-        Optional<DialogResult> tag = openTimeLineCreationDialog(
+        Optional<TopicCreationDialogResult> tag = openTimeLineCreationDialog(
                 TXT_TL_CREATION_TITLE,
                 TXT_TL_CREATION_HEADER,
                 TXT_TL_CREATION_TEXT,
@@ -203,14 +223,31 @@ public class TimeLineContainer extends VBox {
                 COLOR_TL_TAG_DEFAULTVAL,
                 false);
         if(tag.isPresent()){
-            ObservableTimeLineTag newTag = timeLineContainerController.createNewTimeLineTag(tag.get().timeLinename, tag.get().timeLineColor);
+            ObservableTimeLineTag newTag = timeLineContainerController.createNewTimeLineTag(tag.get().topicName, tag.get().topicColor);
+            TimeLinePane timeLinePane = createNewTimeLinePaneOutOfSelectedDots(newTag, timeLineContainerController.getPage());
+            addTimeLinePane(timeLinePane);
+        }
+    }
+
+    public void createNewTimeLineOutOfFilteredAnnotations(){
+        Optional<AnnotationFilterDialogResult> filter;
+        Optional<TopicCreationDialogResult> tag = openTimeLineCreationDialog(
+                TXT_TL_CREATION_TITLE,
+                TXT_TL_CREATION_HEADER,
+                TXT_TL_CREATION_TEXT,
+                TXT_TL_TIMELINETAG_LABEL,
+                TXT_TL_TAG_DEFAULTVAL,
+                COLOR_TL_TAG_DEFAULTVAL,
+                false);
+        if(tag.isPresent()){
+            ObservableTimeLineTag newTag = timeLineContainerController.createNewTimeLineTag(tag.get().topicName, tag.get().topicColor);
             TimeLinePane timeLinePane = createNewTimeLinePaneOutOfSelectedDots(newTag, timeLineContainerController.getPage());
             addTimeLinePane(timeLinePane);
         }
     }
 
     public void createNewTimeLineOutOfCombinedElement(Annotation a){
-        Optional<DialogResult> tag = openTimeLineCreationDialog(
+        Optional<TopicCreationDialogResult> tag = openTimeLineCreationDialog(
                 TXT_TL_CREATION_TITLE,
                 TXT_TL_CREATION_HEADER,
                 TXT_TL_CREATION_TEXT,
@@ -220,7 +257,7 @@ public class TimeLineContainer extends VBox {
                 false
         );
         if(tag.isPresent()){
-            ObservableTimeLineTag newTag = timeLineContainerController.createNewTimeLineTag(tag.get().timeLinename, tag.get().timeLineColor);
+            ObservableTimeLineTag newTag = timeLineContainerController.createNewTimeLineTag(tag.get().topicName, tag.get().topicColor);
             TimeLinePane timeLinePane = createNewTimeLinePaneOutOfCombined(newTag, timeLineContainerController.getPage(), a);
             addTimeLinePane(timeLinePane);
         }
@@ -253,6 +290,10 @@ public class TimeLineContainer extends VBox {
         return newTimeLine;
     }
 
+    private TimeLinePane createNewTimeLinePaneOutOfAnnotations(ObservableTimeLineTag tag, ObservablePage page, Annotation[] annotations){
+        return new CustomTimeLinePane(timeLineContainerController.getPage().getDuration(), timeLinesHeight, scale, tag, page, this, annotations);
+    }
+
     private void addTimeLineToChildren(TimeLinePane timeline){
         getChildren().remove(hbox_buttonHBox);
         getChildren().add(timeline);
@@ -260,7 +301,7 @@ public class TimeLineContainer extends VBox {
     }
 
     public void editTimeLine(ObservableTimeLineTag oldTag){
-        Optional<DialogResult> tag = openTimeLineCreationDialog(
+        Optional<TopicCreationDialogResult> tag = openTimeLineCreationDialog(
                 TXT_TL_EDIT_TITLE,
                 TXT_TL_EDIT_HEADER,
                 TXT_TL_EDIT_TEXT,
@@ -269,9 +310,9 @@ public class TimeLineContainer extends VBox {
                 oldTag.getColor(),
                 true);
         if (tag.isPresent()){
-            timeLineContainerController.editTimeLineTag(oldTag.getTag(), tag.get().timeLinename, tag.get().timeLineColor);
-            oldTag.setTag(tag.get().timeLinename);
-            oldTag.setColor(tag.get().timeLineColor);
+            timeLineContainerController.editTimeLineTag(oldTag.getTag(), tag.get().topicName, tag.get().topicColor);
+            oldTag.setTag(tag.get().topicName);
+            oldTag.setColor(tag.get().topicColor);
         }
     }
 
@@ -297,16 +338,62 @@ public class TimeLineContainer extends VBox {
         }
     }
 
+
+
+    private Optional<AnnotationFilterDialogResult> filterForAnnotationsDialog(String title, String header, String text){
+        CheckBox checkBox_filterForAnnotations = new CheckBox("Filter for annotations");
+        ComboBox<String> comboBoxTopics = new ComboBox<>();
+        TextField textBox_filterText = new TextField("");
+
+        comboBoxTopics.disableProperty().bind(checkBox_filterForAnnotations.selectedProperty().not());
+        textBox_filterText.disableProperty().bind(checkBox_filterForAnnotations.selectedProperty().not());
+
+        comboBoxTopics.getItems().addAll(timeLineContainerController.getTopics());
+
+        comboBoxTopics.getSelectionModel().select(0);
+
+        Dialog<AnnotationFilterDialogResult> dialog = new Dialog<>();
+        dialog.setTitle(title);
+        dialog.setHeaderText(header);
+        dialog.setContentText(text);
+
+
+        GridPane grid = new GridPane();
+        grid.add(checkBox_filterForAnnotations, 0, 0);
+        grid.add(comboBoxTopics, 0,1);
+        grid.add(textBox_filterText, 0, 2);
+
+        ButtonType buttonTypeOk = new ButtonType("Okay", ButtonBar.ButtonData.OK_DONE);
+
+        dialog.getDialogPane().setContent(grid);
+        dialog.getDialogPane().getButtonTypes().addAll(buttonTypeOk);
+
+        dialog.setResultConverter(b -> {
+            if (b == buttonTypeOk && checkBox_filterForAnnotations.isSelected()) {
+                return new AnnotationFilterDialogResult(comboBoxTopics.getValue(), textBox_filterText.getText());
+            }
+            return null;
+        });
+
+        return dialog.showAndWait();
+    }
+
     //region CreateNewTimeLineDialogue
     //https://code.makery.ch/blog/javafx-dialogs-official/
     //https://examples.javacodegeeks.com/desktop-java/javafx/dialog-javafx/javafx-dialog-example/
     //https://docs.oracle.com/javase/8/javafx/api/javafx/scene/control/Dialog.html#resultConverterProperty--
-    private Optional<DialogResult> openTimeLineCreationDialog(String dialogTitle, String dialogHeader, String dialogText, String labelText, String defaultValue, Color defaultColor, boolean editCall){
+    //TODO: perhaps extract dialog into separate class
+    //TODO: onlyCreate is a cheap solution to keep the dialog reusable. Perhaps there's a better solution?
+    // Problem: The option to filter for other annotations on a specific timeline should only show up when creating a new timeline
+    // and not when using any of the other options to create a timeline.
+    // Possible solution: create a separate dialog only for the search/filtering of annotations, then open the regular create dialog.
+    // Afterwards, use one of the creation methods that takes an annotation array.
+    private Optional<TopicCreationDialogResult> openTimeLineCreationDialog(String dialogTitle, String dialogHeader, String dialogText, String labelText, String defaultValue, Color defaultColor, boolean editCall){
         /*
         This dialog is specific to the creation of timelines and contains some more complex logic
         specific to timelines and the TimelineContainer. Therefore it cannot be moved to DialogGenerator
          */
-        Dialog<DialogResult> dialog = new Dialog<>();
+        Dialog<TopicCreationDialogResult> dialog = new Dialog<>();
         dialog.setTitle(dialogTitle);
         dialog.setHeaderText(dialogHeader);
         dialog.setContentText(dialogText);
@@ -315,16 +402,18 @@ public class TimeLineContainer extends VBox {
         TextField textBox_TimeLineTag = new TextField(defaultValue);
         ColorPicker colorPicker = new ColorPicker(defaultColor);
 
+
+
         GridPane grid = new GridPane();
         grid.add(new Label(labelText), 1, 1);
         grid.add(textBox_TimeLineTag, 2, 1);
         grid.add(new Label("Timeline color:"), 1, 2);
         grid.add(colorPicker,2,2 );
-        dialog.getDialogPane().setContent(grid);
 
         ButtonType buttonTypeOk = new ButtonType("Okay", ButtonBar.ButtonData.OK_DONE);
         ButtonType buttonTypeCancel = new ButtonType("Cancel", ButtonBar.ButtonData.CANCEL_CLOSE);
 
+        dialog.getDialogPane().setContent(grid);
         dialog.getDialogPane().getButtonTypes().addAll(buttonTypeOk, buttonTypeCancel);
 
         final Button okButton = (Button) dialog.getDialogPane().lookupButton(buttonTypeOk);
@@ -351,7 +440,7 @@ public class TimeLineContainer extends VBox {
 
         dialog.setResultConverter(b -> {
             if (b == buttonTypeOk) {
-                return new DialogResult(textBox_TimeLineTag.getText(), colorPicker.getValue());
+                return new TopicCreationDialogResult(textBox_TimeLineTag.getText(), colorPicker.getValue());
             }
             return null;
         });
@@ -436,11 +525,22 @@ public class TimeLineContainer extends VBox {
         TimeLineInformation getTimelineInformation(){return tli;}
     }
 
-    private class DialogResult{
-        String timeLinename;
-        Color timeLineColor;
-        public DialogResult(String name, Color color){this.timeLinename = name; this.timeLineColor = color;}
+    private class TopicCreationDialogResult {
+        String topicName;
+        Color topicColor;
+        public TopicCreationDialogResult(String name, Color color){this.topicName = name; this.topicColor = color;}
+    }
 
+    private class AnnotationFilterDialogResult{
+        String topic;
+        String filterText;
+        public AnnotationFilterDialogResult(String topic, String filterText){
+            this.topic = topic;
+            this.filterText = filterText;
+        }
+        Annotation[] getFilteredAnnotations(){
+            return timeLineContainerController.getFilteredAnnotations(topic, filterText);
+        }
     }
 
     //endregion

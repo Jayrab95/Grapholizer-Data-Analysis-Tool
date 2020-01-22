@@ -33,10 +33,10 @@ public class CustomTimeLineController {
 
     public void removeTimeLine(CustomTimeLinePane timeLine){
         if(parent.removeTimeLine(timeLine)){
-            page.removeObserver(timeLine);
             observableTimeLine.removeObserver(timeLine);
         }
     }
+
 
     public double[] getCombinedAnnotationBoundaries(){
         List<AnnotationRectangle> selectedAnnotations = observableTimeLine.getSelectedAnnotations();
