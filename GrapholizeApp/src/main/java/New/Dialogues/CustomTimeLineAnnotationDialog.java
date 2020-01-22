@@ -14,9 +14,7 @@ public class CustomTimeLineAnnotationDialog {
     private final Dialog d;
     private final ButtonType ok;
     private final CheckBox cbox;
-
-     */
-
+    */
     private Dialog annotationCopyDialog(String title, String header, String text){
         Dialog dialog = new Dialog<>();
         dialog.setTitle(title);

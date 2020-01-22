@@ -121,11 +121,14 @@
     <key name="CreateTestDialog.Recents.Supers">
       <recent name="" />
     </key>
+    <key name="MoveFile.RECENT_KEYS">
+      <recent name="C:\Users\lukat\Repos\repotest\IP6_Grapholize\GrapholizeApp\src" />
+      <recent name="C:\Users\jarab\Documents\FHNW\Semester 7\Projekt\IP6_Grapholize\GrapholizeApp\src\main\resources\data" />
+      <recent name="C:\Users\jarab\Documents\FHNW\Semester 7\Projekt\IP6_Grapholize\GrapholizeApp\src\main\resources\fxml" />
+      <recent name="C:\Users\jarab\Documents\FHNW\Semester 7\Projekt\IP6_Grapholize\GrapholizeApp\src\main\resources\views" />
+    </key>
     <key name="MoveClassesOrPackagesDialog.RECENTS_KEY">
       <recent name="" />
-    </key>
-    <key name="CopyFile.RECENT_KEYS">
-      <recent name="C:\Users\jarab\Documents\FHNW\Semester 7\Projekt\IP6_Grapholize\GrapholizeApp\src\main\resources\data" />
     </key>
     <key name="CopyClassDialog.RECENTS_KEY">
       <recent name="New.Characteristics" />
@@ -134,11 +137,8 @@
       <recent name="New.CustomControls.TimeLineElement" />
       <recent name="New.CustomControls.TimeLine" />
     </key>
-    <key name="MoveFile.RECENT_KEYS">
-      <recent name="C:\Users\lukat\Repos\repotest\IP6_Grapholize\GrapholizeApp\src" />
+    <key name="CopyFile.RECENT_KEYS">
       <recent name="C:\Users\jarab\Documents\FHNW\Semester 7\Projekt\IP6_Grapholize\GrapholizeApp\src\main\resources\data" />
-      <recent name="C:\Users\jarab\Documents\FHNW\Semester 7\Projekt\IP6_Grapholize\GrapholizeApp\src\main\resources\fxml" />
-      <recent name="C:\Users\jarab\Documents\FHNW\Semester 7\Projekt\IP6_Grapholize\GrapholizeApp\src\main\resources\views" />
     </key>
   </component>
   <component name="RunAnythingCache">
@@ -159,7 +159,7 @@
       </list>
     </option>
   </component>
-  <component name="RunManager" selected="JAR Application.GrapholizeAppAID-1.0-SNAPSHOT.jar">
+  <component name="RunManager" selected="Application.HelloFX">
     <configuration default="true" type="Applet">
       <option name="POLICY_FILE" value="$APPLICATION_HOME_DIR$/bin/appletviewer.policy" />
       <method v="2">
@@ -198,6 +198,25 @@
         <option name="taskNames">
           <list>
             <option value="build" />
+          </list>
+        </option>
+        <option name="vmOptions" />
+      </ExternalSystemSettings>
+      <GradleScriptDebugEnabled>true</GradleScriptDebugEnabled>
+      <method v="2" />
+    </configuration>
+    <configuration name="GrapholizeApp [clean]" type="GradleRunConfiguration" factoryName="Gradle" temporary="true">
+      <ExternalSystemSettings>
+        <option name="executionName" />
+        <option name="externalProjectPath" value="$PROJECT_DIR$" />
+        <option name="externalSystemIdString" value="GRADLE" />
+        <option name="scriptParameters" />
+        <option name="taskDescriptions">
+          <list />
+        </option>
+        <option name="taskNames">
+          <list>
+            <option value="clean" />
           </list>
         </option>
         <option name="vmOptions" />
@@ -262,25 +281,6 @@
       <GradleScriptDebugEnabled>true</GradleScriptDebugEnabled>
       <method v="2" />
     </configuration>
-    <configuration name="GrapholizeApp [jpackage]" type="GradleRunConfiguration" factoryName="Gradle" temporary="true">
-      <ExternalSystemSettings>
-        <option name="executionName" />
-        <option name="externalProjectPath" value="$PROJECT_DIR$" />
-        <option name="externalSystemIdString" value="GRADLE" />
-        <option name="scriptParameters" />
-        <option name="taskDescriptions">
-          <list />
-        </option>
-        <option name="taskNames">
-          <list>
-            <option value="jpackage" />
-          </list>
-        </option>
-        <option name="vmOptions" />
-      </ExternalSystemSettings>
-      <GradleScriptDebugEnabled>true</GradleScriptDebugEnabled>
-      <method v="2" />
-    </configuration>
     <configuration default="true" type="JUnit" factoryName="JUnit">
       <option name="TEST_OBJECT" value="class" />
       <option name="WORKING_DIRECTORY" value="%MODULE_WORKING_DIR%" />
@@ -315,19 +315,19 @@
     <list>
       <item itemvalue="Application.HelloFX" />
       <item itemvalue="Gradle.GrapholizeApp [jar]" />
-      <item itemvalue="Gradle.GrapholizeApp [build]" />
       <item itemvalue="Gradle.GrapholizeApp [jlinkZip]" />
       <item itemvalue="Gradle.GrapholizeApp [jlink]" />
-      <item itemvalue="Gradle.GrapholizeApp [jpackage]" />
+      <item itemvalue="Gradle.GrapholizeApp [clean]" />
       <item itemvalue="JAR Application.GrapholizeAppAID-1.0-SNAPSHOT.jar" />
+      <item itemvalue="Gradle.GrapholizeApp [build]" />
     </list>
     <recent_temporary>
       <list>
         <item itemvalue="Application.HelloFX" />
+        <item itemvalue="Gradle.GrapholizeApp [build]" />
+        <item itemvalue="Gradle.GrapholizeApp [clean]" />
         <item itemvalue="Gradle.GrapholizeApp [jlink]" />
         <item itemvalue="Gradle.GrapholizeApp [jlinkZip]" />
-        <item itemvalue="Gradle.GrapholizeApp [jpackage]" />
-        <item itemvalue="Gradle.GrapholizeApp [build]" />
       </list>
     </recent_temporary>
   </component>
@@ -387,6 +387,14 @@
       <workItem from="1578987763220" duration="5209000" />
       <workItem from="1579023780568" duration="7748000" />
       <workItem from="1579100938702" duration="620000" />
+      <workItem from="1579106200512" duration="1875000" />
+      <workItem from="1579358592158" duration="1258000" />
+      <workItem from="1579531690171" duration="9471000" />
+      <workItem from="1579636079121" duration="6470000" />
+      <workItem from="1579643089961" duration="4094000" />
+      <workItem from="1579692396599" duration="9484000" />
+      <workItem from="1579705870293" duration="357000" />
+      <workItem from="1579706285243" duration="11865000" />
     </task>
     <servers />
   </component>
@@ -438,11 +446,6 @@
           <option name="timeStamp" value="33" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="java-line">
-          <url>file://$PROJECT_DIR$/src/main/java/New/CustomControls/TimeLine/TimeLinePane.java</url>
-          <line>48</line>
-          <option name="timeStamp" value="58" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" type="java-line">
           <url>file://$PROJECT_DIR$/src/main/java/New/Model/Entities/Annotation.java</url>
           <line>49</line>
           <option name="timeStamp" value="69" />
@@ -451,21 +454,6 @@
           <url>file://$PROJECT_DIR$/src/main/java/New/Filters/VelocityFilter.java</url>
           <line>34</line>
           <option name="timeStamp" value="87" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" type="java-line">
-          <url>file://$PROJECT_DIR$/src/main/java/New/Controllers/MainSceneController.java</url>
-          <line>147</line>
-          <option name="timeStamp" value="88" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" type="java-line">
-          <url>file://$PROJECT_DIR$/src/main/java/New/Controllers/MainSceneController.java</url>
-          <line>121</line>
-          <option name="timeStamp" value="89" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" type="java-line">
-          <url>file://$PROJECT_DIR$/src/main/java/New/util/ZipHelper.java</url>
-          <line>29</line>
-          <option name="timeStamp" value="91" />
         </line-breakpoint>
       </breakpoints>
     </breakpoint-manager>

@@ -20,7 +20,6 @@ public class AnnotationTimeLinePane extends TimeLinePane {
         addAnnotations(l);
     }
 
-
     private void addAnnotation(Annotation a){
         getChildren().add(new AnnotationRectangle(
                 c,

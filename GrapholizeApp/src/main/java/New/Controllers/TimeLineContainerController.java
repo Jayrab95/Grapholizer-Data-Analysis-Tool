@@ -11,17 +11,13 @@ import javafx.scene.paint.Color;
 
 public class TimeLineContainerController {
 
-
     private ObservableProject project;
     private ObservablePage page;
-
 
     public TimeLineContainerController(ObservableProject project, ObservablePage page){
         this.project = project;
         this.page = page;
     }
-
-
     public ObservablePage getPage(){return this.page;}
 
     //Assumption with create and edit: CheckIfTagIsValid has been called beforehand.
@@ -46,9 +42,6 @@ public class TimeLineContainerController {
     public void checkIfTagIsValid(String tag) throws TimeLineTagException{
         project.checkIfTagIsValid(tag);
     }
-
-
-
 
     /*
     public void createCopyAnnotations(TimeLinePane tl, boolean combinedElement, String combinedAnnotationText){
@@ -79,11 +72,6 @@ public class TimeLineContainerController {
                     "One or more of the selected elements collides with other elements on the timeline."
             );
         }
-
-
     }
-
-     */
-
-
+*/
 }

@@ -14,22 +14,21 @@ public abstract class TimeLinePane extends Pane {
     protected DoubleProperty scale;
     protected DoubleProperty totalLength;
     protected StringProperty timeLineName;
+    private final double height;
 
     //Todo: perhaps reference style from a style sheet.
     protected String style = "-fx-padding: 10; -fx-border-style: solid inside; -fx-border-width: 2; -fx-border-insets: 5; -fx-border-radius: 5; -fx-border-color: blue; -fx-background-color: grey";
 
     protected TimeLinePane(double totalLength, double height, DoubleProperty scaleProp, StringProperty name){
         this.totalLength = new SimpleDoubleProperty(totalLength);
-        //this.totalLength.bind(totalLength);
         this.totalLength.addListener((observable, oldValue, newValue) -> resizeTimeLine());
-
         this.scale = new SimpleDoubleProperty(scaleProp.get());
         this.scale.bind(scaleProp);
         this.scale.addListener((observable, oldValue, newValue) -> resizeTimeLine());
 
         this.timeLineName = new SimpleStringProperty(name.get());
         this.timeLineName.bind(name);
-
+        this.height = height;
         setHeight(height);
         setPrefHeight(height);
         setWidth(this.totalLength.get() * scale.get());
@@ -41,6 +40,7 @@ public abstract class TimeLinePane extends Pane {
     public String getTimeLineName(){
         return timeLineName.get();
     }
+
     public StringProperty getTimeLineNameProperty(){
         return this.timeLineName;
     }
@@ -51,14 +51,7 @@ public abstract class TimeLinePane extends Pane {
         setStyle(style);
     }
 
-
-
     private void InitiateTimeLine() {
         setStyle(style);
     }
-
-
-
-
-
 }

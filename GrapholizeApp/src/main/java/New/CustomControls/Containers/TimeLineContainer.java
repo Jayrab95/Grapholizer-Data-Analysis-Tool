@@ -5,11 +5,12 @@ import New.CustomControls.TimeLine.CustomTimeLinePane;
 import New.CustomControls.TimeLine.StrokeDurationTimeLinePane;
 import New.CustomControls.TimeLine.TimeLinePane;
 import New.CustomControls.Annotation.AnnotationRectangle;
+import New.CustomControls.TimeLine.TimeUnitPane;
 import New.Execptions.NoTimeLineSelectedException;
 import New.Execptions.TimeLineTagException;
 import New.Interfaces.Observer.Observer;
 import New.Model.Entities.Annotation;
-import New.Model.Entities.TimeLineTag;
+
 import New.Observables.*;
 import New.util.DialogGenerator;
 import javafx.beans.property.DoubleProperty;
@@ -30,7 +31,6 @@ import java.util.List;
 import java.util.Optional;
 
 public class TimeLineContainer extends VBox {
-
     //region static strings
     private final static String TXT_TL_CREATION_TITLE = "Create a new timeline";
     private final static String TXT_TL_CREATION_HEADER = "Creation of a new timeline";
@@ -60,8 +60,11 @@ public class TimeLineContainer extends VBox {
 
     private TimeLineContainerController timeLineContainerController;
 
-    private ScrollPane scrollPane_timeLineScrollPane;
-    private VBox vBox_TimeLineBox;
+    private ScrollPane scrollPane_outer = new ScrollPane();
+    private VBox vBox_OuterScrollPane = new VBox();
+    private ScrollPane scrollPane_inner = new ScrollPane();
+    private VBox vBox_TimeLineBox = new VBox();
+    TimeUnitPane unitPane;
 
     private Button btn_CreateNewTimeLine;
     private Button btn_CreateNewTimeLineOutOfSelected;
@@ -70,9 +73,7 @@ public class TimeLineContainer extends VBox {
     private Slider scaleSlider;
 
     public TimeLineContainer(ObservableProject project, ObservablePage page, double initialScale){
-
         this.p = page;
-
         page.getPageProperty().addListener((observable, oldValue, newValue) -> {
             System.out.println("TimeLineContainer has detected a page change");
             InitializeContainer(project, page);
@@ -84,17 +85,25 @@ public class TimeLineContainer extends VBox {
         AnchorPane.setTopAnchor(this, 0.0);
 
         timeLineContainerController = new TimeLineContainerController(project, page);
-
         totalWidth = new SimpleDoubleProperty(page.getDuration());
         scale = new SimpleDoubleProperty(initialScale);
 
         scaleSlider = initializeSlider(initialScale);
         scale.bind(scaleSlider.valueProperty());
 
-        vBox_TimeLineBox = new VBox();
         vBox_TimeLineBox.setPadding(new Insets(5, 0, 10, 0));
-        scrollPane_timeLineScrollPane = new ScrollPane();
-        scrollPane_timeLineScrollPane.setContent(vBox_TimeLineBox);
+
+        scrollPane_inner.setHbarPolicy(ScrollPane.ScrollBarPolicy.NEVER);
+        scrollPane_inner.setVbarPolicy(ScrollPane.ScrollBarPolicy.ALWAYS);
+        scrollPane_inner.setContent(vBox_TimeLineBox);
+
+        unitPane = new TimeUnitPane(scale,20,totalWidth);
+        vBox_OuterScrollPane.getChildren().add(unitPane);
+        vBox_OuterScrollPane.getChildren().add(scrollPane_inner);
+
+        scrollPane_outer.setVbarPolicy(ScrollPane.ScrollBarPolicy.NEVER);
+        scrollPane_outer.setHbarPolicy(ScrollPane.ScrollBarPolicy.ALWAYS);
+        scrollPane_outer.setContent(vBox_OuterScrollPane);
 
         InitializeButtonHBox();
         InitializeContainer(project, page);
@@ -115,7 +124,7 @@ public class TimeLineContainer extends VBox {
         getChildren().clear();
         getChildren().add(scaleSlider);
         getChildren().add(hbox_buttonHBox);
-        getChildren().add(scrollPane_timeLineScrollPane);
+        getChildren().add(scrollPane_outer);
 
         vBox_TimeLineBox.getChildren().clear();
 
@@ -127,7 +136,6 @@ public class TimeLineContainer extends VBox {
             ObservableTimeLineTag tag = project.getTimeLineTag(s);
             loadTimeLine(tag, page, page.getAnnotationSet(s));
         }
-
     }
 
     private Slider initializeSlider(double initScale){
@@ -440,10 +448,6 @@ public class TimeLineContainer extends VBox {
         String timeLinename;
         Color timeLineColor;
         public DialogResult(String name, Color color){this.timeLinename = name; this.timeLineColor = color;}
-
     }
-
     //endregion
-
-
 }
