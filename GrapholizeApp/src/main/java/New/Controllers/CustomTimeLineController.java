@@ -37,6 +37,7 @@ public class CustomTimeLineController {
         }
     }
 
+
     public double[] getCombinedAnnotationBoundaries(){
         List<AnnotationRectangle> selectedAnnotations = observableTimeLine.getSelectedAnnotations();
         Comparator<AnnotationRectangle> comp = Comparator.comparing(AnnotationRectangle::getTimeStart);

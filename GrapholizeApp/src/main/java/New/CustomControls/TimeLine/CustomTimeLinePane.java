@@ -137,9 +137,9 @@ public class CustomTimeLinePane extends SelectableTimeLinePane implements PageOb
         //TODO: Move into controller
         double lowerBounds = 0;
         double upperBounds = getWidth();
+        //The children list is not sorted and can also include handles of annotations
         for(Node n : getChildren()){
             if(n instanceof AnnotationRectangle){
-                System.out.println("yep");
                 AnnotationRectangle rect = (AnnotationRectangle)n;
                 double nTimeStart = rect.getX();
                 double nTimeStop = rect.getX() + rect.getWidth();

@@ -21,7 +21,7 @@ public abstract class Filter {
         });
         this.filterName = filterName;
         this.p = p;
-        p.getPageProperty().addListener((observable, oldValue, newValue) -> calculateMetrics(p));
+        p.getPageProperty().addListener((observable, oldValue, newValue) -> handlePageChange(p));
         calculateMetrics(p);
     }
 
@@ -37,9 +37,17 @@ public abstract class Filter {
         return this.filterActiveProperty;
     }
 
+    protected void handlePageChange(ObservablePage p){
+        calculateMetrics(p);
+        if(isActive()){
+            applyFilter();
+        }
+    }
     public abstract void applyFilter();
 
     public abstract void removeFilter();
 
     public abstract void calculateMetrics(ObservablePage p);
+
+
 }
