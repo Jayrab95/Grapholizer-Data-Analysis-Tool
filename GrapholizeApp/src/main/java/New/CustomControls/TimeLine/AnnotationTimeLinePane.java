@@ -1,8 +1,7 @@
 package New.CustomControls.TimeLine;
 
 import New.CustomControls.Annotation.AnnotationRectangle;
-import New.CustomControls.Annotation.MovableAnnotationRectangle;
-import New.Model.Entities.Annotation;
+import New.Model.Entities.Segment;
 import javafx.beans.property.DoubleProperty;
 import javafx.beans.property.ObjectProperty;
 import javafx.beans.property.SimpleStringProperty;
@@ -21,7 +20,7 @@ public class AnnotationTimeLinePane extends TimeLinePane {
     }
 
 
-    private void addAnnotation(Annotation a){
+    private void addAnnotation(Segment a){
         getChildren().add(new AnnotationRectangle(
                 c,
                 new SimpleStringProperty(a.getAnnotationText()),
@@ -34,8 +33,8 @@ public class AnnotationTimeLinePane extends TimeLinePane {
 
     private void addAnnotations(List<AnnotationRectangle> annotations){
         for(AnnotationRectangle a : annotations){
-            Annotation newAnnotation = new Annotation(a.getText(), a.getTimeStart(), a.getTimeStop());
-            addAnnotation(newAnnotation);
+            Segment newSegment = new Segment(a.getText(), a.getTimeStart(), a.getTimeStop());
+            addAnnotation(newSegment);
         }
     }
 }

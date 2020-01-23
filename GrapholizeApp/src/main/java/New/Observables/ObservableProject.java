@@ -6,13 +6,10 @@ import New.Execptions.TimelineTagNotUniqueException;
 import New.Interfaces.Observer.ProjectObserver;
 import New.Model.Entities.Participant;
 import New.Model.Entities.Project;
-import New.Model.Entities.TimeLineTag;
+import New.Model.Entities.TopicSet;
 import New.util.ColorConverter;
 import javafx.beans.property.ObjectProperty;
 import javafx.beans.property.SimpleObjectProperty;
-import javafx.collections.FXCollections;
-import javafx.collections.ListChangeListener;
-import javafx.collections.ObservableList;
 import javafx.scene.paint.Color;
 
 import java.util.*;
@@ -21,7 +18,7 @@ public class ObservableProject {
     private ObjectProperty<Project> innerProjectProperty;
     private Project inner;
     private List<ProjectObserver> observers;
-    private List<ObservableTimeLineTag> timeLineTags;
+    private List<ObservableTopicSet> timeLineTags;
     //private ObservableList<ObservableTimeLineTag> observableTimeLineTags;
 
     public ObservableProject(Project inner){
@@ -55,17 +52,17 @@ public class ObservableProject {
     private void generateTimeLineTags(Project p){
         timeLineTags = new LinkedList<>();
         for(String s : p.getTimeLineTagNames()){
-            ObservableTimeLineTag tag = new ObservableTimeLineTag(p.getTimeLineTag(s));
+            ObservableTopicSet tag = new ObservableTopicSet(p.getTimeLineTag(s));
             timeLineTags.add(tag);
             //observableTimeLineTags.add(tag);
         }
     }
 
-    public List<ObservableTimeLineTag> getObservableTimeLineTags(){
+    public List<ObservableTopicSet> getObservableTimeLineTags(){
         return timeLineTags;
     }
 
-    public List<TimeLineTag> getTimeLineTags(){
+    public List<TopicSet> getTimeLineTags(){
         return new LinkedList<>(inner.getProjectTagsMap().values());
     }
 
@@ -89,8 +86,8 @@ public class ObservableProject {
         return innerProjectProperty;
     }
 
-    public ObservableTimeLineTag getTimeLineTag(String tag){
-        return new ObservableTimeLineTag(inner.getTimeLineTag(tag));
+    public ObservableTopicSet getTimeLineTag(String tag){
+        return new ObservableTopicSet(inner.getTimeLineTag(tag));
     }
 
     public void setInnerProject(Project p){
@@ -131,7 +128,7 @@ public class ObservableProject {
     }
     //endregion
 
-    public void insertTimeLineTag(TimeLineTag t) {
+    public void insertTimeLineTag(TopicSet t) {
         inner.getProjectTagsMap().put(t.getTag(), t);
     }
 
@@ -139,14 +136,14 @@ public class ObservableProject {
     //PRoblem with doing the check during creation and edit: the insertion has to happen as a result of a DialogOK.
     //Problem with assumption: The caller could technically use the edit function without checking first.
     public boolean editTimeLineTag(String oldTag, String newTagName, Color newColor){
-        TimeLineTag oldTimeLineTag = inner.getTimeLineTag(oldTag);
-        if(oldTimeLineTag != null){
+        TopicSet oldTopicSet = inner.getTimeLineTag(oldTag);
+        if(oldTopicSet != null){
             if(!oldTag.equals(newTagName)){
                 inner.getProjectTagsMap().remove(oldTag);
-                oldTimeLineTag.setTag(newTagName);
-                inner.getProjectTagsMap().put(newTagName, oldTimeLineTag);
+                oldTopicSet.setTag(newTagName);
+                inner.getProjectTagsMap().put(newTagName, oldTopicSet);
             }
-            oldTimeLineTag.setSimpleColor(ColorConverter.convertJavaFXColorToModelColor(newColor));
+            oldTopicSet.setSimpleColor(ColorConverter.convertJavaFXColorToModelColor(newColor));
             return true;
         }
         //The tag was not found for soem reason. Throw exception?
@@ -170,7 +167,7 @@ public class ObservableProject {
         }
     }
 
-    public TimeLineTag removeTimeLineTag(String key){
+    public TopicSet removeTimeLineTag(String key){
         return inner.getProjectTagsMap().remove(key);
     }
 

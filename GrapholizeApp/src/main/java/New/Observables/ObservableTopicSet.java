@@ -1,27 +1,33 @@
 package New.Observables;
 
-import New.Model.Entities.SimpleColor;
-import New.Model.Entities.TimeLineTag;
+import New.Model.Entities.TopicSet;
 import New.util.ColorConverter;
 import javafx.beans.property.ObjectProperty;
 import javafx.beans.property.SimpleObjectProperty;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.property.StringProperty;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import javafx.scene.paint.Color;
 
-public class ObservableTimeLineTag {
-    private TimeLineTag inner;
+public class ObservableTopicSet {
+    private TopicSet inner;
 
-    StringProperty tagProperty;
-    ObjectProperty<Color> colorProperty;
+    private StringProperty tagProperty;
+    private ObjectProperty<Color> colorProperty;
+    private StringProperty mainTopicIDProperty;
+    private ObservableList topicsObservableList;
 
-    public ObservableTimeLineTag(TimeLineTag inner){
+    public ObservableTopicSet(TopicSet inner){
         this.inner = inner;
         tagProperty = new SimpleStringProperty(inner.getTag());
         tagProperty.addListener((observable, oldValue, newValue) -> inner.setTag(newValue));
         colorProperty = new SimpleObjectProperty<>(ColorConverter.convertModelColorToJavaFXColor(inner.getSimpleColor()));
         colorProperty.addListener((observable, oldValue, newValue) -> inner.setSimpleColor(
                 ColorConverter.convertJavaFXColorToModelColor(newValue)));
+        mainTopicIDProperty = new SimpleStringProperty(inner.getMainTopicID());
+        mainTopicIDProperty.addListener((observable, oldValue, newValue) -> inner.setMainTopic(newValue));
+        topicsObservableList = FXCollections.observableList(inner.getTopics());
     }
 
     public String getTag() {
@@ -47,5 +53,6 @@ public class ObservableTimeLineTag {
     public void setColor(Color color) {
         this.colorProperty.set(color);
     }
+    
 
 }

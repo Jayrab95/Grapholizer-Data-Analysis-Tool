@@ -1,7 +1,7 @@
 package New.Interfaces.Observer;
 
-import New.Observables.ObservableTimeLineTag;
+import New.Observables.ObservableTopicSet;
 
 public interface TimeLineTagObserver {
-    void update(ObservableTimeLineTag sender);
+    void update(ObservableTopicSet sender);
 }

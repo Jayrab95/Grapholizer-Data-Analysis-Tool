@@ -7,15 +7,27 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="f9c9e85c-b6d3-4a2f-99c7-3350288aea5b" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/src/main/resources/data/meeting.zip" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/New/Model/Entities/Topic.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/New/Controllers/CustomTimeLineController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/New/Controllers/CustomTimeLineController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/New/Controllers/MainSceneController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/New/Controllers/MainSceneController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/New/Controllers/MovableAnnotationController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/New/Controllers/MovableAnnotationController.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/New/Controllers/TimeLineContainerController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/New/Controllers/TimeLineContainerController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/New/CustomControls/Annotation/MovableAnnotationRectangle.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/New/CustomControls/Annotation/MovableAnnotationRectangle.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/New/CustomControls/Containers/TimeLineContainer.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/New/CustomControls/Containers/TimeLineContainer.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/New/CustomControls/TimeLine/AnnotationTimeLinePane.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/New/CustomControls/TimeLine/AnnotationTimeLinePane.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/New/CustomControls/TimeLine/CustomTimeLinePane.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/New/CustomControls/TimeLine/CustomTimeLinePane.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/New/Filters/Filter.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/New/Filters/Filter.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/New/Observables/DotLine.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/New/Observables/DotLine.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/New/Interfaces/Observer/TimeLineTagObserver.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/New/Interfaces/Observer/TimeLineTagObserver.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/New/Model/Entities/Annotation.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/New/Model/Entities/Segment.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/New/Model/Entities/Page.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/New/Model/Entities/Page.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/New/Model/Entities/Project.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/New/Model/Entities/Project.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/New/Model/Entities/TimeLineTag.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/New/Model/Entities/TopicSet.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/New/Model/Entities/Timeline.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/New/Model/Entities/Timeline.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/New/Observables/ObservableAnnotation.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/New/Observables/ObservableAnnotation.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/New/Observables/ObservablePage.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/New/Observables/ObservablePage.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/New/Observables/ObservableProject.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/New/Observables/ObservableProject.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/New/Observables/ObservableTimeLineTag.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/New/Observables/ObservableTopicSet.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/New/util/Import/JsonLoader.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/New/util/Import/JsonLoader.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/New/util/PageUtil.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/New/util/PageUtil.java" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -443,7 +455,7 @@
           <option name="timeStamp" value="58" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="java-line">
-          <url>file://$PROJECT_DIR$/src/main/java/New/Model/Entities/Annotation.java</url>
+          <url>file://$PROJECT_DIR$/src/main/java/New/Model/Entities/Segment.java</url>
           <line>49</line>
           <option name="timeStamp" value="69" />
         </line-breakpoint>

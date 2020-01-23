@@ -2,7 +2,7 @@ package New.Controllers;
 
 import New.CustomControls.Annotation.AnnotationRectangle;
 import New.CustomControls.TimeLine.CustomTimeLinePane;
-import New.Model.Entities.Annotation;
+import New.Model.Entities.Segment;
 import New.Observables.ObservableAnnotation;
 import javafx.scene.shape.Rectangle;
 
@@ -17,8 +17,8 @@ public class MovableAnnotationController {
         this.parent = parent;
     }
 
-    public Annotation getObservableAnnotation() {
-        return oAnnotation.getAnnotation();
+    public Segment getObservableAnnotation() {
+        return oAnnotation.getSegment();
     }
 
     public void editElement(String newAnnotationText){
@@ -30,7 +30,7 @@ public class MovableAnnotationController {
     }
 
     public void moveElement(double delta){
-        oAnnotation.getAnnotation().move(delta);
+        oAnnotation.getSegment().move(delta);
     }
 
     public double[] getBounds(double xPosition){

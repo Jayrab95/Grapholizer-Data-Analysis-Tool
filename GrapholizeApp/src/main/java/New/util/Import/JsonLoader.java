@@ -3,8 +3,6 @@ package New.util.Import;
 import New.Interfaces.Loader;
 import New.Model.Entities.Participant;
 import New.Model.Entities.Project;
-import New.Model.Entities.TimeLineTag;
-import New.util.Import.CompressedParticipant;
 import com.google.gson.Gson;
 
 import java.io.BufferedReader;
@@ -12,8 +10,6 @@ import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.util.*;
-import java.util.concurrent.ConcurrentHashMap;
-import java.util.concurrent.ConcurrentMap;
 
 public class JsonLoader implements Loader {
     @Override

@@ -8,7 +8,7 @@ import New.CustomControls.Annotation.AnnotationRectangle;
 import New.Execptions.NoTimeLineSelectedException;
 import New.Execptions.TimeLineTagException;
 import New.Interfaces.Observer.Observer;
-import New.Model.Entities.Annotation;
+import New.Model.Entities.Segment;
 import New.Observables.*;
 import New.util.DialogGenerator;
 import javafx.beans.property.DoubleProperty;
@@ -130,7 +130,7 @@ public class TimeLineContainer extends VBox {
 
         //TODO: Observe if A: This actually works and B: if there are any memory leaks when chaning project.
         for(String s : project.getTimeLineTagNames()){
-            ObservableTimeLineTag tag = project.getTimeLineTag(s);
+            ObservableTopicSet tag = project.getTimeLineTag(s);
             loadTimeLine(tag, page, page.getAnnotationSet(s));
         }
 
@@ -152,10 +152,10 @@ public class TimeLineContainer extends VBox {
         vBox_TimeLineBox.getChildren().add(new TimeLineWrapper(timeLinePane));
     }
 
-    private void loadTimeLine(ObservableTimeLineTag t, ObservablePage p, Optional<List<Annotation>> annotations){
+    private void loadTimeLine(ObservableTopicSet t, ObservablePage p, Optional<List<Segment>> annotations){
         if(annotations.isPresent()){
             CustomTimeLinePane pane;
-            Annotation[] array = annotations.get().stream().toArray(n -> new Annotation[n]);
+            Segment[] array = annotations.get().stream().toArray(n -> new Segment[n]);
             pane = new CustomTimeLinePane(totalWidth.get(), timeLinesHeight, scale, t, p, this, array);
             addTimeLinePane(pane);
         }
@@ -182,12 +182,12 @@ public class TimeLineContainer extends VBox {
         }
         if(tag.isPresent()){
             if(filtered.isPresent()){
-                ObservableTimeLineTag newTag = timeLineContainerController.createNewTimeLineTag(tag.get().topicName, tag.get().topicColor);
+                ObservableTopicSet newTag = timeLineContainerController.createNewTimeLineTag(tag.get().topicName, tag.get().topicColor);
                 TimeLinePane timeLinePane = createNewTimeLinePaneOutOfAnnotations(newTag, timeLineContainerController.getPage(), filtered.get().getFilteredAnnotations());
                 addTimeLinePane(timeLinePane);
             }
             else{
-                ObservableTimeLineTag newTag = timeLineContainerController.createNewTimeLineTag(tag.get().topicName, tag.get().topicColor);
+                ObservableTopicSet newTag = timeLineContainerController.createNewTimeLineTag(tag.get().topicName, tag.get().topicColor);
                 TimeLinePane timeLinePane = createNewTimeLinePane(newTag, timeLineContainerController.getPage(),Optional.empty());
                 addTimeLinePane(timeLinePane);
             }
@@ -207,7 +207,7 @@ public class TimeLineContainer extends VBox {
                 COLOR_TL_TAG_DEFAULTVAL,
                 false);
         if(tag.isPresent()){
-            ObservableTimeLineTag newTag = timeLineContainerController.createNewTimeLineTag(tag.get().topicName, tag.get().topicColor);
+            ObservableTopicSet newTag = timeLineContainerController.createNewTimeLineTag(tag.get().topicName, tag.get().topicColor);
             TimeLinePane timeLinePane = createNewTimeLineTagOutOfSelected(newTag, timeLineContainerController.getPage());
             addTimeLinePane(timeLinePane);
         }
@@ -223,7 +223,7 @@ public class TimeLineContainer extends VBox {
                 COLOR_TL_TAG_DEFAULTVAL,
                 false);
         if(tag.isPresent()){
-            ObservableTimeLineTag newTag = timeLineContainerController.createNewTimeLineTag(tag.get().topicName, tag.get().topicColor);
+            ObservableTopicSet newTag = timeLineContainerController.createNewTimeLineTag(tag.get().topicName, tag.get().topicColor);
             TimeLinePane timeLinePane = createNewTimeLinePaneOutOfSelectedDots(newTag, timeLineContainerController.getPage());
             addTimeLinePane(timeLinePane);
         }
@@ -240,13 +240,13 @@ public class TimeLineContainer extends VBox {
                 COLOR_TL_TAG_DEFAULTVAL,
                 false);
         if(tag.isPresent()){
-            ObservableTimeLineTag newTag = timeLineContainerController.createNewTimeLineTag(tag.get().topicName, tag.get().topicColor);
+            ObservableTopicSet newTag = timeLineContainerController.createNewTimeLineTag(tag.get().topicName, tag.get().topicColor);
             TimeLinePane timeLinePane = createNewTimeLinePaneOutOfSelectedDots(newTag, timeLineContainerController.getPage());
             addTimeLinePane(timeLinePane);
         }
     }
 
-    public void createNewTimeLineOutOfCombinedElement(Annotation a){
+    public void createNewTimeLineOutOfCombinedElement(Segment a){
         Optional<TopicCreationDialogResult> tag = openTimeLineCreationDialog(
                 TXT_TL_CREATION_TITLE,
                 TXT_TL_CREATION_HEADER,
@@ -257,41 +257,41 @@ public class TimeLineContainer extends VBox {
                 false
         );
         if(tag.isPresent()){
-            ObservableTimeLineTag newTag = timeLineContainerController.createNewTimeLineTag(tag.get().topicName, tag.get().topicColor);
+            ObservableTopicSet newTag = timeLineContainerController.createNewTimeLineTag(tag.get().topicName, tag.get().topicColor);
             TimeLinePane timeLinePane = createNewTimeLinePaneOutOfCombined(newTag, timeLineContainerController.getPage(), a);
             addTimeLinePane(timeLinePane);
         }
     }
 
-    private TimeLinePane createNewTimeLinePane(ObservableTimeLineTag tag, ObservablePage page, Optional<List<AnnotationRectangle>> annotations){
+    private TimeLinePane createNewTimeLinePane(ObservableTopicSet tag, ObservablePage page, Optional<List<AnnotationRectangle>> annotations){
         CustomTimeLinePane newTimeLine = annotations.isPresent() ?
                 new CustomTimeLinePane(timeLineContainerController.getPage().getDuration(), timeLinesHeight, scale, tag, page, this, annotations.get()) :
                 new CustomTimeLinePane(timeLineContainerController.getPage().getDuration(), timeLinesHeight, scale, tag, page, this);
         return newTimeLine;
     }
 
-    private TimeLinePane createNewTimeLineTagOutOfSelected(ObservableTimeLineTag newTimeLineTag, ObservablePage page){
+    private TimeLinePane createNewTimeLineTagOutOfSelected(ObservableTopicSet newTimeLineTag, ObservablePage page){
         return createNewTimeLinePane(newTimeLineTag, page, Optional.of(selectedTimeLine.getSelectedAnnotations()));
     }
 
-    private TimeLinePane createNewTimeLinePaneOutOfSelectedDots(ObservableTimeLineTag newTimeLineTag, ObservablePage page){
-        List<Annotation> annotations = new LinkedList();
+    private TimeLinePane createNewTimeLinePaneOutOfSelectedDots(ObservableTopicSet newTimeLineTag, ObservablePage page){
+        List<Segment> segments = new LinkedList();
         for(List<ObservableDot> segment : page.getSelectedDotSegments()){
-            annotations.add(new Annotation(
+            segments.add(new Segment(
                     "Generated Annotation",
                     segment.get(0).getTimeStamp(),
                     segment.get(segment.size()-1).getTimeStamp()));
         }
-        return new CustomTimeLinePane(timeLineContainerController.getPage().getDuration(), timeLinesHeight, scale, newTimeLineTag, page, this, annotations.toArray(new Annotation[annotations.size()]));
+        return new CustomTimeLinePane(timeLineContainerController.getPage().getDuration(), timeLinesHeight, scale, newTimeLineTag, page, this, segments.toArray(new Segment[segments.size()]));
     }
 
-    private TimeLinePane createNewTimeLinePaneOutOfCombined(ObservableTimeLineTag tag, ObservablePage page, Annotation annotation){
-        CustomTimeLinePane newTimeLine = new CustomTimeLinePane(timeLineContainerController.getPage().getDuration(), timeLinesHeight, scale, tag, page, this, annotation);
+    private TimeLinePane createNewTimeLinePaneOutOfCombined(ObservableTopicSet tag, ObservablePage page, Segment segment){
+        CustomTimeLinePane newTimeLine = new CustomTimeLinePane(timeLineContainerController.getPage().getDuration(), timeLinesHeight, scale, tag, page, this, segment);
         return newTimeLine;
     }
 
-    private TimeLinePane createNewTimeLinePaneOutOfAnnotations(ObservableTimeLineTag tag, ObservablePage page, Annotation[] annotations){
-        return new CustomTimeLinePane(timeLineContainerController.getPage().getDuration(), timeLinesHeight, scale, tag, page, this, annotations);
+    private TimeLinePane createNewTimeLinePaneOutOfAnnotations(ObservableTopicSet tag, ObservablePage page, Segment[] segments){
+        return new CustomTimeLinePane(timeLineContainerController.getPage().getDuration(), timeLinesHeight, scale, tag, page, this, segments);
     }
 
     private void addTimeLineToChildren(TimeLinePane timeline){
@@ -300,7 +300,7 @@ public class TimeLineContainer extends VBox {
         getChildren().add(hbox_buttonHBox);
     }
 
-    public void editTimeLine(ObservableTimeLineTag oldTag){
+    public void editTimeLine(ObservableTopicSet oldTag){
         Optional<TopicCreationDialogResult> tag = openTimeLineCreationDialog(
                 TXT_TL_EDIT_TITLE,
                 TXT_TL_EDIT_HEADER,
@@ -538,7 +538,7 @@ public class TimeLineContainer extends VBox {
             this.topic = topic;
             this.filterText = filterText;
         }
-        Annotation[] getFilteredAnnotations(){
+        Segment[] getFilteredAnnotations(){
             return timeLineContainerController.getFilteredAnnotations(topic, filterText);
         }
     }

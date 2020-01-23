@@ -2,16 +2,14 @@ package New.Controllers;
 
 
 import New.Execptions.TimeLineTagException;
-import New.Model.Entities.Annotation;
-import New.Model.Entities.TimeLineTag;
-import New.Observables.ObservableAnnotation;
+import New.Model.Entities.Segment;
+import New.Model.Entities.TopicSet;
 import New.Observables.ObservablePage;
 import New.Observables.ObservableProject;
-import New.Observables.ObservableTimeLineTag;
+import New.Observables.ObservableTopicSet;
 import New.util.ColorConverter;
 import javafx.scene.paint.Color;
 
-import java.util.List;
 import java.util.Set;
 
 public class TimeLineContainerController {
@@ -33,20 +31,20 @@ public class TimeLineContainerController {
         return project.getTimeLineTagNames();
     }
 
-    public Annotation[] getFilteredAnnotations(String topic, String filterText){
+    public Segment[] getFilteredAnnotations(String topic, String filterText){
         return page.getTimeLineAnnotations(topic).stream()
                 .filter(observableAnnotation -> observableAnnotation.getAnnotationText().equals(filterText))
-                .map(oA -> new Annotation(oA.getAnnotationText(), oA.getTimeStart(), oA.getTimeStop()))
-                .toArray(size -> new Annotation[size]);
+                .map(oA -> new Segment(oA.getAnnotationText(), oA.getTimeStart(), oA.getTimeStop()))
+                .toArray(size -> new Segment[size]);
     }
 
     //Assumption with create and edit: CheckIfTagIsValid has been called beforehand.
     //In the code, create and edit are only called as a result of a dialog, which calls the checkFunction.
     //This convention needs to be upheld.
     //Reason for this: It allows the reusage of the dialog window for both create and edit.
-    public ObservableTimeLineTag createNewTimeLineTag(String tag, Color c){
-        TimeLineTag newTag = new TimeLineTag(tag, ColorConverter.convertJavaFXColorToModelColor(c));
-        ObservableTimeLineTag oTag = new ObservableTimeLineTag(newTag);
+    public ObservableTopicSet createNewTimeLineTag(String tag, Color c){
+        TopicSet newTag = new TopicSet(tag, ColorConverter.convertJavaFXColorToModelColor(c));
+        ObservableTopicSet oTag = new ObservableTopicSet(newTag);
         project.insertTimeLineTag(newTag);
         return oTag;
     }

@@ -9,7 +9,7 @@ public class Page {
     private transient final PageMetaData pageMetaData;
     private transient final List<Stroke> strokes;
 
-    private Map<String, List<Annotation>> timeLines;
+    private Map<String, List<Segment>> timeLines;
 
     //TODO: Load page annotations and add them to map
     public Page (PageMetaData pageMetaData, List<Stroke> strokes){
@@ -43,9 +43,9 @@ public class Page {
         return strokes.get(strokes.size()-1).getTimeEnd();
     }
 
-    public Map<String, List<Annotation>> getTimeLines(){return this.timeLines;}
+    public Map<String, List<Segment>> getTimeLines(){return this.timeLines;}
 
-    public List<Annotation> getTimeLine(String key){
+    public List<Segment> getTimeLine(String key){
         if(!timeLines.keySet().contains(key)){
             timeLines.put(key, new LinkedList<>());
         }

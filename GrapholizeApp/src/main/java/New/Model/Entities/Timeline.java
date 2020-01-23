@@ -8,12 +8,12 @@ public class Timeline {
 
     private String timeLineName;
     private SimpleColor timeLineSimpleColor;
-    private LinkedList<Annotation> annotations;
+    private LinkedList<Segment> segments;
 
     public Timeline(String timeLineName, SimpleColor timeLineSimpleColor){
         this.timeLineName = timeLineName;
         this.timeLineSimpleColor = timeLineSimpleColor;
-        this.annotations = new LinkedList<>();
+        this.segments = new LinkedList<>();
     }
 
     public String getTimeLineName() {
@@ -46,34 +46,34 @@ public class Timeline {
      * "addTimeLineElementInOrder" or "removeTimeLineElement".
      * @return
      */
-    public LinkedList<Annotation> getAnnotations() {
-        return annotations;
+    public LinkedList<Segment> getSegments() {
+        return segments;
     }
 
     /**
      * Adds a new TimeLineElement into the list at the right position. (The elements are ordered by their timeStart value.)
      * @param tle the new element to be added into the list.
      */
-    public void addTimeLineElementInOrder(Annotation tle){
-        if(annotations.size() == 0){
-            annotations.add(tle);
+    public void addTimeLineElementInOrder(Segment tle){
+        if(segments.size() == 0){
+            segments.add(tle);
         }
         else{
             int i = 0;
-            while(i < annotations.size()){
-                if(tle.getTimeStart() <= annotations.get(i).getTimeStart()){
-                    annotations.add(i, tle);
+            while(i < segments.size()){
+                if(tle.getTimeStart() <= segments.get(i).getTimeStart()){
+                    segments.add(i, tle);
                     break;
                 }
                 i++;
             }
-            if (i >= annotations.size()){
-                annotations.add(tle);
+            if (i >= segments.size()){
+                segments.add(tle);
             }
         }
     }
-    public boolean removeTimeLineElement(Annotation tle){
-        return annotations.remove(tle);
+    public boolean removeTimeLineElement(Segment tle){
+        return segments.remove(tle);
     }
 
     /**

@@ -1,11 +1,9 @@
 package New.util;
 
-import New.CustomControls.Annotation.AnnotationRectangle;
-import New.Model.Entities.Annotation;
+import New.Model.Entities.Segment;
 import New.Model.Entities.Dot;
 import New.Model.Entities.Stroke;
 
-import java.util.Comparator;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -13,10 +11,10 @@ import java.util.stream.Stream;
 
 public class PageUtil {
 
-    public static List<List<Dot>> getDotSectionsForAnnotations(List<Annotation> annotations, List<Stroke> strokes){
+    public static List<List<Dot>> getDotSectionsForAnnotations(List<Segment> segments, List<Stroke> strokes){
 
         List<List<Dot>> res = new LinkedList<>();
-        for(Annotation a : annotations) {
+        for(Segment a : segments) {
             for (List<Dot> dotSection : getDotSectionsForAnnotation(a, strokes)) {
                 res.add(dotSection);
             }
@@ -24,7 +22,7 @@ public class PageUtil {
         return res;
     }
 
-    public static List<List<Dot>> getDotSectionsForAnnotation(Annotation a, List<Stroke> strokes){
+    public static List<List<Dot>> getDotSectionsForAnnotation(Segment a, List<Stroke> strokes){
         List<List<Dot>> res = new LinkedList<>();
 
         /*
@@ -45,18 +43,18 @@ public class PageUtil {
                 .collect(Collectors.toList());
     }
 
-    public static List<Stroke> overlappingStrokesForAnnotation(Annotation a, List<Stroke> strokes){
+    public static List<Stroke> overlappingStrokesForAnnotation(Segment a, List<Stroke> strokes){
         return overlappingStrokesForAnnotationStream(a, strokes)
                 .collect(Collectors.toList());
     }
 
-    public static Stream<Stroke> overlappingStrokesForAnnotationStream(Annotation a, List<Stroke> strokes){
+    public static Stream<Stroke> overlappingStrokesForAnnotationStream(Segment a, List<Stroke> strokes){
         return strokes.stream()
                 .filter(stroke -> stroke.getTimeEnd() >= a.getTimeStart() && stroke.getTimeStart() <= a.getTimeStop());
     }
 
-    public static List<Stroke> overlappingStrokesForAnnotations(List<Annotation> annotations, List<Stroke> strokes){
-        return annotations.stream()
+    public static List<Stroke> overlappingStrokesForAnnotations(List<Segment> segments, List<Stroke> strokes){
+        return segments.stream()
                 .flatMap(annotation -> overlappingStrokesForAnnotation(annotation, strokes).stream())
                 .collect(Collectors.toList());
     }

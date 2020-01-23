@@ -1,18 +1,29 @@
 package New.Model.Entities;
 
-public class Annotation {
+import java.util.HashMap;
+import java.util.Map;
+
+public class Segment {
+    //TODO: Remove Annotationtext.
     private String annotationText;
     private double timeStart;
     private double timeStop;
+    private final Map<String, String> annotationsMap;
 
-    public Annotation(String annotationText, double timeStart, double timeStop){
+    public Segment(String annotationText, double timeStart, double timeStop){
         this.annotationText = annotationText;
         this.timeStart = timeStart;
         this.timeStop = timeStop;
+        annotationsMap = new HashMap<>();
     }
 
-    public Annotation(Annotation annotation){
-        this(annotation.annotationText, annotation.timeStart, annotation.timeStop);
+    public Segment(Segment segment){
+        this(segment.annotationText, segment.timeStart, segment.timeStop);
+    }
+
+    public Segment(String annotationText, double timeStart, double timeStop, Map<String, String> annotations){
+        this(annotationText, timeStart, timeStop);
+        this.annotationsMap.putAll(annotations);
     }
 
     public String getAnnotationText() {
@@ -40,6 +51,17 @@ public class Annotation {
     }
 
     public double getDuration(){return timeStop - timeStart;}
+
+    public String getAnnotation(String topicID){
+        if(annotationsMap.containsKey(topicID)){
+            annotationsMap.put(topicID, "");
+        }
+        return annotationsMap.get(topicID);
+    }
+
+    public void setAnnotation(String topicID, String annotationText){
+        annotationsMap.put(topicID, annotationText);
+    }
 
     //TODO: Consider moving these to Entity class?
     public boolean collidesWith(double otherTimeStart, double otherTimeStop){

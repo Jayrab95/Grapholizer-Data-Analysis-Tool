@@ -1,6 +1,5 @@
 package New.Model.Entities;
 
-import java.util.Collections;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
@@ -8,9 +7,9 @@ import java.util.stream.Collectors;
 
 public class Project {
     private Map<String, Participant> participants;
-    private Map<String, TimeLineTag> projectTags;
+    private Map<String, TopicSet> projectTags;
 
-    public Project(List<Participant> participants, List<TimeLineTag> tags){
+    public Project(List<Participant> participants, List<TopicSet> tags){
         this.participants = participants.stream()
                 .collect(Collectors.toMap(p -> p.getID(), p -> p));
         this.projectTags = tags.stream()
@@ -21,7 +20,7 @@ public class Project {
         return participants;
     }
 
-    public Map<String, TimeLineTag> getProjectTagsMap(){
+    public Map<String, TopicSet> getProjectTagsMap(){
         return projectTags;
     }
 
@@ -33,7 +32,7 @@ public class Project {
         return participants.keySet();
     }
 
-    public TimeLineTag getTimeLineTag(String tagKey){
+    public TopicSet getTimeLineTag(String tagKey){
         return projectTags.get(tagKey);
     }
 

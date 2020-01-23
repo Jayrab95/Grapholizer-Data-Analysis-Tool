@@ -4,26 +4,26 @@ import New.CustomControls.TimeLine.CustomTimeLinePane;
 import New.CustomControls.Containers.TimeLineContainer;
 import New.CustomControls.Annotation.AnnotationRectangle;
 import New.Execptions.NoTimeLineSelectedException;
-import New.Model.Entities.Annotation;
+import New.Model.Entities.Segment;
 import New.Observables.*;
 
 import java.util.*;
 import java.util.stream.Collectors;
 
 public class CustomTimeLineController {
-    private ObservableTimeLineTag timeLineTag;
+    private ObservableTopicSet timeLineTag;
     private ObservablePage page;
     private ObservableTimeLine observableTimeLine;
     private TimeLineContainer parent;
 
-    public CustomTimeLineController(ObservableTimeLineTag timeLineTag, ObservablePage page, TimeLineContainer parent) {
+    public CustomTimeLineController(ObservableTopicSet timeLineTag, ObservablePage page, TimeLineContainer parent) {
         this.timeLineTag = timeLineTag;
         this.page = page;
         this.parent = parent;
         this.observableTimeLine = parent.getSelectedTimeLine();
     }
 
-    public void addAnnotation(Annotation a){
+    public void addAnnotation(Segment a){
         page.addAnnotation(timeLineTag.getTag(), a);
     }
 
@@ -150,7 +150,7 @@ public class CustomTimeLineController {
     public void createNewTimeLine() throws NoTimeLineSelectedException {
         parent.createNewTimeLineOutOfSelectedElements();
     }
-    public void createNewTimeLine(Optional<Annotation> combined) throws NoTimeLineSelectedException {
+    public void createNewTimeLine(Optional<Segment> combined) throws NoTimeLineSelectedException {
         if(combined.isPresent()){
             parent.createNewTimeLineOutOfCombinedElement(combined.get());
         }
@@ -160,7 +160,7 @@ public class CustomTimeLineController {
     }
 
     public void removeAnnotation(ObservableAnnotation a){
-        page.removeAnnotation(timeLineTag.getTag(), a.getAnnotation());
+        page.removeAnnotation(timeLineTag.getTag(), a.getSegment());
     }
 
 }

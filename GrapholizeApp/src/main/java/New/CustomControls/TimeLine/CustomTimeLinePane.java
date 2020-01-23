@@ -6,11 +6,11 @@ import New.CustomControls.Annotation.AnnotationRectangle;
 import New.CustomControls.Annotation.MovableAnnotationRectangle;
 import New.Execptions.NoTimeLineSelectedException;
 import New.Interfaces.Observer.PageObserver;
-import New.Model.Entities.Annotation;
+import New.Model.Entities.Segment;
 import New.Observables.ObservableAnnotation;
 import New.Observables.ObservableDot;
 import New.Observables.ObservablePage;
-import New.Observables.ObservableTimeLineTag;
+import New.Observables.ObservableTopicSet;
 import New.util.DialogGenerator;
 import javafx.beans.property.DoubleProperty;
 import javafx.scene.Node;
@@ -47,12 +47,12 @@ public class CustomTimeLinePane extends SelectableTimeLinePane implements PageOb
     private Light.Point anchor;
     private Rectangle selection;
     private double[] dragBounds;
-    private ObservableTimeLineTag timeLineTag;
+    private ObservableTopicSet timeLineTag;
     private ObservablePage p;
     private CustomTimeLineController customTimeLineController;
     private ContextMenu contextMenu;
 
-    public CustomTimeLinePane(double width, double height, DoubleProperty scaleProp, ObservableTimeLineTag tag, ObservablePage p, TimeLineContainer parent) {
+    public CustomTimeLinePane(double width, double height, DoubleProperty scaleProp, ObservableTopicSet tag, ObservablePage p, TimeLineContainer parent) {
         super(width, height, scaleProp, tag.getTagProperty(), parent);
         this.timeLineTag = tag;
         customTimeLineController = new CustomTimeLineController(tag, p, parent);
@@ -71,17 +71,17 @@ public class CustomTimeLinePane extends SelectableTimeLinePane implements PageOb
         //p.addObserver(this);
     }
 
-    public CustomTimeLinePane(double width, double height, DoubleProperty scaleProp, ObservableTimeLineTag tag, ObservablePage p, TimeLineContainer parent, Annotation[] annotations) {
+    public CustomTimeLinePane(double width, double height, DoubleProperty scaleProp, ObservableTopicSet tag, ObservablePage p, TimeLineContainer parent, Segment[] segments) {
+        this(width, height, scaleProp, tag, p, parent);
+        addAnnotations(segments);
+    }
+
+    public CustomTimeLinePane(double width, double height, DoubleProperty scaleProp, ObservableTopicSet tag, ObservablePage p, TimeLineContainer parent, List<AnnotationRectangle> annotations) {
         this(width, height, scaleProp, tag, p, parent);
         addAnnotations(annotations);
     }
 
-    public CustomTimeLinePane(double width, double height, DoubleProperty scaleProp, ObservableTimeLineTag tag, ObservablePage p, TimeLineContainer parent, List<AnnotationRectangle> annotations) {
-        this(width, height, scaleProp, tag, p, parent);
-        addAnnotations(annotations);
-    }
-
-    public CustomTimeLinePane(double width, double height, DoubleProperty scaleProp, ObservableTimeLineTag tag, ObservablePage p, TimeLineContainer parent, Annotation a) {
+    public CustomTimeLinePane(double width, double height, DoubleProperty scaleProp, ObservableTopicSet tag, ObservablePage p, TimeLineContainer parent, Segment a) {
         this(width, height, scaleProp, tag, p, parent);
         addAnnotation(a);
     }
@@ -102,7 +102,7 @@ public class CustomTimeLinePane extends SelectableTimeLinePane implements PageOb
         return timeLineName.get();
     }
 
-    private void addAnnotation(Annotation a){
+    private void addAnnotation(Segment a){
         customTimeLineController.addAnnotation(a);
         getChildren().add(new MovableAnnotationRectangle(
                 timeLineTag.getColorProperty(),
@@ -114,13 +114,13 @@ public class CustomTimeLinePane extends SelectableTimeLinePane implements PageOb
 
     private void addAnnotations(List<AnnotationRectangle> annotations){
         for(AnnotationRectangle a : annotations){
-            Annotation newAnnotation = new Annotation(a.getText(), a.getTimeStart(), a.getTimeStop());
-            addAnnotation(newAnnotation);
+            Segment newSegment = new Segment(a.getText(), a.getTimeStart(), a.getTimeStop());
+            addAnnotation(newSegment);
         }
     }
 
-    private void addAnnotations(Annotation[] annotations){
-        for(Annotation a : annotations){
+    private void addAnnotations(Segment[] segments){
+        for(Segment a : segments){
             addAnnotation(a);
         }
     }
@@ -236,8 +236,8 @@ public class CustomTimeLinePane extends SelectableTimeLinePane implements PageOb
             if(s.isPresent()){
                 double timeStart = selection.getX() / scale.get();
                 double timeStop = (selection.getX() + selection.getWidth()) / scale.get();
-                Annotation newAnnotation = new Annotation(s.get(),timeStart, timeStop);
-                addAnnotation(newAnnotation);
+                Segment newSegment = new Segment(s.get(),timeStart, timeStop);
+                addAnnotation(newSegment);
             }
             else{
                 System.out.println("Annotation creation aborted.");
@@ -288,8 +288,8 @@ public class CustomTimeLinePane extends SelectableTimeLinePane implements PageOb
                 //If a collision was detected, a dialog is prompted which asks the user if they want to create a new timeline.
                 //should they decline, the entire procees is aborted.
                 if(customTimeLineController.copiedAnnotationsCollideWithOtherAnnotations(boundaries) && DialogGenerator.confirmationDialogue(TXT_COLLIDEHANDLER_TITLE, TXT_COLLIDEHANDLER_HEADER, TXT_COLLIDEHANDLER_MSG)){
-                    Optional<Annotation> annotation = cbox_joinedAnnotation.isSelected() ?
-                            Optional.of(new Annotation(textField_annotationText.getText(), boundaries.get()[0], boundaries.get()[1])) :
+                    Optional<Segment> annotation = cbox_joinedAnnotation.isSelected() ?
+                            Optional.of(new Segment(textField_annotationText.getText(), boundaries.get()[0], boundaries.get()[1])) :
                             Optional.empty();
                     try {
                         customTimeLineController.createNewTimeLine(annotation);
@@ -300,7 +300,7 @@ public class CustomTimeLinePane extends SelectableTimeLinePane implements PageOb
                 else{
                     //If no collisions were detected, copy the annotations into this timeline.
                     if (cbox_joinedAnnotation.isSelected()) {
-                        addAnnotation(new Annotation(textField_annotationText.getText(), boundaries.get()[0], boundaries.get()[1]));
+                        addAnnotation(new Segment(textField_annotationText.getText(), boundaries.get()[0], boundaries.get()[1]));
                     }
                     else {
                         addAnnotations(customTimeLineController.getSelectedAnnotations());
@@ -351,8 +351,8 @@ public class CustomTimeLinePane extends SelectableTimeLinePane implements PageOb
                 //If a collision was detected, a dialog is prompted which asks the user if they want to create a new timeline.
                 //should they decline, the entire procees is aborted.
                 if(customTimeLineController.dotSegmentsCollideWithOtherAnnotations(boundaries) && DialogGenerator.confirmationDialogue(TXT_COLLIDEHANDLER_TITLE, TXT_COLLIDEHANDLER_HEADER, TXT_COLLIDEHANDLER_MSG)){
-                    Optional<Annotation> annotation = cbox_joinedAnnotation.isSelected() ?
-                            Optional.of(new Annotation(textField_annotationText.getText(), boundaries.get()[0], boundaries.get()[1])) :
+                    Optional<Segment> annotation = cbox_joinedAnnotation.isSelected() ?
+                            Optional.of(new Segment(textField_annotationText.getText(), boundaries.get()[0], boundaries.get()[1])) :
                             Optional.empty();
                     try {
                         customTimeLineController.createNewTimeLine(annotation);
@@ -363,11 +363,11 @@ public class CustomTimeLinePane extends SelectableTimeLinePane implements PageOb
                 else{
                     //If no collisions were detected, copy the annotations into this timeline.
                     if (cbox_joinedAnnotation.isSelected()) {
-                        addAnnotation(new Annotation(textField_annotationText.getText(), boundaries.get()[0], boundaries.get()[1]));
+                        addAnnotation(new Segment(textField_annotationText.getText(), boundaries.get()[0], boundaries.get()[1]));
                     }
                     else {
                         for(List<ObservableDot> segment : p.getSelectedDotSegments()){
-                            addAnnotation(new Annotation(
+                            addAnnotation(new Segment(
                                     "Generated Annotation",
                                     segment.get(0).getTimeStamp(),
                                     segment.get(segment.size()-1).getTimeStamp()));

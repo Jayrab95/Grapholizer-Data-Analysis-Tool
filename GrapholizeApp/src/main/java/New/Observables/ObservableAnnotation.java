@@ -1,35 +1,35 @@
 package New.Observables;
 
-import New.Model.Entities.Annotation;
+import New.Model.Entities.Segment;
 import javafx.beans.property.DoubleProperty;
 import javafx.beans.property.SimpleDoubleProperty;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.property.StringProperty;
 
 public class ObservableAnnotation {
-    private Annotation annotation;
+    private Segment segment;
 
     private StringProperty annotationTextProperty;
     private DoubleProperty timeStartProperty;
     private DoubleProperty timeStopProperty;
 
-    public ObservableAnnotation(Annotation original){
-        this.annotation = original;
+    public ObservableAnnotation(Segment original){
+        this.segment = original;
         annotationTextProperty = new SimpleStringProperty(original.getAnnotationText());
-        annotationTextProperty.addListener((observable, oldValue, newValue) -> annotation.setAnnotationText(newValue));
+        annotationTextProperty.addListener((observable, oldValue, newValue) -> segment.setAnnotationText(newValue));
         timeStartProperty = new SimpleDoubleProperty(original.getTimeStart());
-        timeStartProperty.addListener((observable, oldValue, newValue) -> annotation.setTimeStart(newValue.doubleValue()));
+        timeStartProperty.addListener((observable, oldValue, newValue) -> segment.setTimeStart(newValue.doubleValue()));
         timeStopProperty = new SimpleDoubleProperty(original.getTimeStop());
-        timeStopProperty.addListener((observable, oldValue, newValue) -> annotation.setTimeStop(newValue.doubleValue()));
+        timeStopProperty.addListener((observable, oldValue, newValue) -> segment.setTimeStop(newValue.doubleValue()));
     }
 
     //region Getters and Setters
-    public Annotation getAnnotation() {
-        return annotation;
+    public Segment getSegment() {
+        return segment;
     }
 
-    public ObservableAnnotation setAnnotation(Annotation annotation) {
-        this.annotation = annotation;
+    public ObservableAnnotation setSegment(Segment segment) {
+        this.segment = segment;
         return this;
     }
 
@@ -72,16 +72,16 @@ public class ObservableAnnotation {
 
     //region annotation accessors
     public double getDuration(){
-        return annotation.getDuration();
+        return segment.getDuration();
     }
     public boolean collidesWith(double otherTimeStart, double otherTimeStop){
-        return annotation.collidesWith(otherTimeStart, otherTimeStop);
+        return segment.collidesWith(otherTimeStart, otherTimeStop);
     }
     public boolean timeStampWithinTimeRange(double timeStamp){
-        return annotation.timeStampWithinTimeRange(timeStamp);
+        return segment.timeStampWithinTimeRange(timeStamp);
     }
     public void move(double delta){
-        annotation.move(delta);
+        segment.move(delta);
     }
     //endregion
 }

@@ -2,7 +2,6 @@ package New.Observables;
 
 import New.CustomControls.Annotation.AnnotationRectangle;
 import New.Interfaces.Observer.PageObserver;
-import New.Interfaces.Observer.StrokeObserver;
 import New.Interfaces.Selector;
 import New.Model.Entities.*;
 import New.util.PageUtil;
@@ -69,11 +68,11 @@ public class ObservablePage implements Selector {
         this.setPage(p.inner.get());
     }
 
-    public void addAnnotation(String key, Annotation a){
+    public void addAnnotation(String key, Segment a){
         inner.get().getTimeLine(key).add(a);
     }
 
-    public void removeAnnotation(String key, Annotation a){
+    public void removeAnnotation(String key, Segment a){
         inner.get().getTimeLines().get(key).remove(a);
     }
 
@@ -81,7 +80,7 @@ public class ObservablePage implements Selector {
         return inner.get().getTimeLines().containsKey(tag);
     }
 
-    public Optional<List<Annotation>> getAnnotationSet(String tag){
+    public Optional<List<Segment>> getAnnotationSet(String tag){
         if(containsTag(tag)){
             return Optional.of(inner.get().getTimeLine(tag));
         }
@@ -207,7 +206,7 @@ public class ObservablePage implements Selector {
 
     public List<ObservableAnnotation>getTimeLineAnnotations(String timeLineKey){
         List<ObservableAnnotation> res = new LinkedList<>();
-        for(Annotation a : inner.get().getTimeLine(timeLineKey)){
+        for(Segment a : inner.get().getTimeLine(timeLineKey)){
             res.add(new ObservableAnnotation(a));
         }
         return res;

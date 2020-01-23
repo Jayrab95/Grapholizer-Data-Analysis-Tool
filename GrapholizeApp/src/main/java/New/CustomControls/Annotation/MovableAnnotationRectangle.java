@@ -4,7 +4,6 @@ package New.CustomControls.Annotation;
 import New.Controllers.MovableAnnotationController;
 import New.CustomControls.TimeLine.CustomTimeLinePane;
 import New.Interfaces.Selector;
-import New.Model.Entities.Annotation;
 import New.Observables.ObservableAnnotation;
 import New.util.DialogGenerator;
 import javafx.beans.property.DoubleProperty;
