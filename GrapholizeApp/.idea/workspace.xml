@@ -24,6 +24,20 @@
   <component name="CodeStyleSettingsInfer">
     <option name="done" value="true" />
   </component>
+  <component name="DatabaseView">
+    <option name="SHOW_INTERMEDIATE" value="true" />
+    <option name="GROUP_DATA_SOURCES" value="true" />
+    <option name="GROUP_SCHEMA" value="true" />
+    <option name="GROUP_CONTENTS" value="false" />
+    <option name="SORT_POSITIONED" value="false" />
+    <option name="SHOW_EMPTY_GROUPS" value="false" />
+    <option name="AUTO_SCROLL_FROM_SOURCE" value="false" />
+    <option name="HIDDEN_KINDS">
+      <set />
+    </option>
+    <expand />
+    <select />
+  </component>
   <component name="ExternalProjectsData">
     <projectState path="$PROJECT_DIR$">
       <ProjectState />
@@ -186,6 +200,25 @@
         <option name="Make" enabled="true" />
       </method>
     </configuration>
+    <configuration name="GrapholizeApp [buildDependents]" type="GradleRunConfiguration" factoryName="Gradle" temporary="true">
+      <ExternalSystemSettings>
+        <option name="executionName" />
+        <option name="externalProjectPath" value="$PROJECT_DIR$" />
+        <option name="externalSystemIdString" value="GRADLE" />
+        <option name="scriptParameters" />
+        <option name="taskDescriptions">
+          <list />
+        </option>
+        <option name="taskNames">
+          <list>
+            <option value="buildDependents" />
+          </list>
+        </option>
+        <option name="vmOptions" />
+      </ExternalSystemSettings>
+      <GradleScriptDebugEnabled>true</GradleScriptDebugEnabled>
+      <method v="2" />
+    </configuration>
     <configuration name="GrapholizeApp [build]" type="GradleRunConfiguration" factoryName="Gradle" temporary="true">
       <ExternalSystemSettings>
         <option name="executionName" />
@@ -236,25 +269,6 @@
         <option name="taskNames">
           <list>
             <option value="jar" />
-          </list>
-        </option>
-        <option name="vmOptions" />
-      </ExternalSystemSettings>
-      <GradleScriptDebugEnabled>true</GradleScriptDebugEnabled>
-      <method v="2" />
-    </configuration>
-    <configuration name="GrapholizeApp [jlinkZip]" type="GradleRunConfiguration" factoryName="Gradle" temporary="true">
-      <ExternalSystemSettings>
-        <option name="executionName" />
-        <option name="externalProjectPath" value="$PROJECT_DIR$" />
-        <option name="externalSystemIdString" value="GRADLE" />
-        <option name="scriptParameters" />
-        <option name="taskDescriptions">
-          <list />
-        </option>
-        <option name="taskNames">
-          <list>
-            <option value="jlinkZip" />
           </list>
         </option>
         <option name="vmOptions" />
@@ -315,19 +329,19 @@
     <list>
       <item itemvalue="Application.HelloFX" />
       <item itemvalue="Gradle.GrapholizeApp [jar]" />
-      <item itemvalue="Gradle.GrapholizeApp [jlinkZip]" />
       <item itemvalue="Gradle.GrapholizeApp [jlink]" />
       <item itemvalue="Gradle.GrapholizeApp [clean]" />
-      <item itemvalue="JAR Application.GrapholizeAppAID-1.0-SNAPSHOT.jar" />
       <item itemvalue="Gradle.GrapholizeApp [build]" />
+      <item itemvalue="JAR Application.GrapholizeAppAID-1.0-SNAPSHOT.jar" />
+      <item itemvalue="Gradle.GrapholizeApp [buildDependents]" />
     </list>
     <recent_temporary>
       <list>
         <item itemvalue="Application.HelloFX" />
+        <item itemvalue="Gradle.GrapholizeApp [buildDependents]" />
         <item itemvalue="Gradle.GrapholizeApp [build]" />
         <item itemvalue="Gradle.GrapholizeApp [clean]" />
         <item itemvalue="Gradle.GrapholizeApp [jlink]" />
-        <item itemvalue="Gradle.GrapholizeApp [jlinkZip]" />
       </list>
     </recent_temporary>
   </component>
@@ -394,7 +408,8 @@
       <workItem from="1579643089961" duration="4094000" />
       <workItem from="1579692396599" duration="9484000" />
       <workItem from="1579705870293" duration="357000" />
-      <workItem from="1579706285243" duration="11865000" />
+      <workItem from="1579706285243" duration="12205000" />
+      <workItem from="1579785674687" duration="18209000" />
     </task>
     <servers />
   </component>

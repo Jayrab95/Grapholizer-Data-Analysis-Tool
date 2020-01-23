@@ -4,9 +4,10 @@ import javafx.beans.property.DoubleProperty;
 import javafx.geometry.Insets;
 import javafx.scene.control.Label;
 import javafx.scene.layout.HBox;
+import javafx.scene.layout.VBox;
 import javafx.scene.shape.Line;
 
-public class TimeUnitPane extends HBox {
+public class TimeUnitPane extends VBox {
     private enum Unit{
         LIMIT("", 0.0d, 10000, 10),
         TEN_SECONDS("s", 0.05d, 10000,10),
@@ -70,7 +71,9 @@ public class TimeUnitPane extends HBox {
         this.getChildren().clear();
         this.getChildren().add(new Line( 0, 0, 0, height));
         for(int i = 0; i < gapNumber; i++) {
-            this.getChildren().add(new Line( 0, 0, 0, height));
+            Line line = new Line( 0, 0, 0, height);
+            this.getChildren().add(line);
+            System.out.println(line.getStrokeWidth());
         }
         this.setSpacing(unit.msRatio * scale);
     }
