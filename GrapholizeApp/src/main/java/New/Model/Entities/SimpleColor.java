@@ -16,6 +16,7 @@ public class SimpleColor {
         b = rand.nextFloat();
         o = 1;
     }
+
     public SimpleColor(double r, double g, double b, double o){
         this.r = r;
         this.g = g;

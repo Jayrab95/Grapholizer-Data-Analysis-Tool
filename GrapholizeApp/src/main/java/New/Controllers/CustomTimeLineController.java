@@ -24,7 +24,7 @@ public class CustomTimeLineController {
     }
 
     public void addAnnotation(Segment a){
-        page.addAnnotation(timeLineTag.getTag(), a);
+        page.addSegment(timeLineTag.getTag(), a);
     }
 
     public void editTimeLine(){
@@ -159,7 +159,7 @@ public class CustomTimeLineController {
         }
     }
 
-    public void removeAnnotation(ObservableAnnotation a){
+    public void removeAnnotation(ObservableSegment a){
         page.removeAnnotation(timeLineTag.getTag(), a.getSegment());
     }
 

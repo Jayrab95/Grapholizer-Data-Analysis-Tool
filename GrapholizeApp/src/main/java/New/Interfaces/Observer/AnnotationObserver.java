@@ -1,7 +1,7 @@
 package New.Interfaces.Observer;
 
-import New.Observables.ObservableAnnotation;
+import New.Observables.ObservableSegment;
 
 public interface AnnotationObserver {
-    void update(ObservableAnnotation sender);
+    void update(ObservableSegment sender);
 }

@@ -1,5 +1,7 @@
 package New.Observables;
 
+import New.Model.Entities.Segment;
+import New.Model.Entities.Topic;
 import New.Model.Entities.TopicSet;
 import New.util.ColorConverter;
 import javafx.beans.property.ObjectProperty;
@@ -16,7 +18,7 @@ public class ObservableTopicSet {
     private StringProperty tagProperty;
     private ObjectProperty<Color> colorProperty;
     private StringProperty mainTopicIDProperty;
-    private ObservableList topicsObservableList;
+    private ObservableList<Topic> topicsObservableList;
 
     public ObservableTopicSet(TopicSet inner){
         this.inner = inner;
@@ -53,6 +55,31 @@ public class ObservableTopicSet {
     public void setColor(Color color) {
         this.colorProperty.set(color);
     }
-    
+
+    public String getMainTopicID() {
+        return mainTopicIDProperty.get();
+    }
+
+    public StringProperty getMainTopicIDProperty(){
+        return mainTopicIDProperty;
+    }
+
+    public ObservableList<Topic> getTopicsObservableList() {
+        return topicsObservableList;
+    }
+
+    public void setMainTopicID(String topicID){
+        mainTopicIDProperty.set(topicID);
+    }
+
+    public void addTopic(Topic t){
+        topicsObservableList.add(t);
+        inner.addTopic(t);
+    }
+
+    public void removeTopic(Topic t){
+        topicsObservableList.remove(t);
+        inner.removeTopic(t);
+    }
 
 }

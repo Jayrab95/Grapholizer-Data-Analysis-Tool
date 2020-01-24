@@ -1,7 +1,6 @@
 package New.Observables;
 
 import New.CustomControls.Annotation.AnnotationRectangle;
-import New.Interfaces.Observer.PageObserver;
 import New.Interfaces.Selector;
 import New.Model.Entities.*;
 import New.util.PageUtil;
@@ -22,7 +21,6 @@ public class ObservablePage implements Selector {
     //private Page inner;
 
     private ObservableList<ObservableStroke> strokes;
-    private List<PageObserver> observers;
 
     private final ObjectProperty<Page> inner;
     private ObservableList<Dot> selectedDots;
@@ -32,12 +30,13 @@ public class ObservablePage implements Selector {
         this.inner = new SimpleObjectProperty();
         this.inner.set(inner);
 
-        observers = new LinkedList<>();
     }
 
     public ObservablePage(ObservablePage p){
         this(p.inner.get());
     }
+
+
 
     public ObjectProperty getPageProperty(){
         return inner;
@@ -57,7 +56,7 @@ public class ObservablePage implements Selector {
                     .map(stroke -> stroke.getDots())
                     .collect(Collectors.toList());
         }
-        return PageUtil.getDotSectionsForAnnotations(inner.get().getTimeLine(topic), inner.get().getStrokes());
+        return PageUtil.getDotSectionsForAnnotations(inner.get().getSegmentation(topic), inner.get().getStrokes());
     }
 
     public List<Stroke> getAllStrokes(){
@@ -68,12 +67,12 @@ public class ObservablePage implements Selector {
         this.setPage(p.inner.get());
     }
 
-    public void addAnnotation(String key, Segment a){
-        inner.get().getTimeLine(key).add(a);
+    public void addSegment(String topicSetKey, Segment a){
+        inner.get().getSegmentation(topicSetKey).add(a);
     }
 
-    public void removeAnnotation(String key, Segment a){
-        inner.get().getTimeLines().get(key).remove(a);
+    public void removeAnnotation(String topicSetKey, Segment a){
+        inner.get().getSegmentation(topicSetKey).remove(a);
     }
 
     public boolean containsTag(String tag){
@@ -82,16 +81,16 @@ public class ObservablePage implements Selector {
 
     public Optional<List<Segment>> getAnnotationSet(String tag){
         if(containsTag(tag)){
-            return Optional.of(inner.get().getTimeLine(tag));
+            return Optional.of(inner.get().getSegmentation(tag));
         }
         return Optional.empty();
     }
 
     public boolean collidesWithOtherElements(String timeLineKey, double timeStart, double timeStop){
-        List debug = inner.get().getTimeLine(timeLineKey).stream()
+        List debug = inner.get().getSegmentation(timeLineKey).stream()
                 .filter(annotation -> annotation.collidesWith(timeStart, timeStop))
                 .collect(Collectors.toList());
-        return inner.get().getTimeLine(timeLineKey).stream()
+        return inner.get().getSegmentation(timeLineKey).stream()
                 .filter(annotation -> annotation.collidesWith(timeStart, timeStop))
                 .count() > 0;
     }
@@ -204,13 +203,6 @@ public class ObservablePage implements Selector {
         return this.strokes;
     }
 
-    public List<ObservableAnnotation>getTimeLineAnnotations(String timeLineKey){
-        List<ObservableAnnotation> res = new LinkedList<>();
-        for(Segment a : inner.get().getTimeLine(timeLineKey)){
-            res.add(new ObservableAnnotation(a));
-        }
-        return res;
-    }
     public PageMetaData getPageMetaData(){
         return inner.get().getPageMetaData();
     }

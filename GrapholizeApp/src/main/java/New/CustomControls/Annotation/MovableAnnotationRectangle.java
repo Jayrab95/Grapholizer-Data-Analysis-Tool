@@ -4,7 +4,7 @@ package New.CustomControls.Annotation;
 import New.Controllers.MovableAnnotationController;
 import New.CustomControls.TimeLine.CustomTimeLinePane;
 import New.Interfaces.Selector;
-import New.Observables.ObservableAnnotation;
+import New.Observables.ObservableSegment;
 import New.util.DialogGenerator;
 import javafx.beans.property.DoubleProperty;
 import javafx.beans.property.ObjectProperty;
@@ -27,8 +27,8 @@ public class MovableAnnotationRectangle extends SelectableAnnotationRectangle {
     private DragRectangle right;
 
 
-    public MovableAnnotationRectangle(ObjectProperty<Color> c, DoubleProperty scale, ObservableAnnotation t, CustomTimeLinePane parent, Selector s) {
-        super(c, t.getAnnotationTextProperty(), scale, t.getDuration(), parent.getHeight(), t.getTimeStart(), parent, s);
+    public MovableAnnotationRectangle(ObjectProperty<Color> c, DoubleProperty scale, ObservableSegment t, CustomTimeLinePane parent, Selector s) {
+        super(c, t.getMainTopicAnnotationProperty(), scale, t.getDuration(), parent.getHeight(), t.getTimeStart(), parent, s);
 
         this.movableAnnotationController = new MovableAnnotationController(t,parent);
 

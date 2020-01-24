@@ -31,12 +31,19 @@ public class TimeLineContainerController {
         return project.getTimeLineTagNames();
     }
 
+
     public Segment[] getFilteredAnnotations(String topic, String filterText){
+        return null;
+        /*
         return page.getTimeLineAnnotations(topic).stream()
                 .filter(observableAnnotation -> observableAnnotation.getAnnotationText().equals(filterText))
                 .map(oA -> new Segment(oA.getAnnotationText(), oA.getTimeStart(), oA.getTimeStop()))
                 .toArray(size -> new Segment[size]);
+
+         */
     }
+
+
 
     //Assumption with create and edit: CheckIfTagIsValid has been called beforehand.
     //In the code, create and edit are only called as a result of a dialog, which calls the checkFunction.

@@ -4,34 +4,24 @@ import java.util.HashMap;
 import java.util.Map;
 
 public class Segment {
-    //TODO: Remove Annotationtext.
-    private String annotationText;
+
     private double timeStart;
     private double timeStop;
     private final Map<String, String> annotationsMap;
 
-    public Segment(String annotationText, double timeStart, double timeStop){
-        this.annotationText = annotationText;
+    public Segment(double timeStart, double timeStop){
         this.timeStart = timeStart;
         this.timeStop = timeStop;
         annotationsMap = new HashMap<>();
     }
 
     public Segment(Segment segment){
-        this(segment.annotationText, segment.timeStart, segment.timeStop);
+        this(segment.timeStart, segment.timeStop, segment.annotationsMap);
     }
 
-    public Segment(String annotationText, double timeStart, double timeStop, Map<String, String> annotations){
-        this(annotationText, timeStart, timeStop);
+    public Segment(double timeStart, double timeStop, Map<String, String> annotations){
+        this(timeStart, timeStop);
         this.annotationsMap.putAll(annotations);
-    }
-
-    public String getAnnotationText() {
-        return annotationText;
-    }
-
-    public void setAnnotationText(String annotationText) {
-        this.annotationText = annotationText;
     }
 
     public double getTimeStart() {
@@ -59,8 +49,12 @@ public class Segment {
         return annotationsMap.get(topicID);
     }
 
-    public void setAnnotation(String topicID, String annotationText){
+    public void putAnnotation(String topicID, String annotationText){
         annotationsMap.put(topicID, annotationText);
+    }
+
+    public void removeAnnotation(String topicID){
+        annotationsMap.remove(topicID);
     }
 
     //TODO: Consider moving these to Entity class?

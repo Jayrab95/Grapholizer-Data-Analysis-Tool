@@ -278,7 +278,6 @@ public class TimeLineContainer extends VBox {
         List<Segment> segments = new LinkedList();
         for(List<ObservableDot> segment : page.getSelectedDotSegments()){
             segments.add(new Segment(
-                    "Generated Annotation",
                     segment.get(0).getTimeStamp(),
                     segment.get(segment.size()-1).getTimeStamp()));
         }

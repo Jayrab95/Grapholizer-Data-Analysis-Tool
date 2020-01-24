@@ -8,11 +8,13 @@ import java.util.*;
 public class Page {
     private transient final PageMetaData pageMetaData;
     private transient final List<Stroke> strokes;
+    private final String pageID;
 
     private Map<String, List<Segment>> timeLines;
 
     //TODO: Load page annotations and add them to map
-    public Page (PageMetaData pageMetaData, List<Stroke> strokes){
+    public Page (PageMetaData pageMetaData, List<Stroke> strokes, String pageID){
+        this.pageID = pageID;
         this.pageMetaData = pageMetaData;
         this.strokes = strokes;
         timeLines = new HashMap<>();
@@ -29,6 +31,8 @@ public class Page {
             strokes.add(new Stroke(cstroke, initialTimestamp));
         }
         timeLines = new HashMap<>();
+        //TODO: get ID out of compressed Page!
+        this.pageID = "";
     }
 
     public PageMetaData getPageMetaData() {
@@ -39,13 +43,17 @@ public class Page {
         return strokes;
     }
 
+    public String getPageID() {
+        return pageID;
+    }
+
     public double getDuration(){
         return strokes.get(strokes.size()-1).getTimeEnd();
     }
 
     public Map<String, List<Segment>> getTimeLines(){return this.timeLines;}
 
-    public List<Segment> getTimeLine(String key){
+    public List<Segment> getSegmentation(String key){
         if(!timeLines.keySet().contains(key)){
             timeLines.put(key, new LinkedList<>());
         }

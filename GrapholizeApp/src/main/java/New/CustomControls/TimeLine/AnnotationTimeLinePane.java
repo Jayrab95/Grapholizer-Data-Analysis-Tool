@@ -20,10 +20,11 @@ public class AnnotationTimeLinePane extends TimeLinePane {
     }
 
 
+    //TODO: This somehow needs to receive the main topic
     private void addAnnotation(Segment a){
         getChildren().add(new AnnotationRectangle(
                 c,
-                new SimpleStringProperty(a.getAnnotationText()),
+                new SimpleStringProperty(),
                 scale,
                 a.getDuration(),
                 this.getHeight(),
@@ -33,7 +34,7 @@ public class AnnotationTimeLinePane extends TimeLinePane {
 
     private void addAnnotations(List<AnnotationRectangle> annotations){
         for(AnnotationRectangle a : annotations){
-            Segment newSegment = new Segment(a.getText(), a.getTimeStart(), a.getTimeStop());
+            Segment newSegment = new Segment(a.getTimeStart(), a.getTimeStop());
             addAnnotation(newSegment);
         }
     }

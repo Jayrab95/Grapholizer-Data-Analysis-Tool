@@ -7,8 +7,75 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="f9c9e85c-b6d3-4a2f-99c7-3350288aea5b" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/src/main/java/New/Model/Entities/Topic.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.gradle/5.2.1/executionHistory/executionHistory.bin" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/5.2.1/executionHistory/executionHistory.bin" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.gradle/5.2.1/executionHistory/executionHistory.lock" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/5.2.1/executionHistory/executionHistory.lock" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.gradle/5.2.1/fileHashes/fileHashes.bin" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/5.2.1/fileHashes/fileHashes.bin" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.gradle/5.2.1/fileHashes/fileHashes.lock" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/5.2.1/fileHashes/fileHashes.lock" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.gradle/5.2.1/javaCompile/classAnalysis.bin" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/5.2.1/javaCompile/classAnalysis.bin" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.gradle/5.2.1/javaCompile/javaCompile.lock" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/5.2.1/javaCompile/javaCompile.lock" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.gradle/buildOutputCleanup/buildOutputCleanup.lock" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/buildOutputCleanup/buildOutputCleanup.lock" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/classes/java/main/New/Controllers/CustomTimeLineController.class" beforeDir="false" afterPath="$PROJECT_DIR$/build/classes/java/main/New/Controllers/CustomTimeLineController.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/classes/java/main/New/Controllers/MovableAnnotationController.class" beforeDir="false" afterPath="$PROJECT_DIR$/build/classes/java/main/New/Controllers/MovableAnnotationController.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/classes/java/main/New/Controllers/TimeLineContainerController.class" beforeDir="false" afterPath="$PROJECT_DIR$/build/classes/java/main/New/Controllers/TimeLineContainerController.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/classes/java/main/New/CustomControls/Annotation/MovableAnnotationRectangle$DragRectangle.class" beforeDir="false" afterPath="$PROJECT_DIR$/build/classes/java/main/New/CustomControls/Annotation/MovableAnnotationRectangle$DragRectangle.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/classes/java/main/New/CustomControls/Annotation/MovableAnnotationRectangle$LeftDragRectangle.class" beforeDir="false" afterPath="$PROJECT_DIR$/build/classes/java/main/New/CustomControls/Annotation/MovableAnnotationRectangle$LeftDragRectangle.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/classes/java/main/New/CustomControls/Annotation/MovableAnnotationRectangle$RightDragRectangle.class" beforeDir="false" afterPath="$PROJECT_DIR$/build/classes/java/main/New/CustomControls/Annotation/MovableAnnotationRectangle$RightDragRectangle.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/classes/java/main/New/CustomControls/Annotation/MovableAnnotationRectangle.class" beforeDir="false" afterPath="$PROJECT_DIR$/build/classes/java/main/New/CustomControls/Annotation/MovableAnnotationRectangle.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/classes/java/main/New/CustomControls/Containers/TimeLineContainer$AnnotationFilterDialogResult.class" beforeDir="false" afterPath="$PROJECT_DIR$/build/classes/java/main/New/CustomControls/Containers/TimeLineContainer$AnnotationFilterDialogResult.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/classes/java/main/New/CustomControls/Containers/TimeLineContainer$TimeLineInformation.class" beforeDir="false" afterPath="$PROJECT_DIR$/build/classes/java/main/New/CustomControls/Containers/TimeLineContainer$TimeLineInformation.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/classes/java/main/New/CustomControls/Containers/TimeLineContainer$TimeLineWrapper.class" beforeDir="false" afterPath="$PROJECT_DIR$/build/classes/java/main/New/CustomControls/Containers/TimeLineContainer$TimeLineWrapper.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/classes/java/main/New/CustomControls/Containers/TimeLineContainer$TopicCreationDialogResult.class" beforeDir="false" afterPath="$PROJECT_DIR$/build/classes/java/main/New/CustomControls/Containers/TimeLineContainer$TopicCreationDialogResult.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/classes/java/main/New/CustomControls/Containers/TimeLineContainer.class" beforeDir="false" afterPath="$PROJECT_DIR$/build/classes/java/main/New/CustomControls/Containers/TimeLineContainer.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/classes/java/main/New/CustomControls/TimeLine/AnnotationTimeLinePane.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/classes/java/main/New/CustomControls/TimeLine/CustomTimeLinePane.class" beforeDir="false" afterPath="$PROJECT_DIR$/build/classes/java/main/New/CustomControls/TimeLine/CustomTimeLinePane.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/classes/java/main/New/CustomControls/TimeLine/StrokeDurationTimeLinePane.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/classes/java/main/New/CustomControls/TimeLine/SubTimeLines/DetailTimeLine.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/classes/java/main/New/CustomControls/TimeLine/SubTimeLines/PressureTimeLine.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/classes/java/main/New/CustomControls/TimeLine/SubTimeLines/VelocityTimeLine.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/classes/java/main/New/Dialogues/CustomTimeLineAnnotationDialog.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/classes/java/main/New/Execptions/AnnotationCopyCollideException.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/classes/java/main/New/Execptions/TimeLineTagEmptyException.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/classes/java/main/New/Execptions/TimeLineTagNotFoundException.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/classes/java/main/New/Execptions/TimelineTagNotUniqueException.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/classes/java/main/New/Filters/DefaultFilter.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/classes/java/main/New/Filters/PressureFilter.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/classes/java/main/New/Filters/StrokeColorFilter.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/classes/java/main/New/Filters/VelocityFilter.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/classes/java/main/New/Interfaces/IExporter.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/classes/java/main/New/Interfaces/Observer/AnnotationObserver.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/classes/java/main/New/Interfaces/Observer/DotObserver.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/classes/java/main/New/Interfaces/Observer/TimeLineTagObserver.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/classes/java/main/New/Interfaces/Serializer.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/classes/java/main/New/Model/Entities/Annotation.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/classes/java/main/New/Model/Entities/Page.class" beforeDir="false" afterPath="$PROJECT_DIR$/build/classes/java/main/New/Model/Entities/Page.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/classes/java/main/New/Model/Entities/Project.class" beforeDir="false" afterPath="$PROJECT_DIR$/build/classes/java/main/New/Model/Entities/Project.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/classes/java/main/New/Model/Entities/SimpleColor.class" beforeDir="false" afterPath="$PROJECT_DIR$/build/classes/java/main/New/Model/Entities/SimpleColor.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/classes/java/main/New/Model/Entities/TimeLineTag.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/classes/java/main/New/Model/Entities/Timeline.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/classes/java/main/New/Observables/DotLine.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/classes/java/main/New/Observables/Observable.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/classes/java/main/New/Observables/ObservableAnnotation.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/classes/java/main/New/Observables/ObservablePage.class" beforeDir="false" afterPath="$PROJECT_DIR$/build/classes/java/main/New/Observables/ObservablePage.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/classes/java/main/New/Observables/ObservableProject.class" beforeDir="false" afterPath="$PROJECT_DIR$/build/classes/java/main/New/Observables/ObservableProject.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/classes/java/main/New/Observables/ObservableTimeLineTag.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/classes/java/main/New/Scenes/HelloFX.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/classes/java/main/New/util/ColorConverter.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/classes/java/main/New/util/DialogGenerator.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/classes/java/main/New/util/Export/CSVBuilder.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/classes/java/main/New/util/Export/CSVExporter.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/classes/java/main/New/util/Export/ExportConfig.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/classes/java/main/New/util/Export/JsonSerializer.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/classes/java/main/New/util/Export/ProjectSerializer.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/classes/java/main/New/util/Import/JsonLoader.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/classes/java/main/New/util/Import/PageDataReader.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/classes/java/main/New/util/Import/ProjectLoader.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/classes/java/main/New/util/PageUtil.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/classes/java/main/New/util/Selector$1.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/classes/java/main/New/util/Selector$Point.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/classes/java/main/New/util/Selector.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/classes/java/main/New/util/math/DotSearch.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/classes/java/main/New/util/math/VelocityMathUtil.class" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/New/Controllers/CustomTimeLineController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/New/Controllers/CustomTimeLineController.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/New/Controllers/MovableAnnotationController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/New/Controllers/MovableAnnotationController.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/New/Controllers/TimeLineContainerController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/New/Controllers/TimeLineContainerController.java" afterDir="false" />
@@ -16,18 +83,14 @@
       <change beforePath="$PROJECT_DIR$/src/main/java/New/CustomControls/Containers/TimeLineContainer.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/New/CustomControls/Containers/TimeLineContainer.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/New/CustomControls/TimeLine/AnnotationTimeLinePane.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/New/CustomControls/TimeLine/AnnotationTimeLinePane.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/New/CustomControls/TimeLine/CustomTimeLinePane.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/New/CustomControls/TimeLine/CustomTimeLinePane.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/New/Interfaces/Observer/TimeLineTagObserver.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/New/Interfaces/Observer/TimeLineTagObserver.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/New/Model/Entities/Annotation.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/New/Model/Entities/Segment.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/New/Interfaces/Observer/AnnotationObserver.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/New/Interfaces/Observer/AnnotationObserver.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/New/Model/Entities/Page.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/New/Model/Entities/Page.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/New/Model/Entities/Project.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/New/Model/Entities/Project.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/New/Model/Entities/TimeLineTag.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/New/Model/Entities/TopicSet.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/New/Model/Entities/Timeline.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/New/Model/Entities/Timeline.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/New/Observables/ObservableAnnotation.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/New/Observables/ObservableAnnotation.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/New/Model/Entities/Segment.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/New/Model/Entities/Segment.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/New/Model/Entities/SimpleColor.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/New/Model/Entities/SimpleColor.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/New/Observables/ObservableAnnotation.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/New/Observables/ObservableSegment.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/New/Observables/ObservablePage.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/New/Observables/ObservablePage.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/New/Observables/ObservableProject.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/New/Observables/ObservableProject.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/New/Observables/ObservableTimeLineTag.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/New/Observables/ObservableTopicSet.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/New/util/Import/JsonLoader.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/New/util/Import/JsonLoader.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/New/util/PageUtil.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/New/util/PageUtil.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/New/Observables/ObservableTopicSet.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/New/Observables/ObservableTopicSet.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/New/util/Import/PageDataReader.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/New/util/Import/PageDataReader.java" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -173,7 +236,7 @@
       </list>
     </option>
   </component>
-  <component name="RunManager" selected="JAR Application.GrapholizeAppAID-1.0-SNAPSHOT.jar">
+  <component name="RunManager" selected="Gradle.GrapholizeApp [run]">
     <configuration default="true" type="Applet">
       <option name="POLICY_FILE" value="$APPLICATION_HOME_DIR$/bin/appletviewer.policy" />
       <method v="2">
@@ -199,25 +262,6 @@
       <method v="2">
         <option name="Make" enabled="true" />
       </method>
-    </configuration>
-    <configuration name="GrapholizeApp [build]" type="GradleRunConfiguration" factoryName="Gradle" temporary="true">
-      <ExternalSystemSettings>
-        <option name="executionName" />
-        <option name="externalProjectPath" value="$PROJECT_DIR$" />
-        <option name="externalSystemIdString" value="GRADLE" />
-        <option name="scriptParameters" />
-        <option name="taskDescriptions">
-          <list />
-        </option>
-        <option name="taskNames">
-          <list>
-            <option value="build" />
-          </list>
-        </option>
-        <option name="vmOptions" />
-      </ExternalSystemSettings>
-      <GradleScriptDebugEnabled>true</GradleScriptDebugEnabled>
-      <method v="2" />
     </configuration>
     <configuration name="GrapholizeApp [jar]" type="GradleRunConfiguration" factoryName="Gradle">
       <ExternalSystemSettings>
@@ -295,6 +339,25 @@
       <GradleScriptDebugEnabled>true</GradleScriptDebugEnabled>
       <method v="2" />
     </configuration>
+    <configuration name="GrapholizeApp [run]" type="GradleRunConfiguration" factoryName="Gradle" temporary="true">
+      <ExternalSystemSettings>
+        <option name="executionName" />
+        <option name="externalProjectPath" value="$PROJECT_DIR$" />
+        <option name="externalSystemIdString" value="GRADLE" />
+        <option name="scriptParameters" />
+        <option name="taskDescriptions">
+          <list />
+        </option>
+        <option name="taskNames">
+          <list>
+            <option value="run" />
+          </list>
+        </option>
+        <option name="vmOptions" />
+      </ExternalSystemSettings>
+      <GradleScriptDebugEnabled>true</GradleScriptDebugEnabled>
+      <method v="2" />
+    </configuration>
     <configuration default="true" type="JUnit" factoryName="JUnit">
       <option name="TEST_OBJECT" value="class" />
       <option name="WORKING_DIRECTORY" value="%MODULE_WORKING_DIR%" />
@@ -329,19 +392,19 @@
     <list>
       <item itemvalue="Application.HelloFX" />
       <item itemvalue="Gradle.GrapholizeApp [jar]" />
-      <item itemvalue="Gradle.GrapholizeApp [build]" />
       <item itemvalue="Gradle.GrapholizeApp [jlinkZip]" />
       <item itemvalue="Gradle.GrapholizeApp [jlink]" />
       <item itemvalue="Gradle.GrapholizeApp [jpackage]" />
       <item itemvalue="JAR Application.GrapholizeAppAID-1.0-SNAPSHOT.jar" />
+      <item itemvalue="Gradle.GrapholizeApp [run]" />
     </list>
     <recent_temporary>
       <list>
+        <item itemvalue="Gradle.GrapholizeApp [run]" />
         <item itemvalue="Application.HelloFX" />
         <item itemvalue="Gradle.GrapholizeApp [jlink]" />
         <item itemvalue="Gradle.GrapholizeApp [jlinkZip]" />
         <item itemvalue="Gradle.GrapholizeApp [jpackage]" />
-        <item itemvalue="Gradle.GrapholizeApp [build]" />
       </list>
     </recent_temporary>
   </component>
