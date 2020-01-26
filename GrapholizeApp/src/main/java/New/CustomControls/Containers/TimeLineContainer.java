@@ -127,7 +127,6 @@ public class TimeLineContainer extends VBox {
         getChildren().add(scrollPane_outer);
         totalWidth = new SimpleDoubleProperty(page.getDuration());
         unitPane = new TimeUnitPane(scale,20,totalWidth);
-
         vBox_TimeLineBox.getChildren().clear();
 
         StrokeDurationTimeLinePane strokePane = new StrokeDurationTimeLinePane(timeLineContainerController.getPage().getDuration(), timeLinesHeight, scale, timeLineContainerController.getPage(), this);

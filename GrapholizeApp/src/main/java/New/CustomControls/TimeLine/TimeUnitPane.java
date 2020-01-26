@@ -54,26 +54,27 @@ public class TimeUnitPane extends VBox {
         this.getChildren().addAll(labelLayer, markerLayer);
 
         scale.addListener((observableValue,oldValue,newValue) -> {
-            recalculateUnits(scale.get(),totalwidth.get());
+            recalculateUnits(scale.get(),totalwidth.get(), false);
         });
 
         totalwidth.addListener((observableValue,oldVal,newValue) -> {
             this.setWidth((double)newValue);
-            recalculateUnits(scale.get(), totalwidth.get());
+            recalculateUnits(scale.get(), totalwidth.get(),false);
         });
 
-        recalculateUnits(scale.get(),totalwidth.get());
+        recalculateUnits(scale.get(),totalwidth.get(), true);
     }
 
-    public void recalculateUnits(double scale, double totalWidth){
-        ChooseRightUnit(scale);
+    public void recalculateUnits(double scale, double totalWidth, boolean isInitialize){
+        boolean hasChanged = ChooseRightUnit(scale);
         int gapNumber = (int)totalWidth/unit.msRatio;
-        labelLayer.getChildren().clear();
-        markerLayer.getChildren().clear();
 
-        fillLabelLayer(gapNumber);
-
-        fillMarkerLayer(gapNumber);
+        if(hasChanged || isInitialize) {
+            labelLayer.getChildren().clear();
+            markerLayer.getChildren().clear();
+            fillLabelLayer(gapNumber);
+            fillMarkerLayer(gapNumber);
+        }
 
         double spacing = resizeTiles(scale);
 
@@ -95,8 +96,9 @@ public class TimeUnitPane extends VBox {
         return spacing;
     }
 
-    private void ChooseRightUnit(double scale) {
+    private boolean ChooseRightUnit(double scale) {
         Unit lastUnit = Unit.HUNDRED_MILLISECONDS;
+        Unit oldUnit = unit;
         for(Unit unit : Unit.values()) {
             if(scale < unit.threshhold){
                 this.unit = lastUnit;
@@ -104,6 +106,8 @@ public class TimeUnitPane extends VBox {
             }
             lastUnit = unit;
         }
+        if(unit == oldUnit) return false;
+        return true;
     }
 
     private void fillLabelLayer(int gapNumber) {
