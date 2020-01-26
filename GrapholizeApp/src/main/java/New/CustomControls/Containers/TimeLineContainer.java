@@ -118,13 +118,15 @@ public class TimeLineContainer extends VBox {
     }
 
     private void InitializeContainer(ObservableProject project, ObservablePage page){
-        System.out.println("initialize container called");
+        System.out.println("initialize timeline_container called");
         //Step 1: Create the stroke timeline
         //Step 2: For each tag, create a new timeline and pass over the observble Tag and the page. Then create the annotations.
         getChildren().clear();
         getChildren().add(scaleSlider);
         getChildren().add(hbox_buttonHBox);
         getChildren().add(scrollPane_outer);
+        totalWidth = new SimpleDoubleProperty(page.getDuration());
+        unitPane = new TimeUnitPane(scale,20,totalWidth);
 
         vBox_TimeLineBox.getChildren().clear();
 

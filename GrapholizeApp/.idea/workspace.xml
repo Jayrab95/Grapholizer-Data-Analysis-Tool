@@ -113,6 +113,7 @@
     <property name="com.intellij.testIntegration.createTest.CreateTestDialog.defaultLibrary" value="JUnit5" />
     <property name="com.intellij.testIntegration.createTest.CreateTestDialog.defaultLibrarySuperClass.JUnit5" value="" />
     <property name="create.test.in.the.same.root" value="true" />
+    <property name="extract.method.default.visibility" value="private" />
     <property name="last_opened_file_path" value="$PROJECT_DIR$/src/main/java/META-INF" />
     <property name="node.js.detected.package.eslint" value="true" />
     <property name="node.js.detected.package.tslint" value="true" />
@@ -332,8 +333,8 @@
       <item itemvalue="Gradle.GrapholizeApp [jlink]" />
       <item itemvalue="Gradle.GrapholizeApp [clean]" />
       <item itemvalue="Gradle.GrapholizeApp [build]" />
-      <item itemvalue="JAR Application.GrapholizeAppAID-1.0-SNAPSHOT.jar" />
       <item itemvalue="Gradle.GrapholizeApp [buildDependents]" />
+      <item itemvalue="JAR Application.GrapholizeAppAID-1.0-SNAPSHOT.jar" />
     </list>
     <recent_temporary>
       <list>
@@ -409,7 +410,12 @@
       <workItem from="1579692396599" duration="9484000" />
       <workItem from="1579705870293" duration="357000" />
       <workItem from="1579706285243" duration="12205000" />
-      <workItem from="1579785674687" duration="18209000" />
+      <workItem from="1579785674687" duration="18279000" />
+      <workItem from="1579820119501" duration="6928000" />
+      <workItem from="1579876432735" duration="14776000" />
+      <workItem from="1579900187824" duration="4579000" />
+      <workItem from="1579948051280" duration="1709000" />
+      <workItem from="1580050879635" duration="1853000" />
     </task>
     <servers />
   </component>

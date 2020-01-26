@@ -33,7 +33,7 @@ public abstract class DataGenerator {
             " \"MarginR\": 0.0,\n" +
             " \"MarginT\": 0.0,\n" +
             " \"MarginB\": 0.0,\n" +
-            " \"Strokes\": [ " + "((strokes))" + "]}";
+            " \"Strokes\": [ " + "((strokes))" + "]\n}\n]\n]";
     protected final String preparedStroke = "{\"TimeStart\": ((timeStart)),\n" +
             " \"TimeEnd\": ((timeEnd)),\n" +
             " \"CompressedDots\": [\n" + "((dots))" + "]}";

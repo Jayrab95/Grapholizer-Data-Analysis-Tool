@@ -30,7 +30,7 @@ public class CircleGenerator extends DataGenerator{
         //x=x0​+r⋅cost y=y0+r⋅sin(t) *y=y_0+r\cdot\sin ty=y0​+r⋅sint
         double x_0 = startX;
         double y_0 = startY;
-        int radius = 5;
+        int radius = 3;
         double angleSteps = 360d/(double)numberOfDots;
         double angle = 0;
         StringBuilder sBuilder = new StringBuilder();
