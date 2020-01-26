@@ -129,7 +129,7 @@ public class ObservableProject {
     //endregion
 
     public void insertTimeLineTag(TopicSet t) {
-        inner.getProjectTagsMap().put(t.getTag(), t);
+        inner.getProjectTagsMap().put(t.getTagID(), t);
     }
 
     //TODO: What's better? Doing the valid check before inserting or assuming that the check has been called before inserting?

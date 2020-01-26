@@ -3,8 +3,11 @@ package New.CustomControls.Annotation;
 
 import New.Controllers.MovableAnnotationController;
 import New.CustomControls.TimeLine.CustomTimeLinePane;
+import New.Dialogues.DialogControls.TopicTextControl;
+import New.Dialogues.SegmentDialog;
 import New.Interfaces.Selector;
 import New.Observables.ObservableSegment;
+import New.Observables.ObservableTopicSet;
 import New.util.DialogGenerator;
 import javafx.beans.property.DoubleProperty;
 import javafx.beans.property.ObjectProperty;
@@ -21,16 +24,20 @@ public class MovableAnnotationRectangle extends SelectableAnnotationRectangle {
 
     private double[] dragBounds;
     private double mouseDelta;
+    private ObservableSegment s;
+    private ObservableTopicSet oSet;
     private MovableAnnotationController movableAnnotationController;
 
     private DragRectangle left;
     private DragRectangle right;
 
 
-    public MovableAnnotationRectangle(ObjectProperty<Color> c, DoubleProperty scale, ObservableSegment t, CustomTimeLinePane parent, Selector s) {
+    public MovableAnnotationRectangle(ObjectProperty<Color> c, DoubleProperty scale, ObservableSegment t, CustomTimeLinePane parent, Selector s, ObservableTopicSet set) {
         super(c, t.getMainTopicAnnotationProperty(), scale, t.getDuration(), parent.getHeight(), t.getTimeStart(), parent, s);
 
         this.movableAnnotationController = new MovableAnnotationController(t,parent);
+        this.s=t;
+        this.oSet = set;
 
         /*
         xProperty().bind(t.getTimeStartProperty().multiply(scale));
@@ -112,6 +119,26 @@ public class MovableAnnotationRectangle extends SelectableAnnotationRectangle {
     }
 
     private void openEditDialog(){
+
+        SegmentDialog dialog = new SegmentDialog(
+                "Edit Segment",
+                "Edit the text of your segment.",
+                "Edit the text of your segment, then click on Ok to apply the changes.",
+                oSet.getTopicsObservableList(),
+                Optional.of(s.getInnerSegment()),
+                false
+                );
+        dialog.setResultConverter(b -> {
+            if (b == dialog.getButtonTypeOK()) {
+                //TODO: Move this to controller??
+                for(TopicTextControl ttc : dialog.getControls()){
+                    s.getInnerSegment().putAnnotation(ttc.getTopicID(), ttc.getTextFieldText());
+                }
+            }
+            return null;
+        });
+        dialog.showAndWait();
+        /*
         Optional<String> newAnnotationText = DialogGenerator.simpleTextInputDialog(
                 annotationText.get(),
                 "Edit annotation",
@@ -121,6 +148,8 @@ public class MovableAnnotationRectangle extends SelectableAnnotationRectangle {
         if(newAnnotationText.isPresent()){
             movableAnnotationController.editElement(newAnnotationText.get());
         }
+
+         */
     }
 
     private void handleEditTimeLineElementClick(){

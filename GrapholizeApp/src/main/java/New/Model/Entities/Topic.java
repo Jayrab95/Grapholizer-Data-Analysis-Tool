@@ -20,4 +20,9 @@ public class Topic {
     public void setTopicName(String topicName) {
         this.topicName = topicName;
     }
+
+    @Override
+    public String toString() {
+        return topicName;
+    }
 }

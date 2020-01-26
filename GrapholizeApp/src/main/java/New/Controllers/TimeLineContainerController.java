@@ -3,6 +3,7 @@ package New.Controllers;
 
 import New.Execptions.TimeLineTagException;
 import New.Model.Entities.Segment;
+import New.Model.Entities.Topic;
 import New.Model.Entities.TopicSet;
 import New.Observables.ObservablePage;
 import New.Observables.ObservableProject;
@@ -10,7 +11,10 @@ import New.Observables.ObservableTopicSet;
 import New.util.ColorConverter;
 import javafx.scene.paint.Color;
 
+import java.util.LinkedList;
+import java.util.List;
 import java.util.Set;
+import java.util.stream.Collectors;
 
 public class TimeLineContainerController {
 
@@ -49,15 +53,38 @@ public class TimeLineContainerController {
     //In the code, create and edit are only called as a result of a dialog, which calls the checkFunction.
     //This convention needs to be upheld.
     //Reason for this: It allows the reusage of the dialog window for both create and edit.
-    public ObservableTopicSet createNewTimeLineTag(String tag, Color c){
-        TopicSet newTag = new TopicSet(tag, ColorConverter.convertJavaFXColorToModelColor(c));
-        ObservableTopicSet oTag = new ObservableTopicSet(newTag);
-        project.insertTimeLineTag(newTag);
+    public ObservableTopicSet createNewTimeLineTag(TopicSet t){
+        //TopicSet newTag = new TopicSet(tag, ColorConverter.convertJavaFXColorToModelColor(c));
+        ObservableTopicSet oTag = new ObservableTopicSet(t);
+        project.insertTimeLineTag(t);
         return oTag;
     }
 
-    public void editTimeLineTag(String oldTag, String newTag, Color newColor){
-        project.editTimeLineTag(oldTag, newTag, newColor);
+    public void editTimeLineTag(ObservableTopicSet oldSet, TopicSet newSet){
+        oldSet.setTag(newSet.getTag());
+        oldSet.setMainTopicID(newSet.getMainTopicID());
+        oldSet.setColor(ColorConverter.convertModelColorToJavaFXColor(newSet.getSimpleColor()));
+        List<Topic> toRemove = oldSet.getTopicsObservableList().stream()
+                .filter(topic -> newSet.getTopics().stream().noneMatch(t -> t.getTopicID().equals(topic.getTopicID())))
+                .collect(Collectors.toList());
+        List<Topic> toAdd = newSet.getTopics().stream()
+                .filter(topic -> oldSet.getTopicsObservableList().stream().noneMatch(t -> t.getTopicID().equals(topic.getTopicID())))
+                .collect(Collectors.toList());
+
+        //Remove deleted topics and add new topics
+        oldSet.getTopicsObservableList().removeAll(toRemove);
+        oldSet.getTopicsObservableList().addAll(toAdd);
+        //Change topic names of adjusted topics
+        for(Topic t : newSet.getTopics()){
+            for(Topic oldT : oldSet.getTopicsObservableList()){
+                if(t.getTopicID().equals(oldT.getTopicID())){
+                    if(!t.getTopicName().equals(oldT.getTopicName())){
+                        oldT.setTopicName(t.getTopicName());
+                    }
+                    break;
+                }
+            }
+        }
     }
 
     public void removeTimeLine(String tag){

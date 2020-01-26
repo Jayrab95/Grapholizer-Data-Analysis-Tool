@@ -63,6 +63,10 @@ public class ObservableSegment {
         this.timeStopProperty.set(timeStopProperty);
     }
 
+    public Segment getInnerSegment(){
+        return segment;
+    }
+
     public StringProperty getMainTopicAnnotationProperty(){
         return this.mainTopicAnnotationProperty;
     }

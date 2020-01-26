@@ -9,6 +9,7 @@ import javafx.beans.property.SimpleObjectProperty;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.property.StringProperty;
 import javafx.collections.FXCollections;
+import javafx.collections.ListChangeListener;
 import javafx.collections.ObservableList;
 import javafx.scene.paint.Color;
 
@@ -30,6 +31,17 @@ public class ObservableTopicSet {
         mainTopicIDProperty = new SimpleStringProperty(inner.getMainTopicID());
         mainTopicIDProperty.addListener((observable, oldValue, newValue) -> inner.setMainTopic(newValue));
         topicsObservableList = FXCollections.observableList(inner.getTopics());
+        topicsObservableList.addListener(new ListChangeListener<Topic>() {
+            @Override
+            public void onChanged(Change<? extends Topic> c) {
+                inner.getTopics().addAll(c.getAddedSubList());
+                inner.getTopics().removeAll(c.getRemoved());
+            }
+        });
+    }
+
+    public TopicSet getInner() {
+        return inner;
     }
 
     public String getTag() {
@@ -64,22 +76,22 @@ public class ObservableTopicSet {
         return mainTopicIDProperty;
     }
 
+    public void setMainTopicID(String mainTopicID){
+        mainTopicIDProperty.set(mainTopicID);
+    }
+
     public ObservableList<Topic> getTopicsObservableList() {
         return topicsObservableList;
     }
 
-    public void setMainTopicID(String topicID){
-        mainTopicIDProperty.set(topicID);
-    }
-
     public void addTopic(Topic t){
         topicsObservableList.add(t);
-        inner.addTopic(t);
+        //inner.addTopic(t);
     }
 
     public void removeTopic(Topic t){
         topicsObservableList.remove(t);
-        inner.removeTopic(t);
+        //inner.removeTopic(t);
     }
 
 }

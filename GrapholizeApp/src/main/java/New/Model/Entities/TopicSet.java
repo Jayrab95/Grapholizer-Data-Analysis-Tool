@@ -6,23 +6,23 @@ import java.util.List;
 import java.util.Map;
 
 public class TopicSet {
+    private final String tagID;
     private String tag;
     private SimpleColor simpleColor;
     private String mainTopicID;
     private final List<Topic> topics;
-    private final Map<String, List<Segment>> pageSegmentsMap;
 
-    public TopicSet(String tag, SimpleColor simpleColor) {
+    public TopicSet(String tag, SimpleColor simpleColor, List<Topic> topics, String maintopicID, String tagID){
         this.tag = tag;
         this.simpleColor = simpleColor;
         this.topics = new LinkedList<>();
-        this.pageSegmentsMap = new HashMap<>();
+        this.topics.addAll(topics);
+        this.mainTopicID = maintopicID;
+        this.tagID = tagID;
     }
 
-    public TopicSet(String tag, SimpleColor simpleColor, List<Topic> topics, Map<String, List<Segment>> pageSegmentsMap){
-        this(tag, simpleColor);
-        this.topics.addAll(topics);
-        this.pageSegmentsMap.putAll(pageSegmentsMap);
+    public String getTagID() {
+        return tagID;
     }
 
     public String getTag() {
@@ -60,26 +60,6 @@ public class TopicSet {
     public void removeTopic(Topic t){
         this.topics.remove(t);
     }
-
-    public Map<String, List<Segment>> getPageSegmentsMap() {
-        return pageSegmentsMap;
-    }
-
-    public List<Segment> getPageSegmentsForPage(String pageID){
-        if(!this.pageSegmentsMap.containsKey(pageID)){
-            this.pageSegmentsMap.put(pageID, new LinkedList<>());
-        }
-        return this.pageSegmentsMap.get(pageID);
-    }
-
-    public void addSegment(String pageID, Segment a){
-        this.getPageSegmentsForPage(pageID).add(a);
-    }
-
-    public void removeSegment(String pageID, Segment a){
-        this.getPageSegmentsForPage(pageID).remove(a);
-    }
-
 
 
 }

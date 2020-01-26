@@ -4,8 +4,9 @@ import New.Controllers.CustomTimeLineController;
 import New.CustomControls.Containers.TimeLineContainer;
 import New.CustomControls.Annotation.AnnotationRectangle;
 import New.CustomControls.Annotation.MovableAnnotationRectangle;
+import New.Dialogues.DialogControls.TopicTextControl;
+import New.Dialogues.SegmentDialog;
 import New.Execptions.NoTimeLineSelectedException;
-import New.Interfaces.Observer.PageObserver;
 import New.Model.Entities.Segment;
 import New.Observables.ObservableSegment;
 import New.Observables.ObservableDot;
@@ -18,7 +19,6 @@ import javafx.scene.control.*;
 import javafx.scene.effect.Light;
 import javafx.scene.input.MouseButton;
 import javafx.scene.input.MouseEvent;
-import javafx.scene.layout.GridPane;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
 
@@ -94,7 +94,8 @@ public class CustomTimeLinePane extends SelectableTimeLinePane {
                     scale,
                     a,
                     this,
-                    p));
+                    p,
+                    timeLineTag));
         }
     }
 
@@ -109,7 +110,8 @@ public class CustomTimeLinePane extends SelectableTimeLinePane {
                 scale,
                 new ObservableSegment(a, timeLineTag),
                 this,
-                p));
+                p,
+                timeLineTag));
     }
 
     private void addAnnotations(List<AnnotationRectangle> annotations){
@@ -228,6 +230,27 @@ public class CustomTimeLinePane extends SelectableTimeLinePane {
     private void handleTimelineMouseRelease(MouseEvent e){
         if(selection.getWidth() > 0){
             //Call annotation creation dialogue
+            double timeStart = selection.getX() / scale.get();
+            double timeStop = (selection.getX() + selection.getWidth()) / scale.get();
+            Segment s = new Segment(timeStart, timeStop);
+            SegmentDialog dialog = new SegmentDialog(
+                    "New segment",
+                    "Create new segment",
+                    "Enter a text for your annotation. (The annotation text can also be empty).",
+                    timeLineTag.getTopicsObservableList(),
+                    Optional.of(s),
+                    false
+            );
+            dialog.setResultConverter(b -> {
+                if (b == dialog.getButtonTypeOK()) {
+                    for(TopicTextControl ttc : dialog.getControls()){
+                        s.putAnnotation(ttc.getTopicID(), ttc.getTextFieldText());
+                    }
+                    addAnnotation(s);
+                }
+                return null;
+            });
+            /*
             Optional<String> s = DialogGenerator.simpleTextInputDialog(
                     "New annotation",
                     "Create new annotation",
@@ -242,6 +265,8 @@ public class CustomTimeLinePane extends SelectableTimeLinePane {
             else{
                 System.out.println("Annotation creation aborted.");
             }
+
+             */
         }
 
         //Reset SelectionRectangle
@@ -255,6 +280,7 @@ public class CustomTimeLinePane extends SelectableTimeLinePane {
     public void createCopyAnnotationDialogue()  {
         //Dialog dialog = annotationCopyDialog(TXT_COPYANNOTATION_TITLE, String.format(TXT_COPYANNOTATION_HEADER, timeLineTag.getTag()), String.format(TXT_COPYANNOTATION_TEXT, timeLineTag.getTag()));
 
+        /*
         Dialog dialog = new Dialog<>();
         dialog.setTitle(TXT_COPYANNOTATION_TITLE);
         dialog.setHeaderText(String.format(TXT_COPYANNOTATION_HEADER, timeLineTag.getTag()));
@@ -278,17 +304,22 @@ public class CustomTimeLinePane extends SelectableTimeLinePane {
 
         dialog.getDialogPane().getButtonTypes().addAll(buttonTypeOk, buttonTypeCancel);
 
+         */
+
+        SegmentDialog dialog = new SegmentDialog(TXT_DOTANNOTATION_TITLE, TXT_DOTANNOTATION_HEADER, TXT_DOTANNOTATION_TEXT, timeLineTag.getTopicsObservableList(), Optional.empty(), true);
+
+
         dialog.setResultConverter(b -> {
-            if (b == buttonTypeOk) {
+            if (b == dialog.getButtonTypeOK()) {
                 //If the cbox is selected, a new optional containing the boundaries of the new combined annotation is created.
-                Optional<double[]> boundaries = cbox_joinedAnnotation.isSelected() ?
+                Optional<double[]> boundaries = dialog.isCombined() ?
                         Optional.of(customTimeLineController.getCombinedAnnotationBoundaries()) :
                         Optional.empty();
                 //collidesWithOtherElements is executed with the boundaries if they are available or with all selected elements otherwise.
                 //If a collision was detected, a dialog is prompted which asks the user if they want to create a new timeline.
                 //should they decline, the entire procees is aborted.
                 if(customTimeLineController.copiedAnnotationsCollideWithOtherAnnotations(boundaries) && DialogGenerator.confirmationDialogue(TXT_COLLIDEHANDLER_TITLE, TXT_COLLIDEHANDLER_HEADER, TXT_COLLIDEHANDLER_MSG)){
-                    Optional<Segment> annotation = cbox_joinedAnnotation.isSelected() ?
+                    Optional<Segment> annotation = dialog.isCombined() ?
                             Optional.of(new Segment(boundaries.get()[0], boundaries.get()[1])) :
                             Optional.empty();
                     try {
@@ -299,7 +330,7 @@ public class CustomTimeLinePane extends SelectableTimeLinePane {
                 }
                 else{
                     //If no collisions were detected, copy the annotations into this timeline.
-                    if (cbox_joinedAnnotation.isSelected()) {
+                    if (dialog.isCombined()) {
                         addAnnotation(new Segment(boundaries.get()[0], boundaries.get()[1]));
                     }
                     else {
@@ -318,7 +349,8 @@ public class CustomTimeLinePane extends SelectableTimeLinePane {
         //TODO: Extract reusable logic into separate method or even class.
         //Dialog dialog = annotationCopyDialog(TXT_COPYANNOTATION_TITLE, String.format(TXT_COPYANNOTATION_HEADER, timeLineTag.getTag()), String.format(TXT_COPYANNOTATION_TEXT, timeLineTag.getTag()));
 
-        Dialog dialog = new Dialog<>();
+        //Dialog dialog = new Dialog<>();
+        /*
         dialog.setTitle(TXT_DOTANNOTATION_TITLE);
         dialog.setHeaderText(String.format(TXT_DOTANNOTATION_HEADER, timeLineTag.getTag()));
         dialog.setContentText(String.format(TXT_DOTANNOTATION_TEXT, timeLineTag.getTag()));
@@ -341,17 +373,19 @@ public class CustomTimeLinePane extends SelectableTimeLinePane {
 
         dialog.getDialogPane().getButtonTypes().addAll(buttonTypeOk, buttonTypeCancel);
 
+         */
+        SegmentDialog dialog = new SegmentDialog(TXT_DOTANNOTATION_TITLE, TXT_DOTANNOTATION_HEADER, TXT_DOTANNOTATION_TEXT, timeLineTag.getTopicsObservableList(), Optional.empty(), true);
         dialog.setResultConverter(b -> {
-            if (b == buttonTypeOk) {
+            if (b == dialog.getButtonTypeOK()) {
                 //If the cbox is selected, a new optional containing the boundaries of the new combined annotation is created.
-                Optional<double[]> boundaries = cbox_joinedAnnotation.isSelected() ?
+                Optional<double[]> boundaries = dialog.isCombined() ?
                         Optional.of(customTimeLineController.getCombinedDotAnnotationBoundaries()) :
                         Optional.empty();
                 //collidesWithOtherElements is executed with the boundaries if they are available or with all selected elements otherwise.
                 //If a collision was detected, a dialog is prompted which asks the user if they want to create a new timeline.
                 //should they decline, the entire procees is aborted.
                 if(customTimeLineController.dotSegmentsCollideWithOtherAnnotations(boundaries) && DialogGenerator.confirmationDialogue(TXT_COLLIDEHANDLER_TITLE, TXT_COLLIDEHANDLER_HEADER, TXT_COLLIDEHANDLER_MSG)){
-                    Optional<Segment> annotation = cbox_joinedAnnotation.isSelected() ?
+                    Optional<Segment> annotation = dialog.isCombined() ?
                             Optional.of(new Segment(boundaries.get()[0], boundaries.get()[1])) :
                             Optional.empty();
                     try {
@@ -362,7 +396,7 @@ public class CustomTimeLinePane extends SelectableTimeLinePane {
                 }
                 else{
                     //If no collisions were detected, copy the annotations into this timeline.
-                    if (cbox_joinedAnnotation.isSelected()) {
+                    if (dialog.isCombined()) {
                         addAnnotation(new Segment(boundaries.get()[0], boundaries.get()[1]));
                     }
                     else {
@@ -380,6 +414,7 @@ public class CustomTimeLinePane extends SelectableTimeLinePane {
 
         dialog.showAndWait();
     }
+
 
     /*
     @Override
