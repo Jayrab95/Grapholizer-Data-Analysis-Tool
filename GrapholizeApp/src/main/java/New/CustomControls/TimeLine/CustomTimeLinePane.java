@@ -8,6 +8,7 @@ import New.Dialogues.DialogControls.TopicTextControl;
 import New.Dialogues.SegmentDialog;
 import New.Execptions.NoTimeLineSelectedException;
 import New.Model.Entities.Segment;
+import New.Model.Entities.Topic;
 import New.Observables.ObservableSegment;
 import New.Observables.ObservableDot;
 import New.Observables.ObservablePage;
@@ -279,34 +280,6 @@ public class CustomTimeLinePane extends SelectableTimeLinePane {
 
 
     public void createCopyAnnotationDialogue()  {
-        //Dialog dialog = annotationCopyDialog(TXT_COPYANNOTATION_TITLE, String.format(TXT_COPYANNOTATION_HEADER, timeLineTag.getTag()), String.format(TXT_COPYANNOTATION_TEXT, timeLineTag.getTag()));
-
-        /*
-        Dialog dialog = new Dialog<>();
-        dialog.setTitle(TXT_COPYANNOTATION_TITLE);
-        dialog.setHeaderText(String.format(TXT_COPYANNOTATION_HEADER, timeLineTag.getTag()));
-        dialog.setContentText(String.format(TXT_COPYANNOTATION_TEXT, timeLineTag.getTag()));
-
-        CheckBox cbox_joinedAnnotation = new CheckBox("Combine selected elements into one annotation");
-
-        Label label_AnnotationText = new Label("Annotation text: (Only applied if combine option is selected.)");
-        TextField textField_annotationText = new TextField(TXT_COPYANNOTATION_DEFAULTVAL);
-        textField_annotationText.disableProperty().bind(cbox_joinedAnnotation.selectedProperty().not());
-
-
-        GridPane grid = new GridPane();
-        grid.add(cbox_joinedAnnotation, 1, 1);
-        grid.add(label_AnnotationText, 1, 2);
-        grid.add(textField_annotationText, 2, 2);
-        dialog.getDialogPane().setContent(grid);
-
-        ButtonType buttonTypeOk = new ButtonType("Okay", ButtonBar.ButtonData.OK_DONE);
-        ButtonType buttonTypeCancel = new ButtonType("Cancel", ButtonBar.ButtonData.CANCEL_CLOSE);
-
-        dialog.getDialogPane().getButtonTypes().addAll(buttonTypeOk, buttonTypeCancel);
-
-         */
-
         SegmentDialog dialog = new SegmentDialog(TXT_DOTANNOTATION_TITLE, TXT_DOTANNOTATION_HEADER, TXT_DOTANNOTATION_TEXT, timeLineTag.getTopicsObservableList(), Optional.empty(), true);
 
 
@@ -320,11 +293,19 @@ public class CustomTimeLinePane extends SelectableTimeLinePane {
                 //If a collision was detected, a dialog is prompted which asks the user if they want to create a new timeline.
                 //should they decline, the entire procees is aborted.
                 if(customTimeLineController.copiedAnnotationsCollideWithOtherAnnotations(boundaries) && DialogGenerator.confirmationDialogue(TXT_COLLIDEHANDLER_TITLE, TXT_COLLIDEHANDLER_HEADER, TXT_COLLIDEHANDLER_MSG)){
-                    Optional<Segment> annotation = dialog.isCombined() ?
-                            Optional.of(new Segment(boundaries.get()[0], boundaries.get()[1])) :
-                            Optional.empty();
+                    Optional<Segment> optional;
+                    if(dialog.isCombined()){
+                        Segment s = new Segment(boundaries.get()[0], boundaries.get()[1]);
+                        for(TopicTextControl ttc : dialog.getControls()){
+                            s.putAnnotation(ttc.getTopicID(), ttc.getTextFieldText());
+                        }
+                        optional = Optional.of(s);
+                    }
+                    else{
+                        optional = Optional.empty();
+                    }
                     try {
-                        customTimeLineController.createNewTimeLine(annotation);
+                        customTimeLineController.createNewTimeLine(optional);
                     } catch (NoTimeLineSelectedException ex) {
                         DialogGenerator.simpleErrorDialog("Creation Error","Error while creating timeline", ex.toString());
                     }
@@ -332,7 +313,11 @@ public class CustomTimeLinePane extends SelectableTimeLinePane {
                 else{
                     //If no collisions were detected, copy the annotations into this timeline.
                     if (dialog.isCombined()) {
-                        addAnnotation(new Segment(boundaries.get()[0], boundaries.get()[1]));
+                        Segment s = new Segment(boundaries.get()[0], boundaries.get()[1]);
+                        for(TopicTextControl ttc : dialog.getControls()){
+                            s.putAnnotation(ttc.getTopicID(), ttc.getTextFieldText());
+                        }
+                        addAnnotation(s);
                     }
                     else {
                         addAnnotations(customTimeLineController.getSelectedAnnotations());

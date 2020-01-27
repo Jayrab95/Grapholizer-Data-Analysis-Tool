@@ -7,64 +7,8 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="f9c9e85c-b6d3-4a2f-99c7-3350288aea5b" name="Default Changelist" comment="">
-      <change beforePath="$PROJECT_DIR$/.gradle/5.2.1/executionHistory/executionHistory.bin" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/5.2.1/executionHistory/executionHistory.bin" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.gradle/5.2.1/executionHistory/executionHistory.lock" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/5.2.1/executionHistory/executionHistory.lock" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.gradle/5.2.1/fileContent/fileContent.lock" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/5.2.1/fileContent/fileContent.lock" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.gradle/5.2.1/fileHashes/fileHashes.bin" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/5.2.1/fileHashes/fileHashes.bin" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.gradle/5.2.1/fileHashes/fileHashes.lock" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/5.2.1/fileHashes/fileHashes.lock" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.gradle/5.2.1/javaCompile/classAnalysis.bin" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/5.2.1/javaCompile/classAnalysis.bin" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.gradle/5.2.1/javaCompile/javaCompile.lock" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/5.2.1/javaCompile/javaCompile.lock" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.gradle/buildOutputCleanup/buildOutputCleanup.lock" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/buildOutputCleanup/buildOutputCleanup.lock" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/build/classes/java/main/New/Controllers/CustomTimeLineController.class" beforeDir="false" afterPath="$PROJECT_DIR$/build/classes/java/main/New/Controllers/CustomTimeLineController.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/build/classes/java/main/New/Controllers/MainSceneController.class" beforeDir="false" afterPath="$PROJECT_DIR$/build/classes/java/main/New/Controllers/MainSceneController.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/build/classes/java/main/New/Controllers/TimeLineContainerController.class" beforeDir="false" afterPath="$PROJECT_DIR$/build/classes/java/main/New/Controllers/TimeLineContainerController.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/build/classes/java/main/New/CustomControls/Containers/TimeLineContainer$AnnotationFilterDialogResult.class" beforeDir="false" afterPath="$PROJECT_DIR$/build/classes/java/main/New/CustomControls/Containers/TimeLineContainer$AnnotationFilterDialogResult.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/build/classes/java/main/New/CustomControls/Containers/TimeLineContainer$TimeLineInformation.class" beforeDir="false" afterPath="$PROJECT_DIR$/build/classes/java/main/New/CustomControls/Containers/TimeLineContainer$TimeLineInformation.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/build/classes/java/main/New/CustomControls/Containers/TimeLineContainer$TimeLineWrapper.class" beforeDir="false" afterPath="$PROJECT_DIR$/build/classes/java/main/New/CustomControls/Containers/TimeLineContainer$TimeLineWrapper.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/build/classes/java/main/New/CustomControls/Containers/TimeLineContainer$TopicCreationDialogResult.class" beforeDir="false" afterPath="$PROJECT_DIR$/build/classes/java/main/New/CustomControls/Containers/TimeLineContainer$TopicCreationDialogResult.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/build/classes/java/main/New/CustomControls/Containers/TimeLineContainer.class" beforeDir="false" afterPath="$PROJECT_DIR$/build/classes/java/main/New/CustomControls/Containers/TimeLineContainer.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/build/classes/java/main/New/CustomControls/Containers/TimeLineDetailContainer.class" beforeDir="false" afterPath="$PROJECT_DIR$/build/classes/java/main/New/CustomControls/Containers/TimeLineDetailContainer.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/build/classes/java/main/New/CustomControls/TimeLine/AnnotationTimeLinePane.class" beforeDir="false" afterPath="$PROJECT_DIR$/build/classes/java/main/New/CustomControls/TimeLine/AnnotationTimeLinePane.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/build/classes/java/main/New/CustomControls/TimeLine/CustomTimeLinePane.class" beforeDir="false" afterPath="$PROJECT_DIR$/build/classes/java/main/New/CustomControls/TimeLine/CustomTimeLinePane.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/build/classes/java/main/New/CustomControls/TimeLine/SelectableTimeLinePane.class" beforeDir="false" afterPath="$PROJECT_DIR$/build/classes/java/main/New/CustomControls/TimeLine/SelectableTimeLinePane.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/build/classes/java/main/New/CustomControls/TimeLine/StrokeDurationTimeLinePane.class" beforeDir="false" afterPath="$PROJECT_DIR$/build/classes/java/main/New/CustomControls/TimeLine/StrokeDurationTimeLinePane.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/build/classes/java/main/New/CustomControls/TimeLine/SubTimeLines/DetailTimeLine.class" beforeDir="false" afterPath="$PROJECT_DIR$/build/classes/java/main/New/CustomControls/TimeLine/SubTimeLines/DetailTimeLine.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/build/classes/java/main/New/CustomControls/TimeLine/SubTimeLines/PressureTimeLine.class" beforeDir="false" afterPath="$PROJECT_DIR$/build/classes/java/main/New/CustomControls/TimeLine/SubTimeLines/PressureTimeLine.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/build/classes/java/main/New/CustomControls/TimeLine/SubTimeLines/VelocityTimeLine.class" beforeDir="false" afterPath="$PROJECT_DIR$/build/classes/java/main/New/CustomControls/TimeLine/SubTimeLines/VelocityTimeLine.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/build/classes/java/main/New/CustomControls/TimeLine/TimeLinePane.class" beforeDir="false" afterPath="$PROJECT_DIR$/build/classes/java/main/New/CustomControls/TimeLine/TimeLinePane.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/build/classes/java/main/New/Dialogues/CustomTimeLineAnnotationDialog.class" beforeDir="false" afterPath="$PROJECT_DIR$/build/classes/java/main/New/Dialogues/CustomTimeLineAnnotationDialog.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/build/classes/java/main/New/Dialogues/TopicSetDialog.class" beforeDir="false" afterPath="$PROJECT_DIR$/build/classes/java/main/New/Dialogues/TopicSetDialog.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/build/classes/java/main/New/Model/Entities/Project.class" beforeDir="false" afterPath="$PROJECT_DIR$/build/classes/java/main/New/Model/Entities/Project.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/build/classes/java/main/New/Model/Entities/Segment.class" beforeDir="false" afterPath="$PROJECT_DIR$/build/classes/java/main/New/Model/Entities/Segment.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/build/classes/java/main/New/Model/Entities/TopicSet.class" beforeDir="false" afterPath="$PROJECT_DIR$/build/classes/java/main/New/Model/Entities/TopicSet.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/build/classes/java/main/New/Observables/ObservablePage.class" beforeDir="false" afterPath="$PROJECT_DIR$/build/classes/java/main/New/Observables/ObservablePage.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/build/classes/java/main/New/Observables/ObservableProject.class" beforeDir="false" afterPath="$PROJECT_DIR$/build/classes/java/main/New/Observables/ObservableProject.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/build/classes/java/main/New/Observables/ObservableSegment.class" beforeDir="false" afterPath="$PROJECT_DIR$/build/classes/java/main/New/Observables/ObservableSegment.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/build/classes/java/main/New/Observables/ObservableTopicSet$1.class" beforeDir="false" afterPath="$PROJECT_DIR$/build/classes/java/main/New/Observables/ObservableTopicSet$1.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/build/classes/java/main/New/Observables/ObservableTopicSet.class" beforeDir="false" afterPath="$PROJECT_DIR$/build/classes/java/main/New/Observables/ObservableTopicSet.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/New/Controllers/CustomTimeLineController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/New/Controllers/CustomTimeLineController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/New/Controllers/MainSceneController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/New/Controllers/MainSceneController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/New/Controllers/TimeLineContainerController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/New/Controllers/TimeLineContainerController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/New/CustomControls/Containers/TimeLineContainer.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/New/CustomControls/Containers/TimeLineContainer.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/New/CustomControls/Containers/TimeLineDetailContainer.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/New/CustomControls/Containers/TimeLineDetailContainer.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/New/CustomControls/TimeLine/AnnotationTimeLinePane.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/New/CustomControls/TimeLine/AnnotationTimeLinePane.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/New/CustomControls/TimeLine/CustomTimeLinePane.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/New/CustomControls/TimeLine/CustomTimeLinePane.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/New/CustomControls/TimeLine/SelectableTimeLinePane.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/New/CustomControls/TimeLine/SelectableTimeLinePane.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/New/CustomControls/TimeLine/StrokeDurationTimeLinePane.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/New/CustomControls/TimeLine/StrokeDurationTimeLinePane.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/New/CustomControls/TimeLine/SubTimeLines/DetailTimeLine.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/New/CustomControls/TimeLine/SubTimeLines/DetailTimeLine.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/New/CustomControls/TimeLine/SubTimeLines/PressureTimeLine.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/New/CustomControls/TimeLine/SubTimeLines/PressureTimeLine.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/New/CustomControls/TimeLine/SubTimeLines/VelocityTimeLine.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/New/CustomControls/TimeLine/SubTimeLines/VelocityTimeLine.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/New/CustomControls/TimeLine/TimeLinePane.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/New/CustomControls/TimeLine/TimeLinePane.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/New/Dialogues/CustomTimeLineAnnotationDialog.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/New/Dialogues/CustomTimeLineAnnotationDialog.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/New/Dialogues/TopicSetDialog.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/New/Dialogues/TopicSetDialog.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/New/Model/Entities/Project.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/New/Model/Entities/Project.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/New/Model/Entities/Segment.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/New/Model/Entities/Segment.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/New/Model/Entities/TopicSet.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/New/Model/Entities/TopicSet.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/New/Observables/ObservablePage.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/New/Observables/ObservablePage.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/New/Observables/ObservableProject.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/New/Observables/ObservableProject.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/New/Observables/ObservableSegment.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/New/Observables/ObservableSegment.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/New/Observables/ObservableTopicSet.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/New/Observables/ObservableTopicSet.java" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -437,7 +381,7 @@
       <workItem from="1578860236954" duration="3230000" />
       <workItem from="1578987763220" duration="5209000" />
       <workItem from="1580041595913" duration="18755000" />
-      <workItem from="1580123090148" duration="6344000" />
+      <workItem from="1580123090148" duration="7997000" />
     </task>
     <servers />
   </component>
@@ -530,7 +474,7 @@
         </line-breakpoint>
         <line-breakpoint enabled="true" type="java-line">
           <url>file://$PROJECT_DIR$/src/main/java/New/CustomControls/TimeLine/CustomTimeLinePane.java</url>
-          <line>244</line>
+          <line>245</line>
           <option name="timeStamp" value="103" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="java-line">
