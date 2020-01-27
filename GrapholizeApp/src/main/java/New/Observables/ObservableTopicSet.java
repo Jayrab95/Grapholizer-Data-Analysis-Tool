@@ -1,6 +1,5 @@
 package New.Observables;
 
-import New.Model.Entities.Segment;
 import New.Model.Entities.Topic;
 import New.Model.Entities.TopicSet;
 import New.util.ColorConverter;
@@ -12,6 +11,9 @@ import javafx.collections.FXCollections;
 import javafx.collections.ListChangeListener;
 import javafx.collections.ObservableList;
 import javafx.scene.paint.Color;
+
+import java.util.List;
+import java.util.stream.Collectors;
 
 public class ObservableTopicSet {
     private TopicSet inner;
@@ -30,18 +32,24 @@ public class ObservableTopicSet {
                 ColorConverter.convertJavaFXColorToModelColor(newValue)));
         mainTopicIDProperty = new SimpleStringProperty(inner.getMainTopicID());
         mainTopicIDProperty.addListener((observable, oldValue, newValue) -> inner.setMainTopic(newValue));
-        topicsObservableList = FXCollections.observableList(inner.getTopics());
+        topicsObservableList = FXCollections.observableList(inner.getTopics().stream().collect(Collectors.toList()));
         topicsObservableList.addListener(new ListChangeListener<Topic>() {
             @Override
             public void onChanged(Change<? extends Topic> c) {
-                inner.getTopics().addAll(c.getAddedSubList());
-                inner.getTopics().removeAll(c.getRemoved());
+                while(c.next()){
+                    inner.putAll((List<Topic>) c.getAddedSubList());
+                    inner.removeAll((List<Topic>) c.getRemoved());
+                }
             }
         });
     }
 
     public TopicSet getInner() {
         return inner;
+    }
+
+    public String getTopicSetID(){
+        return inner.getTagID();
     }
 
     public String getTag() {

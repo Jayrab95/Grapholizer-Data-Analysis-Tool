@@ -10,13 +10,6 @@ public class CustomTimeLineAnnotationDialog {
     //TODO: Perhaps the logic required by this dialog could be put behind an interface.
     private ObservablePage op;
 
-    /*
-    private final Dialog d;
-    private final ButtonType ok;
-    private final CheckBox cbox;
-
-     */
-
     private Dialog annotationCopyDialog(String title, String header, String text){
         Dialog dialog = new Dialog<>();
         dialog.setTitle(title);

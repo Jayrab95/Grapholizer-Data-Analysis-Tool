@@ -28,8 +28,10 @@ public class ObservableSegment {
                 mainTopicAnnotationProperty.set(segment.getAnnotation(newValue))
         );
         observableTopicSet.getTopicsObservableList().addListener((ListChangeListener<Topic>) c -> {
-            for(Topic t : c.getRemoved()){
-                removeAnnotation(t.getTopicID());
+            while(c.next()){
+                for(Topic t : c.getRemoved()){
+                    removeAnnotation(t.getTopicID());
+                }
             }
         });
     }

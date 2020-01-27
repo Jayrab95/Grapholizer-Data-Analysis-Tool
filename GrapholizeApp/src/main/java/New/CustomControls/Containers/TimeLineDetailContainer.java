@@ -2,7 +2,6 @@ package New.CustomControls.Containers;
 
 import New.CustomControls.Annotation.AnnotationRectangle;
 import New.CustomControls.TimeLine.AnnotationTimeLinePane;
-import New.CustomControls.TimeLine.CustomTimeLinePane;
 import New.CustomControls.TimeLine.SelectableTimeLinePane;
 import New.CustomControls.TimeLine.SubTimeLines.PressureTimeLine;
 import New.CustomControls.TimeLine.SubTimeLines.VelocityTimeLine;
@@ -49,7 +48,8 @@ public class TimeLineDetailContainer extends ScrollPane {
                 detaiLScale,
                 inspectedTimeLine.getTimeLineNameProperty(),
                 new SimpleObjectProperty<Color>(Color.BLACK),
-                inspectedTimeLine.getAnnotations()
+                inspectedTimeLine.getAnnotations(),
+                inspectedTimeLine.getTopicSetID()
         );
         return new SimpleTimeLineWrapper(a);
     }
@@ -62,7 +62,7 @@ public class TimeLineDetailContainer extends ScrollPane {
                 new SimpleStringProperty("Pressure"),
                 activePage,
                 inspectedTimeLine,
-                inspectedTimeLine.getTimeLineName()
+                inspectedTimeLine.getTopicSetID()
         );
         return new SimpleTimeLineWrapper(a);
     }
@@ -74,7 +74,7 @@ public class TimeLineDetailContainer extends ScrollPane {
                 detaiLScale,
                 new SimpleStringProperty("Velocity"),
                 activePage,
-                inspectedTimeLine.getTimeLineName()
+                inspectedTimeLine.getTopicSetID()
         );
         return new SimpleTimeLineWrapper(a);
     }

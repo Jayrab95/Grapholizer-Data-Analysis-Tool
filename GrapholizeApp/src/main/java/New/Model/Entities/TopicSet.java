@@ -1,22 +1,21 @@
 package New.Model.Entities;
 
-import java.util.HashMap;
-import java.util.LinkedList;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 public class TopicSet {
     private final String tagID;
     private String tag;
     private SimpleColor simpleColor;
     private String mainTopicID;
-    private final List<Topic> topics;
+    private final Map<String, Topic> topicsMap;
 
-    public TopicSet(String tag, SimpleColor simpleColor, List<Topic> topics, String maintopicID, String tagID){
+    public TopicSet(String tag, SimpleColor simpleColor, List<Topic> topicsMap, String maintopicID, String tagID){
         this.tag = tag;
         this.simpleColor = simpleColor;
-        this.topics = new LinkedList<>();
-        this.topics.addAll(topics);
+        this.topicsMap = new HashMap<>();
+        for(Topic t : topicsMap){
+            this.topicsMap.put(t.getTopicID(), t);
+        }
         this.mainTopicID = maintopicID;
         this.tagID = tagID;
     }
@@ -49,16 +48,32 @@ public class TopicSet {
         this.mainTopicID = mainTopic;
     }
 
-    public List<Topic> getTopics() {
-        return topics;
+    public Collection<Topic> getTopics() {
+        return Collections.unmodifiableCollection(topicsMap.values());
+    }
+
+    public void putAll(List<Topic> topics){
+        for(Topic t : topics){
+            this.topicsMap.put(t.getTopicID(), t);
+        }
+    }
+
+    public void removeAll(List<Topic> topics){
+        for(Topic t : topics){
+            this.topicsMap.remove(t.getTopicID());
+        }
+    }
+
+    public Topic getMainTopic(){
+        return topicsMap.get(mainTopicID);
     }
 
     public void addTopic(Topic t){
-        this.topics.add(t);
+        this.topicsMap.put(t.getTopicID(), t);
     }
 
     public void removeTopic(Topic t){
-        this.topics.remove(t);
+        this.topicsMap.remove(t.getTopicID());
     }
 
 

@@ -9,9 +9,7 @@ import New.Observables.ObservablePage;
 import New.Observables.ObservableProject;
 import New.Observables.ObservableTopicSet;
 import New.util.ColorConverter;
-import javafx.scene.paint.Color;
 
-import java.util.LinkedList;
 import java.util.List;
 import java.util.Set;
 import java.util.stream.Collectors;
@@ -31,8 +29,8 @@ public class TimeLineContainerController {
 
     public ObservablePage getPage(){return this.page;}
 
-    public Set<String> getTopics(){
-        return project.getTimeLineTagNames();
+    public Set<String> getTopicSetIDs(){
+        return project.getTopicSetIDs();
     }
 
 

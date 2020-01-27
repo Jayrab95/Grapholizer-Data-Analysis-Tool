@@ -5,13 +5,11 @@ import New.CustomControls.TimeLine.CustomTimeLinePane;
 import New.CustomControls.TimeLine.StrokeDurationTimeLinePane;
 import New.CustomControls.TimeLine.TimeLinePane;
 import New.CustomControls.Annotation.AnnotationRectangle;
-import New.Dialogues.DialogControls.TopicTextFieldCell;
 import New.Dialogues.TopicSetDialog;
 import New.Execptions.NoTimeLineSelectedException;
 import New.Execptions.TimeLineTagException;
 import New.Interfaces.Observer.Observer;
 import New.Model.Entities.Segment;
-import New.Model.Entities.Topic;
 import New.Model.Entities.TopicSet;
 import New.Observables.*;
 import New.util.DialogGenerator;
@@ -21,16 +19,12 @@ import javafx.event.ActionEvent;
 import javafx.geometry.Insets;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
-import javafx.scene.control.cell.PropertyValueFactory;
-import javafx.scene.control.cell.TextFieldListCell;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
 import javafx.stage.Stage;
-import javafx.util.Callback;
-import javafx.util.StringConverter;
 
 import java.util.LinkedList;
 import java.util.List;
@@ -137,9 +131,9 @@ public class TimeLineContainer extends VBox {
         addTimeLinePane(strokePane);
 
         //TODO: Observe if A: This actually works and B: if there are any memory leaks when chaning project.
-        for(String s : project.getTimeLineTagNames()){
-            ObservableTopicSet tag = project.getTimeLineTag(s);
-            loadTimeLine(tag, page, page.getAnnotationSet(s));
+        for(String topicSetID : project.getTopicSetIDs()){
+            ObservableTopicSet tag = project.getTimeLineTag(topicSetID);
+            loadTimeLine(tag, page, page.getAnnotationSet(topicSetID));
         }
 
     }
@@ -181,7 +175,7 @@ public class TimeLineContainer extends VBox {
                 Optional.empty(),
                 false);
         Optional<AnnotationFilterDialogResult> filtered = Optional.empty();
-        if(timeLineContainerController.getTopics().size() > 0){
+        if(timeLineContainerController.getTopicSetIDs().size() > 0){
             filtered = filterForAnnotationsDialog(
                     TXT_TL_FILTER_TITLE,
                     TXT_TL_FILTER_HEADER,
@@ -348,7 +342,7 @@ public class TimeLineContainer extends VBox {
         comboBoxTopics.disableProperty().bind(checkBox_filterForAnnotations.selectedProperty().not());
         textBox_filterText.disableProperty().bind(checkBox_filterForAnnotations.selectedProperty().not());
 
-        comboBoxTopics.getItems().addAll(timeLineContainerController.getTopics());
+        comboBoxTopics.getItems().addAll(timeLineContainerController.getTopicSetIDs());
 
         comboBoxTopics.getSelectionModel().select(0);
 

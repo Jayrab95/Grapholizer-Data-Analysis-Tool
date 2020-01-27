@@ -18,7 +18,7 @@ public class ObservableProject {
     private ObjectProperty<Project> innerProjectProperty;
     private Project inner;
     private List<ProjectObserver> observers;
-    private List<ObservableTopicSet> timeLineTags;
+    private List<ObservableTopicSet> observableTopicSets;
     //private ObservableList<ObservableTimeLineTag> observableTimeLineTags;
 
     public ObservableProject(Project inner){
@@ -26,7 +26,7 @@ public class ObservableProject {
         this.inner = inner;
         //observableTimeLineTags = FXCollections.emptyObservableList();
         this.observers = new LinkedList<>();
-        generateTimeLineTags(inner);
+        generateObservableTopicSets(inner);
 
         /*
         //https://docs.oracle.com/javase/8/javafx/api/javafx/collections/ListChangeListener.Change.html
@@ -49,20 +49,20 @@ public class ObservableProject {
          */
     }
 
-    private void generateTimeLineTags(Project p){
-        timeLineTags = new LinkedList<>();
-        for(String s : p.getTimeLineTagNames()){
-            ObservableTopicSet tag = new ObservableTopicSet(p.getTimeLineTag(s));
-            timeLineTags.add(tag);
+    private void generateObservableTopicSets(Project p){
+        observableTopicSets = new LinkedList<>();
+        for(String s : p.getTopicSetIDs()){
+            ObservableTopicSet tag = new ObservableTopicSet(p.getTopicSet(s));
+            observableTopicSets.add(tag);
             //observableTimeLineTags.add(tag);
         }
     }
 
-    public List<ObservableTopicSet> getObservableTimeLineTags(){
-        return timeLineTags;
+    public List<ObservableTopicSet> getObservableTopicSets(){
+        return observableTopicSets;
     }
 
-    public List<TopicSet> getTimeLineTags(){
+    public List<TopicSet> getTopicSets(){
         return new LinkedList<>(inner.getProjectTagsMap().values());
     }
 
@@ -74,8 +74,8 @@ public class ObservableProject {
         return Collections.unmodifiableSet(inner.getParticipantIDs());
     }
 
-    public Set<String> getTimeLineTagNames(){
-        return Collections.unmodifiableSet(inner.getTimeLineTagNames());
+    public Set<String> getTopicSetIDs(){
+        return Collections.unmodifiableSet(inner.getTopicSetIDs());
     }
 
     public ObservableParticipant getParticipant(String key){
@@ -87,7 +87,7 @@ public class ObservableProject {
     }
 
     public ObservableTopicSet getTimeLineTag(String tag){
-        return new ObservableTopicSet(inner.getTimeLineTag(tag));
+        return new ObservableTopicSet(inner.getTopicSet(tag));
     }
 
     public void setInnerProject(Project p){
@@ -136,7 +136,9 @@ public class ObservableProject {
     //PRoblem with doing the check during creation and edit: the insertion has to happen as a result of a DialogOK.
     //Problem with assumption: The caller could technically use the edit function without checking first.
     public boolean editTimeLineTag(String oldTag, String newTagName, Color newColor){
-        TopicSet oldTopicSet = inner.getTimeLineTag(oldTag);
+        //TODO: This functionality is currently obsolved in the TimelineCOntrinaer controller.
+        // either remove this or move the functionality here.
+        TopicSet oldTopicSet = inner.getTopicSet(oldTag);
         if(oldTopicSet != null){
             if(!oldTag.equals(newTagName)){
                 inner.getProjectTagsMap().remove(oldTag);
@@ -156,7 +158,7 @@ public class ObservableProject {
     }
 
     private void timeLineTagExists(String tag) throws TimeLineTagException{
-        if(inner.getProjectTagsMap().keySet().contains(tag)){
+        if(getTopicSets().stream().anyMatch(topicSet -> topicSet.getTag().equals(tag))){
             throw new TimelineTagNotUniqueException(tag);
         }
     }

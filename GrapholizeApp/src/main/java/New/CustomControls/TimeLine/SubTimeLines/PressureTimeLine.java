@@ -1,7 +1,6 @@
 package New.CustomControls.TimeLine.SubTimeLines;
 
 import New.CustomControls.TimeLine.SelectableTimeLinePane;
-import New.CustomControls.TimeLine.TimeLinePane;
 import New.Model.Entities.Dot;
 import New.Observables.ObservablePage;
 
@@ -20,7 +19,7 @@ public class PressureTimeLine extends DetailTimeLine {
 
     @Override
     protected void setUp(){
-        List<List<Dot>> dotSections = page.getDotSectionsForAnnotations(topic);
+        List<List<Dot>> dotSections = page.getDotSectionsForAnnotations(topicSetID);
         for(List<Dot> dots : dotSections){
             //At least 2 dots are required so that a line can be drawn
             if(dots.size() >=2){

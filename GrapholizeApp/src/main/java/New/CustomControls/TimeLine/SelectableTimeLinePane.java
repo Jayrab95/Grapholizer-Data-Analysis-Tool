@@ -21,8 +21,8 @@ public abstract class SelectableTimeLinePane extends TimeLinePane implements Tim
     private SelectableTimeLineController selectableTimeLineController;
     private BooleanProperty timeLineSelectedProperty;
 
-    protected SelectableTimeLinePane(double width, double height, DoubleProperty scaleProp, StringProperty name, TimeLineContainer parent) {
-        super(width, height, scaleProp, name);
+    protected SelectableTimeLinePane(double width, double height, DoubleProperty scaleProp, StringProperty name, TimeLineContainer parent, String id) {
+        super(width, height, scaleProp, name, id);
         selectableTimeLineController = new SelectableTimeLineController(parent.getSelectedTimeLine());
         this.timeLineSelectedProperty = new SimpleBooleanProperty(false);
 

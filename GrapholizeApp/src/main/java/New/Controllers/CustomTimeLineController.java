@@ -11,24 +11,24 @@ import java.util.*;
 import java.util.stream.Collectors;
 
 public class CustomTimeLineController {
-    private ObservableTopicSet timeLineTag;
+    private ObservableTopicSet observableTopicSet;
     private ObservablePage page;
     private ObservableTimeLine observableTimeLine;
     private TimeLineContainer parent;
 
-    public CustomTimeLineController(ObservableTopicSet timeLineTag, ObservablePage page, TimeLineContainer parent) {
-        this.timeLineTag = timeLineTag;
+    public CustomTimeLineController(ObservableTopicSet observableTopicSet, ObservablePage page, TimeLineContainer parent) {
+        this.observableTopicSet = observableTopicSet;
         this.page = page;
         this.parent = parent;
         this.observableTimeLine = parent.getSelectedTimeLine();
     }
 
     public void addAnnotation(Segment a){
-        page.addSegment(timeLineTag.getTag(), a);
+        page.addSegment(observableTopicSet.getTopicSetID(), a);
     }
 
     public void editTimeLine(){
-        parent.editTimeLine(timeLineTag);
+        parent.editTimeLine(observableTopicSet);
     }
 
     public void removeTimeLine(CustomTimeLinePane timeLine){
@@ -80,7 +80,7 @@ public class CustomTimeLineController {
 
 
     public boolean selectedAnnotationsCollideWithOtherAnnotations(){
-        return page.listCollidesWithOtherAnnotations(timeLineTag.getTag(), observableTimeLine.getSelectedAnnotations());
+        return page.listCollidesWithOtherAnnotations(observableTopicSet.getTopicSetID(), observableTimeLine.getSelectedAnnotations());
     }
 
 
@@ -144,7 +144,7 @@ public class CustomTimeLineController {
     }
 
     public boolean timeRangeCollidesWithOtherAnnotations(double timeStart, double timeStop){
-        return page.collidesWithOtherElements(timeLineTag.getTag(), timeStart, timeStop);
+        return page.collidesWithOtherElements(observableTopicSet.getTopicSetID(), timeStart, timeStop);
     }
 
     public void createNewTimeLine() throws NoTimeLineSelectedException {
@@ -160,7 +160,7 @@ public class CustomTimeLineController {
     }
 
     public void removeAnnotation(ObservableSegment a){
-        page.removeAnnotation(timeLineTag.getTag(), a.getSegment());
+        page.removeAnnotation(observableTopicSet.getTopicSetID(), a.getSegment());
     }
 
 }

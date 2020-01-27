@@ -7,11 +7,9 @@ import javafx.beans.property.StringProperty;
 
 public abstract class DetailTimeLine extends TimeLinePane {
     protected ObservablePage page;
-    protected String topic;
-    public DetailTimeLine(double totalLength, double height, DoubleProperty scaleProp, StringProperty name, ObservablePage p, String topic) {
-        super(totalLength, height, scaleProp, name);
+    public DetailTimeLine(double totalLength, double height, DoubleProperty scaleProp, StringProperty name, ObservablePage p, String topicSetID) {
+        super(totalLength, height, scaleProp, name, topicSetID);
         this.page = p;
-        this.topic = topic;
         setUp();
     }
 

@@ -48,15 +48,15 @@ public class ObservablePage implements Selector {
         this.inner.set(newPage);
     }
 
-    public List<List<Dot>> getDotSectionsForAnnotations(String topic){
+    public List<List<Dot>> getDotSectionsForAnnotations(String topicSetID){
         //TODO: DEfine a static string for this timeline.
-        if(topic.equals("Stroke duration"))
+        if(topicSetID.equals("Stroke duration"))
         {
             return inner.get().getStrokes().stream()
                     .map(stroke -> stroke.getDots())
                     .collect(Collectors.toList());
         }
-        return PageUtil.getDotSectionsForAnnotations(inner.get().getSegmentation(topic), inner.get().getStrokes());
+        return PageUtil.getDotSectionsForAnnotations(inner.get().getSegmentation(topicSetID), inner.get().getStrokes());
     }
 
     public List<Stroke> getAllStrokes(){
@@ -79,9 +79,9 @@ public class ObservablePage implements Selector {
         return inner.get().getTimeLines().containsKey(tag);
     }
 
-    public Optional<List<Segment>> getAnnotationSet(String tag){
-        if(containsTag(tag)){
-            return Optional.of(inner.get().getSegmentation(tag));
+    public Optional<List<Segment>> getAnnotationSet(String topicSetID){
+        if(containsTag(topicSetID)){
+            return Optional.of(inner.get().getSegmentation(topicSetID));
         }
         return Optional.empty();
     }
@@ -96,9 +96,6 @@ public class ObservablePage implements Selector {
     }
 
     public boolean listCollidesWithOtherAnnotations(String key, List<AnnotationRectangle> annotations){
-        List debug = annotations.stream()
-                .filter(a -> collidesWithOtherElements(key, a.getTimeStart(), a.getTimeStop()))
-                .collect(Collectors.toList());
         return annotations.stream()
                 .filter(a -> collidesWithOtherElements(key, a.getTimeStart(), a.getTimeStop()))
                 .count() > 0;

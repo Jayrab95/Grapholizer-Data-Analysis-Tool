@@ -53,7 +53,7 @@ public class CustomTimeLinePane extends SelectableTimeLinePane {
     private ContextMenu contextMenu;
 
     public CustomTimeLinePane(double width, double height, DoubleProperty scaleProp, ObservableTopicSet tag, ObservablePage p, TimeLineContainer parent) {
-        super(width, height, scaleProp, tag.getTagProperty(), parent);
+        super(width, height, scaleProp, tag.getTagProperty(), parent, tag.getTopicSetID());
         this.timeLineTag = tag;
         customTimeLineController = new CustomTimeLineController(tag, p, parent);
         anchor = new Light.Point();
@@ -250,6 +250,7 @@ public class CustomTimeLinePane extends SelectableTimeLinePane {
                 }
                 return null;
             });
+            dialog.showAndWait();
             /*
             Optional<String> s = DialogGenerator.simpleTextInputDialog(
                     "New annotation",

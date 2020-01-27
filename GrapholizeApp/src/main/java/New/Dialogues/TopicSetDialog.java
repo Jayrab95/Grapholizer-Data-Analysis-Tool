@@ -8,7 +8,6 @@ import javafx.beans.property.ObjectProperty;
 import javafx.beans.property.SimpleObjectProperty;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.property.StringProperty;
-import javafx.collections.FXCollections;
 import javafx.collections.ListChangeListener;
 import javafx.collections.ObservableList;
 import javafx.scene.control.*;
@@ -70,6 +69,10 @@ public class TopicSetDialog extends Dialog<TopicSet> {
                 }
             }
         });
+        if(topicSetOptional.isPresent()){
+            comboBox_mainTopic.getItems().addAll(topicSetOptional.get().getTopics());
+            comboBox_mainTopic.setValue(topicSetOptional.get().getMainTopic());
+        }
         mainTopic = new SimpleObjectProperty<>();
         mainTopic.bind(comboBox_mainTopic.valueProperty());
 

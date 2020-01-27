@@ -69,7 +69,7 @@ public class MainSceneController {
            FXMLLoader loader = openWindowReturnController("fxml/views/ExportDialog.fxml",800,400);
            ((ExportDialogController) loader.getController()).initialize(
                     _session.getActiveProject().getParticipantIDs()
-                    ,_session.getActiveProject().getTimeLineTagNames()
+                    ,_session.getActiveProject().getTopicSetIDs()
                     ,characteristicList
                     ,this);
         } catch (IOException e) {

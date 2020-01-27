@@ -1,7 +1,6 @@
 package New.CustomControls.TimeLine.SubTimeLines;
 
 import New.Characteristics.CharacteristicVelocityAverage;
-import New.CustomControls.TimeLine.TimeLinePane;
 import New.Model.Entities.Dot;
 import New.Observables.ObservablePage;
 import javafx.beans.property.DoubleProperty;
@@ -19,7 +18,7 @@ public class VelocityTimeLine extends DetailTimeLine {
 
     @Override
     protected void setUp() {
-        List<List<Dot>> dotSections = page.getDotSectionsForAnnotations(topic);
+        List<List<Dot>> dotSections = page.getDotSectionsForAnnotations(topicSetID);
 
         List<List<Double>> velocitySteps = new ArrayList<>();
         for(List<Dot> dotSection : dotSections){

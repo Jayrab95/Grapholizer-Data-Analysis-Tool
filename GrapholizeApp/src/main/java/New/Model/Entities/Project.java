@@ -9,11 +9,11 @@ public class Project {
     private Map<String, Participant> participants;
     private Map<String, TopicSet> projectTags;
 
-    public Project(List<Participant> participants, List<TopicSet> tags){
+    public Project(List<Participant> participants, List<TopicSet> topicSets){
         this.participants = participants.stream()
                 .collect(Collectors.toMap(p -> p.getID(), p -> p));
-        this.projectTags = tags.stream()
-                .collect(Collectors.toMap(t -> t.getTag(), t -> t));
+        this.projectTags = topicSets.stream()
+                .collect(Collectors.toMap(t -> t.getTagID(), t -> t));
     }
 
     public Map<String, Participant> getParticipantsMap(){
@@ -32,10 +32,11 @@ public class Project {
         return participants.keySet();
     }
 
-    public TopicSet getTimeLineTag(String tagKey){
-        return projectTags.get(tagKey);
+    public TopicSet getTopicSet(String topicSetID){
+        return projectTags.get(topicSetID);
     }
 
-    public Set<String> getTimeLineTagNames(){return projectTags.keySet();}
+    public Set<String> getTopicSetIDs(){return projectTags.keySet();}
+
 
 }

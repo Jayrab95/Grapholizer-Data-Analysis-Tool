@@ -13,8 +13,8 @@ import java.util.List;
 public class AnnotationTimeLinePane extends TimeLinePane {
 
     ObjectProperty<Color>c;
-    public AnnotationTimeLinePane(double totalLength, double height, DoubleProperty scaleProp, StringProperty name, ObjectProperty<Color> c, List<AnnotationRectangle>l) {
-        super(totalLength, height, scaleProp, name);
+    public AnnotationTimeLinePane(double totalLength, double height, DoubleProperty scaleProp, StringProperty name, ObjectProperty<Color> c, List<AnnotationRectangle>l, String id) {
+        super(totalLength, height, scaleProp, name, id);
         this.c=c;
         addAnnotations(l);
     }
