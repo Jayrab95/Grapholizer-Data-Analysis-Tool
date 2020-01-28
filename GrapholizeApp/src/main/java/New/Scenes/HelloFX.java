@@ -1,5 +1,7 @@
 package New.Scenes;
 
+import New.util.datagenerator.CircleGenerator;
+import New.util.datagenerator.DataGenerator;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;

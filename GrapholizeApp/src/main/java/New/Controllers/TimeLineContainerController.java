@@ -16,17 +16,13 @@ import java.util.stream.Collectors;
 
 public class TimeLineContainerController {
 
-
     private ObservableProject project;
     private ObservablePage page;
-
 
     public TimeLineContainerController(ObservableProject project, ObservablePage page){
         this.project = project;
         this.page = page;
     }
-
-
     public ObservablePage getPage(){return this.page;}
 
     public Set<String> getTopicSetIDs(){
@@ -93,9 +89,6 @@ public class TimeLineContainerController {
         project.checkIfTagIsValid(tag);
     }
 
-
-
-
     /*
     public void createCopyAnnotations(TimeLinePane tl, boolean combinedElement, String combinedAnnotationText){
         List<TimeLineElementRect> tles = selectedTimeLine.getChildren().stream()
@@ -125,11 +118,6 @@ public class TimeLineContainerController {
                     "One or more of the selected elements collides with other elements on the timeline."
             );
         }
-
-
     }
-
-     */
-
-
+*/
 }

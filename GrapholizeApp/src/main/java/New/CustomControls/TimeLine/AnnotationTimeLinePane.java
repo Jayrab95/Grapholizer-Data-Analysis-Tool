@@ -19,7 +19,6 @@ public class AnnotationTimeLinePane extends TimeLinePane {
         addAnnotations(l);
     }
 
-
     //TODO: This somehow needs to receive the main topic
     private void addAnnotation(Segment a){
         getChildren().add(new AnnotationRectangle(

@@ -5,14 +5,17 @@ import New.CustomControls.TimeLine.CustomTimeLinePane;
 import New.CustomControls.TimeLine.StrokeDurationTimeLinePane;
 import New.CustomControls.TimeLine.TimeLinePane;
 import New.CustomControls.Annotation.AnnotationRectangle;
+
 import New.Dialogues.TopicSetDialog;
 import New.Execptions.NoTimeLineSelectedException;
 import New.Execptions.TimeLineTagException;
 import New.Interfaces.Observer.Observer;
 import New.Model.Entities.Segment;
 import New.Model.Entities.TopicSet;
+import New.CustomControls.TimeLine.TimeUnitPane;
 import New.Observables.*;
 import New.util.DialogGenerator;
+
 import javafx.beans.property.DoubleProperty;
 import javafx.beans.property.SimpleDoubleProperty;
 import javafx.event.ActionEvent;
@@ -31,7 +34,6 @@ import java.util.List;
 import java.util.Optional;
 
 public class TimeLineContainer extends VBox {
-
     //region static strings
     private final static String TXT_TL_CREATION_TITLE = "Create a new timeline";
     private final static String TXT_TL_CREATION_HEADER = "Creation of a new timeline";
@@ -68,8 +70,11 @@ public class TimeLineContainer extends VBox {
 
     private TimeLineContainerController timeLineContainerController;
 
-    private ScrollPane scrollPane_timeLineScrollPane;
-    private VBox vBox_TimeLineBox;
+    private ScrollPane scrollPane_outer = new ScrollPane();
+    private VBox vBox_OuterScrollPane = new VBox();
+    private ScrollPane scrollPane_inner = new ScrollPane();
+    private VBox vBox_TimeLineBox = new VBox();
+    TimeUnitPane unitPane;
 
     private Button btn_CreateNewTimeLine;
     private Button btn_CreateNewTimeLineOutOfSelected;
@@ -78,9 +83,7 @@ public class TimeLineContainer extends VBox {
     private Slider scaleSlider;
 
     public TimeLineContainer(ObservableProject project, ObservablePage page, double initialScale){
-
         this.p = page;
-
         page.getPageProperty().addListener((observable, oldValue, newValue) -> {
             System.out.println("TimeLineContainer has detected a page change");
             InitializeContainer(project, page);
@@ -92,17 +95,25 @@ public class TimeLineContainer extends VBox {
         AnchorPane.setTopAnchor(this, 0.0);
 
         timeLineContainerController = new TimeLineContainerController(project, page);
-
         totalWidth = new SimpleDoubleProperty(page.getDuration());
         scale = new SimpleDoubleProperty(initialScale);
 
         scaleSlider = initializeSlider(initialScale);
         scale.bind(scaleSlider.valueProperty());
 
-        vBox_TimeLineBox = new VBox();
         vBox_TimeLineBox.setPadding(new Insets(5, 0, 10, 0));
-        scrollPane_timeLineScrollPane = new ScrollPane();
-        scrollPane_timeLineScrollPane.setContent(vBox_TimeLineBox);
+
+        scrollPane_inner.setHbarPolicy(ScrollPane.ScrollBarPolicy.NEVER);
+        scrollPane_inner.setVbarPolicy(ScrollPane.ScrollBarPolicy.ALWAYS);
+        scrollPane_inner.setContent(vBox_TimeLineBox);
+
+        unitPane = new TimeUnitPane(scale,20,totalWidth);
+        vBox_OuterScrollPane.getChildren().add(unitPane);
+        vBox_OuterScrollPane.getChildren().add(scrollPane_inner);
+
+        scrollPane_outer.setVbarPolicy(ScrollPane.ScrollBarPolicy.NEVER);
+        scrollPane_outer.setHbarPolicy(ScrollPane.ScrollBarPolicy.ALWAYS);
+        scrollPane_outer.setContent(vBox_OuterScrollPane);
 
         InitializeButtonHBox();
         InitializeContainer(project, page);
@@ -117,14 +128,15 @@ public class TimeLineContainer extends VBox {
     }
 
     private void InitializeContainer(ObservableProject project, ObservablePage page){
-        System.out.println("initialize container called");
+        System.out.println("initialize timeline_container called");
         //Step 1: Create the stroke timeline
         //Step 2: For each tag, create a new timeline and pass over the observble Tag and the page. Then create the annotations.
         getChildren().clear();
         getChildren().add(scaleSlider);
         getChildren().add(hbox_buttonHBox);
-        getChildren().add(scrollPane_timeLineScrollPane);
-
+        getChildren().add(scrollPane_outer);
+        totalWidth = new SimpleDoubleProperty(page.getDuration());
+        unitPane = new TimeUnitPane(scale,20,totalWidth);
         vBox_TimeLineBox.getChildren().clear();
 
         StrokeDurationTimeLinePane strokePane = new StrokeDurationTimeLinePane(timeLineContainerController.getPage().getDuration(), timeLinesHeight, scale, timeLineContainerController.getPage(), this);
@@ -135,11 +147,14 @@ public class TimeLineContainer extends VBox {
             ObservableTopicSet tag = project.getTimeLineTag(topicSetID);
             loadTimeLine(tag, page, page.getAnnotationSet(topicSetID));
         }
-
     }
 
     private Slider initializeSlider(double initScale){
-        Slider slider = new Slider(0.001, 1, initScale);
+        Slider slider = new Slider(0.0d, 1, initScale);
+        slider.setMajorTickUnit(0.05);
+        slider.setMinorTickCount(0);
+        slider.setShowTickMarks(true);
+        slider.setSnapToTicks(true);
         return slider;
     }
 
@@ -516,8 +531,5 @@ public class TimeLineContainer extends VBox {
             return timeLineContainerController.getFilteredAnnotations(topic, filterText);
         }
     }
-
     //endregion
-
-
 }

@@ -21,16 +21,13 @@ public abstract class TimeLinePane extends Pane {
 
     protected TimeLinePane(double totalLength, double height, DoubleProperty scaleProp, StringProperty name, String id){
         this.totalLength = new SimpleDoubleProperty(totalLength);
-        //this.totalLength.bind(totalLength);
         this.totalLength.addListener((observable, oldValue, newValue) -> resizeTimeLine());
-
         this.scale = new SimpleDoubleProperty(scaleProp.get());
         this.scale.bind(scaleProp);
         this.scale.addListener((observable, oldValue, newValue) -> resizeTimeLine());
 
         this.timeLineName = new SimpleStringProperty(name.get());
         this.timeLineName.bind(name);
-
         this.topicSetID = id;
 
         setHeight(height);
@@ -59,14 +56,7 @@ public abstract class TimeLinePane extends Pane {
         setStyle(style);
     }
 
-
-
     private void InitiateTimeLine() {
         setStyle(style);
     }
-
-
-
-
-
 }

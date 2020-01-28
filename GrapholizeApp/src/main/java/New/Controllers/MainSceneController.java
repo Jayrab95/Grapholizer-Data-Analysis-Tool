@@ -88,7 +88,6 @@ public class MainSceneController {
                });
            });
        });
-
     }
 
     @FXML
@@ -230,7 +229,7 @@ public class MainSceneController {
         }
         if(optionalTimeLineContainer.isEmpty()){
             System.out.println("new container");
-            optionalTimeLineContainer = Optional.of(new TimeLineContainer(_session.getActiveProject(), _session.getActivePage(), 0.05));
+            optionalTimeLineContainer = Optional.of(new TimeLineContainer(_session.getActiveProject(), _session.getActivePage(), 0.2));
             scrollPane_TimeLines.getChildren().add(optionalTimeLineContainer.get());
         }
     }
