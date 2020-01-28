@@ -140,7 +140,11 @@ public class TimeLineContainer extends VBox {
     }
 
     private Slider initializeSlider(double initScale){
-        Slider slider = new Slider(0.001, 1, initScale);
+        Slider slider = new Slider(0.0d, 1, initScale);
+        slider.setMajorTickUnit(0.05);
+        slider.setMinorTickCount(0);
+        slider.setShowTickMarks(true);
+        slider.setSnapToTicks(true);
         return slider;
     }
 

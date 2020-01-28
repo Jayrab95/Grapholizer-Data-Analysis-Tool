@@ -65,11 +65,10 @@ public class TimeUnitPane extends VBox {
         recalculateUnits(scale.get(),totalwidth.get(), true);
     }
 
-    public void recalculateUnits(double scale, double totalWidth, boolean isInitialize){
+    public void recalculateUnits(double scale, double totalWidth, boolean isNotInitialize){
         boolean hasChanged = ChooseRightUnit(scale);
         int gapNumber = (int)totalWidth/unit.msRatio;
-
-        if(hasChanged || isInitialize) {
+        if(hasChanged || isNotInitialize) {
             labelLayer.getChildren().clear();
             markerLayer.getChildren().clear();
             fillLabelLayer(gapNumber);
@@ -77,23 +76,30 @@ public class TimeUnitPane extends VBox {
         }
 
         double spacing = resizeTiles(scale);
-
         resizeTilePanes(scale, totalWidth, spacing);
+
     }
 
     private void resizeTilePanes(double scale, double totalWidth, double spacing) {
-        double newWidth = scale * totalWidth + 50*spacing*scale;
+        double newWidth = scale * totalWidth + 10*spacing*scale;
         this.setPrefWidth(newWidth);
+        this.setMaxWidth(newWidth);
         this.setWidth(newWidth);
         markerLayer.setPrefWidth(newWidth);
         labelLayer.setPrefWidth(newWidth);
+        markerLayer.setMaxWidth(newWidth);
+        labelLayer.setMaxWidth(newWidth);
     }
 
-    private double resizeTiles(double scale) {
+    private long resizeTiles(double scale) {
         double spacing = unit.msRatio * scale;
-        labelLayer.prefTileWidthProperty().setValue(spacing);
-        markerLayer.prefTileWidthProperty().setValue(spacing);
-        return spacing;
+        long rounded_spacing = Math.round(spacing);
+        labelLayer.prefTileWidthProperty().setValue(rounded_spacing);
+        markerLayer.prefTileWidthProperty().setValue(rounded_spacing);
+        System.out.println("scale: " + scale);
+        System.out.println("rounded_spacing: " + rounded_spacing);
+        System.out.println("tileWidth: " + markerLayer.getTileWidth());
+        return rounded_spacing;
     }
 
     private boolean ChooseRightUnit(double scale) {
