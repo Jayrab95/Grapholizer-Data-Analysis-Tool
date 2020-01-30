@@ -1,13 +1,17 @@
 package New.Characteristics;
 
-public abstract class Characteristic<T,D> {
+import New.Model.Entities.Dot;
+
+import java.util.List;
+
+public abstract class Characteristic<T extends Number> {
     private String name;
 
     public Characteristic(String name) {
         this.name = name;
     }
 
-    public abstract T calculate(D data);
+    public abstract T calculate(List<List<Dot>> data);
 
     public String getName(){
         return name;

@@ -4,13 +4,13 @@ import New.Model.Entities.Dot;
 
 import java.util.List;
 
-public class CharacteristicAveragePressure extends Characteristic<Integer, List<Dot>> {
+public class CharacteristicAveragePressure extends Characteristic<Integer> {
 
     public CharacteristicAveragePressure(String name) {
         super(name);
     }
 
     @Override
-    public Integer calculate(List<Dot> dots) {throw new UnsupportedOperationException();}
+    public Integer calculate(List<List<Dot>> dots) {throw new UnsupportedOperationException();}
 
 }

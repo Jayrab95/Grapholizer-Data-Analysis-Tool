@@ -1,23 +1,26 @@
 package New.Characteristics;
 
+import New.Model.Entities.Dot;
 import New.Model.Entities.Stroke;
 
 import java.util.List;
 import java.util.concurrent.atomic.AtomicLong;
 
-public class CharacteristicAverageStrokeDuration extends Characteristic<Double, List<Stroke>> {
+public class CharacteristicAverageStrokeDuration extends Characteristic<Double> {
 
     public CharacteristicAverageStrokeDuration(String name) {
         super(name);
     }
 
     @Override
-    public Double calculate(List<Stroke> strks) {
+    public Double calculate(List<List<Dot>> dotLists) {
         AtomicLong sumDuration = new AtomicLong();
-        strks.forEach(stroke -> {
-            sumDuration.addAndGet(stroke.getTimeEnd() - stroke.getTimeStart());
+        dotLists.forEach(list -> {
+            long timeStart = list.get(0).getTimeStamp();
+            long timeEnd = list.get(list.size() - 1).getTimeStamp();
+            sumDuration.addAndGet(timeEnd - timeStart);
         });
-        return sumDuration.doubleValue()/strks.size();
+        return sumDuration.doubleValue()/dotLists.size();
     }
 
 }

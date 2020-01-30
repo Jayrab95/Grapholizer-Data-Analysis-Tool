@@ -61,4 +61,12 @@ public class CSVTableBuilder {
     public boolean hasInitializedHeaders(){
         return columnHeaders.size() > 1;
     }
+
+    public int columnNumber(){
+        return columnHeaders.size();
+    }
+
+    public int rowNumber() {
+        return rows.size();
+    }
 }
