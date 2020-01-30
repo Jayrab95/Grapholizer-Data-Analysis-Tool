@@ -5,13 +5,13 @@ import New.Characteristics.Characteristic;
 import java.util.List;
 
 public class ExportConfig {
-    List<String> participantID;
-    List<String> topics;
-    List<Characteristic> characteristicList;
+    public final List<String> participantID;
+    public final List<String> topicSetIDs;
+    public final List<Characteristic> characteristicList;
 
     public ExportConfig(List<String> participantID, List<String> topics, List<Characteristic> characteristicList) {
         this.participantID = participantID;
-        this.topics = topics;
+        this.topicSetIDs = topics;
         this.characteristicList = characteristicList;
     }
 }

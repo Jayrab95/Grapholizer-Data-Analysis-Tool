@@ -1,6 +1,7 @@
 package New.Model.Entities;
 
 import java.util.*;
+import java.util.stream.Collectors;
 
 public class TopicSet {
     private final String tagID;
@@ -49,7 +50,7 @@ public class TopicSet {
     }
 
     public Collection<Topic> getTopics() {
-        return Collections.unmodifiableCollection(topicsMap.values());
+        return Collections.unmodifiableCollection(topicsMap.values()).stream().sorted().collect(Collectors.toList());
     }
 
     public void putAll(List<Topic> topics){

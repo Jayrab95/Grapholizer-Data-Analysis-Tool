@@ -1,12 +1,13 @@
 package New.Controllers;
-
 import New.Characteristics.Characteristic;
 import New.Interfaces.Controller;
+import New.util.Export.CSVExporter;
+import New.util.Export.ExportConfig;
+
 import javafx.fxml.FXML;
 import javafx.scene.control.ListView;
 import javafx.stage.Stage;
 
-import java.lang.ref.Reference;
 import java.util.Set;
 
 public class ExportDialogController implements Controller {
@@ -109,10 +110,11 @@ public class ExportDialogController implements Controller {
 
     @FXML
     private void exportAction() {
-        callback_reference.exportWindowCallback(
-                selection_participantsID.getItems()
-                ,selection_timelineTopics.getItems()
-                ,selection_characteristics.getItems());
+        callback_reference.exportWindowCallback(new CSVExporter(),
+                new ExportConfig(selection_participantsID.getItems()
+                        ,selection_timelineTopics.getItems()
+                        ,selection_characteristics.getItems())
+             );
     }
 
     private boolean addIfNotPresent(ListView listview, Object element) {

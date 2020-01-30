@@ -1,5 +1,4 @@
 package New.Controllers;
-
 import New.Characteristics.*;
 import New.Characteristics.CharacteristicVelocityAverage;
 import New.CustomControls.Containers.ContentSwitcher;
@@ -9,12 +8,13 @@ import New.Interfaces.*;
 import New.Model.Entities.*;
 import New.Model.Session;
 import New.util.*;
-
-import New.util.Export.CSVBuilder;
+import New.util.Export.CSVExporter;
+import New.util.Export.ExportConfig;
 import New.util.Export.ProjectSerializer;
 import New.util.Import.JsonLoader;
 import New.util.Import.PageDataReader;
 import New.util.Import.ProjectLoader;
+
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
@@ -66,7 +66,9 @@ public class MainSceneController {
     @FXML
     private void exportDataToCSV(){
         try {
-           FXMLLoader loader = openWindowReturnController("fxml/views/ExportDialog.fxml",800,400);
+           FXMLLoader loader = openWindowReturnController("fxml/views/ExportDialog.fxml"
+                   , "CSV-Export"
+                   ,800,400);
            ((ExportDialogController) loader.getController()).initialize(
                     _session.getActiveProject().getParticipantIDs()
                     ,_session.getActiveProject().getTopicSetIDs()
@@ -79,15 +81,8 @@ public class MainSceneController {
         }
     }
 
-    public void exportWindowCallback(List<String> partID, List<String> topics, List<Characteristic> characteristics){
-        CSVBuilder csvBuilder = new CSVBuilder();
-        partID.forEach(part -> {
-           _session.getActiveProject().getParticipant(part).getAllPages().forEach(page -> {
-               page.getSelectedDotSegments().forEach(obsDots -> {
-                   //TODO lukas
-               });
-           });
-       });
+    public void exportWindowCallback(IExporter exporter, ExportConfig exportConfig){
+        export(exporter, exportConfig);
     }
 
     @FXML
@@ -158,7 +153,26 @@ public class MainSceneController {
                     , e.getMessage());
         }
     }
-    //Replace with openFileDialogue after testing.
+
+    /**
+     *
+     * @param exporter The exporter that implements the export algorithm
+     * @param config The subset that is going to be exported
+     */
+    private void export(IExporter exporter, ExportConfig config) {
+        try {
+            File sFile = openFileDialog("Export Data"
+                    , "Export"
+                    , true
+                    , ".csv");
+            exporter.export(sFile.getAbsolutePath(), _session.getActiveProject().getInner(), config);
+        }catch(IOException ex) {
+            new DialogGenerator().simpleErrorDialog("Failed to Export"
+                    , "During writing the file an error occured"
+                    , ex.getMessage());
+        }
+    }
+
     private void loadDataFromFiles(Loader loader, String ... fileExtensions) {
         try {
             File sFile = openFileDialog("Load Dialog"
@@ -187,6 +201,14 @@ public class MainSceneController {
         }
     }
 
+    /**
+     *
+     * @param windowTitle The title of the newly opened window
+     * @param chooserTitle The title of the file chooser
+     * @param isSaveDialog true if this it is indended to save the file
+     * @param fileFilters A list of String representing the allowed file endings
+     * @return Returns the chosen file or null if no file was picked
+     */
     private File openFileDialog(String windowTitle , String chooserTitle, boolean isSaveDialog, String ... fileFilters) {
         FileChooser fileChooser = new FileChooser();
         fileChooser.setTitle(chooserTitle);
@@ -200,14 +222,21 @@ public class MainSceneController {
         else sFile = fileChooser.showOpenDialog(stage);
         return sFile;
     }
-    //@Parameters width, height:  window size in pixel
-    //@Parameter fxmlPath:  path to the fxml file in folder ressources
-    //@Returns The Fxmlloader of opened window
-    private FXMLLoader openWindowReturnController(String fxmlPath, int width, int height) throws IOException {
+
+    /**
+     *
+     * @param fxmlPath Absolute path to the fxml file to load
+     * @param stageTitle Name of newly opened window
+     * @param width width of the opened window
+     * @param height height of the opened window
+     * @return FXMLLoader of the given fxml file
+     * @throws IOException when the fxml file can not be located
+     */
+    private FXMLLoader openWindowReturnController(String fxmlPath, String stageTitle, int width, int height) throws IOException {
             FXMLLoader loader = new FXMLLoader(getClass().getClassLoader().getResource(fxmlPath));
             Scene scene = new Scene(loader.load(), width, height);
             Stage stage = new Stage();
-            stage.setTitle("CSV Export");
+            stage.setTitle(stageTitle);
             stage.setScene(scene);
             stage.show();
             return loader;

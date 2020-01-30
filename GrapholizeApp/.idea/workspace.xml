@@ -75,6 +75,9 @@
       </state>
     </system>
   </component>
+  <component name="FavoritesManager">
+    <favorites_list name="GrapholizeAppAID" />
+  </component>
   <component name="FileTemplateManagerImpl">
     <option name="RECENT_TEMPLATES">
       <list>
@@ -397,6 +400,8 @@
       <workItem from="1578987763220" duration="5209000" />
       <workItem from="1580041595913" duration="18755000" />
       <workItem from="1580123090148" duration="7997000" />
+      <workItem from="1580235301780" duration="921000" />
+      <workItem from="1580386687768" duration="10486000" />
     </task>
     <servers />
   </component>
@@ -446,16 +451,6 @@
           <url>file://$PROJECT_DIR$/src/main/java/Controls/Container/TimeLineContainer.java</url>
           <line>239</line>
           <option name="timeStamp" value="33" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" type="java-line">
-          <url>file://$PROJECT_DIR$/src/main/java/New/CustomControls/TimeLine/TimeLinePane.java</url>
-          <line>46</line>
-          <option name="timeStamp" value="58" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" type="java-line">
-          <url>file://$PROJECT_DIR$/src/main/java/New/Model/Entities/Segment.java</url>
-          <line>49</line>
-          <option name="timeStamp" value="69" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="java-line">
           <url>file://$PROJECT_DIR$/src/main/java/New/Filters/VelocityFilter.java</url>

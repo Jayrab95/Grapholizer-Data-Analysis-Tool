@@ -96,9 +96,9 @@ public class TimeUnitPane extends VBox {
         long rounded_spacing = Math.round(spacing);
         labelLayer.prefTileWidthProperty().setValue(rounded_spacing);
         markerLayer.prefTileWidthProperty().setValue(rounded_spacing);
-        System.out.println("scale: " + scale);
+        /*System.out.println("scale: " + scale);
         System.out.println("rounded_spacing: " + rounded_spacing);
-        System.out.println("tileWidth: " + markerLayer.getTileWidth());
+        System.out.println("tileWidth: " + markerLayer.getTileWidth());*/
         return rounded_spacing;
     }
 
