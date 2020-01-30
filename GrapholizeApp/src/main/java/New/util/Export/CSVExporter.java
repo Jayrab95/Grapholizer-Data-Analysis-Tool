@@ -4,7 +4,11 @@ import New.Interfaces.IExporter;
 import New.Model.Entities.*;
 import New.util.PageUtil;
 
+import java.io.BufferedWriter;
 import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.StandardOpenOption;
 import java.rmi.server.ExportException;
 import java.util.HashMap;
 import java.util.List;
@@ -28,7 +32,18 @@ public class CSVExporter implements IExporter {
         });
         project = proj;
         this.config = config;
+
+        //Create the CSV for every topicset
         proj.getParticipantsMap().forEach((partID,part) -> processParticipant(part));
+
+        //Collect the generated tables to one String
+        StringBuilder generatedCSV = new StringBuilder();
+        csvBuilders.forEach((s, csvTableBuilder) -> generatedCSV.append(csvTableBuilder.build()));
+
+        //Write the file
+        BufferedWriter buffWriter = Files.newBufferedWriter(Path.of(filePath), StandardOpenOption.WRITE);
+        buffWriter.write(generatedCSV.toString());
+        buffWriter.flush();
         return true;
     }
 
@@ -38,6 +53,7 @@ public class CSVExporter implements IExporter {
 
     private void processPage(Participant part, Page page) {
         page.getTimeLines().forEach((topicSetID, segmentations) -> {
+            if(config.topicSetIDs.contains(topicSetID))
             processSegmentation(part.getID(), topicSetID, segmentations, csvBuilders.get(topicSetID), page);
         });
     }
