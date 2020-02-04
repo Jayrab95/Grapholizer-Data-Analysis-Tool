@@ -34,13 +34,20 @@ public class CSVExporter implements IExporter {
         this.config = config;
 
         //Create the CSV for every topicset
-        proj.getParticipantsMap().forEach((partID,part) -> processParticipant(part));
-
+        try {
+            config.participantID.forEach((partID) -> processParticipant(proj.getParticipant(partID)));
+        }catch (Exception e){
+            e.printStackTrace();
+            return false;
+        }
         //Collect the generated tables to one String
         StringBuilder generatedCSV = new StringBuilder();
         csvBuilders.forEach((s, csvTableBuilder) -> generatedCSV.append(csvTableBuilder.build()));
 
         //Write the file
+        if(!Files.exists(Path.of(filePath))) {
+            Files.createFile(Path.of(filePath));
+        }
         BufferedWriter buffWriter = Files.newBufferedWriter(Path.of(filePath), StandardOpenOption.WRITE);
         buffWriter.write(generatedCSV.toString());
         buffWriter.flush();
@@ -48,10 +55,12 @@ public class CSVExporter implements IExporter {
     }
 
     private void processParticipant(Participant part) {
+        System.out.println("process Participant");
         part.getPages().forEach(page -> processPage(part,page));
     }
 
     private void processPage(Participant part, Page page) {
+        System.out.println("process Page");
         page.getTimeLines().forEach((topicSetID, segmentations) -> {
             if(config.topicSetIDs.contains(topicSetID))
             processSegmentation(part.getID(), topicSetID, segmentations, csvBuilders.get(topicSetID), page);
@@ -60,6 +69,7 @@ public class CSVExporter implements IExporter {
 
     private void processSegmentation(String partID, String topicSetID
             , List<Segment> segmentations, CSVTableBuilder tableBuilder, Page page){
+        System.out.println("process Segmentation");
         segmentations.forEach(segment -> {
             int index = tableBuilder.addRow(partID);
             addSegmentToCSV(segment, tableBuilder, index, topicSetID, page);
@@ -69,6 +79,7 @@ public class CSVExporter implements IExporter {
     }
 
     private void addSegmentToCSV(Segment seg, CSVTableBuilder builder, int rowIndex, String topicSetId, Page page) {
+        System.out.println("add Segment To CSV");
         initializeHeaders(builder, topicSetId);
 
         AddAnnotations(seg, builder, rowIndex, topicSetId);

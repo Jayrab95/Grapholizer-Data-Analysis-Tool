@@ -70,8 +70,8 @@ public class MainSceneController {
                    , "CSV-Export"
                    ,800,400);
            ((ExportDialogController) loader.getController()).initialize(
-                    _session.getActiveProject().getParticipantIDs()
-                    ,_session.getActiveProject().getTopicSetIDs()
+                     _session.getActiveProject().getTopicSetIDs()
+                    ,_session.getActiveProject().getParticipantIDs()
                     ,characteristicList
                     ,this);
         } catch (IOException e) {
@@ -82,7 +82,7 @@ public class MainSceneController {
     }
 
     public void exportWindowCallback(IExporter exporter, ExportConfig exportConfig){
-        export(exporter, exportConfig);
+        export(exporter, exportConfig, "*.csv");
     }
 
     @FXML
@@ -159,12 +159,12 @@ public class MainSceneController {
      * @param exporter The exporter that implements the export algorithm
      * @param config The subset that is going to be exported
      */
-    private void export(IExporter exporter, ExportConfig config) {
+    private void export(IExporter exporter, ExportConfig config, String ... filefilters) {
         try {
             File sFile = openFileDialog("Export Data"
                     , "Export"
                     , true
-                    , ".csv");
+                    , filefilters);
             exporter.export(sFile.getAbsolutePath(), _session.getActiveProject().getInner(), config);
         }catch(IOException ex) {
             new DialogGenerator().simpleErrorDialog("Failed to Export"

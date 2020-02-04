@@ -401,7 +401,12 @@
       <workItem from="1580041595913" duration="18755000" />
       <workItem from="1580123090148" duration="7997000" />
       <workItem from="1580235301780" duration="921000" />
-      <workItem from="1580386687768" duration="18356000" />
+      <workItem from="1580386687768" duration="18417000" />
+      <workItem from="1580488436342" duration="19000" />
+      <workItem from="1580572328025" duration="4915000" />
+      <workItem from="1580578459930" duration="1214000" />
+      <workItem from="1580825438059" duration="1568000" />
+      <workItem from="1580831310875" duration="615000" />
     </task>
     <servers />
   </component>
@@ -459,11 +464,6 @@
         </line-breakpoint>
         <line-breakpoint enabled="true" type="java-line">
           <url>file://$PROJECT_DIR$/src/main/java/New/CustomControls/TimeLine/TimeUnitPane.java</url>
-          <line>101</line>
-          <option name="timeStamp" value="92" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" type="java-line">
-          <url>file://$PROJECT_DIR$/src/main/java/New/CustomControls/TimeLine/TimeUnitPane.java</url>
           <line>60</line>
           <option name="timeStamp" value="95" />
         </line-breakpoint>
@@ -473,29 +473,9 @@
           <option name="timeStamp" value="96" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="java-line">
-          <url>file://$PROJECT_DIR$/src/main/java/New/Dialogues/SegmentDialog.java</url>
-          <line>26</line>
-          <option name="timeStamp" value="101" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" type="java-line">
-          <url>file://$PROJECT_DIR$/src/main/java/New/Dialogues/DialogControls/TopicTextControl.java</url>
-          <line>16</line>
-          <option name="timeStamp" value="102" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" type="java-line">
-          <url>file://$PROJECT_DIR$/src/main/java/New/CustomControls/TimeLine/CustomTimeLinePane.java</url>
-          <line>245</line>
-          <option name="timeStamp" value="103" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" type="java-line">
           <url>file://$PROJECT_DIR$/src/main/java/New/CustomControls/Annotation/MovableAnnotationRectangle.java</url>
           <line>122</line>
           <option name="timeStamp" value="104" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" type="java-line">
-          <url>file://$PROJECT_DIR$/src/main/java/New/Observables/ObservableSegment.java</url>
-          <line>19</line>
-          <option name="timeStamp" value="105" />
         </line-breakpoint>
       </breakpoints>
     </breakpoint-manager>
