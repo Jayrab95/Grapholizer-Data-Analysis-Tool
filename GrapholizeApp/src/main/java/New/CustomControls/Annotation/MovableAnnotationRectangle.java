@@ -94,6 +94,13 @@ public class MovableAnnotationRectangle extends SelectableAnnotationRectangle {
          */
     }
 
+    public DragRectangle getLeft() {
+        return left;
+    }
+
+    public DragRectangle getRight() {
+        return right;
+    }
 
     private void move(double newTimeStart){
         double delta = (newTimeStart - getX()) / scale.get();

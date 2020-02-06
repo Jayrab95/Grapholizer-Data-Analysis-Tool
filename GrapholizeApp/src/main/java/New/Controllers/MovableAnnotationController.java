@@ -1,6 +1,7 @@
 package New.Controllers;
 
 import New.CustomControls.Annotation.AnnotationRectangle;
+import New.CustomControls.Annotation.MovableAnnotationRectangle;
 import New.CustomControls.TimeLine.CustomTimeLinePane;
 import New.Model.Entities.Segment;
 import New.Observables.ObservableSegment;
@@ -25,8 +26,8 @@ public class MovableAnnotationController {
         //oAnnotation.setAnnotationText(newAnnotationText);
     }
 
-    public void removeElement(AnnotationRectangle rect){
-        parent.getChildren().remove(rect);
+    public void removeElement(MovableAnnotationRectangle rect){
+        parent.deleteSegment(rect, oAnnotation);
     }
 
     public void moveElement(double delta){
