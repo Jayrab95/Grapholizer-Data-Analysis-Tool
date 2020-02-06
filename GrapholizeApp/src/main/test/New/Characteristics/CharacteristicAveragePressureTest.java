@@ -3,15 +3,13 @@ package New.Characteristics;
 import New.Model.Entities.Dot;
 import org.junit.Test;
 
-import java.util.Collections;
 import java.util.LinkedList;
 import java.util.List;
 
 import static org.junit.Assert.*;
 
 public class CharacteristicAveragePressureTest {
-    private List<Float> randomDoubles;
-    private List<Float> randomDoubles2;
+
     @Test
     public void calculate() {
         List<List<Dot>> dotLists = new LinkedList<>();
@@ -31,6 +29,6 @@ public class CharacteristicAveragePressureTest {
         }
 
         Double result = new CharacteristicAveragePressure("Charac1").calculate(dotLists);
-        assertEquals(0.5432857, result ,0.00001 );
+        assertEquals(0.5432857, result ,0.000001 );
     }
 }
