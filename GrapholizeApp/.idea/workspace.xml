@@ -175,7 +175,7 @@
       </list>
     </option>
   </component>
-  <component name="RunManager" selected="Gradle.GrapholizeApp [run]">
+  <component name="RunManager" selected="JUnit.CharacteristicAveragePressureTest">
     <configuration default="true" type="Applet">
       <option name="POLICY_FILE" value="$APPLICATION_HOME_DIR$/bin/appletviewer.policy" />
       <method v="2">
@@ -259,25 +259,6 @@
       <GradleScriptDebugEnabled>true</GradleScriptDebugEnabled>
       <method v="2" />
     </configuration>
-    <configuration name="GrapholizeApp [jpackage]" type="GradleRunConfiguration" factoryName="Gradle" temporary="true">
-      <ExternalSystemSettings>
-        <option name="executionName" />
-        <option name="externalProjectPath" value="$PROJECT_DIR$" />
-        <option name="externalSystemIdString" value="GRADLE" />
-        <option name="scriptParameters" />
-        <option name="taskDescriptions">
-          <list />
-        </option>
-        <option name="taskNames">
-          <list>
-            <option value="jpackage" />
-          </list>
-        </option>
-        <option name="vmOptions" />
-      </ExternalSystemSettings>
-      <GradleScriptDebugEnabled>true</GradleScriptDebugEnabled>
-      <method v="2" />
-    </configuration>
     <configuration name="GrapholizeApp [run]" type="GradleRunConfiguration" factoryName="Gradle" temporary="true">
       <ExternalSystemSettings>
         <option name="executionName" />
@@ -296,6 +277,22 @@
       </ExternalSystemSettings>
       <GradleScriptDebugEnabled>true</GradleScriptDebugEnabled>
       <method v="2" />
+    </configuration>
+    <configuration name="CharacteristicAveragePressureTest" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
+      <module name="GrapholizeAppAID.main" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="New.Characteristics.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <option name="PACKAGE_NAME" value="New.Characteristics" />
+      <option name="MAIN_CLASS_NAME" value="New.Characteristics.CharacteristicAveragePressureTest" />
+      <option name="TEST_OBJECT" value="class" />
+      <option name="WORKING_DIRECTORY" value="%MODULE_WORKING_DIR%" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
     </configuration>
     <configuration default="true" type="JUnit" factoryName="JUnit">
       <option name="TEST_OBJECT" value="class" />
@@ -333,17 +330,17 @@
       <item itemvalue="Gradle.GrapholizeApp [jar]" />
       <item itemvalue="Gradle.GrapholizeApp [jlinkZip]" />
       <item itemvalue="Gradle.GrapholizeApp [jlink]" />
-      <item itemvalue="Gradle.GrapholizeApp [jpackage]" />
       <item itemvalue="Gradle.GrapholizeApp [run]" />
       <item itemvalue="JAR Application.GrapholizeAppAID-1.0-SNAPSHOT.jar" />
+      <item itemvalue="JUnit.CharacteristicAveragePressureTest" />
     </list>
     <recent_temporary>
       <list>
+        <item itemvalue="JUnit.CharacteristicAveragePressureTest" />
         <item itemvalue="Gradle.GrapholizeApp [run]" />
         <item itemvalue="Application.HelloFX" />
         <item itemvalue="Gradle.GrapholizeApp [jlink]" />
         <item itemvalue="Gradle.GrapholizeApp [jlinkZip]" />
-        <item itemvalue="Gradle.GrapholizeApp [jpackage]" />
       </list>
     </recent_temporary>
   </component>
@@ -412,7 +409,7 @@
       <workItem from="1580831310875" duration="3823000" />
       <workItem from="1580835258963" duration="1831000" />
       <workItem from="1580906127482" duration="6433000" />
-      <workItem from="1580997626848" duration="4480000" />
+      <workItem from="1580997626848" duration="7463000" />
     </task>
     <servers />
   </component>
