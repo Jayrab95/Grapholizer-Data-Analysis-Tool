@@ -69,14 +69,19 @@ public class MainSceneController {
            FXMLLoader loader = openWindowReturnController("fxml/views/ExportDialog.fxml"
                    , "CSV-Export"
                    ,800,400);
+           if(raw_data_file == null) throw new NullPointerException();
            ((ExportDialogController) loader.getController()).initialize(
-                     _session.getActiveProject().getTopicSetIDs()
+                     _session.getActiveProject().getTopicSets()
                     ,_session.getActiveProject().getParticipantIDs()
                     ,characteristicList
                     ,this);
         } catch (IOException e) {
             new DialogGenerator().simpleErrorDialog("Export Error"
-                    , "While exporting an error occured." //TODO find better error description
+                    , "While exporting an error occured."
+                    , e.getMessage());
+        } catch (NullPointerException e) {
+            new DialogGenerator().simpleErrorDialog("Export Info"
+                    , "There is no data to be exported"
                     , e.getMessage());
         }
     }

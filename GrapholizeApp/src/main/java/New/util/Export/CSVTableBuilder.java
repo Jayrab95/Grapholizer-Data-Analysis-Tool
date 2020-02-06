@@ -20,7 +20,7 @@ public class CSVTableBuilder {
         List<String> list = new LinkedList<>();
         list.add(rowName);
         rows.add(list);
-        return list.size() - 1;
+        return rows.size() - 1;
     }
 
     public CSVTableBuilder addDataToRow(int rowIndex, String data) {

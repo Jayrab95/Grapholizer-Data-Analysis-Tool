@@ -50,7 +50,7 @@ public class TopicSet {
     }
 
     public Collection<Topic> getTopics() {
-        return Collections.unmodifiableCollection(topicsMap.values()).stream().sorted().collect(Collectors.toList());
+        return Collections.unmodifiableCollection(topicsMap.values()).stream().sorted(Comparator.comparing(Topic::getTopicName)).collect(Collectors.toList());
     }
 
     public void putAll(List<Topic> topics){
@@ -77,5 +77,8 @@ public class TopicSet {
         this.topicsMap.remove(t.getTopicID());
     }
 
-
+    @Override
+    public String toString() {
+        return tag;
+    }
 }

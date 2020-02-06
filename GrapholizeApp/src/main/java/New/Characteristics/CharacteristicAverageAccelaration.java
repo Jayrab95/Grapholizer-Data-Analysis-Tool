@@ -12,6 +12,7 @@ public class CharacteristicAverageAccelaration extends Characteristic<Double>{
 
     @Override
     public Double calculate(List<List<Dot>> data) {
+
         throw new UnsupportedOperationException();
     }
 }

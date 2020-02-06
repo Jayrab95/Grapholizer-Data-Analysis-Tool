@@ -12,7 +12,7 @@ public class CharacteristicNumOfStrokes extends Characteristic<Integer> {
 
     @Override
     public Integer calculate(List<List<Dot>> dotLists) {
-        return 0;
+        return dotLists.size();
     }
 
 }

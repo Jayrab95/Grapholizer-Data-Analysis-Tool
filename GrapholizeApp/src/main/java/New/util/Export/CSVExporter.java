@@ -51,6 +51,7 @@ public class CSVExporter implements IExporter {
         BufferedWriter buffWriter = Files.newBufferedWriter(Path.of(filePath), StandardOpenOption.WRITE);
         buffWriter.write(generatedCSV.toString());
         buffWriter.flush();
+        buffWriter.close();
         return true;
     }
 
@@ -74,13 +75,12 @@ public class CSVExporter implements IExporter {
             int index = tableBuilder.addRow(partID);
             addSegmentToCSV(segment, tableBuilder, index, topicSetID, page);
         });
-        tableBuilder.addEmptyRow(tableBuilder.columnNumber());
 
     }
 
     private void addSegmentToCSV(Segment seg, CSVTableBuilder builder, int rowIndex, String topicSetId, Page page) {
         System.out.println("add Segment To CSV");
-        initializeHeaders(builder, topicSetId);
+        initializeHeadersIfNotPresent(builder, topicSetId);
 
         AddAnnotations(seg, builder, rowIndex, topicSetId);
 
@@ -106,7 +106,7 @@ public class CSVExporter implements IExporter {
         });
     }
 
-    private void initializeHeaders(CSVTableBuilder builder, String topicSetID) {
+    private void initializeHeadersIfNotPresent(CSVTableBuilder builder, String topicSetID) {
         if(!builder.hasInitializedHeaders()) {
             //Get Topics
             TopicSet topicSet = project.getTopicSet(topicSetID);

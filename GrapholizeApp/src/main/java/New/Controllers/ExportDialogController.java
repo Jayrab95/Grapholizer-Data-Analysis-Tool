@@ -1,6 +1,7 @@
 package New.Controllers;
 import New.Characteristics.Characteristic;
 import New.Interfaces.Controller;
+import New.Model.Entities.TopicSet;
 import New.util.Export.CSVExporter;
 import New.util.Export.ExportConfig;
 
@@ -8,14 +9,16 @@ import javafx.fxml.FXML;
 import javafx.scene.control.ListView;
 import javafx.stage.Stage;
 
+import java.util.List;
 import java.util.Set;
+import java.util.stream.Collectors;
 
 public class ExportDialogController implements Controller {
     @FXML
     private ListView<String> view_participantsID;
 
     @FXML
-    private ListView<String> view_timelineTopics;
+    private ListView<TopicSet> view_timelineTopics;
 
     @FXML
     private ListView<Characteristic> view_characteristics;
@@ -24,7 +27,7 @@ public class ExportDialogController implements Controller {
     private ListView<String> selection_participantsID;
 
     @FXML
-    private ListView<String> selection_timelineTopics;
+    private ListView<TopicSet> selection_timelineTopics;
 
     @FXML
     private ListView<Characteristic> selection_characteristics;
@@ -33,12 +36,16 @@ public class ExportDialogController implements Controller {
 
     public ExportDialogController() { }
 
-    public void initialize(Set<String> timelineTags
+    public void initialize(List<TopicSet> topicSets
             , Set<String> participantIDs
             , Set<Characteristic> characteristics
             , MainSceneController mainScene) {
+        if(participantIDs.isEmpty() || topicSets.isEmpty() || characteristics.isEmpty()){
+            cancelAction();
+            throw new NullPointerException();
+        }
         view_participantsID.getItems().addAll(participantIDs);
-        view_timelineTopics.getItems().addAll(timelineTags);
+        view_timelineTopics.getItems().addAll(topicSets);
         view_characteristics.getItems().addAll(characteristics);
         this.callback_reference = mainScene;
     }
@@ -110,9 +117,10 @@ public class ExportDialogController implements Controller {
 
     @FXML
     private void exportAction() {
+        cancelAction();
         callback_reference.exportWindowCallback(new CSVExporter(),
                 new ExportConfig(selection_participantsID.getItems()
-                        ,selection_timelineTopics.getItems()
+                        ,selection_timelineTopics.getItems().stream().map(t -> t.getTagID()).collect(Collectors.toList())
                         ,selection_characteristics.getItems())
              );
     }
