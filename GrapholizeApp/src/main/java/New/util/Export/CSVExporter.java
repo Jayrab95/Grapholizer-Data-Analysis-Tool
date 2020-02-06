@@ -42,7 +42,10 @@ public class CSVExporter implements IExporter {
         }
         //Collect the generated tables to one String
         StringBuilder generatedCSV = new StringBuilder();
-        csvBuilders.forEach((s, csvTableBuilder) -> generatedCSV.append(csvTableBuilder.build()));
+        csvBuilders.forEach((s, csvTableBuilder) -> {
+            csvTableBuilder.addEmptyRow();
+            generatedCSV.append(csvTableBuilder.build());
+        });
 
         //Write the file
         if(!Files.exists(Path.of(filePath))) {

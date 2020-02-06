@@ -28,11 +28,13 @@ public class CSVTableBuilder {
         return this;
     }
 
-    public void addEmptyRow(int numberOfEntries) {
+    public void addEmptyRow() {
+        int numberOfEntries = columnHeaders.size();
         List<String> emptyRow = new LinkedList<>();
         for (int i = 0; i < numberOfEntries; i++) {
             emptyRow.add("");
         }
+        emptyRow.add(ROW_SEPERATOR);
         rows.add(emptyRow);
     }
 
