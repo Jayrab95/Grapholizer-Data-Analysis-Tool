@@ -18,7 +18,6 @@ public class CharacteristicAveragePressureTest {
         Float[] floats1 = {1.0f, 0.89f, 0.57f, 0.364f, 0.767f, 0.572f};
         Float[] floats2 = {0.45f, 0.227f, 0.161f ,0.394f , 0.687f , 0.334f , 0.77f , 0.42f };
 
-
         for (Float randomDouble : floats1) {
             Dot dot = new Dot(0,0,randomDouble,0);
             dotLists.get(0).add(dot);

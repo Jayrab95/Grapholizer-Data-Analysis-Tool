@@ -23,19 +23,27 @@ public class VelocityMathUtil {
         //calculate the distance of two points with euclidean norm
         double distanceVecX = x1Mm - x2Mm;
         double distanceVecY = y1Mm - y2Mm;
-        double vecLenghtMm = vectorLengthMm(distanceVecX,distanceVecY);
+        double vecLenghtMm = vectorLength(distanceVecX,distanceVecY);
         double res = velocityMMPerMS(vecLenghtMm, timeDifference);
         return res >= 0 ? res : 0;
     }
 
-    public static double vectorLengthMm(double xMm, double yMm) {
-        double pythagoras = (Math.pow(xMm,2) + Math.pow(yMm,2));
-        return Math.sqrt(pythagoras);
+    public static double calculateDistanceBetweenPoints(float x1, float y1, float x2, float y2) {
+        float nCodeX = x1 - x2;
+        float nCodeY = y1 - y2;
+        double mmX = convertInchToCm(convertNeoCoordToInch(nCodeX)) * 10;
+        double mmY = convertInchToCm(convertNeoCoordToInch(nCodeY)) * 10;
+        return vectorLength(mmX,mmY);
+    }
+
+    public static double vectorLength(double xMm, double yMm) {
+        return Math.sqrt(Math.pow(xMm,2.0d) + Math.pow(yMm,2.0d));
     }
     //Converts Ncode™coordinates to Inch: InchVal(NcodeXY) = NcodeXY * 56.0 / 600.0
     public static double convertNeoCoordToInch(float xOrYCoord) {
         return xOrYCoord * PIXEL_DPI_RATIO;
     }
+
 
     public static double convertInchToCm(double inches){
         return inches * CM_TO_INCH_RATIO;
