@@ -177,7 +177,7 @@
       </list>
     </option>
   </component>
-  <component name="RunManager" selected="JUnit.CharacteristicTotalPenUpPauseTest">
+  <component name="RunManager" selected="JUnit.All in GrapholizeAppAID.main">
     <configuration default="true" type="Applet">
       <option name="POLICY_FILE" value="$APPLICATION_HOME_DIR$/bin/appletviewer.policy" />
       <method v="2">
@@ -218,7 +218,7 @@
         <option name="Make" enabled="true" />
       </method>
     </configuration>
-    <configuration name="CharacteristicAverageLengthOfStrokesTest" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
+    <configuration name="CharacteristicAverageStrokeDurationTest" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
       <module name="GrapholizeAppAID.main" />
       <extension name="coverage">
         <pattern>
@@ -227,7 +227,7 @@
         </pattern>
       </extension>
       <option name="PACKAGE_NAME" value="New.Characteristics" />
-      <option name="MAIN_CLASS_NAME" value="New.Characteristics.CharacteristicAverageLengthOfStrokesTest" />
+      <option name="MAIN_CLASS_NAME" value="New.Characteristics.CharacteristicAverageStrokeDurationTest" />
       <option name="TEST_OBJECT" value="class" />
       <option name="WORKING_DIRECTORY" value="%MODULE_WORKING_DIR%" />
       <method v="2">
@@ -333,19 +333,19 @@
       <item itemvalue="Gradle.GrapholizeApp [jar]" />
       <item itemvalue="JAR Application.GrapholizeAppAID-1.0-SNAPSHOT.jar" />
       <item itemvalue="JUnit.VelocityMathUtilTest" />
-      <item itemvalue="JUnit.CharacteristicAverageLengthOfStrokesTest" />
       <item itemvalue="JUnit.CharacteristicNumOfStrokesTest" />
       <item itemvalue="JUnit.CharacteristicTotalVelocityInversionsTest" />
       <item itemvalue="JUnit.All in GrapholizeAppAID.main" />
       <item itemvalue="JUnit.CharacteristicTotalPenUpPauseTest" />
+      <item itemvalue="JUnit.CharacteristicAverageStrokeDurationTest" />
     </list>
     <recent_temporary>
       <list>
-        <item itemvalue="JUnit.CharacteristicTotalPenUpPauseTest" />
         <item itemvalue="JUnit.All in GrapholizeAppAID.main" />
+        <item itemvalue="JUnit.CharacteristicAverageStrokeDurationTest" />
+        <item itemvalue="JUnit.CharacteristicTotalPenUpPauseTest" />
         <item itemvalue="JUnit.CharacteristicTotalVelocityInversionsTest" />
         <item itemvalue="JUnit.CharacteristicNumOfStrokesTest" />
-        <item itemvalue="JUnit.CharacteristicAverageLengthOfStrokesTest" />
       </list>
     </recent_temporary>
   </component>
@@ -417,7 +417,7 @@
       <workItem from="1580997626848" duration="14509000" />
       <workItem from="1581013053060" duration="2108000" />
       <workItem from="1581092957936" duration="16566000" />
-      <workItem from="1581265166518" duration="21273000" />
+      <workItem from="1581265166518" duration="23268000" />
     </task>
     <servers />
   </component>
