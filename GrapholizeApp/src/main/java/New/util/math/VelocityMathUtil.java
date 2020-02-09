@@ -24,6 +24,7 @@ public class VelocityMathUtil {
         double distanceVecX = x1Mm - x2Mm;
         double distanceVecY = y1Mm - y2Mm;
         double vecLenghtMm = vectorLength(distanceVecX,distanceVecY);
+        //calculate the velocity
         double res = velocityMMPerMS(vecLenghtMm, timeDifference);
         return res >= 0 ? res : 0;
     }
@@ -39,11 +40,11 @@ public class VelocityMathUtil {
     public static double vectorLength(double xMm, double yMm) {
         return Math.sqrt(Math.pow(xMm,2.0d) + Math.pow(yMm,2.0d));
     }
+
     //Converts Ncode™coordinates to Inch: InchVal(NcodeXY) = NcodeXY * 56.0 / 600.0
     public static double convertNeoCoordToInch(float xOrYCoord) {
         return xOrYCoord * PIXEL_DPI_RATIO;
     }
-
 
     public static double convertInchToCm(double inches){
         return inches * CM_TO_INCH_RATIO;
@@ -59,10 +60,9 @@ public class VelocityMathUtil {
         return mm/(double)milliseconds;
     }
 
-    //unit is mm/ms^2
-    public static double acceleration(double velocityMmPerMs, int milliseconds){
-        if(milliseconds == 0 || velocityMmPerMs == 0) return 0.0d;
-        return velocityMmPerMs/(double)milliseconds;
+    public static double acceleration(double velocityMmPerMs1, double velocityMmPerMs2, int milliseconds){
+        if(milliseconds == 0) return 0.0d;
+        return (velocityMmPerMs2 - velocityMmPerMs1)/(double)milliseconds;
     }
 
     //TODO Normalize it
@@ -71,6 +71,7 @@ public class VelocityMathUtil {
         return accelerationMmPerMsSquare/(double)milliseconds;
     }
 
+    //TODO Normalize this man
     public static double normalizedJerk(double accelerationMmPerMsSquare, int miliseconds) {
         if(miliseconds == 0 || accelerationMmPerMsSquare == 0) return 0.0d;
         return 1.0d / (accelerationMmPerMsSquare/(double)miliseconds);

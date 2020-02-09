@@ -138,11 +138,15 @@
     <key name="CreateTestDialog.Recents.Supers">
       <recent name="" />
     </key>
+    <key name="MoveFile.RECENT_KEYS">
+      <recent name="C:\Users\lukat\Repos\repotest\IP6_Grapholize\GrapholizeApp\src" />
+      <recent name="C:\Users\lukat\Repos\repotest\IP6_Grapholize\GrapholizeApp\src\main" />
+      <recent name="C:\Users\jarab\Documents\FHNW\Semester 7\Projekt\IP6_Grapholize\GrapholizeApp\src\main\resources\data" />
+      <recent name="C:\Users\jarab\Documents\FHNW\Semester 7\Projekt\IP6_Grapholize\GrapholizeApp\src\main\resources\fxml" />
+      <recent name="C:\Users\jarab\Documents\FHNW\Semester 7\Projekt\IP6_Grapholize\GrapholizeApp\src\main\resources\views" />
+    </key>
     <key name="MoveClassesOrPackagesDialog.RECENTS_KEY">
       <recent name="" />
-    </key>
-    <key name="CopyFile.RECENT_KEYS">
-      <recent name="C:\Users\jarab\Documents\FHNW\Semester 7\Projekt\IP6_Grapholize\GrapholizeApp\src\main\resources\data" />
     </key>
     <key name="CopyClassDialog.RECENTS_KEY">
       <recent name="New.Characteristics" />
@@ -151,12 +155,8 @@
       <recent name="New.CustomControls.TimeLineElement" />
       <recent name="New.CustomControls.TimeLine" />
     </key>
-    <key name="MoveFile.RECENT_KEYS">
-      <recent name="C:\Users\lukat\Repos\repotest\IP6_Grapholize\GrapholizeApp\src" />
-      <recent name="C:\Users\lukat\Repos\repotest\IP6_Grapholize\GrapholizeApp\src\main" />
+    <key name="CopyFile.RECENT_KEYS">
       <recent name="C:\Users\jarab\Documents\FHNW\Semester 7\Projekt\IP6_Grapholize\GrapholizeApp\src\main\resources\data" />
-      <recent name="C:\Users\jarab\Documents\FHNW\Semester 7\Projekt\IP6_Grapholize\GrapholizeApp\src\main\resources\fxml" />
-      <recent name="C:\Users\jarab\Documents\FHNW\Semester 7\Projekt\IP6_Grapholize\GrapholizeApp\src\main\resources\views" />
     </key>
   </component>
   <component name="RunAnythingCache">
@@ -177,7 +177,7 @@
       </list>
     </option>
   </component>
-  <component name="RunManager" selected="JUnit.CharacteristicNumOfStrokesTest">
+  <component name="RunManager" selected="JUnit.CharacteristicTotalPenUpPauseTest">
     <configuration default="true" type="Applet">
       <option name="POLICY_FILE" value="$APPLICATION_HOME_DIR$/bin/appletviewer.policy" />
       <method v="2">
@@ -209,8 +209,8 @@
       <GradleScriptDebugEnabled>true</GradleScriptDebugEnabled>
       <method v="2" />
     </configuration>
-    <configuration name="All in GrapholizeAppAID.test" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
-      <module name="GrapholizeAppAID.test" />
+    <configuration name="All in GrapholizeAppAID.main" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
+      <module name="GrapholizeAppAID.main" />
       <option name="PACKAGE_NAME" value="" />
       <option name="TEST_OBJECT" value="package" />
       <option name="WORKING_DIRECTORY" value="%MODULE_WORKING_DIR%" />
@@ -234,38 +234,6 @@
         <option name="Make" enabled="true" />
       </method>
     </configuration>
-    <configuration name="CharacteristicAveragePressureTest" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
-      <module name="GrapholizeAppAID.main" />
-      <extension name="coverage">
-        <pattern>
-          <option name="PATTERN" value="New.Characteristics.*" />
-          <option name="ENABLED" value="true" />
-        </pattern>
-      </extension>
-      <option name="PACKAGE_NAME" value="New.Characteristics" />
-      <option name="MAIN_CLASS_NAME" value="New.Characteristics.CharacteristicAveragePressureTest" />
-      <option name="TEST_OBJECT" value="class" />
-      <option name="WORKING_DIRECTORY" value="%MODULE_WORKING_DIR%" />
-      <method v="2">
-        <option name="Make" enabled="true" />
-      </method>
-    </configuration>
-    <configuration name="CharacteristicAverageStrokeDurationTest" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
-      <module name="GrapholizeAppAID.main" />
-      <extension name="coverage">
-        <pattern>
-          <option name="PATTERN" value="New.Characteristics.*" />
-          <option name="ENABLED" value="true" />
-        </pattern>
-      </extension>
-      <option name="PACKAGE_NAME" value="New.Characteristics" />
-      <option name="MAIN_CLASS_NAME" value="New.Characteristics.CharacteristicAverageStrokeDurationTest" />
-      <option name="TEST_OBJECT" value="class" />
-      <option name="WORKING_DIRECTORY" value="%MODULE_WORKING_DIR%" />
-      <method v="2">
-        <option name="Make" enabled="true" />
-      </method>
-    </configuration>
     <configuration name="CharacteristicNumOfStrokesTest" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
       <module name="GrapholizeAppAID.main" />
       <extension name="coverage">
@@ -276,6 +244,38 @@
       </extension>
       <option name="PACKAGE_NAME" value="New.Characteristics" />
       <option name="MAIN_CLASS_NAME" value="New.Characteristics.CharacteristicNumOfStrokesTest" />
+      <option name="TEST_OBJECT" value="class" />
+      <option name="WORKING_DIRECTORY" value="%MODULE_WORKING_DIR%" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="CharacteristicTotalPenUpPauseTest" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
+      <module name="GrapholizeAppAID.main" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="New.Characteristics.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <option name="PACKAGE_NAME" value="New.Characteristics" />
+      <option name="MAIN_CLASS_NAME" value="New.Characteristics.CharacteristicTotalPenUpPauseTest" />
+      <option name="TEST_OBJECT" value="class" />
+      <option name="WORKING_DIRECTORY" value="%MODULE_WORKING_DIR%" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="CharacteristicTotalVelocityInversionsTest" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
+      <module name="GrapholizeAppAID.main" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="New.Characteristics.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <option name="PACKAGE_NAME" value="New.Characteristics" />
+      <option name="MAIN_CLASS_NAME" value="New.Characteristics.CharacteristicTotalVelocityInversionsTest" />
       <option name="TEST_OBJECT" value="class" />
       <option name="WORKING_DIRECTORY" value="%MODULE_WORKING_DIR%" />
       <method v="2">
@@ -333,19 +333,19 @@
       <item itemvalue="Gradle.GrapholizeApp [jar]" />
       <item itemvalue="JAR Application.GrapholizeAppAID-1.0-SNAPSHOT.jar" />
       <item itemvalue="JUnit.VelocityMathUtilTest" />
-      <item itemvalue="JUnit.CharacteristicAveragePressureTest" />
-      <item itemvalue="JUnit.All in GrapholizeAppAID.test" />
-      <item itemvalue="JUnit.CharacteristicAverageStrokeDurationTest" />
       <item itemvalue="JUnit.CharacteristicAverageLengthOfStrokesTest" />
       <item itemvalue="JUnit.CharacteristicNumOfStrokesTest" />
+      <item itemvalue="JUnit.CharacteristicTotalVelocityInversionsTest" />
+      <item itemvalue="JUnit.All in GrapholizeAppAID.main" />
+      <item itemvalue="JUnit.CharacteristicTotalPenUpPauseTest" />
     </list>
     <recent_temporary>
       <list>
+        <item itemvalue="JUnit.CharacteristicTotalPenUpPauseTest" />
+        <item itemvalue="JUnit.All in GrapholizeAppAID.main" />
+        <item itemvalue="JUnit.CharacteristicTotalVelocityInversionsTest" />
         <item itemvalue="JUnit.CharacteristicNumOfStrokesTest" />
         <item itemvalue="JUnit.CharacteristicAverageLengthOfStrokesTest" />
-        <item itemvalue="JUnit.CharacteristicAverageStrokeDurationTest" />
-        <item itemvalue="JUnit.All in GrapholizeAppAID.test" />
-        <item itemvalue="JUnit.CharacteristicAveragePressureTest" />
       </list>
     </recent_temporary>
   </component>
@@ -416,7 +416,8 @@
       <workItem from="1580906127482" duration="6433000" />
       <workItem from="1580997626848" duration="14509000" />
       <workItem from="1581013053060" duration="2108000" />
-      <workItem from="1581092957936" duration="15849000" />
+      <workItem from="1581092957936" duration="16566000" />
+      <workItem from="1581265166518" duration="21273000" />
     </task>
     <servers />
   </component>
