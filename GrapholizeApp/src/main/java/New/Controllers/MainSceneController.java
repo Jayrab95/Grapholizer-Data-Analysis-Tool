@@ -276,5 +276,7 @@ public class MainSceneController {
         characteristicList.add(new CharacteristicNumOfStrokes("Number of Strokes"));
         characteristicList.add(new CharacteristicTotalDurationStrokes("total stroke durations"));
         characteristicList.add(new CharacteristicTotalVelocityInversions("Number of Velocity Inversions"));
+        characteristicList.add(new CharacteristicNormalizedJerk("Normalized Jerk"));
+        characteristicList.add(new CharacteristicAveragePressure("Average Pressure"));
     }
 }
