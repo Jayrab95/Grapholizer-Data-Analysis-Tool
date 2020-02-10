@@ -28,7 +28,11 @@ public class CharacteristicNormalizedJerk extends Characteristic<Double> {
                             , dot.getX(), dot.getY()
                             , timedifference
                     );
-                    double acceleration = VelocityMathUtil.acceleration(lastVelocity,velocity, timedifference);
+                    double acceleration = VelocityMathUtil.acceleration(
+                            lastVelocity
+                            ,velocity
+                            , timedifference
+                    );
                     jerks.add(VelocityMathUtil.jerk(lastAcceleration,acceleration,timedifference));
                     lastVelocity = velocity;
                     lastAcceleration = acceleration;

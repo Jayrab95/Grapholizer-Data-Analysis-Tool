@@ -17,7 +17,7 @@ public class CharacteristicPenDownPause extends Characteristic<Long> {
         long totalPenDownPause = 0;
         for (List<Dot> dotList : dotLists) {
             for (Dot dot : dotList) {
-
+                //TODO I don't know how to implement that
             }
         }
         return totalPenDownPause;

@@ -6,6 +6,7 @@ import New.util.math.VelocityMathUtil;
 import java.util.List;
 
 public class CharacteristicAverageAccelaration extends Characteristic<Double>{
+
     public CharacteristicAverageAccelaration(String name) {
         super(name);
     }

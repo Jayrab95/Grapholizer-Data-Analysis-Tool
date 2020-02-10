@@ -8,6 +8,7 @@ import java.util.List;
 import java.util.Optional;
 
 public class CharacteristicVelocityVerticalAverage extends Characteristic<Double> {
+
     public CharacteristicVelocityVerticalAverage(String name) {
         super(name);
     }
