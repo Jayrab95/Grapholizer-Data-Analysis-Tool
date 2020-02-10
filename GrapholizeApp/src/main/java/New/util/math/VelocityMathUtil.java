@@ -1,6 +1,8 @@
 package New.util.math;
 
 
+import java.util.List;
+import java.util.Optional;
 
 public class VelocityMathUtil {
     //Dots-Per-Inch is a standard value that is used by NeoNotes for all their papersizes
@@ -37,6 +39,25 @@ public class VelocityMathUtil {
         return vectorLength(mmX,mmY);
     }
 
+    //TODO sqrt (0.5 * Sum (jerk(t)**2) * duration**5 / length**2).
+    public static double normalizedJerk(List<Double> jerkPoints, long duration, double length) {
+        //Summ up all the jerks
+        if(length == 0) return 0d;
+        double normJerk;
+        Optional<Double> accelerationSum = jerkPoints.stream().reduce((d1, d2) ->
+                Math.pow(d1,2.0d) + Math.pow(d2,2.0d)
+        );
+        if(accelerationSum.isPresent()){
+            double squaredJerkSum = accelerationSum.get();
+            double powerDuration = Math.pow(duration,5.0d);
+            double squaredLength = Math.pow(length,2.0d);
+            normJerk = Math.sqrt(0.5d * squaredJerkSum * powerDuration / squaredLength);
+        }else {
+            return 0d;
+        }
+        return normJerk;
+    }
+
     public static double vectorLength(double xMm, double yMm) {
         return Math.sqrt(Math.pow(xMm,2.0d) + Math.pow(yMm,2.0d));
     }
@@ -66,14 +87,9 @@ public class VelocityMathUtil {
     }
 
     //TODO Normalize it
-    public static double jerk(double accelerationMmPerMsSquare, int milliseconds) {
-        if(milliseconds == 0 || accelerationMmPerMsSquare == 0) return 0.0d;
-        return accelerationMmPerMsSquare/(double)milliseconds;
+    public static double jerk(double acceleration1, double acceleration2, int milliseconds) {
+        if(milliseconds == 0) return 0.0d;
+        return (acceleration2 - acceleration1)/(double)milliseconds;
     }
 
-    //TODO Normalize this man
-    public static double normalizedJerk(double accelerationMmPerMsSquare, int miliseconds) {
-        if(miliseconds == 0 || accelerationMmPerMsSquare == 0) return 0.0d;
-        return 1.0d / (accelerationMmPerMsSquare/(double)miliseconds);
-    }
 }
