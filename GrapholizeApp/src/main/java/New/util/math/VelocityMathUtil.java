@@ -107,6 +107,6 @@ public class VelocityMathUtil {
     }
 
     private static double convertToMilimeterCoords(float neoCoord) {
-        return convertInchToCm(convertNeoCoordToInch(neoCoord)) * 10;
+        return convertInchToCm(convertNeoCoordToInch(neoCoord)) * 1000;
     }
 }

@@ -26,8 +26,6 @@ public class CharacteristicVelocityAverage extends Characteristic<Double> {
             }
         }
         return result;
-
-
     }
 
     @Override
