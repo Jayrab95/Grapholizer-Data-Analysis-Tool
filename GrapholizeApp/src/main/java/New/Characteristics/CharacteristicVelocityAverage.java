@@ -1,6 +1,7 @@
 package New.Characteristics;
 
 import New.Model.Entities.Dot;
+import New.util.math.VelocityMathUtil;
 
 import java.util.LinkedList;
 import java.util.List;
@@ -40,7 +41,7 @@ public class CharacteristicVelocityAverage extends Characteristic<Double> {
                     lastDot = dots.get(i);
                 } else {
                     Dot nextDot = dots.get(i);
-                    result.add(New.util.math.VelocityMathUtil.calculateVelocityBetweenDots(
+                    result.add(VelocityMathUtil.calculateVelocityBetweenDots(
                             lastDot.getX(), lastDot.getY()
                             , nextDot.getX(), nextDot.getY()
                             , (int) (lastDot.getTimeStamp() - nextDot.getTimeStamp())
@@ -56,10 +57,5 @@ public class CharacteristicVelocityAverage extends Characteristic<Double> {
         } else {
             return 0d;
         }
-    }
-
-    @Override
-    public String toString() {
-        return getName();
     }
 }

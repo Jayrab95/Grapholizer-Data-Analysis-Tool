@@ -169,9 +169,23 @@
       </list>
     </option>
   </component>
-  <component name="RunManager" selected="JUnit.All in GrapholizeAppAID.main">
+  <component name="RunManager" selected="Application.HelloFX">
     <configuration default="true" type="Applet">
       <option name="POLICY_FILE" value="$APPLICATION_HOME_DIR$/bin/appletviewer.policy" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="HelloFX" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
+      <option name="MAIN_CLASS_NAME" value="New.Scenes.HelloFX" />
+      <module name="GrapholizeAppAID.main" />
+      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="New.Scenes.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
       <method v="2">
         <option name="Make" enabled="true" />
       </method>
@@ -220,22 +234,6 @@
       </extension>
       <option name="PACKAGE_NAME" value="New.Characteristics" />
       <option name="MAIN_CLASS_NAME" value="New.Characteristics.CharacteristicAverageStrokeDurationTest" />
-      <option name="TEST_OBJECT" value="class" />
-      <option name="WORKING_DIRECTORY" value="%MODULE_WORKING_DIR%" />
-      <method v="2">
-        <option name="Make" enabled="true" />
-      </method>
-    </configuration>
-    <configuration name="CharacteristicNumOfStrokesTest" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
-      <module name="GrapholizeAppAID.main" />
-      <extension name="coverage">
-        <pattern>
-          <option name="PATTERN" value="New.Characteristics.*" />
-          <option name="ENABLED" value="true" />
-        </pattern>
-      </extension>
-      <option name="PACKAGE_NAME" value="New.Characteristics" />
-      <option name="MAIN_CLASS_NAME" value="New.Characteristics.CharacteristicNumOfStrokesTest" />
       <option name="TEST_OBJECT" value="class" />
       <option name="WORKING_DIRECTORY" value="%MODULE_WORKING_DIR%" />
       <method v="2">
@@ -325,19 +323,19 @@
       <item itemvalue="Gradle.GrapholizeApp [jar]" />
       <item itemvalue="JAR Application.GrapholizeAppAID-1.0-SNAPSHOT.jar" />
       <item itemvalue="JUnit.VelocityMathUtilTest" />
-      <item itemvalue="JUnit.CharacteristicNumOfStrokesTest" />
       <item itemvalue="JUnit.CharacteristicTotalVelocityInversionsTest" />
       <item itemvalue="JUnit.All in GrapholizeAppAID.main" />
       <item itemvalue="JUnit.CharacteristicTotalPenUpPauseTest" />
       <item itemvalue="JUnit.CharacteristicAverageStrokeDurationTest" />
+      <item itemvalue="Application.HelloFX" />
     </list>
     <recent_temporary>
       <list>
+        <item itemvalue="Application.HelloFX" />
         <item itemvalue="JUnit.All in GrapholizeAppAID.main" />
         <item itemvalue="JUnit.CharacteristicAverageStrokeDurationTest" />
         <item itemvalue="JUnit.CharacteristicTotalPenUpPauseTest" />
         <item itemvalue="JUnit.CharacteristicTotalVelocityInversionsTest" />
-        <item itemvalue="JUnit.CharacteristicNumOfStrokesTest" />
       </list>
     </recent_temporary>
   </component>
@@ -413,6 +411,7 @@
       <workItem from="1581299800513" duration="715000" />
       <workItem from="1581350661258" duration="58000" />
       <workItem from="1581358434168" duration="7853000" />
+      <workItem from="1581692308966" duration="1728000" />
     </task>
     <servers />
   </component>
