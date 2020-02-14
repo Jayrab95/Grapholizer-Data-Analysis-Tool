@@ -178,11 +178,36 @@ public class ObservablePage implements Selector {
     public List<List<ObservableDot>> getSelectedDotSegments(){
         List<List<ObservableDot>> res = new LinkedList<>();
         for (ObservableStroke s : getObservableStrokes()){
-            List<ObservableDot> dotSegment = s.getObservableDots().stream()
-                    .filter(d -> d.isSelected())
-                    .collect(Collectors.toList());
-            if(!dotSegment.isEmpty()){
-                res.add(dotSegment);
+            //foundSegment marks whether the loop is currently within a segment of selected dots.
+            boolean foundSegment = false;
+            List<ObservableDot> seg = new LinkedList<>();
+
+            for(int i = 0; i < s.getObservableDots().size(); i++){
+                if(s.getObservableDots().get(i).isSelected()){
+                    if(!foundSegment){
+                        //The first selecte dot of a segment has been found.
+                        seg = new LinkedList<>();
+                        foundSegment = true;
+                    }
+                    seg.add(s.getObservableDots().get(i));
+                    if(i == s.getObservableDots().size() && seg.size() > 1){
+                        //Add the segment to the result list if the end of the loop has been reached.
+                        res.add(new LinkedList(seg));
+                    }
+                }
+                else{
+                    if(foundSegment){
+                        //The end of a segment has been reached
+                        foundSegment = false;
+                        //This dot marks the end of a segment and needs to be added.
+                        //This way, there can't be segments which only consist of 1 dot.
+                        seg.add(s.getObservableDots().get(i));
+                        //A segment needs to consist of at least 2 dots, otherwise, the segment will not be visible.
+                        if(seg.size() > 1){
+                            res.add(new LinkedList(seg));
+                        }
+                    }
+                }
             }
         }
         return res;

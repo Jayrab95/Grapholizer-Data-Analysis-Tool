@@ -332,34 +332,7 @@ public class CustomTimeLinePane extends SelectableTimeLinePane {
     }
 
     public void createAnnotationFromDotsDialogue()  {
-        //TODO: Extract reusable logic into separate method or even class.
-        //Dialog dialog = annotationCopyDialog(TXT_COPYANNOTATION_TITLE, String.format(TXT_COPYANNOTATION_HEADER, timeLineTag.getTag()), String.format(TXT_COPYANNOTATION_TEXT, timeLineTag.getTag()));
 
-        //Dialog dialog = new Dialog<>();
-        /*
-        dialog.setTitle(TXT_DOTANNOTATION_TITLE);
-        dialog.setHeaderText(String.format(TXT_DOTANNOTATION_HEADER, timeLineTag.getTag()));
-        dialog.setContentText(String.format(TXT_DOTANNOTATION_TEXT, timeLineTag.getTag()));
-
-        CheckBox cbox_joinedAnnotation = new CheckBox("Combine selected elements into one annotation");
-
-        Label label_AnnotationText = new Label("Annotation text: (Only applied if combine option is selected.)");
-        TextField textField_annotationText = new TextField(TXT_COPYANNOTATION_DEFAULTVAL);
-        textField_annotationText.disableProperty().bind(cbox_joinedAnnotation.selectedProperty().not());
-
-
-        GridPane grid = new GridPane();
-        grid.add(cbox_joinedAnnotation, 1, 1);
-        grid.add(label_AnnotationText, 1, 2);
-        grid.add(textField_annotationText, 2, 2);
-        dialog.getDialogPane().setContent(grid);
-
-        ButtonType buttonTypeOk = new ButtonType("Okay", ButtonBar.ButtonData.OK_DONE);
-        ButtonType buttonTypeCancel = new ButtonType("Cancel", ButtonBar.ButtonData.CANCEL_CLOSE);
-
-        dialog.getDialogPane().getButtonTypes().addAll(buttonTypeOk, buttonTypeCancel);
-
-         */
         SegmentDialog dialog = new SegmentDialog(TXT_DOTANNOTATION_TITLE, TXT_DOTANNOTATION_HEADER, TXT_DOTANNOTATION_TEXT, timeLineTag.getTopicsObservableList(), Optional.empty(), true);
         dialog.setResultConverter(b -> {
             if (b == dialog.getButtonTypeOK()) {
@@ -401,6 +374,10 @@ public class CustomTimeLinePane extends SelectableTimeLinePane {
         dialog.showAndWait();
     }
 
+    public void deleteSegment(MovableAnnotationRectangle a, ObservableSegment observableSegment){
+        getChildren().removeAll(a, a.getLeft(), a.getRight());
+        customTimeLineController.removeAnnotation(observableSegment);
+    }
 
     /*
     @Override
