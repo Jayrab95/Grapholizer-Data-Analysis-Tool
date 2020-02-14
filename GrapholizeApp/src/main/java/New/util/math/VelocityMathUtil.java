@@ -61,11 +61,12 @@ public class VelocityMathUtil {
         Optional<Double> accelerationSum = jerkPoints.stream().reduce((d1, d2) ->
                 Math.pow(d1,2.0d) + Math.pow(d2,2.0d)
         );
-        if(accelerationSum.isPresent()){
-            double squaredJerkSum = accelerationSum.get();
+        if(accelerationSum.isPresent() && jerkPoints.size() != 0){
+            double squaredJerkSum = accelerationSum.get() / (double) jerkPoints.size();
+            double integratedSquaredJerk = squaredJerkSum * duration;
             double powerDuration = Math.pow(duration,5.0d);
             double squaredLength = Math.pow(length,2.0d);
-            normJerk = Math.sqrt(0.5d * squaredJerkSum * powerDuration / squaredLength);
+            normJerk =  Math.sqrt(0.5d * integratedSquaredJerk * (powerDuration / squaredLength));
         }else {
             return 0d;
         }

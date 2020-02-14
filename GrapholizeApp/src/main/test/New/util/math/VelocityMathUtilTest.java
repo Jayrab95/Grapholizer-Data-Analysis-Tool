@@ -16,6 +16,14 @@ public class VelocityMathUtilTest {
     }
 
     @Test
+    public void calculateNormalizedJerk() {
+        List<Double> jerks = new LinkedList<>();
+        long duration = 100l;
+        double strokeLength = 1d;
+        VelocityMathUtil.normalizedJerk(jerks,duration,strokeLength);
+    }
+
+    @Test
     public void calculateVelocityBetweenDots() {
         Dot dot1 = new Dot(12.0f,11.1f,0f,1000l);
         Dot dot2 = new Dot(13.0f,12.1f,0f,1005l);;
