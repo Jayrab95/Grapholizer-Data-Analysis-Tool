@@ -17,10 +17,10 @@ public class CharacteristicAveragePressure extends Characteristic<Double> {
         for (List<Dot> listDot : listDots) {
             numberOfDots += listDot.size();
             for (Dot dot : listDot) {
-                forceSum += dot.getForce() + dot.getForce();
+                forceSum += dot.getForce();
             }
         }
-        return (forceSum / (double)(numberOfDots-1));
+        return (forceSum / (double)(numberOfDots));
     }
 
 }

@@ -8,7 +8,6 @@ import New.Interfaces.*;
 import New.Model.Entities.*;
 import New.Model.Session;
 import New.util.*;
-import New.util.Export.CSVExporter;
 import New.util.Export.ExportConfig;
 import New.util.Export.ProjectSerializer;
 import New.util.Import.JsonLoader;
@@ -58,9 +57,9 @@ public class MainSceneController {
         optionalCanvas = Optional.empty();
         optionalContentSwitcher = Optional.empty();
         optionalTimeLineContainer = Optional.empty();
-
         characteristicList = new HashSet<>();
-        characteristicList.add(new CharacteristicVelocityAverage("Velocity Average"));
+        initCharacteristics();
+
     }
 
     @FXML
@@ -266,5 +265,18 @@ public class MainSceneController {
             optionalTimeLineContainer = Optional.of(new TimeLineContainer(_session.getActiveProject(), _session.getActivePage(), 0.2));
             scrollPane_TimeLines.getChildren().add(optionalTimeLineContainer.get());
         }
+    }
+
+    private void initCharacteristics() {
+        characteristicList.add(new CharacteristicVelocityAverage("Velocity Average"));
+        characteristicList.add(new CharacteristicAverageLengthOfStrokes("Average Stroke Length"));
+        characteristicList.add(new CharacteristicAverageAccelaration("Average Acceleration"));
+        characteristicList.add(new CharacteristicAverageStrokeDuration("Average Stroke Duration"));
+        characteristicList.add(new CharacteristicTotalPenUpPause("Pen Up Pause"));
+        characteristicList.add(new CharacteristicNumOfStrokes("Number of Strokes"));
+        characteristicList.add(new CharacteristicTotalDurationStrokes("total stroke durations"));
+        characteristicList.add(new CharacteristicTotalVelocityInversions("Number of Velocity Inversions"));
+        characteristicList.add(new CharacteristicNormalizedJerk("Normalized Jerk"));
+        characteristicList.add(new CharacteristicAveragePressure("Average Pressure"));
     }
 }

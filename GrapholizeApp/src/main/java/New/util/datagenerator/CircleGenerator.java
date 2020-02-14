@@ -3,22 +3,30 @@ package New.util.datagenerator;
 import org.apache.commons.lang3.text.StrSubstitutor;
 
 import java.util.HashMap;
+import java.util.LinkedList;
+import java.util.List;
 import java.util.Map;
 
 public class CircleGenerator extends DataGenerator{
+    private int radius = 0;
+
+
+    private int strokeCounter = 0;
 
     public CircleGenerator(double averageVelocity
             , int timeDifference, int pauseBetweenStrokes
             , int numberOfDots, int numberOfStrokes
             , int startX, int startY
             , int stepX, int stepY
-            , double force) {
+            , double force
+            , int radius) {
         super(averageVelocity, timeDifference
                 , pauseBetweenStrokes, numberOfStrokes
                 , numberOfDots
                 , startX, startY
                 , stepX, stepY
                 , force);
+        this.radius = radius;
     }
 
     /**
@@ -33,6 +41,8 @@ public class CircleGenerator extends DataGenerator{
         int radius = 3;
         double angleSteps = 360d/(double)numberOfDots;
         double angle = 0;
+        List<Double> listX = new LinkedList<>();
+        List<Double> listY = new LinkedList<>();
         StringBuilder sBuilder = new StringBuilder();
         for(int i = 0; i < numberOfDots; i++) {
             Map<String, String> values = new HashMap<>();
@@ -43,6 +53,9 @@ public class CircleGenerator extends DataGenerator{
             double radian = Math.toRadians(angle);
             double x = x_0 + (radius * Math.sin(radian));
             double y = y_0 + (radius * Math.cos(radian));
+            listX.add(x);
+            listY.add(y);
+
             long xIntegral = (long) x;
             long yIntegral = (long) y;
             long xFractional = (long)((x - xIntegral)*10000);
@@ -52,7 +65,7 @@ public class CircleGenerator extends DataGenerator{
             values.put("fx",Long.toString(xFractional));
             values.put("y", Long.toString(yIntegral));
             values.put("fy", Long.toString(yFractional));
-            values.put("force", "0.5"); //TODO add to private members
+            values.put("force", Double.toString(force));
             values.put("dotType", "0");
             values.put("timeDifference", Integer.toString(timeDifference));
 
@@ -63,6 +76,39 @@ public class CircleGenerator extends DataGenerator{
                 sBuilder.append(",");
             }
         }
+        debugOut(listX, listY);
         return sBuilder.toString();
+    }
+
+    private void debugOut(List<Double> listX, List<Double> listY) {
+        StringBuilder debugBuilderX = new StringBuilder();
+        StringBuilder debugBuilderY = new StringBuilder();
+        debugBuilderX.append("{");debugBuilderY.append("{");
+        for (int i = 0; i < listX.size(); i++) {
+            debugBuilderX.append(listX.get(i)); debugBuilderY.append(listY.get(i));
+            debugBuilderX.append("f"); debugBuilderY.append("f");
+            if(i < listX.size() - 1) {
+                debugBuilderX.append(','); debugBuilderY.append(",");
+            }
+        }
+        debugBuilderX.append("};");debugBuilderY.append("};");
+        System.out.println("Float[] xs = " + debugBuilderX.toString());
+        System.out.println("Float[] ys = " + debugBuilderY.toString());
+
+        //other stuff
+        StringBuilder debugBuilderTime1 = new StringBuilder();
+        debugBuilderTime1.append("{");
+        strokeCounter ++;
+        int incrementer = 0;
+        for (int i = 0; i < listX.size(); i++) {
+            debugBuilderTime1.append(strokeCounter*100000 + incrementer);
+            debugBuilderTime1.append("l");
+            if(i < listX.size() - 1) {
+                debugBuilderTime1.append(',');
+            }
+            incrementer += 5;
+        }
+        debugBuilderTime1.append("};");
+        System.out.println("Long[] timeStamps = " + debugBuilderTime1.toString());
     }
 }

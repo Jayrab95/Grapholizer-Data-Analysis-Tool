@@ -77,8 +77,8 @@
         <option value="Interface" />
         <option value="FxmlFile" />
         <option value="FxmlFile" />
-        <option value="Class" />
         <option value="JUnit4 Test Class" />
+        <option value="Class" />
       </list>
     </option>
   </component>
@@ -116,7 +116,7 @@
     <property name="nodejs_interpreter_path.stuck_in_default_project" value="undefined stuck path" />
     <property name="nodejs_npm_path_reset_for_default_project" value="true" />
     <property name="nodejs_package_manager_path" value="npm" />
-    <property name="project.structure.last.edited" value="Libraries" />
+    <property name="project.structure.last.edited" value="Modules" />
     <property name="project.structure.proportion" value="0.15" />
     <property name="project.structure.side.proportion" value="0.31954023" />
     <property name="settings.editor.selected.configurable" value="reference.projectsettings.compiler.javacompiler" />
@@ -124,19 +124,17 @@
   <component name="RecentsManager">
     <key name="CreateTestDialog.RecentsKey">
       <recent name="New.Characteristics" />
+      <recent name="New.util.math" />
       <recent name="util.math" />
     </key>
     <key name="CreateTestDialog.Recents.Supers">
       <recent name="" />
     </key>
-    <key name="MoveFile.RECENT_KEYS">
-      <recent name="C:\Users\lukat\Repos\repotest\IP6_Grapholize\GrapholizeApp\src" />
-      <recent name="C:\Users\jarab\Documents\FHNW\Semester 7\Projekt\IP6_Grapholize\GrapholizeApp\src\main\resources\data" />
-      <recent name="C:\Users\jarab\Documents\FHNW\Semester 7\Projekt\IP6_Grapholize\GrapholizeApp\src\main\resources\fxml" />
-      <recent name="C:\Users\jarab\Documents\FHNW\Semester 7\Projekt\IP6_Grapholize\GrapholizeApp\src\main\resources\views" />
-    </key>
     <key name="MoveClassesOrPackagesDialog.RECENTS_KEY">
       <recent name="" />
+    </key>
+    <key name="CopyFile.RECENT_KEYS">
+      <recent name="C:\Users\jarab\Documents\FHNW\Semester 7\Projekt\IP6_Grapholize\GrapholizeApp\src\main\resources\data" />
     </key>
     <key name="CopyClassDialog.RECENTS_KEY">
       <recent name="New.Characteristics" />
@@ -145,8 +143,12 @@
       <recent name="New.CustomControls.TimeLineElement" />
       <recent name="New.CustomControls.TimeLine" />
     </key>
-    <key name="CopyFile.RECENT_KEYS">
+    <key name="MoveFile.RECENT_KEYS">
+      <recent name="C:\Users\lukat\Repos\repotest\IP6_Grapholize\GrapholizeApp\src" />
+      <recent name="C:\Users\lukat\Repos\repotest\IP6_Grapholize\GrapholizeApp\src\main" />
       <recent name="C:\Users\jarab\Documents\FHNW\Semester 7\Projekt\IP6_Grapholize\GrapholizeApp\src\main\resources\data" />
+      <recent name="C:\Users\jarab\Documents\FHNW\Semester 7\Projekt\IP6_Grapholize\GrapholizeApp\src\main\resources\fxml" />
+      <recent name="C:\Users\jarab\Documents\FHNW\Semester 7\Projekt\IP6_Grapholize\GrapholizeApp\src\main\resources\views" />
     </key>
   </component>
   <component name="RunAnythingCache">
@@ -167,23 +169,9 @@
       </list>
     </option>
   </component>
-  <component name="RunManager" selected="Gradle.GrapholizeApp [run]">
+  <component name="RunManager" selected="JUnit.All in GrapholizeAppAID.main">
     <configuration default="true" type="Applet">
       <option name="POLICY_FILE" value="$APPLICATION_HOME_DIR$/bin/appletviewer.policy" />
-      <method v="2">
-        <option name="Make" enabled="true" />
-      </method>
-    </configuration>
-    <configuration name="HelloFX" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
-      <option name="MAIN_CLASS_NAME" value="New.Scenes.HelloFX" />
-      <module name="GrapholizeAppAID.main" />
-      <option name="VM_PARAMETERS" value="--module-path &quot;\path\to\javafx-sdk-13\lib&quot; --add-modules javafx.controls,javafx.fxml" />
-      <extension name="coverage">
-        <pattern>
-          <option name="PATTERN" value="New.Scenes.*" />
-          <option name="ENABLED" value="true" />
-        </pattern>
-      </extension>
       <method v="2">
         <option name="Make" enabled="true" />
       </method>
@@ -213,81 +201,94 @@
       <GradleScriptDebugEnabled>true</GradleScriptDebugEnabled>
       <method v="2" />
     </configuration>
-    <configuration name="GrapholizeApp [jlinkZip]" type="GradleRunConfiguration" factoryName="Gradle" temporary="true">
-      <ExternalSystemSettings>
-        <option name="executionName" />
-        <option name="externalProjectPath" value="$PROJECT_DIR$" />
-        <option name="externalSystemIdString" value="GRADLE" />
-        <option name="scriptParameters" />
-        <option name="taskDescriptions">
-          <list />
-        </option>
-        <option name="taskNames">
-          <list>
-            <option value="jlinkZip" />
-          </list>
-        </option>
-        <option name="vmOptions" />
-      </ExternalSystemSettings>
-      <GradleScriptDebugEnabled>true</GradleScriptDebugEnabled>
-      <method v="2" />
+    <configuration name="All in GrapholizeAppAID.main" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
+      <module name="GrapholizeAppAID.main" />
+      <option name="PACKAGE_NAME" value="" />
+      <option name="TEST_OBJECT" value="package" />
+      <option name="WORKING_DIRECTORY" value="%MODULE_WORKING_DIR%" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
     </configuration>
-    <configuration name="GrapholizeApp [jlink]" type="GradleRunConfiguration" factoryName="Gradle" temporary="true">
-      <ExternalSystemSettings>
-        <option name="executionName" />
-        <option name="externalProjectPath" value="$PROJECT_DIR$" />
-        <option name="externalSystemIdString" value="GRADLE" />
-        <option name="scriptParameters" />
-        <option name="taskDescriptions">
-          <list />
-        </option>
-        <option name="taskNames">
-          <list>
-            <option value="jlink" />
-          </list>
-        </option>
-        <option name="vmOptions" />
-      </ExternalSystemSettings>
-      <GradleScriptDebugEnabled>true</GradleScriptDebugEnabled>
-      <method v="2" />
+    <configuration name="CharacteristicAverageStrokeDurationTest" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
+      <module name="GrapholizeAppAID.main" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="New.Characteristics.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <option name="PACKAGE_NAME" value="New.Characteristics" />
+      <option name="MAIN_CLASS_NAME" value="New.Characteristics.CharacteristicAverageStrokeDurationTest" />
+      <option name="TEST_OBJECT" value="class" />
+      <option name="WORKING_DIRECTORY" value="%MODULE_WORKING_DIR%" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
     </configuration>
-    <configuration name="GrapholizeApp [jpackage]" type="GradleRunConfiguration" factoryName="Gradle" temporary="true">
-      <ExternalSystemSettings>
-        <option name="executionName" />
-        <option name="externalProjectPath" value="$PROJECT_DIR$" />
-        <option name="externalSystemIdString" value="GRADLE" />
-        <option name="scriptParameters" />
-        <option name="taskDescriptions">
-          <list />
-        </option>
-        <option name="taskNames">
-          <list>
-            <option value="jpackage" />
-          </list>
-        </option>
-        <option name="vmOptions" />
-      </ExternalSystemSettings>
-      <GradleScriptDebugEnabled>true</GradleScriptDebugEnabled>
-      <method v="2" />
+    <configuration name="CharacteristicNumOfStrokesTest" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
+      <module name="GrapholizeAppAID.main" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="New.Characteristics.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <option name="PACKAGE_NAME" value="New.Characteristics" />
+      <option name="MAIN_CLASS_NAME" value="New.Characteristics.CharacteristicNumOfStrokesTest" />
+      <option name="TEST_OBJECT" value="class" />
+      <option name="WORKING_DIRECTORY" value="%MODULE_WORKING_DIR%" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
     </configuration>
-    <configuration name="GrapholizeApp [run]" type="GradleRunConfiguration" factoryName="Gradle" temporary="true">
-      <ExternalSystemSettings>
-        <option name="executionName" />
-        <option name="externalProjectPath" value="$PROJECT_DIR$" />
-        <option name="externalSystemIdString" value="GRADLE" />
-        <option name="scriptParameters" />
-        <option name="taskDescriptions">
-          <list />
-        </option>
-        <option name="taskNames">
-          <list>
-            <option value="run" />
-          </list>
-        </option>
-        <option name="vmOptions" />
-      </ExternalSystemSettings>
-      <GradleScriptDebugEnabled>true</GradleScriptDebugEnabled>
-      <method v="2" />
+    <configuration name="CharacteristicTotalPenUpPauseTest" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
+      <module name="GrapholizeAppAID.main" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="New.Characteristics.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <option name="PACKAGE_NAME" value="New.Characteristics" />
+      <option name="MAIN_CLASS_NAME" value="New.Characteristics.CharacteristicTotalPenUpPauseTest" />
+      <option name="TEST_OBJECT" value="class" />
+      <option name="WORKING_DIRECTORY" value="%MODULE_WORKING_DIR%" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="CharacteristicTotalVelocityInversionsTest" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
+      <module name="GrapholizeAppAID.main" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="New.Characteristics.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <option name="PACKAGE_NAME" value="New.Characteristics" />
+      <option name="MAIN_CLASS_NAME" value="New.Characteristics.CharacteristicTotalVelocityInversionsTest" />
+      <option name="TEST_OBJECT" value="class" />
+      <option name="WORKING_DIRECTORY" value="%MODULE_WORKING_DIR%" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="VelocityMathUtilTest" type="JUnit" factoryName="JUnit" nameIsGenerated="true">
+      <module name="GrapholizeAppAID.main" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="New.util.math.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <option name="PACKAGE_NAME" value="New.util.math" />
+      <option name="MAIN_CLASS_NAME" value="New.util.math.VelocityMathUtilTest" />
+      <option name="TEST_OBJECT" value="class" />
+      <option name="WORKING_DIRECTORY" value="%MODULE_WORKING_DIR%" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
     </configuration>
     <configuration default="true" type="JUnit" factoryName="JUnit">
       <option name="TEST_OBJECT" value="class" />
@@ -321,21 +322,22 @@
       </method>
     </configuration>
     <list>
-      <item itemvalue="Application.HelloFX" />
       <item itemvalue="Gradle.GrapholizeApp [jar]" />
-      <item itemvalue="Gradle.GrapholizeApp [jlinkZip]" />
-      <item itemvalue="Gradle.GrapholizeApp [jlink]" />
-      <item itemvalue="Gradle.GrapholizeApp [jpackage]" />
-      <item itemvalue="Gradle.GrapholizeApp [run]" />
       <item itemvalue="JAR Application.GrapholizeAppAID-1.0-SNAPSHOT.jar" />
+      <item itemvalue="JUnit.VelocityMathUtilTest" />
+      <item itemvalue="JUnit.CharacteristicNumOfStrokesTest" />
+      <item itemvalue="JUnit.CharacteristicTotalVelocityInversionsTest" />
+      <item itemvalue="JUnit.All in GrapholizeAppAID.main" />
+      <item itemvalue="JUnit.CharacteristicTotalPenUpPauseTest" />
+      <item itemvalue="JUnit.CharacteristicAverageStrokeDurationTest" />
     </list>
     <recent_temporary>
       <list>
-        <item itemvalue="Gradle.GrapholizeApp [run]" />
-        <item itemvalue="Application.HelloFX" />
-        <item itemvalue="Gradle.GrapholizeApp [jlink]" />
-        <item itemvalue="Gradle.GrapholizeApp [jlinkZip]" />
-        <item itemvalue="Gradle.GrapholizeApp [jpackage]" />
+        <item itemvalue="JUnit.All in GrapholizeAppAID.main" />
+        <item itemvalue="JUnit.CharacteristicAverageStrokeDurationTest" />
+        <item itemvalue="JUnit.CharacteristicTotalPenUpPauseTest" />
+        <item itemvalue="JUnit.CharacteristicTotalVelocityInversionsTest" />
+        <item itemvalue="JUnit.CharacteristicNumOfStrokesTest" />
       </list>
     </recent_temporary>
   </component>
@@ -404,7 +406,13 @@
       <workItem from="1580831310875" duration="3823000" />
       <workItem from="1580835258963" duration="1831000" />
       <workItem from="1580906127482" duration="6433000" />
-      <workItem from="1580997626848" duration="4480000" />
+      <workItem from="1580997626848" duration="14509000" />
+      <workItem from="1581013053060" duration="2108000" />
+      <workItem from="1581092957936" duration="16566000" />
+      <workItem from="1581265166518" duration="25806000" />
+      <workItem from="1581299800513" duration="715000" />
+      <workItem from="1581350661258" duration="58000" />
+      <workItem from="1581358434168" duration="7853000" />
     </task>
     <servers />
   </component>
