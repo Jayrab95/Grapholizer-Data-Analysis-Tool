@@ -1,6 +1,7 @@
 package New.CustomControls.TimeLine;
 
 import New.Controllers.CustomTimeLineController;
+import New.CustomControls.Annotation.MovableAnnotationWrapper;
 import New.CustomControls.Containers.TimeLineContainer;
 import New.CustomControls.Annotation.AnnotationRectangle;
 import New.CustomControls.Annotation.MovableAnnotationRectangle;
@@ -87,32 +88,20 @@ public class CustomTimeLinePane extends SelectableTimeLinePane {
         addAnnotation(a);
     }
 
-    private void reloadTimeLine(List<ObservableSegment> annotations, double newWidth){
-        setWidth(newWidth * scale.get());
-        for(ObservableSegment a : annotations){
-            getChildren().add(new MovableAnnotationRectangle(
-                    timeLineTag.getColorProperty(),
-                    scale,
-                    a,
-                    this,
-                    p,
-                    timeLineTag));
-        }
-    }
-
     public String getTimeLineName(){
         return timeLineName.get();
     }
 
     private void addAnnotation(Segment a){
         customTimeLineController.addAnnotation(a);
-        getChildren().add(new MovableAnnotationRectangle(
+        MovableAnnotationRectangle mov = new MovableAnnotationRectangle(
                 timeLineTag.getColorProperty(),
                 scale,
                 new ObservableSegment(a, timeLineTag),
                 this,
                 p,
-                timeLineTag));
+                timeLineTag);
+        getChildren().addAll(mov, mov.getDisplayedText());
     }
 
     private void addAnnotations(List<AnnotationRectangle> annotations){

@@ -18,13 +18,16 @@ public class ObservableSegment {
 
     public ObservableSegment(Segment original, ObservableTopicSet observableTopicSet){
         this.segment = original;
-        this.timeStartProperty = new SimpleDoubleProperty(original.getTimeStart());
+        this.timeStartProperty = new SimpleDoubleProperty(segment.getTimeStart());
         this.timeStartProperty.addListener((observable, oldValue, newValue) -> segment.setTimeStart(newValue.doubleValue()));
-        this.timeStopProperty = new SimpleDoubleProperty(original.getTimeStop());
+        this.timeStopProperty = new SimpleDoubleProperty(segment.getTimeStop());
         this.timeStopProperty.addListener((observable, oldValue, newValue) -> segment.setTimeStop(newValue.doubleValue()));
+        this.mainTopicIDProperty = new SimpleStringProperty(observableTopicSet.getMainTopicID());
+        this.mainTopicIDProperty.bind(observableTopicSet.getMainTopicIDProperty());
+
         this.mainTopicAnnotationProperty = new SimpleStringProperty(segment.getAnnotation(observableTopicSet.getMainTopicID()));
 
-        observableTopicSet.getMainTopicIDProperty().addListener((observable, oldValue, newValue) ->
+        mainTopicIDProperty.addListener((observable, oldValue, newValue) ->
                 mainTopicAnnotationProperty.set(segment.getAnnotation(newValue))
         );
         observableTopicSet.getTopicsObservableList().addListener((ListChangeListener<Topic>) c -> {
