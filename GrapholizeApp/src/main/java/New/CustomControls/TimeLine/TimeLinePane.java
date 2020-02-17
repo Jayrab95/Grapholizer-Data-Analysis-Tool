@@ -6,6 +6,7 @@ import javafx.beans.property.SimpleDoubleProperty;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.property.StringProperty;
 import javafx.scene.layout.Pane;
+import javafx.scene.layout.StackPane;
 
 //Idea: make Timeline an interface? This way timeline operations can be called without referencing the actual control.
 //TODO: Separate TimeLinePane into view and controller.

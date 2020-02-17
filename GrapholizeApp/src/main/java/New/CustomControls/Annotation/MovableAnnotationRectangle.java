@@ -12,11 +12,13 @@ import New.util.DialogGenerator;
 import javafx.beans.property.DoubleProperty;
 import javafx.beans.property.ObjectProperty;
 import javafx.scene.control.ContextMenu;
+import javafx.scene.control.Label;
 import javafx.scene.control.MenuItem;
 import javafx.scene.input.MouseButton;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
+import javafx.scene.text.Text;
 
 import java.util.Optional;
 
@@ -24,49 +26,27 @@ public class MovableAnnotationRectangle extends SelectableAnnotationRectangle {
 
     private double[] dragBounds;
     private double mouseDelta;
-    private ObservableSegment s;
-    private ObservableTopicSet oSet;
+    private ObservableSegment observableSegment;
+    private ObservableTopicSet observableTopicSet;
     private MovableAnnotationController movableAnnotationController;
 
     private DragRectangle left;
     private DragRectangle right;
 
 
-    public MovableAnnotationRectangle(ObjectProperty<Color> c, DoubleProperty scale, ObservableSegment t, CustomTimeLinePane parent, Selector s, ObservableTopicSet set) {
-        super(c, t.getMainTopicAnnotationProperty(), scale, t.getDuration(), parent.getHeight(), t.getTimeStart(), parent, s);
+    public MovableAnnotationRectangle(ObjectProperty<Color> c, DoubleProperty scale, ObservableSegment t, CustomTimeLinePane parent, Selector observableSegment, ObservableTopicSet set) {
+        super(c, t.getMainTopicAnnotationProperty(), scale, t.getDuration(), parent.getHeight(), t.getTimeStart(), parent, observableSegment);
 
         this.movableAnnotationController = new MovableAnnotationController(t,parent);
-        this.s=t;
-        this.oSet = set;
-
-        /*
-        xProperty().bind(t.getTimeStartProperty().multiply(scale));
-        widthProperty().bind(t.getTimeStopProperty().subtract(t.getTimeStart()).multiply(scale));
+        this.observableSegment =t;
+        this.observableTopicSet = set;
 
         t.getTimeStartProperty().bind(this.xProperty().divide(scale));
         t.getTimeStopProperty().bind(this.xProperty().add(this.widthProperty()).divide(scale));
-
-         */
-
-        t.getTimeStartProperty().bind(this.xProperty().divide(scale));
-        t.getTimeStopProperty().bind(this.xProperty().add(this.widthProperty()).divide(scale));
-        //t.getTimeStartProperty().addListener(observable -> System.out.println("TmeStart changed"));
-
-        /*
-        t.getTimeStartProperty().addListener((observable, oldValue, newValue) -> {
-            this.setX(newValue.doubleValue() * scale.get());
-            this.setWidth((newValue.doubleValue() * scale.get()));
-        });
-        t.getTimeStopProperty().addListener((observable, oldValue, newValue) -> {
-
-        });
-
-         */
 
 
         this.left = new LeftDragRectangle(this);
         this.right = new RightDragRectangle(this);
-
 
 
         selected.addListener((observable, oldValue, newValue) -> {
@@ -78,20 +58,10 @@ public class MovableAnnotationRectangle extends SelectableAnnotationRectangle {
             }
         });
 
-
-
-
         setOnMousePressed(e-> handleMousePress(e));
         setOnMouseDragged(e-> handleMouseDrag(e));
         setOnMouseReleased(e-> handleMouseRelease(e));
 
-        /*
-        System.out.println("X:" + getX());
-        System.out.println("LayoutX: " + getLayoutX());
-        System.out.println("ScaleX: " + getScaleX());
-        System.out.println("translateX: " + getTranslateX());
-
-         */
     }
 
     public DragRectangle getLeft() {
@@ -101,6 +71,7 @@ public class MovableAnnotationRectangle extends SelectableAnnotationRectangle {
     public DragRectangle getRight() {
         return right;
     }
+
 
     private void move(double newTimeStart){
         double delta = (newTimeStart - getX()) / scale.get();
@@ -131,15 +102,15 @@ public class MovableAnnotationRectangle extends SelectableAnnotationRectangle {
                 "Edit Segment",
                 "Edit the text of your segment.",
                 "Edit the text of your segment, then click on Ok to apply the changes.",
-                oSet.getTopicsObservableList(),
-                Optional.of(s.getInnerSegment()),
+                observableTopicSet.getTopicsObservableList(),
+                Optional.of(observableSegment.getInnerSegment()),
                 false
                 );
         dialog.setResultConverter(b -> {
             if (b == dialog.getButtonTypeOK()) {
                 //TODO: Move this to controller??
                 for(TopicTextControl ttc : dialog.getControls()){
-                    s.getInnerSegment().putAnnotation(ttc.getTopicID(), ttc.getTextFieldText());
+                    observableSegment.putAnnotation(ttc.getTopicID(), ttc.getTextFieldText());
                 }
             }
             return null;
