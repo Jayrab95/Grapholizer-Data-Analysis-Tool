@@ -2,6 +2,7 @@ package New.CustomControls.Annotation;
 
 import javafx.beans.property.*;
 import javafx.scene.control.Label;
+import javafx.scene.control.Tooltip;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
 
@@ -19,6 +20,7 @@ public class AnnotationRectangle extends Rectangle {
     protected double start;
 
     protected Label displayedText;
+    protected Tooltip tooltip;
 
 
 
@@ -49,6 +51,10 @@ public class AnnotationRectangle extends Rectangle {
         this.displayedText.translateXProperty().bind((this.xProperty().add((this.widthProperty()).divide(2))).subtract(this.displayedText.widthProperty().divide(2)));
         this.displayedText.setTranslateY((getHeight()/2) + (this.displayedText.getHeight()/2));
         this.displayedText.visibleProperty().bind(widthProperty().greaterThanOrEqualTo(this.displayedText.widthProperty()));
+
+        this.tooltip = new Tooltip(text.get());
+        this.tooltip.textProperty().bind(text);
+        Tooltip.install(this, tooltip);
 
         setHeight(height);
         setWidth(width * scale.get());

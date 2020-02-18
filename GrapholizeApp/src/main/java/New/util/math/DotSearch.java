@@ -4,7 +4,7 @@ import New.Model.Entities.Dot;
 
 import java.util.Collections;
 import java.util.List;
-
+@Deprecated
 public class DotSearch {
     /**
      * Does a binary search over a sorted list of dots and returns the dots within the given range.

@@ -1,11 +1,16 @@
 package New.CustomControls.Containers;
 
+import New.Characteristics.Characteristic;
+import New.Characteristics.CharacteristicAverageAccelaration;
+import New.Characteristics.CharacteristicAveragePressure;
 import New.CustomControls.Annotation.AnnotationRectangle;
 import New.CustomControls.TimeLine.AnnotationTimeLinePane;
 import New.CustomControls.TimeLine.SelectableTimeLinePane;
+import New.CustomControls.TimeLine.SubTimeLines.DetailCharacteristicTimeLine;
 import New.CustomControls.TimeLine.SubTimeLines.PressureTimeLine;
 import New.CustomControls.TimeLine.SubTimeLines.VelocityTimeLine;
 import New.CustomControls.TimeLine.TimeLinePane;
+import New.util.CharacteristicList;
 import javafx.beans.property.DoubleProperty;
 import javafx.beans.property.SimpleDoubleProperty;
 import javafx.beans.property.SimpleObjectProperty;
@@ -17,6 +22,10 @@ import New.Observables.ObservablePage;
 
 import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
+
+import java.util.LinkedList;
+import java.util.List;
+import java.util.stream.Collectors;
 
 public class TimeLineDetailContainer extends ScrollPane {
 
@@ -38,6 +47,7 @@ public class TimeLineDetailContainer extends ScrollPane {
         subTimeLines = new VBox();
         subTimeLines.getChildren().add(copy());
         subTimeLines.getChildren().addAll(pressure(), velocity());
+        subTimeLines.getChildren().addAll(characteristicTimeLines(CharacteristicList.characteristics()));
         this.setContent(subTimeLines);
     }
 
@@ -77,6 +87,23 @@ public class TimeLineDetailContainer extends ScrollPane {
                 inspectedTimeLine.getTopicSetID()
         );
         return new SimpleTimeLineWrapper(a);
+    }
+
+
+    private List<SimpleTimeLineWrapper> characteristicTimeLines(List<Characteristic> characteristics){
+        return characteristics.stream()
+                .map(numberCharacteristic -> new SimpleTimeLineWrapper(
+                        new DetailCharacteristicTimeLine(
+                                getLength(),
+                                inspectedTimeLine.getHeight(),
+                                detaiLScale,
+                                new SimpleStringProperty(numberCharacteristic.getName()),
+                                activePage,
+                                inspectedTimeLine.getTopicSetID(),
+                                numberCharacteristic
+                        )
+                ))
+                .collect(Collectors.toList());
     }
 
     private double getLength(){

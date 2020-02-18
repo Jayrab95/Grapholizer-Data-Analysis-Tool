@@ -19,7 +19,7 @@ public class DurationTimeLine extends DetailTimeLine {
 
     @Override
     protected void setUp() {
-        List<List<Dot>> dotSections = page.getDotSectionsForAnnotations(topicSetID);
+        List<List<Dot>> dotSections = page.getAllDotSectionsForTopicSet(topicSetID);
 
         for(List<Dot> dots : dotSections) {
             //At least 2 dots are required so that a line can be drawn
@@ -32,6 +32,7 @@ public class DurationTimeLine extends DetailTimeLine {
                         duration,
                         50,
                         dots.get(0).getTimeStamp());
+                getChildren().add(rect);
             }
         }
     }

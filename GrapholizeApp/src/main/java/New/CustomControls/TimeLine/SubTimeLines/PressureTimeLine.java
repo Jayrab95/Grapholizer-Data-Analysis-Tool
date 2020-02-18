@@ -19,7 +19,7 @@ public class PressureTimeLine extends DetailTimeLine {
 
     @Override
     protected void setUp(){
-        List<List<Dot>> dotSections = page.getDotSectionsForAnnotations(topicSetID);
+        List<List<Dot>> dotSections = page.getAllDotSectionsForTopicSet(topicSetID);
         for(List<Dot> dots : dotSections){
             //At least 2 dots are required so that a line can be drawn
             if(dots.size() >=2){

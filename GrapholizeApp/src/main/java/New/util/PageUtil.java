@@ -9,8 +9,20 @@ import java.util.List;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
+/**
+ * The PageUtil class provides static methods for searching dot sections (list of dot lists (strokes) that lie within
+ * a segment's start and end time)
+ * This functionality is mainly used for the Detail timelines and Characteristic calculation.
+ * Definition: Dot Section: Overlap between strokes and segments
+ */
 public class PageUtil {
 
+    /**
+     * Retrieves all dot sections that are contained in between the given segments
+     * @param segments List of segments for which the dotsections should be retrieved
+     * @param strokes All strokes that need to be examined (generally all strokes on a page)
+     * @return list of dot sections
+     */
     public static List<List<Dot>> getDotSectionsForAnnotations(List<Segment> segments, List<Stroke> strokes){
 
         List<List<Dot>> res = new LinkedList<>();
@@ -23,19 +35,6 @@ public class PageUtil {
     }
 
     public static List<List<Dot>> getDotSectionsForAnnotation(Segment a, List<Stroke> strokes){
-        List<List<Dot>> res = new LinkedList<>();
-
-        /*
-        //overlappingStrokes contains all strokes that overlap with the bounds of this annotation.
-        List<Stroke> overlappingStrokes = strokes.stream()
-                .filter(stroke -> stroke.getTimeEnd() >= a.getTimeStart() && stroke.getTimeStart() <= a.getTimeStop())
-                .collect(Collectors.toList());
-        for(Stroke s : overlappingStrokes){
-            res.add(s.getDotsWithinTimeRange(a.getTimeStart(), a.getTimeStop()));
-        }
-        return res;
-
-         */
 
         return overlappingStrokesForAnnotationStream(a, strokes)
                 .map(s -> s.getDotsWithinTimeRange(a.getTimeStart(), a.getTimeStop()))
@@ -52,6 +51,7 @@ public class PageUtil {
         return strokes.stream()
                 .filter(stroke -> stroke.getTimeEnd() >= a.getTimeStart() && stroke.getTimeStart() <= a.getTimeStop());
     }
+
 
     public static List<Stroke> overlappingStrokesForAnnotations(List<Segment> segments, List<Stroke> strokes){
         return segments.stream()

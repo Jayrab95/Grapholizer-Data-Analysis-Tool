@@ -18,7 +18,7 @@ public class VelocityTimeLine extends DetailTimeLine {
 
     @Override
     protected void setUp() {
-        List<List<Dot>> dotSections = page.getDotSectionsForAnnotations(topicSetID);
+        List<List<Dot>> dotSections = page.getAllDotSectionsForTopicSet(topicSetID);
 
         List<List<Double>> velocitySteps = new ArrayList<>();
         for(List<Dot> dotSection : dotSections){

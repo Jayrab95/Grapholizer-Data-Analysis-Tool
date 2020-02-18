@@ -38,7 +38,7 @@ public class ObservablePage implements Selector {
 
 
 
-    public ObjectProperty getPageProperty(){
+    public ObjectProperty<Page> getPageProperty(){
         return inner;
     }
 
@@ -48,7 +48,7 @@ public class ObservablePage implements Selector {
         this.inner.set(newPage);
     }
 
-    public List<List<Dot>> getDotSectionsForAnnotations(String topicSetID){
+    public List<List<Dot>> getAllDotSectionsForTopicSet(String topicSetID){
         //TODO: DEfine a static string for this timeline.
         if(topicSetID.equals("Stroke duration"))
         {
@@ -101,14 +101,13 @@ public class ObservablePage implements Selector {
                 .count() > 0;
     }
 
-
     /**
      * Returns a list of dot lists that represent the strokes which overlap with the given list of annotations.
      * These dots are required for the detail timelines, in order to calculate the different characteristics for each timneline.
      * @param rects the annotation rectangles of the timeline.
      * @return a list of dot lists (dot sections)
      */
-    public List<List<Dot>> getDotSectionsForAnnotations(List<AnnotationRectangle> rects){
+    public List<List<Dot>> getAllDotSectionsForTopicSet(List<AnnotationRectangle> rects){
         List<List<Dot>> res = new LinkedList<>();
 
         for(AnnotationRectangle ar : rects){
