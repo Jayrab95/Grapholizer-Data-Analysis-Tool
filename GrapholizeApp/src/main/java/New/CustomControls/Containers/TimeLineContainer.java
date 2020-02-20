@@ -6,6 +6,7 @@ import New.CustomControls.TimeLine.StrokeDurationTimeLinePane;
 import New.CustomControls.TimeLine.TimeLinePane;
 import New.CustomControls.Annotation.AnnotationRectangle;
 
+import New.Dialogues.FilterForSegmentsDialog;
 import New.Dialogues.TopicSetDialog;
 import New.Execptions.NoTimeLineSelectedException;
 import New.Execptions.TimeLineTagException;
@@ -181,6 +182,7 @@ public class TimeLineContainer extends VBox {
         }
     }
 
+
     public void createNewTimeLine(){
         Optional<TopicSet> tag = openTimeLineCreationDialog(
                 TXT_TL_CREATION_TITLE,
@@ -189,18 +191,27 @@ public class TimeLineContainer extends VBox {
                 TXT_TL_TIMELINETAG_LABEL,
                 Optional.empty(),
                 false);
-        Optional<AnnotationFilterDialogResult> filtered = Optional.empty();
+        Optional<FilterForSegmentsDialog.FilterDialogResult> filtered = Optional.empty();
+        //TODO: Until filter has been reworked, this functionality is offline
+        /*
         if(timeLineContainerController.getTopicSetIDs().size() > 0){
             filtered = filterForAnnotationsDialog(
                     TXT_TL_FILTER_TITLE,
                     TXT_TL_FILTER_HEADER,
                     TXT_TL_FILTER_TEXT);
         }
+         */
         if(tag.isPresent()){
+
             if(filtered.isPresent()){
+                /*
+                FilterForSegmentsDialog.FilterDialogResult res = filtered.get();
+
                 ObservableTopicSet newTag = timeLineContainerController.createNewTimeLineTag(tag.get());
                 TimeLinePane timeLinePane = createNewTimeLinePaneOutOfAnnotations(newTag, timeLineContainerController.getPage(), filtered.get().getFilteredAnnotations());
                 addTimeLinePane(timeLinePane);
+
+                 */
             }
             else{
                 ObservableTopicSet newTag = timeLineContainerController.createNewTimeLineTag(tag.get());
@@ -349,37 +360,12 @@ public class TimeLineContainer extends VBox {
 
 
 
-    private Optional<AnnotationFilterDialogResult> filterForAnnotationsDialog(String title, String header, String text){
-        CheckBox checkBox_filterForAnnotations = new CheckBox("Filter for annotations");
-        ComboBox<String> comboBoxTopics = new ComboBox<>();
-        TextField textBox_filterText = new TextField("");
-
-        comboBoxTopics.disableProperty().bind(checkBox_filterForAnnotations.selectedProperty().not());
-        textBox_filterText.disableProperty().bind(checkBox_filterForAnnotations.selectedProperty().not());
-
-        comboBoxTopics.getItems().addAll(timeLineContainerController.getTopicSetIDs());
-
-        comboBoxTopics.getSelectionModel().select(0);
-
-        Dialog<AnnotationFilterDialogResult> dialog = new Dialog<>();
-        dialog.setTitle(title);
-        dialog.setHeaderText(header);
-        dialog.setContentText(text);
-
-
-        GridPane grid = new GridPane();
-        grid.add(checkBox_filterForAnnotations, 0, 0);
-        grid.add(comboBoxTopics, 0,1);
-        grid.add(textBox_filterText, 0, 2);
-
-        ButtonType buttonTypeOk = new ButtonType("Okay", ButtonBar.ButtonData.OK_DONE);
-
-        dialog.getDialogPane().setContent(grid);
-        dialog.getDialogPane().getButtonTypes().addAll(buttonTypeOk);
+    private Optional<FilterForSegmentsDialog.FilterDialogResult> filterForAnnotationsDialog(String title, String header, String text){
+        FilterForSegmentsDialog dialog = new FilterForSegmentsDialog(timeLineContainerController.getTopicSets());
 
         dialog.setResultConverter(b -> {
-            if (b == buttonTypeOk && checkBox_filterForAnnotations.isSelected()) {
-                return new AnnotationFilterDialogResult(comboBoxTopics.getValue(), textBox_filterText.getText());
+            if (b == dialog.getButtonType_ok()) {
+                return dialog.getDialogResult();
             }
             return null;
         });

@@ -29,6 +29,10 @@ public class TimeLineContainerController {
         return project.getTopicSetIDs();
     }
 
+    public List<TopicSet> getTopicSets(){
+        return project.getTopicSets();
+    }
+
 
     public Segment[] getFilteredAnnotations(String topic, String filterText){
         return null;

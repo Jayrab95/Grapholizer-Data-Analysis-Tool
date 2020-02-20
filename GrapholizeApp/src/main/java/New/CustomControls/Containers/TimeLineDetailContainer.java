@@ -1,8 +1,6 @@
 package New.CustomControls.Containers;
 
 import New.Characteristics.Characteristic;
-import New.Characteristics.CharacteristicAverageAccelaration;
-import New.Characteristics.CharacteristicAveragePressure;
 import New.CustomControls.Annotation.AnnotationRectangle;
 import New.CustomControls.TimeLine.AnnotationTimeLinePane;
 import New.CustomControls.TimeLine.SelectableTimeLinePane;
@@ -23,7 +21,6 @@ import New.Observables.ObservablePage;
 import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
 
-import java.util.LinkedList;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -31,14 +28,14 @@ public class TimeLineDetailContainer extends ScrollPane {
 
     private SelectableTimeLinePane inspectedTimeLine;
     ObservablePage activePage;
-    DoubleProperty detaiLScale;
+    DoubleProperty detailScale;
 
     VBox subTimeLines;
 
     public TimeLineDetailContainer(TimeLinePane inspectedTimeLine, ObservablePage activePage){
         this.inspectedTimeLine = (SelectableTimeLinePane)inspectedTimeLine;
         this.activePage = activePage;
-        detaiLScale = new SimpleDoubleProperty(0.05);
+        detailScale = new SimpleDoubleProperty(0.05);
         generateDetailContainer();
 
     }
@@ -55,7 +52,7 @@ public class TimeLineDetailContainer extends ScrollPane {
         AnnotationTimeLinePane a = new AnnotationTimeLinePane(
                 getLength(),
                 inspectedTimeLine.getHeight(),
-                detaiLScale,
+                detailScale,
                 inspectedTimeLine.getTimeLineNameProperty(),
                 new SimpleObjectProperty<Color>(Color.BLACK),
                 inspectedTimeLine.getAnnotations(),
@@ -68,7 +65,7 @@ public class TimeLineDetailContainer extends ScrollPane {
         PressureTimeLine a = new PressureTimeLine(
                 getLength(),
                 inspectedTimeLine.getHeight(),
-                detaiLScale,
+                detailScale,
                 new SimpleStringProperty("Pressure"),
                 activePage,
                 inspectedTimeLine,
@@ -81,7 +78,7 @@ public class TimeLineDetailContainer extends ScrollPane {
         VelocityTimeLine a = new VelocityTimeLine(
                 getLength(),
                 inspectedTimeLine.getHeight(),
-                detaiLScale,
+                detailScale,
                 new SimpleStringProperty("Velocity"),
                 activePage,
                 inspectedTimeLine.getTopicSetID()
@@ -96,7 +93,7 @@ public class TimeLineDetailContainer extends ScrollPane {
                         new DetailCharacteristicTimeLine(
                                 getLength(),
                                 inspectedTimeLine.getHeight(),
-                                detaiLScale,
+                                detailScale,
                                 new SimpleStringProperty(numberCharacteristic.getName()),
                                 activePage,
                                 inspectedTimeLine.getTopicSetID(),
