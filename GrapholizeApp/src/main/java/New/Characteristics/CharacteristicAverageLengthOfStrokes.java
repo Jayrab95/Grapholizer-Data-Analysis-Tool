@@ -31,5 +31,4 @@ public class CharacteristicAverageLengthOfStrokes extends Characteristic<Double>
         }
         return totalLength /numberOfStrokes;
     }
-
 }

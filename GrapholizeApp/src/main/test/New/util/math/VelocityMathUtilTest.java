@@ -32,7 +32,7 @@ public class VelocityMathUtilTest {
             , dot2.getX(), dot2.getY()
             ,(byte) (dot2.getTimeStamp() - dot1.getTimeStamp())
         );
-        assertEquals(0.6705257803,velocity, 0.000001);
+        assertEquals(67.05257803028755,velocity, 0.000001);
     }
 
     @Test

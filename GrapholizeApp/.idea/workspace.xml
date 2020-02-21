@@ -77,8 +77,8 @@
         <option value="Interface" />
         <option value="FxmlFile" />
         <option value="FxmlFile" />
-        <option value="JUnit4 Test Class" />
         <option value="Class" />
+        <option value="JUnit4 Test Class" />
       </list>
     </option>
   </component>
@@ -130,11 +130,15 @@
     <key name="CreateTestDialog.Recents.Supers">
       <recent name="" />
     </key>
+    <key name="MoveFile.RECENT_KEYS">
+      <recent name="C:\Users\lukat\Repos\repotest\IP6_Grapholize\GrapholizeApp\src" />
+      <recent name="C:\Users\lukat\Repos\repotest\IP6_Grapholize\GrapholizeApp\src\main" />
+      <recent name="C:\Users\jarab\Documents\FHNW\Semester 7\Projekt\IP6_Grapholize\GrapholizeApp\src\main\resources\data" />
+      <recent name="C:\Users\jarab\Documents\FHNW\Semester 7\Projekt\IP6_Grapholize\GrapholizeApp\src\main\resources\fxml" />
+      <recent name="C:\Users\jarab\Documents\FHNW\Semester 7\Projekt\IP6_Grapholize\GrapholizeApp\src\main\resources\views" />
+    </key>
     <key name="MoveClassesOrPackagesDialog.RECENTS_KEY">
       <recent name="" />
-    </key>
-    <key name="CopyFile.RECENT_KEYS">
-      <recent name="C:\Users\jarab\Documents\FHNW\Semester 7\Projekt\IP6_Grapholize\GrapholizeApp\src\main\resources\data" />
     </key>
     <key name="CopyClassDialog.RECENTS_KEY">
       <recent name="New.Characteristics" />
@@ -143,12 +147,8 @@
       <recent name="New.CustomControls.TimeLineElement" />
       <recent name="New.CustomControls.TimeLine" />
     </key>
-    <key name="MoveFile.RECENT_KEYS">
-      <recent name="C:\Users\lukat\Repos\repotest\IP6_Grapholize\GrapholizeApp\src" />
-      <recent name="C:\Users\lukat\Repos\repotest\IP6_Grapholize\GrapholizeApp\src\main" />
+    <key name="CopyFile.RECENT_KEYS">
       <recent name="C:\Users\jarab\Documents\FHNW\Semester 7\Projekt\IP6_Grapholize\GrapholizeApp\src\main\resources\data" />
-      <recent name="C:\Users\jarab\Documents\FHNW\Semester 7\Projekt\IP6_Grapholize\GrapholizeApp\src\main\resources\fxml" />
-      <recent name="C:\Users\jarab\Documents\FHNW\Semester 7\Projekt\IP6_Grapholize\GrapholizeApp\src\main\resources\views" />
     </key>
   </component>
   <component name="RunAnythingCache">
@@ -169,7 +169,7 @@
       </list>
     </option>
   </component>
-  <component name="RunManager" selected="Application.HelloFX">
+  <component name="RunManager" selected="JUnit.All in GrapholizeAppAID.main">
     <configuration default="true" type="Applet">
       <option name="POLICY_FILE" value="$APPLICATION_HOME_DIR$/bin/appletviewer.policy" />
       <method v="2">
@@ -256,7 +256,7 @@
         <option name="Make" enabled="true" />
       </method>
     </configuration>
-    <configuration name="CharacteristicTotalVelocityInversionsTest" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
+    <configuration name="CharacteristicVelocityAverageTest" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
       <module name="GrapholizeAppAID.main" />
       <extension name="coverage">
         <pattern>
@@ -265,7 +265,7 @@
         </pattern>
       </extension>
       <option name="PACKAGE_NAME" value="New.Characteristics" />
-      <option name="MAIN_CLASS_NAME" value="New.Characteristics.CharacteristicTotalVelocityInversionsTest" />
+      <option name="MAIN_CLASS_NAME" value="New.Characteristics.CharacteristicVelocityAverageTest" />
       <option name="TEST_OBJECT" value="class" />
       <option name="WORKING_DIRECTORY" value="%MODULE_WORKING_DIR%" />
       <method v="2">
@@ -320,22 +320,22 @@
       </method>
     </configuration>
     <list>
+      <item itemvalue="Application.HelloFX" />
       <item itemvalue="Gradle.GrapholizeApp [jar]" />
       <item itemvalue="JAR Application.GrapholizeAppAID-1.0-SNAPSHOT.jar" />
       <item itemvalue="JUnit.VelocityMathUtilTest" />
-      <item itemvalue="JUnit.CharacteristicTotalVelocityInversionsTest" />
       <item itemvalue="JUnit.All in GrapholizeAppAID.main" />
       <item itemvalue="JUnit.CharacteristicTotalPenUpPauseTest" />
       <item itemvalue="JUnit.CharacteristicAverageStrokeDurationTest" />
-      <item itemvalue="Application.HelloFX" />
+      <item itemvalue="JUnit.CharacteristicVelocityAverageTest" />
     </list>
     <recent_temporary>
       <list>
-        <item itemvalue="Application.HelloFX" />
         <item itemvalue="JUnit.All in GrapholizeAppAID.main" />
+        <item itemvalue="JUnit.CharacteristicVelocityAverageTest" />
+        <item itemvalue="Application.HelloFX" />
         <item itemvalue="JUnit.CharacteristicAverageStrokeDurationTest" />
         <item itemvalue="JUnit.CharacteristicTotalPenUpPauseTest" />
-        <item itemvalue="JUnit.CharacteristicTotalVelocityInversionsTest" />
       </list>
     </recent_temporary>
   </component>
@@ -412,6 +412,12 @@
       <workItem from="1581350661258" duration="58000" />
       <workItem from="1581358434168" duration="7853000" />
       <workItem from="1581692308966" duration="1728000" />
+      <workItem from="1581701901446" duration="1349000" />
+      <workItem from="1582047400594" duration="1568000" />
+      <workItem from="1582101779974" duration="103000" />
+      <workItem from="1582102619301" duration="939000" />
+      <workItem from="1582104788346" duration="19000" />
+      <workItem from="1582294059596" duration="8728000" />
     </task>
     <servers />
   </component>
@@ -511,6 +517,21 @@
           <url>file://$PROJECT_DIR$/src/main/java/New/Observables/ObservablePage.java</url>
           <line>212</line>
           <option name="timeStamp" value="118" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/src/main/java/New/Controllers/MainSceneController.java</url>
+          <line>102</line>
+          <option name="timeStamp" value="119" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/src/main/test/New/Characteristics/CharacteristicVelocityAverageTest.java</url>
+          <line>39</line>
+          <option name="timeStamp" value="125" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/src/main/java/New/Characteristics/CharacteristicVelocityAverage.java</url>
+          <line>39</line>
+          <option name="timeStamp" value="126" />
         </line-breakpoint>
       </breakpoints>
     </breakpoint-manager>
