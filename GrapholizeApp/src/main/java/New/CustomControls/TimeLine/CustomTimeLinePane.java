@@ -1,7 +1,6 @@
 package New.CustomControls.TimeLine;
 
 import New.Controllers.CustomTimeLineController;
-import New.CustomControls.Annotation.MovableAnnotationWrapper;
 import New.CustomControls.Containers.TimeLineContainer;
 import New.CustomControls.Annotation.AnnotationRectangle;
 import New.CustomControls.Annotation.MovableAnnotationRectangle;
@@ -9,7 +8,6 @@ import New.Dialogues.DialogControls.TopicTextControl;
 import New.Dialogues.SegmentDialog;
 import New.Execptions.NoTimeLineSelectedException;
 import New.Model.Entities.Segment;
-import New.Model.Entities.Topic;
 import New.Observables.ObservableSegment;
 import New.Observables.ObservableDot;
 import New.Observables.ObservablePage;

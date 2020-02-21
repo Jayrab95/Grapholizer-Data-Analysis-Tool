@@ -7,7 +7,6 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="f9c9e85c-b6d3-4a2f-99c7-3350288aea5b" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/src/main/java/New/Dialogues/FilterForSegmentsDialog.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.gradle/5.2.1/executionHistory/executionHistory.bin" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/5.2.1/executionHistory/executionHistory.bin" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.gradle/5.2.1/executionHistory/executionHistory.lock" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/5.2.1/executionHistory/executionHistory.lock" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.gradle/5.2.1/fileHashes/fileHashes.bin" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/5.2.1/fileHashes/fileHashes.bin" afterDir="false" />
@@ -16,16 +15,14 @@
       <change beforePath="$PROJECT_DIR$/.gradle/5.2.1/javaCompile/javaCompile.lock" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/5.2.1/javaCompile/javaCompile.lock" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.gradle/buildOutputCleanup/buildOutputCleanup.lock" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/buildOutputCleanup/buildOutputCleanup.lock" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/build/classes/java/main/New/Controllers/TimeLineContainerController.class" beforeDir="false" afterPath="$PROJECT_DIR$/build/classes/java/main/New/Controllers/TimeLineContainerController.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/build/classes/java/main/New/CustomControls/Containers/TimeLineContainer$AnnotationFilterDialogResult.class" beforeDir="false" afterPath="$PROJECT_DIR$/build/classes/java/main/New/CustomControls/Containers/TimeLineContainer$AnnotationFilterDialogResult.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/build/classes/java/main/New/CustomControls/Containers/TimeLineContainer$TimeLineInformation.class" beforeDir="false" afterPath="$PROJECT_DIR$/build/classes/java/main/New/CustomControls/Containers/TimeLineContainer$TimeLineInformation.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/build/classes/java/main/New/CustomControls/Containers/TimeLineContainer$TimeLineWrapper.class" beforeDir="false" afterPath="$PROJECT_DIR$/build/classes/java/main/New/CustomControls/Containers/TimeLineContainer$TimeLineWrapper.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/build/classes/java/main/New/CustomControls/Containers/TimeLineContainer$TopicCreationDialogResult.class" beforeDir="false" afterPath="$PROJECT_DIR$/build/classes/java/main/New/CustomControls/Containers/TimeLineContainer$TopicCreationDialogResult.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/build/classes/java/main/New/CustomControls/Containers/TimeLineContainer.class" beforeDir="false" afterPath="$PROJECT_DIR$/build/classes/java/main/New/CustomControls/Containers/TimeLineContainer.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/build/classes/java/main/New/CustomControls/Containers/TimeLineDetailContainer.class" beforeDir="false" afterPath="$PROJECT_DIR$/build/classes/java/main/New/CustomControls/Containers/TimeLineDetailContainer.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/New/Controllers/TimeLineContainerController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/New/Controllers/TimeLineContainerController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/New/CustomControls/Containers/TimeLineContainer.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/New/CustomControls/Containers/TimeLineContainer.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/New/CustomControls/Containers/TimeLineDetailContainer.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/New/CustomControls/Containers/TimeLineDetailContainer.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/classes/java/main/New/CustomControls/Annotation/MovableAnnotationWrapper.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/classes/java/main/New/CustomControls/Annotation/SegmentText.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/classes/java/main/New/CustomControls/TimeLine/CustomTimeLinePane.class" beforeDir="false" afterPath="$PROJECT_DIR$/build/classes/java/main/New/CustomControls/TimeLine/CustomTimeLinePane.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/classes/java/main/New/Model/Entities/Page.class" beforeDir="false" afterPath="$PROJECT_DIR$/build/classes/java/main/New/Model/Entities/Page.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/New/CustomControls/Annotation/MovableAnnotationWrapper.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/New/CustomControls/Annotation/SegmentText.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/New/CustomControls/TimeLine/CustomTimeLinePane.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/New/CustomControls/TimeLine/CustomTimeLinePane.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/New/Model/Entities/Page.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/New/Model/Entities/Page.java" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -437,7 +434,8 @@
       <workItem from="1580835258963" duration="1831000" />
       <workItem from="1580906127482" duration="6433000" />
       <workItem from="1582032708084" duration="11132000" />
-      <workItem from="1582117670888" duration="15143000" />
+      <workItem from="1582117670888" duration="18362000" />
+      <workItem from="1582292135759" duration="992000" />
     </task>
     <servers />
   </component>
@@ -510,7 +508,7 @@
         </line-breakpoint>
         <line-breakpoint enabled="true" type="java-line">
           <url>file://$PROJECT_DIR$/src/main/java/New/CustomControls/TimeLine/CustomTimeLinePane.java</url>
-          <line>351</line>
+          <line>349</line>
           <option name="timeStamp" value="111" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="java-line">
