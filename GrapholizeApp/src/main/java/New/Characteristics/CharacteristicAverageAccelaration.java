@@ -36,6 +36,6 @@ public class CharacteristicAverageAccelaration extends Characteristic<Double>{
                 lastDot = dot;
             }
         }
-        return totalAcceleration / accelarationCounter;
+        return totalAcceleration / (double)accelarationCounter;
     }
 }
