@@ -7,8 +7,8 @@ import java.util.List;
 
 public class CharacteristicAverageLengthOfStrokes extends Characteristic<Double> {
 
-    public CharacteristicAverageLengthOfStrokes(String name) {
-        super(name);
+    public CharacteristicAverageLengthOfStrokes(String name, String unitName) {
+        super(name, unitName);
     }
 
     @Override

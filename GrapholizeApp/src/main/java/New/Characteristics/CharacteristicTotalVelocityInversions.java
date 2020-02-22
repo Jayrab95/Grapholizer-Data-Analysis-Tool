@@ -7,8 +7,8 @@ import java.util.List;
 
 public class CharacteristicTotalVelocityInversions extends Characteristic<Integer> {
 
-    public CharacteristicTotalVelocityInversions(String name) {
-        super(name);
+    public CharacteristicTotalVelocityInversions(String name, String unitName) {
+        super(name, unitName);
     }
 
     @Override

@@ -7,8 +7,8 @@ import java.util.List;
 
 public class CharacteristicTotalLengthOfStrokes extends Characteristic<Double> {
 
-    public CharacteristicTotalLengthOfStrokes(String name) {
-        super(name);
+    public CharacteristicTotalLengthOfStrokes(String name, String unitName) {
+        super(name, unitName);
     }
 
     @Override
