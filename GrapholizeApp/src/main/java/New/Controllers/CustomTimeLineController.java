@@ -1,8 +1,11 @@
 package New.Controllers;
 
+import New.CustomControls.Annotation.MovableAnnotationRectangle;
+import New.CustomControls.Annotation.SelectableAnnotationRectangle;
 import New.CustomControls.TimeLine.CustomTimeLinePane;
 import New.CustomControls.Containers.TimeLineContainer;
 import New.CustomControls.Annotation.AnnotationRectangle;
+import New.CustomControls.TimeLine.SelectableTimeLinePane;
 import New.Execptions.NoTimeLineSelectedException;
 import New.Model.Entities.Segment;
 import New.Observables.*;
@@ -163,17 +166,11 @@ public class CustomTimeLineController {
         page.removeAnnotation(observableTopicSet.getTopicSetID(), a.getSegment());
     }
 
-    public void filterSelect(Map<String, String> topicFilters){
-
-    }
-
-    private boolean fitsFilterCriteria(Segment s, Map<String, String> topicFilters){
-        for(String key : topicFilters.keySet()){
-            if(!s.getAnnotation(key).equals(topicFilters.get(key))){
-                return false;
-            }
-        }
-        return true;
+    public void filterSelect(SelectableTimeLinePane caller, Map<String, String> topicFilters, List<MovableAnnotationRectangle> segments){
+        observableTimeLine.setSelectedTimeLine(caller);
+        segments.stream()
+                .filter(s -> s.fitsCriteria(topicFilters))
+                .forEach(s -> s.setSelected(true));
     }
 
 }

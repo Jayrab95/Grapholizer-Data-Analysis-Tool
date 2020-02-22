@@ -8,6 +8,8 @@ import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.property.StringProperty;
 import javafx.collections.ListChangeListener;
 
+import java.util.Map;
+
 public class ObservableSegment {
     private Segment segment;
 
@@ -105,6 +107,15 @@ public class ObservableSegment {
     }
     public void move(double delta){
         segment.move(delta);
+    }
+
+    public boolean fitsFilterCriteria(Map<String, String> topicFilters){
+        for(String key : topicFilters.keySet()){
+            if(!getInnerSegment().getAnnotation(key).equals(topicFilters.get(key))){
+                return false;
+            }
+        }
+        return true;
     }
     //endregion
 }

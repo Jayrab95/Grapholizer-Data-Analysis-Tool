@@ -31,6 +31,10 @@ public class FilterSelectDialog extends Dialog<Map<String, String>> {
     public FilterSelectDialog(TopicSet set) {
         this.topicFilters = new LinkedList<>();
 
+        setTitle(TITLE);
+        setHeaderText(HEADER);
+        setContentText(String.format(TEXT, set.getTag()));
+
         GridPane grid = new GridPane();
 
         Iterator<Topic> topics = set.getTopics().iterator();

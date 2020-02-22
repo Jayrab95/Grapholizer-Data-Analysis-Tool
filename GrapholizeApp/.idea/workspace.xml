@@ -2,35 +2,35 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="f9c9e85c-b6d3-4a2f-99c7-3350288aea5b" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/build/classes/java/main/New/util/javafx/JavaFxUtil.class" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/New/CustomControls/TimeLine/SubTimeLines/DetailLine.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/New/util/javafx/JavaFxUtil.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/test/New/Characteristics/CharacteristicVelocityAverageTest.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.gradle/5.2.1/executionHistory/executionHistory.bin" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/5.2.1/executionHistory/executionHistory.bin" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.gradle/5.2.1/executionHistory/executionHistory.lock" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/5.2.1/executionHistory/executionHistory.lock" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.gradle/5.2.1/fileHashes/fileHashes.bin" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/5.2.1/fileHashes/fileHashes.bin" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.gradle/5.2.1/fileHashes/fileHashes.lock" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/5.2.1/fileHashes/fileHashes.lock" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.gradle/5.2.1/javaCompile/javaCompile.lock" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/5.2.1/javaCompile/javaCompile.lock" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.gradle/5.2.1/javaCompile/classAnalysis.bin" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/5.2.1/javaCompile/classAnalysis.bin" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.gradle/5.2.1/javaCompile/taskHistory.bin" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/5.2.1/javaCompile/taskHistory.bin" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.gradle/buildOutputCleanup/buildOutputCleanup.lock" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/buildOutputCleanup/buildOutputCleanup.lock" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.gradle/buildOutputCleanup/cache.properties" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.gradle/buildOutputCleanup/outputFiles.bin" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/build/classes/java/main/New/Characteristics/Characteristic.class" beforeDir="false" afterPath="$PROJECT_DIR$/build/classes/java/main/New/Characteristics/Characteristic.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/build/classes/java/main/New/Characteristics/CharacteristicVelocityAverage.class" beforeDir="false" afterPath="$PROJECT_DIR$/build/classes/java/main/New/Characteristics/CharacteristicVelocityAverage.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/build/classes/java/main/New/Controllers/MainSceneController.class" beforeDir="false" afterPath="$PROJECT_DIR$/build/classes/java/main/New/Controllers/MainSceneController.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/build/classes/java/main/New/util/math/VelocityMathUtil.class" beforeDir="false" afterPath="$PROJECT_DIR$/build/classes/java/main/New/util/math/VelocityMathUtil.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/New/Characteristics/Characteristic.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/New/Characteristics/Characteristic.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/New/Characteristics/CharacteristicAverageAccelaration.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/New/Characteristics/CharacteristicAverageAccelaration.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/New/Characteristics/CharacteristicAverageLengthOfStrokes.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/New/Characteristics/CharacteristicAverageLengthOfStrokes.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/New/Characteristics/CharacteristicVelocityAverage.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/New/Characteristics/CharacteristicVelocityAverage.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/New/Controllers/MainSceneController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/New/Controllers/MainSceneController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/New/CustomControls/TimeLine/SubTimeLines/PressureTimeLine.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/New/CustomControls/TimeLine/SubTimeLines/PressureTimeLine.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/New/CustomControls/TimeLine/SubTimeLines/VelocityTimeLine.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/New/CustomControls/TimeLine/SubTimeLines/VelocityTimeLine.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/New/util/math/VelocityMathUtil.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/New/util/math/VelocityMathUtil.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/test/New/Characteristics/CharacteristicAverageAccelarationTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/test/New/Characteristics/CharacteristicAverageAccelarationTest.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/test/New/Characteristics/CharacteristicAverageLengthOfStrokesTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/test/New/Characteristics/CharacteristicAverageLengthOfStrokesTest.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/test/New/util/math/VelocityMathUtilTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/test/New/util/math/VelocityMathUtilTest.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/classes/java/main/New/Controllers/CustomTimeLineController.class" beforeDir="false" afterPath="$PROJECT_DIR$/build/classes/java/main/New/Controllers/CustomTimeLineController.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/classes/java/main/New/Controllers/MovableAnnotationController.class" beforeDir="false" afterPath="$PROJECT_DIR$/build/classes/java/main/New/Controllers/MovableAnnotationController.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/classes/java/main/New/CustomControls/Annotation/MovableAnnotationRectangle$DragRectangle.class" beforeDir="false" afterPath="$PROJECT_DIR$/build/classes/java/main/New/CustomControls/Annotation/MovableAnnotationRectangle$DragRectangle.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/classes/java/main/New/CustomControls/Annotation/MovableAnnotationRectangle$LeftDragRectangle.class" beforeDir="false" afterPath="$PROJECT_DIR$/build/classes/java/main/New/CustomControls/Annotation/MovableAnnotationRectangle$LeftDragRectangle.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/classes/java/main/New/CustomControls/Annotation/MovableAnnotationRectangle$RightDragRectangle.class" beforeDir="false" afterPath="$PROJECT_DIR$/build/classes/java/main/New/CustomControls/Annotation/MovableAnnotationRectangle$RightDragRectangle.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/classes/java/main/New/CustomControls/Annotation/MovableAnnotationRectangle.class" beforeDir="false" afterPath="$PROJECT_DIR$/build/classes/java/main/New/CustomControls/Annotation/MovableAnnotationRectangle.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/classes/java/main/New/CustomControls/Containers/TimeLineContainer$AnnotationFilterDialogResult.class" beforeDir="false" afterPath="$PROJECT_DIR$/build/classes/java/main/New/CustomControls/Containers/TimeLineContainer$AnnotationFilterDialogResult.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/classes/java/main/New/CustomControls/Containers/TimeLineContainer$TimeLineInformation.class" beforeDir="false" afterPath="$PROJECT_DIR$/build/classes/java/main/New/CustomControls/Containers/TimeLineContainer$TimeLineInformation.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/classes/java/main/New/CustomControls/Containers/TimeLineContainer$TimeLineWrapper.class" beforeDir="false" afterPath="$PROJECT_DIR$/build/classes/java/main/New/CustomControls/Containers/TimeLineContainer$TimeLineWrapper.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/classes/java/main/New/CustomControls/Containers/TimeLineContainer$TopicCreationDialogResult.class" beforeDir="false" afterPath="$PROJECT_DIR$/build/classes/java/main/New/CustomControls/Containers/TimeLineContainer$TopicCreationDialogResult.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/classes/java/main/New/CustomControls/Containers/TimeLineContainer.class" beforeDir="false" afterPath="$PROJECT_DIR$/build/classes/java/main/New/CustomControls/Containers/TimeLineContainer.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/classes/java/main/New/CustomControls/TimeLine/CustomTimeLinePane.class" beforeDir="false" afterPath="$PROJECT_DIR$/build/classes/java/main/New/CustomControls/TimeLine/CustomTimeLinePane.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/classes/java/main/New/CustomControls/TimeLine/SubTimeLines/PressureTimeLine.class" beforeDir="false" afterPath="$PROJECT_DIR$/build/classes/java/main/New/CustomControls/TimeLine/SubTimeLines/PressureTimeLine.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/classes/java/main/New/CustomControls/TimeLine/SubTimeLines/VelocityTimeLine.class" beforeDir="false" afterPath="$PROJECT_DIR$/build/classes/java/main/New/CustomControls/TimeLine/SubTimeLines/VelocityTimeLine.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/classes/java/main/New/Dialogues/DialogControls/TopicTextFieldCell.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/classes/java/main/New/Dialogues/TopicSetDialog.class" beforeDir="false" afterPath="$PROJECT_DIR$/build/classes/java/main/New/Dialogues/TopicSetDialog.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/classes/java/main/New/Execptions/AnnotationCopyCollideException.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/classes/java/main/New/Observables/ObservableSegment.class" beforeDir="false" afterPath="$PROJECT_DIR$/build/classes/java/main/New/Observables/ObservableSegment.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/classes/java/main/New/Observables/ObservableTimeLine.class" beforeDir="false" afterPath="$PROJECT_DIR$/build/classes/java/main/New/Observables/ObservableTimeLine.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/New/Controllers/CustomTimeLineController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/New/Controllers/CustomTimeLineController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/New/Controllers/MovableAnnotationController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/New/Controllers/MovableAnnotationController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/New/CustomControls/Annotation/MovableAnnotationRectangle.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/New/CustomControls/Annotation/MovableAnnotationRectangle.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/New/CustomControls/TimeLine/CustomTimeLinePane.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/New/CustomControls/TimeLine/CustomTimeLinePane.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/New/Dialogues/FilterSelectDialog.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/New/Dialogues/FilterSelectDialog.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/New/Observables/ObservableSegment.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/New/Observables/ObservableSegment.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/New/Observables/ObservableTimeLine.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/New/Observables/ObservableTimeLine.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -43,7 +43,28 @@
         <task path="$PROJECT_DIR$">
           <activation />
         </task>
-        <projects_view />
+        <projects_view>
+          <tree_state>
+            <expand>
+              <path>
+                <item name="" type="6a2764b6:ExternalProjectsStructure$RootNode" />
+                <item name="GrapholizeAppAID" type="f1a62948:ProjectNode" />
+              </path>
+              <path>
+                <item name="" type="6a2764b6:ExternalProjectsStructure$RootNode" />
+                <item name="GrapholizeAppAID" type="f1a62948:ProjectNode" />
+                <item name="Tasks" type="e4a08cd1:TasksNode" />
+              </path>
+              <path>
+                <item name="" type="6a2764b6:ExternalProjectsStructure$RootNode" />
+                <item name="GrapholizeAppAID" type="f1a62948:ProjectNode" />
+                <item name="Tasks" type="e4a08cd1:TasksNode" />
+                <item name="application" type="c8890929:TasksNode$1" />
+              </path>
+            </expand>
+            <select />
+          </tree_state>
+        </projects_view>
       </state>
     </system>
   </component>
@@ -64,6 +85,32 @@
         </RuleState>
       </list>
     </option>
+  </component>
+  <component name="RunManager">
+    <configuration name="GrapholizeApp [run]" type="GradleRunConfiguration" factoryName="Gradle" temporary="true">
+      <ExternalSystemSettings>
+        <option name="executionName" />
+        <option name="externalProjectPath" value="$PROJECT_DIR$" />
+        <option name="externalSystemIdString" value="GRADLE" />
+        <option name="scriptParameters" />
+        <option name="taskDescriptions">
+          <list />
+        </option>
+        <option name="taskNames">
+          <list>
+            <option value="run" />
+          </list>
+        </option>
+        <option name="vmOptions" />
+      </ExternalSystemSettings>
+      <GradleScriptDebugEnabled>true</GradleScriptDebugEnabled>
+      <method v="2" />
+    </configuration>
+    <recent_temporary>
+      <list>
+        <item itemvalue="Gradle.GrapholizeApp [run]" />
+      </list>
+    </recent_temporary>
   </component>
   <component name="SvnConfiguration">
     <configuration />

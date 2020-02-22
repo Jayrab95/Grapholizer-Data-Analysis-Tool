@@ -26,8 +26,16 @@ public class ObservableTimeLine {
         return selectedTimeLine != null;
     }
 
+    //TODO: Perhaps this mechanism needs to be reworked a bit
+    // Could be optimized by making the selection dependant on the observableSegment, rather than the children.
+    // The rectangle's selectedProperty binds itself to the OSegment's selected property.
+    // This way, you can just search through the list of selectable segments on the page, rather than the children.
     public List<AnnotationRectangle> getSelectedAnnotations(){
+        //The children first need to be filtered to see whether or not they're actually rectangles (Can also be drag rect or label)
+        //Then the nodes acquire the correct cast
+        //finally, they're filtered for selection
         return selectedTimeLine.getChildren().stream()
+                .filter(node -> node instanceof SelectableAnnotationRectangle)
                 .map(node -> (SelectableAnnotationRectangle)node)
                 .filter(SelectableAnnotationRectangle::isSelected)
                 .collect(Collectors.toList());

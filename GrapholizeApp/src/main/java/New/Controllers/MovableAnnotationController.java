@@ -7,6 +7,8 @@ import New.Model.Entities.Segment;
 import New.Observables.ObservableSegment;
 import javafx.scene.shape.Rectangle;
 
+import java.util.Map;
+
 public class MovableAnnotationController {
 
     private final ObservableSegment oAnnotation;
@@ -50,6 +52,10 @@ public class MovableAnnotationController {
 
     public void disableResize(Rectangle left, Rectangle right){
         parent.getChildren().removeAll(left, right);
+    }
+
+    public boolean fitsFilterCriteria(Map<String, String> topicFilters){
+        return oAnnotation.fitsFilterCriteria(topicFilters);
     }
 
 }

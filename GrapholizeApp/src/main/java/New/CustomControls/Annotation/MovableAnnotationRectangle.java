@@ -20,6 +20,7 @@ import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
 import javafx.scene.text.Text;
 
+import java.util.Map;
 import java.util.Optional;
 
 public class MovableAnnotationRectangle extends SelectableAnnotationRectangle {
@@ -195,6 +196,10 @@ public class MovableAnnotationRectangle extends SelectableAnnotationRectangle {
         event.consume();
     }
     //endregion
+
+    public boolean fitsCriteria(Map<String, String> filter){
+        return movableAnnotationController.fitsFilterCriteria(filter);
+    }
 
     private abstract class DragRectangle extends Rectangle {
 

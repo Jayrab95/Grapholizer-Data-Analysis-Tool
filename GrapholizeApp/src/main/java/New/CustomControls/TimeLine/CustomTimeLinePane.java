@@ -5,6 +5,7 @@ import New.CustomControls.Containers.TimeLineContainer;
 import New.CustomControls.Annotation.AnnotationRectangle;
 import New.CustomControls.Annotation.MovableAnnotationRectangle;
 import New.Dialogues.DialogControls.TopicTextControl;
+import New.Dialogues.FilterSelectDialog;
 import New.Dialogues.SegmentDialog;
 import New.Execptions.NoTimeLineSelectedException;
 import New.Model.Entities.Segment;
@@ -23,7 +24,9 @@ import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
 
 import java.util.List;
+import java.util.Map;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 public class CustomTimeLinePane extends SelectableTimeLinePane {
 
@@ -147,6 +150,8 @@ public class CustomTimeLinePane extends SelectableTimeLinePane {
 
     private ContextMenu generateContextMenu(){
         //TODO: Find better way to extend context menu functionality
+        MenuItem item_filterSelect = new MenuItem("Filter select");
+        item_filterSelect.setOnAction(event -> handleFilterSelectClick());
         MenuItem item_createNewTimeLine = new MenuItem("Create new time line out of selected elements");
         item_createNewTimeLine.setOnAction(event -> handleContextCreateNewTimeLineClick());
         MenuItem item_copyAnnotations = new MenuItem("Copy selected annotations into this timeline");
@@ -157,7 +162,18 @@ public class CustomTimeLinePane extends SelectableTimeLinePane {
         item_editTimeLine.setOnAction(event -> customTimeLineController.editTimeLine());
         MenuItem item_removeTimeLine = new MenuItem("Remove this timeline");
         item_removeTimeLine.setOnAction(event -> customTimeLineController.removeTimeLine(this));
-        return new ContextMenu(item_createNewTimeLine, item_editTimeLine, item_copyAnnotations, item_createAnnotationsOutOfDots, item_removeTimeLine);
+        return new ContextMenu(item_filterSelect, item_createNewTimeLine, item_editTimeLine, item_copyAnnotations, item_createAnnotationsOutOfDots, item_removeTimeLine);
+    }
+
+    private void handleFilterSelectClick(){
+        Optional<Map<String, String>> o =  new FilterSelectDialog(timeLineTag.getInner()).showAndWait();
+        if(o.isPresent()){
+            List<MovableAnnotationRectangle> children = getChildren().stream()
+                    .filter(node -> node instanceof MovableAnnotationRectangle)
+                    .map(node -> (MovableAnnotationRectangle) node)
+                    .collect(Collectors.toList());
+            customTimeLineController.filterSelect(this, o.get(), children);
+        }
     }
 
     private void handleContextCreateNewTimeLineClick(){
