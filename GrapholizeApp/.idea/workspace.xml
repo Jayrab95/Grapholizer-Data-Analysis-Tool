@@ -2,35 +2,64 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="f9c9e85c-b6d3-4a2f-99c7-3350288aea5b" name="Default Changelist" comment="">
+      <change beforePath="$PROJECT_DIR$/.gradle/5.2.1/executionHistory/executionHistory.bin" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/5.2.1/executionHistory/executionHistory.bin" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.gradle/5.2.1/executionHistory/executionHistory.lock" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/5.2.1/executionHistory/executionHistory.lock" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.gradle/5.2.1/fileHashes/fileHashes.bin" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/5.2.1/fileHashes/fileHashes.bin" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.gradle/5.2.1/fileHashes/fileHashes.lock" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/5.2.1/fileHashes/fileHashes.lock" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.gradle/5.2.1/javaCompile/classAnalysis.bin" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/5.2.1/javaCompile/classAnalysis.bin" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.gradle/5.2.1/javaCompile/taskHistory.bin" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/5.2.1/javaCompile/taskHistory.bin" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.gradle/5.2.1/javaCompile/javaCompile.lock" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/5.2.1/javaCompile/javaCompile.lock" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.gradle/buildOutputCleanup/buildOutputCleanup.lock" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/buildOutputCleanup/buildOutputCleanup.lock" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/build/classes/java/main/New/Controllers/CustomTimeLineController.class" beforeDir="false" afterPath="$PROJECT_DIR$/build/classes/java/main/New/Controllers/CustomTimeLineController.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/build/classes/java/main/New/Controllers/MovableAnnotationController.class" beforeDir="false" afterPath="$PROJECT_DIR$/build/classes/java/main/New/Controllers/MovableAnnotationController.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/build/classes/java/main/New/CustomControls/Annotation/MovableAnnotationRectangle$DragRectangle.class" beforeDir="false" afterPath="$PROJECT_DIR$/build/classes/java/main/New/CustomControls/Annotation/MovableAnnotationRectangle$DragRectangle.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/build/classes/java/main/New/CustomControls/Annotation/MovableAnnotationRectangle$LeftDragRectangle.class" beforeDir="false" afterPath="$PROJECT_DIR$/build/classes/java/main/New/CustomControls/Annotation/MovableAnnotationRectangle$LeftDragRectangle.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/build/classes/java/main/New/CustomControls/Annotation/MovableAnnotationRectangle$RightDragRectangle.class" beforeDir="false" afterPath="$PROJECT_DIR$/build/classes/java/main/New/CustomControls/Annotation/MovableAnnotationRectangle$RightDragRectangle.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/build/classes/java/main/New/CustomControls/Annotation/MovableAnnotationRectangle.class" beforeDir="false" afterPath="$PROJECT_DIR$/build/classes/java/main/New/CustomControls/Annotation/MovableAnnotationRectangle.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/build/classes/java/main/New/CustomControls/Containers/TimeLineContainer$AnnotationFilterDialogResult.class" beforeDir="false" afterPath="$PROJECT_DIR$/build/classes/java/main/New/CustomControls/Containers/TimeLineContainer$AnnotationFilterDialogResult.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/build/classes/java/main/New/CustomControls/Containers/TimeLineContainer$TimeLineInformation.class" beforeDir="false" afterPath="$PROJECT_DIR$/build/classes/java/main/New/CustomControls/Containers/TimeLineContainer$TimeLineInformation.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/build/classes/java/main/New/CustomControls/Containers/TimeLineContainer$TimeLineWrapper.class" beforeDir="false" afterPath="$PROJECT_DIR$/build/classes/java/main/New/CustomControls/Containers/TimeLineContainer$TimeLineWrapper.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/build/classes/java/main/New/CustomControls/Containers/TimeLineContainer$TopicCreationDialogResult.class" beforeDir="false" afterPath="$PROJECT_DIR$/build/classes/java/main/New/CustomControls/Containers/TimeLineContainer$TopicCreationDialogResult.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/build/classes/java/main/New/CustomControls/Containers/TimeLineContainer.class" beforeDir="false" afterPath="$PROJECT_DIR$/build/classes/java/main/New/CustomControls/Containers/TimeLineContainer.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/build/classes/java/main/New/CustomControls/TimeLine/CustomTimeLinePane.class" beforeDir="false" afterPath="$PROJECT_DIR$/build/classes/java/main/New/CustomControls/TimeLine/CustomTimeLinePane.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/classes/java/main/New/Characteristics/Characteristic.class" beforeDir="false" afterPath="$PROJECT_DIR$/build/classes/java/main/New/Characteristics/Characteristic.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/classes/java/main/New/Characteristics/CharacteristicAverageAccelaration.class" beforeDir="false" afterPath="$PROJECT_DIR$/build/classes/java/main/New/Characteristics/CharacteristicAverageAccelaration.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/classes/java/main/New/Characteristics/CharacteristicAverageLengthOfStrokes.class" beforeDir="false" afterPath="$PROJECT_DIR$/build/classes/java/main/New/Characteristics/CharacteristicAverageLengthOfStrokes.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/classes/java/main/New/Characteristics/CharacteristicAveragePressure.class" beforeDir="false" afterPath="$PROJECT_DIR$/build/classes/java/main/New/Characteristics/CharacteristicAveragePressure.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/classes/java/main/New/Characteristics/CharacteristicAverageStrokeDuration.class" beforeDir="false" afterPath="$PROJECT_DIR$/build/classes/java/main/New/Characteristics/CharacteristicAverageStrokeDuration.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/classes/java/main/New/Characteristics/CharacteristicNormalizedJerk.class" beforeDir="false" afterPath="$PROJECT_DIR$/build/classes/java/main/New/Characteristics/CharacteristicNormalizedJerk.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/classes/java/main/New/Characteristics/CharacteristicNumOfStrokes.class" beforeDir="false" afterPath="$PROJECT_DIR$/build/classes/java/main/New/Characteristics/CharacteristicNumOfStrokes.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/classes/java/main/New/Characteristics/CharacteristicPenDownPause.class" beforeDir="false" afterPath="$PROJECT_DIR$/build/classes/java/main/New/Characteristics/CharacteristicPenDownPause.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/classes/java/main/New/Characteristics/CharacteristicTotalDurationAnnotation.class" beforeDir="false" afterPath="$PROJECT_DIR$/build/classes/java/main/New/Characteristics/CharacteristicTotalDurationAnnotation.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/classes/java/main/New/Characteristics/CharacteristicTotalDurationStrokes.class" beforeDir="false" afterPath="$PROJECT_DIR$/build/classes/java/main/New/Characteristics/CharacteristicTotalDurationStrokes.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/classes/java/main/New/Characteristics/CharacteristicTotalLengthOfStrokes.class" beforeDir="false" afterPath="$PROJECT_DIR$/build/classes/java/main/New/Characteristics/CharacteristicTotalLengthOfStrokes.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/classes/java/main/New/Characteristics/CharacteristicTotalPause.class" beforeDir="false" afterPath="$PROJECT_DIR$/build/classes/java/main/New/Characteristics/CharacteristicTotalPause.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/classes/java/main/New/Characteristics/CharacteristicTotalPenUpPause.class" beforeDir="false" afterPath="$PROJECT_DIR$/build/classes/java/main/New/Characteristics/CharacteristicTotalPenUpPause.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/classes/java/main/New/Characteristics/CharacteristicTotalVelocityInversions.class" beforeDir="false" afterPath="$PROJECT_DIR$/build/classes/java/main/New/Characteristics/CharacteristicTotalVelocityInversions.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/classes/java/main/New/Characteristics/CharacteristicVelocityAverage.class" beforeDir="false" afterPath="$PROJECT_DIR$/build/classes/java/main/New/Characteristics/CharacteristicVelocityAverage.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/classes/java/main/New/Characteristics/CharacteristicVelocityHorizontalAverage.class" beforeDir="false" afterPath="$PROJECT_DIR$/build/classes/java/main/New/Characteristics/CharacteristicVelocityHorizontalAverage.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/classes/java/main/New/Characteristics/CharacteristicVelocityVerticalAverage.class" beforeDir="false" afterPath="$PROJECT_DIR$/build/classes/java/main/New/Characteristics/CharacteristicVelocityVerticalAverage.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/classes/java/main/New/Controllers/MainSceneController.class" beforeDir="false" afterPath="$PROJECT_DIR$/build/classes/java/main/New/Controllers/MainSceneController.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/classes/java/main/New/CustomControls/Containers/TimeLineDetailContainer.class" beforeDir="false" afterPath="$PROJECT_DIR$/build/classes/java/main/New/CustomControls/Containers/TimeLineDetailContainer.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/classes/java/main/New/CustomControls/TimeLine/SubTimeLines/DetailLine.class" beforeDir="false" afterPath="$PROJECT_DIR$/build/classes/java/main/New/CustomControls/TimeLine/SubTimeLines/DetailLine.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/classes/java/main/New/CustomControls/TimeLine/SubTimeLines/DetailTimeLine.class" beforeDir="false" afterPath="$PROJECT_DIR$/build/classes/java/main/New/CustomControls/TimeLine/SubTimeLines/DetailTimeLine.class" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/build/classes/java/main/New/CustomControls/TimeLine/SubTimeLines/PressureTimeLine.class" beforeDir="false" afterPath="$PROJECT_DIR$/build/classes/java/main/New/CustomControls/TimeLine/SubTimeLines/PressureTimeLine.class" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/build/classes/java/main/New/CustomControls/TimeLine/SubTimeLines/VelocityTimeLine.class" beforeDir="false" afterPath="$PROJECT_DIR$/build/classes/java/main/New/CustomControls/TimeLine/SubTimeLines/VelocityTimeLine.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/build/classes/java/main/New/Dialogues/DialogControls/TopicTextFieldCell.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/build/classes/java/main/New/Dialogues/TopicSetDialog.class" beforeDir="false" afterPath="$PROJECT_DIR$/build/classes/java/main/New/Dialogues/TopicSetDialog.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/build/classes/java/main/New/Execptions/AnnotationCopyCollideException.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/build/classes/java/main/New/Observables/ObservableSegment.class" beforeDir="false" afterPath="$PROJECT_DIR$/build/classes/java/main/New/Observables/ObservableSegment.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/build/classes/java/main/New/Observables/ObservableTimeLine.class" beforeDir="false" afterPath="$PROJECT_DIR$/build/classes/java/main/New/Observables/ObservableTimeLine.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/New/Controllers/CustomTimeLineController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/New/Controllers/CustomTimeLineController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/New/Controllers/MovableAnnotationController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/New/Controllers/MovableAnnotationController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/New/CustomControls/Annotation/MovableAnnotationRectangle.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/New/CustomControls/Annotation/MovableAnnotationRectangle.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/New/CustomControls/TimeLine/CustomTimeLinePane.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/New/CustomControls/TimeLine/CustomTimeLinePane.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/New/Dialogues/FilterSelectDialog.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/New/Dialogues/FilterSelectDialog.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/New/Observables/ObservableSegment.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/New/Observables/ObservableSegment.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/New/Observables/ObservableTimeLine.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/New/Observables/ObservableTimeLine.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/classes/java/main/New/CustomControls/TimeLine/TimeLinePane.class" beforeDir="false" afterPath="$PROJECT_DIR$/build/classes/java/main/New/CustomControls/TimeLine/TimeLinePane.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/classes/java/main/New/util/CharacteristicList.class" beforeDir="false" afterPath="$PROJECT_DIR$/build/classes/java/main/New/util/CharacteristicList.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/New/Characteristics/Characteristic.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/New/Characteristics/Characteristic.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/New/Characteristics/CharacteristicAverageAccelaration.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/New/Characteristics/CharacteristicAverageAccelaration.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/New/Characteristics/CharacteristicAverageLengthOfStrokes.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/New/Characteristics/CharacteristicAverageLengthOfStrokes.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/New/Characteristics/CharacteristicAveragePressure.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/New/Characteristics/CharacteristicAveragePressure.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/New/Characteristics/CharacteristicAverageStrokeDuration.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/New/Characteristics/CharacteristicAverageStrokeDuration.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/New/Characteristics/CharacteristicNormalizedJerk.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/New/Characteristics/CharacteristicNormalizedJerk.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/New/Characteristics/CharacteristicNumOfStrokes.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/New/Characteristics/CharacteristicNumOfStrokes.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/New/Characteristics/CharacteristicPenDownPause.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/New/Characteristics/CharacteristicPenDownPause.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/New/Characteristics/CharacteristicTotalDurationAnnotation.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/New/Characteristics/CharacteristicTotalDurationAnnotation.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/New/Characteristics/CharacteristicTotalDurationStrokes.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/New/Characteristics/CharacteristicTotalDurationStrokes.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/New/Characteristics/CharacteristicTotalLengthOfStrokes.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/New/Characteristics/CharacteristicTotalLengthOfStrokes.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/New/Characteristics/CharacteristicTotalPause.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/New/Characteristics/CharacteristicTotalPause.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/New/Characteristics/CharacteristicTotalPenUpPause.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/New/Characteristics/CharacteristicTotalPenUpPause.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/New/Characteristics/CharacteristicTotalVelocityInversions.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/New/Characteristics/CharacteristicTotalVelocityInversions.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/New/Characteristics/CharacteristicVelocityAverage.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/New/Characteristics/CharacteristicVelocityAverage.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/New/Characteristics/CharacteristicVelocityHorizontalAverage.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/New/Characteristics/CharacteristicVelocityHorizontalAverage.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/New/Characteristics/CharacteristicVelocityVerticalAverage.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/New/Characteristics/CharacteristicVelocityVerticalAverage.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/New/Controllers/MainSceneController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/New/Controllers/MainSceneController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/New/CustomControls/Containers/TimeLineDetailContainer.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/New/CustomControls/Containers/TimeLineDetailContainer.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/New/CustomControls/TimeLine/SubTimeLines/DetailLine.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/New/CustomControls/TimeLine/SubTimeLines/DetailLine.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/New/CustomControls/TimeLine/SubTimeLines/DetailTimeLine.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/New/CustomControls/TimeLine/SubTimeLines/DetailTimeLine.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/New/CustomControls/TimeLine/SubTimeLines/PressureTimeLine.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/New/CustomControls/TimeLine/SubTimeLines/PressureTimeLine.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/New/CustomControls/TimeLine/SubTimeLines/VelocityTimeLine.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/New/CustomControls/TimeLine/SubTimeLines/VelocityTimeLine.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/New/CustomControls/TimeLine/TimeLinePane.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/New/CustomControls/TimeLine/TimeLinePane.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/New/util/CharacteristicList.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/New/util/CharacteristicList.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -85,32 +114,6 @@
         </RuleState>
       </list>
     </option>
-  </component>
-  <component name="RunManager">
-    <configuration name="GrapholizeApp [run]" type="GradleRunConfiguration" factoryName="Gradle" temporary="true">
-      <ExternalSystemSettings>
-        <option name="executionName" />
-        <option name="externalProjectPath" value="$PROJECT_DIR$" />
-        <option name="externalSystemIdString" value="GRADLE" />
-        <option name="scriptParameters" />
-        <option name="taskDescriptions">
-          <list />
-        </option>
-        <option name="taskNames">
-          <list>
-            <option value="run" />
-          </list>
-        </option>
-        <option name="vmOptions" />
-      </ExternalSystemSettings>
-      <GradleScriptDebugEnabled>true</GradleScriptDebugEnabled>
-      <method v="2" />
-    </configuration>
-    <recent_temporary>
-      <list>
-        <item itemvalue="Gradle.GrapholizeApp [run]" />
-      </list>
-    </recent_temporary>
   </component>
   <component name="SvnConfiguration">
     <configuration />

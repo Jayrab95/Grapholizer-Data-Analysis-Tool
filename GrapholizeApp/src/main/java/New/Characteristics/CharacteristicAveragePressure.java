@@ -6,8 +6,8 @@ import java.util.List;
 
 public class CharacteristicAveragePressure extends Characteristic<Double> {
 
-    public CharacteristicAveragePressure(String name) {
-        super(name);
+    public CharacteristicAveragePressure(String name, String unitName) {
+        super(name, unitName);
     }
 
     @Override

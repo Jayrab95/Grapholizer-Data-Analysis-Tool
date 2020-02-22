@@ -8,8 +8,8 @@ import java.util.concurrent.atomic.AtomicLong;
 
 public class CharacteristicAverageStrokeDuration extends Characteristic<Double> {
 
-    public CharacteristicAverageStrokeDuration(String name) {
-        super(name);
+    public CharacteristicAverageStrokeDuration(String name, String unitName) {
+        super(name, unitName);
     }
 
     @Override

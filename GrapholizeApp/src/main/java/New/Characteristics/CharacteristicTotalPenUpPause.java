@@ -6,8 +6,8 @@ import java.util.List;
 
 public class CharacteristicTotalPenUpPause extends Characteristic<Long> {
 
-    public CharacteristicTotalPenUpPause(String name) {
-        super(name);
+    public CharacteristicTotalPenUpPause(String name, String unitName) {
+        super(name, unitName);
     }
 
     @Override

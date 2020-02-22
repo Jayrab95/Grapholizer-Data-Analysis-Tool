@@ -8,8 +8,8 @@ import java.util.Optional;
 
 public class CharacteristicPenDownPause extends Characteristic<Long> {
 
-    public CharacteristicPenDownPause(String name) {
-        super(name);
+    public CharacteristicPenDownPause(String name, String unitName) {
+        super(name, unitName);
     }
 
     @Override

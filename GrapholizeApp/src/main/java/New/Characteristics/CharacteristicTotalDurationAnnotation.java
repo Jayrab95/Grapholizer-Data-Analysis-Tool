@@ -6,8 +6,8 @@ import java.util.List;
 
 public class CharacteristicTotalDurationAnnotation extends Characteristic<Double> {
 
-    public CharacteristicTotalDurationAnnotation(String name) {
-        super(name);
+    public CharacteristicTotalDurationAnnotation(String name, String unitName) {
+        super(name, unitName);
     }
 
     @Override

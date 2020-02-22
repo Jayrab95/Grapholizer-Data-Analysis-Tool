@@ -16,12 +16,13 @@ public class DetailLine extends Line {
                 setCoordinates(newValue.doubleValue());
             }
         });
+        setCoordinates(scale.get());
     }
 
     private void setCoordinates(double scale){
         this.setStartX(startX * scale);
-        this.setStartX(startY * scale);
+        this.setStartY(startY);
         this.setEndX(endX * scale);
-        this.setEndY(endY * scale);
+        this.setEndY(endY);
     }
 }

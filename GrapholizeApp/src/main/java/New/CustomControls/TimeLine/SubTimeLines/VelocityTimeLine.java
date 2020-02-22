@@ -41,9 +41,9 @@ public class VelocityTimeLine extends DetailTimeLine {
                         double velocityNorm1 = velocityStepsForDotSection.get(j) / maxVelocity.get();
                         double velocityNorm2 = velocityStepsForDotSection.get((j+1) % velocityStepsForDotSection.size()) / maxVelocity.get();
                         DetailLine l = new DetailLine(
-                                (d1.getTimeStamp()) * scale.get(),
+                                (d1.getTimeStamp()),
                                 getHeight() - (velocityNorm1 * getHeight()),
-                                (d2.getTimeStamp()) * scale.get(),
+                                (d2.getTimeStamp()),
                                 getHeight() - (velocityNorm2 * getHeight()),
                                 scale
                         );

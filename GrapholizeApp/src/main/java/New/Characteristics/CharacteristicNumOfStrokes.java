@@ -6,8 +6,8 @@ import java.util.List;
 
 public class CharacteristicNumOfStrokes extends Characteristic<Integer> {
 
-    public CharacteristicNumOfStrokes(String name) {
-        super(name);
+    public CharacteristicNumOfStrokes(String name, String unitName) {
+        super(name, unitName);
     }
 
     @Override

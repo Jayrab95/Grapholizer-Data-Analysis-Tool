@@ -27,9 +27,9 @@ public class PressureTimeLine extends DetailTimeLine {
                     Dot d1 = dots.get(i);
                     Dot d2 = dots.get(i + 1);
                     DetailLine l = new DetailLine(
-                            (d1.getTimeStamp()) * scale.get(),
+                            (d1.getTimeStamp()),
                             getHeight() - (d1.getForce() * getHeight()),
-                            (d2.getTimeStamp()) * scale.get(),
+                            (d2.getTimeStamp()),
                             getHeight() - (d2.getForce() * getHeight()),
                             scale
                     );

@@ -9,8 +9,8 @@ import java.util.Optional;
 
 public class CharacteristicVelocityHorizontalAverage extends Characteristic<Double> {
 
-    public CharacteristicVelocityHorizontalAverage(String name) {
-        super(name);
+    public CharacteristicVelocityHorizontalAverage(String name, String unitName) {
+        super(name, unitName);
     }
 
     @Override

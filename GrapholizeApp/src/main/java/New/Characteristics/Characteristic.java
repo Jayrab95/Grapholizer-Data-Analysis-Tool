@@ -6,15 +6,21 @@ import java.util.List;
 
 public abstract class Characteristic<T extends Number> {
     private String name;
+    private String unitName;
 
-    public Characteristic(String name) {
+    public Characteristic(String name, String unitName) {
         this.name = name;
+        this.unitName = unitName;
     }
 
     public abstract T calculate(List<List<Dot>> data);
 
     public String getName(){
         return name;
+    }
+
+    public String getUnitName() {
+        return unitName;
     }
 
     @Override
