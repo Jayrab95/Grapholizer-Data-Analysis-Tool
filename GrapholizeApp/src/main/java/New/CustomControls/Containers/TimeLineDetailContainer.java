@@ -19,7 +19,9 @@ import javafx.scene.control.ScrollPane;
 
 import New.Observables.ObservablePage;
 
+import javafx.scene.control.Slider;
 import javafx.scene.layout.GridPane;
+import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
 
@@ -29,33 +31,52 @@ import java.util.stream.Collectors;
 public class TimeLineDetailContainer extends ScrollPane {
 
     private SelectableTimeLinePane inspectedTimeLine;
+    private ScrollPane timelineScrollPane;
+    private GridPane subTimelines;
+    private Slider scaleSlider;
+    private double totalLength;
+
     ObservablePage activePage;
     DoubleProperty detailScale;
-
-    //VBox subTimeLines;
-    GridPane subTimelines;
 
     public TimeLineDetailContainer(TimeLinePane inspectedTimeLine, ObservablePage activePage){
         this.inspectedTimeLine = (SelectableTimeLinePane)inspectedTimeLine;
         this.activePage = activePage;
+        this.totalLength = inspectedTimeLine.getTotalLength();
+        //Initialize Scaler;
         detailScale = new SimpleDoubleProperty(0.05);
+        scaleSlider = initializeSlider(detailScale.get());
+        detailScale.bind(scaleSlider.valueProperty());
         generateDetailContainer();
     }
 
     private void generateDetailContainer(){
-        /*subTimeLines = new VBox();
-        subTimeLines.getChildren().add(copy());
-        subTimeLines.getChildren().addAll(pressure(), velocity());
-        subTimeLines.getChildren().addAll(characteristicTimeLines(CharacteristicList.characteristics()));
-        this.setContent(subTimeLines);
-         */
+        timelineScrollPane = new ScrollPane();
         subTimelines = new GridPane();
-        subTimelines.setVgap(5d);
+        subTimelines.autosize();
+        subTimelines.setVgap(10d);
         copy(0);
         pressure(1);
         velocity(2);
         characteristicTimeLines(CharacteristicList.characteristics(),3);
-        this.setContent(subTimelines);
+
+        /*detailScale.addListener((obs, oldVal, newVal) -> {
+            subTimelines.setPrefWidth(totalLength * newVal.doubleValue());
+        });*/
+        //timelineScrollPane.setContent(subTimelines);
+        this.setContent(new VBox(scaleSlider, subTimelines));
+    }
+
+    private Slider initializeSlider(double initScale){
+        Slider slider = new Slider(0.0d, 1, initScale);
+        slider.setMajorTickUnit(0.05);
+        slider.setMinorTickCount(0);
+        slider.setShowTickMarks(true);
+        slider.setSnapToTicks(true);
+
+        slider.setPrefWidth(1000);
+        slider.setMaxWidth(1000);
+        return slider;
     }
 
     private void copy(int rowIndex){

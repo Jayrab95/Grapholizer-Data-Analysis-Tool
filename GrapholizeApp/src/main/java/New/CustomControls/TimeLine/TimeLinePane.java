@@ -51,6 +51,12 @@ public abstract class TimeLinePane extends Pane {
         return this.timeLineName;
     }
 
+    public double getTotalLength() { return totalLength.get(); }
+
+    public DoubleProperty totalLengthProperty() {
+        return totalLength;
+    }
+
     protected void resizeTimeLine(){
         setWidth(totalLength.get() * scale.get());
         setPrefWidth(totalLength.get() * scale.get());
