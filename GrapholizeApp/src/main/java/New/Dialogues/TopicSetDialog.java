@@ -1,5 +1,6 @@
 package New.Dialogues;
 
+import New.Execptions.NoTopicsException;
 import New.Model.Entities.SimpleColor;
 import New.Model.Entities.Topic;
 import New.Model.Entities.TopicSet;
@@ -14,6 +15,7 @@ import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.layout.GridPane;
 import javafx.scene.paint.Color;
+import javafx.util.Callback;
 
 import java.util.Optional;
 import java.util.UUID;
@@ -25,7 +27,7 @@ public class TopicSetDialog extends Dialog<TopicSet> {
     private StringProperty topicSetNameProperty;
     private ObservableList topics;
     private ObjectProperty<Color> topicSetColor;
-    private  ObjectProperty<Topic> mainTopic;
+    private ObjectProperty<Topic> mainTopic;
 
 
     public TopicSetDialog(String title, String header, String text, Optional<TopicSet> optional){
@@ -51,13 +53,13 @@ public class TopicSetDialog extends Dialog<TopicSet> {
         this.topicSetColor = new SimpleObjectProperty<>();
         this.topicSetColor.bind(colorPicker.valueProperty());
 
-
-
         //https://coderanch.com/t/603701/java/Tableview-TextField-Javafx
         TableView<Topic> tableView_Topics = new TableView<>();
+        tableView_Topics.setEditable(true);
 
         TableColumn topicColumn = new TableColumn("Topics");
         topicColumn.setCellValueFactory(new PropertyValueFactory<Topic, TextField>("topicName"));
+        topicColumn.setMinWidth(tableView_Topics.getWidth());
 
         ComboBox<Topic> comboBox_mainTopic = new ComboBox<>();
         tableView_Topics.getItems().addListener(new ListChangeListener<Topic>() {
@@ -77,7 +79,7 @@ public class TopicSetDialog extends Dialog<TopicSet> {
         mainTopic.bind(comboBox_mainTopic.valueProperty());
 
         tableView_Topics.getColumns().add(topicColumn);
-        tableView_Topics.setEditable(true);
+
         if(topicSetOptional.isPresent()){
             tableView_Topics.getItems().addAll(topicSetOptional.get().getTopics());
         }
@@ -148,6 +150,13 @@ public class TopicSetDialog extends Dialog<TopicSet> {
 
     public String getTopicSetText(){
         return topicSetNameProperty.get();
+    }
+
+    public boolean topicsDefined() throws NoTopicsException {
+        if(topics.size() > 0){
+            return true;
+        }
+        throw new NoTopicsException(getTopicSetText());
     }
 
     public TopicSet getTopicSet(){

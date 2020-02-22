@@ -163,4 +163,17 @@ public class CustomTimeLineController {
         page.removeAnnotation(observableTopicSet.getTopicSetID(), a.getSegment());
     }
 
+    public void filterSelect(Map<String, String> topicFilters){
+
+    }
+
+    private boolean fitsFilterCriteria(Segment s, Map<String, String> topicFilters){
+        for(String key : topicFilters.keySet()){
+            if(!s.getAnnotation(key).equals(topicFilters.get(key))){
+                return false;
+            }
+        }
+        return true;
+    }
+
 }

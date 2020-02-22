@@ -401,6 +401,7 @@ public class TimeLineContainer extends VBox {
             if(!editCall || !defaultValue.equals(newTimeLineName)) {
                 try {
                     timeLineContainerController.checkIfTagIsValid(newTimeLineName);
+                    dialog.topicsDefined();
                 } catch (TimeLineTagException ex) {
                     DialogGenerator.simpleErrorDialog(
                             TXT_TL_CREATION_ERROR_TITLE,
