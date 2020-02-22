@@ -8,8 +8,8 @@ import java.util.List;
 
 public class CharacteristicNormalizedJerk extends Characteristic<Double> {
 
-    public CharacteristicNormalizedJerk(String name) {
-        super(name);
+    public CharacteristicNormalizedJerk(String name, String unitName) {
+        super(name, unitName);
     }
 
     @Override
@@ -60,6 +60,6 @@ public class CharacteristicNormalizedJerk extends Characteristic<Double> {
     private double getStrokeLength(List<Dot> dotList) {
         List<List<Dot>> dotLists = new LinkedList<>();
         dotLists.add(dotList);
-        return new CharacteristicTotalLengthOfStrokes("tempCharac").calculate(dotLists);
+        return new CharacteristicTotalLengthOfStrokes("tempCharac", "tempUnit").calculate(dotLists);
     }
 }

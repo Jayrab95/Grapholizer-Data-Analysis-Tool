@@ -1,6 +1,5 @@
 package New.Controllers;
 import New.Characteristics.*;
-import New.Characteristics.CharacteristicVelocityAverage;
 import New.CustomControls.Containers.ContentSwitcher;
 import New.CustomControls.Containers.MainCanvas;
 import New.CustomControls.Containers.TimeLineContainer;
@@ -13,6 +12,7 @@ import New.util.Export.ProjectSerializer;
 import New.util.Import.JsonLoader;
 import New.util.Import.PageDataReader;
 import New.util.Import.ProjectLoader;
+import New.util.CharacteristicList;
 
 import New.util.javafx.JavaFxUtil;
 import javafx.fxml.FXML;
@@ -59,7 +59,7 @@ public class MainSceneController {
         optionalContentSwitcher = Optional.empty();
         optionalTimeLineContainer = Optional.empty();
         characteristicList = new HashSet<>();
-        initCharacteristics();
+        characteristicList.addAll(CharacteristicList.characteristicsExport());
     }
 
     @FXML
@@ -247,18 +247,5 @@ public class MainSceneController {
             optionalTimeLineContainer = Optional.of(new TimeLineContainer(_session.getActiveProject(), _session.getActivePage(), 0.2));
             scrollPane_TimeLines.getChildren().add(optionalTimeLineContainer.get());
         }
-    }
-
-    private void initCharacteristics() {
-        characteristicList.add(new CharacteristicVelocityAverage("Velocity Average mm/ms"));
-        characteristicList.add(new CharacteristicAverageLengthOfStrokes("Average Stroke Length /mm"));
-        characteristicList.add(new CharacteristicAverageAccelaration("Average Acceleration mm/ms^2"));
-        characteristicList.add(new CharacteristicAverageStrokeDuration("Average Stroke Duration /ms"));
-        characteristicList.add(new CharacteristicTotalPenUpPause("Pen Up Pause"));
-        characteristicList.add(new CharacteristicNumOfStrokes("Number of Strokes"));
-        characteristicList.add(new CharacteristicTotalDurationStrokes("total stroke durations"));
-        characteristicList.add(new CharacteristicTotalVelocityInversions("Number of Velocity Inversions"));
-        //TODO readd Normalized Jerk once finished
-        characteristicList.add(new CharacteristicAveragePressure("Average Pressure"));
     }
 }

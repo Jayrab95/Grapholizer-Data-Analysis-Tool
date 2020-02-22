@@ -9,8 +9,8 @@ import java.util.Optional;
 
 public class CharacteristicVelocityAverage extends Characteristic<Double> {
 
-    public CharacteristicVelocityAverage(String name) {
-        super(name);
+    public CharacteristicVelocityAverage(String name, String unitName) {
+        super(name, unitName);
     }
 
     public static List<Double> getVelocitySteps(List<Dot> dots){

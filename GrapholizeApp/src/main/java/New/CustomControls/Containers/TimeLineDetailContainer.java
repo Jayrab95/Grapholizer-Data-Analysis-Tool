@@ -13,11 +13,13 @@ import javafx.beans.property.DoubleProperty;
 import javafx.beans.property.SimpleDoubleProperty;
 import javafx.beans.property.SimpleObjectProperty;
 import javafx.beans.property.SimpleStringProperty;
+import javafx.scene.control.Label;
 import javafx.scene.control.ScrollPane;
 
 
 import New.Observables.ObservablePage;
 
+import javafx.scene.layout.GridPane;
 import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
 
@@ -30,26 +32,36 @@ public class TimeLineDetailContainer extends ScrollPane {
     ObservablePage activePage;
     DoubleProperty detailScale;
 
-    VBox subTimeLines;
+    //VBox subTimeLines;
+    GridPane subTimelines;
 
     public TimeLineDetailContainer(TimeLinePane inspectedTimeLine, ObservablePage activePage){
         this.inspectedTimeLine = (SelectableTimeLinePane)inspectedTimeLine;
         this.activePage = activePage;
         detailScale = new SimpleDoubleProperty(0.05);
         generateDetailContainer();
-
     }
 
     private void generateDetailContainer(){
-        subTimeLines = new VBox();
+        /*subTimeLines = new VBox();
         subTimeLines.getChildren().add(copy());
         subTimeLines.getChildren().addAll(pressure(), velocity());
         subTimeLines.getChildren().addAll(characteristicTimeLines(CharacteristicList.characteristics()));
         this.setContent(subTimeLines);
+         */
+        subTimelines = new GridPane();
+        subTimelines.setVgap(5d);
+        copy(0);
+        pressure(1);
+        velocity(2);
+        characteristicTimeLines(CharacteristicList.characteristics(),3);
+        this.setContent(subTimelines);
     }
 
-    private SimpleTimeLineWrapper copy(){
-        AnnotationTimeLinePane a = new AnnotationTimeLinePane(
+    private void copy(int rowIndex){
+        subTimelines.add(new Label("Strokes"),0, rowIndex);
+        subTimelines.add(new Label("Unit"),1, rowIndex);
+        subTimelines.add(new AnnotationTimeLinePane(
                 getLength(),
                 inspectedTimeLine.getHeight(),
                 detailScale,
@@ -57,12 +69,13 @@ public class TimeLineDetailContainer extends ScrollPane {
                 new SimpleObjectProperty<Color>(Color.BLACK),
                 inspectedTimeLine.getAnnotations(),
                 inspectedTimeLine.getTopicSetID()
-        );
-        return new SimpleTimeLineWrapper(a);
+        ), 2 ,rowIndex);
     }
 
-    private SimpleTimeLineWrapper pressure(){
-        PressureTimeLine a = new PressureTimeLine(
+    private void pressure(int rowIndex){
+        subTimelines.add(new Label("Pressure"),0, rowIndex);
+        subTimelines.add(new Label("some Unit"),1, rowIndex);
+        subTimelines.add(new PressureTimeLine(
                 getLength(),
                 inspectedTimeLine.getHeight(),
                 detailScale,
@@ -70,37 +83,39 @@ public class TimeLineDetailContainer extends ScrollPane {
                 activePage,
                 inspectedTimeLine,
                 inspectedTimeLine.getTopicSetID()
-        );
-        return new SimpleTimeLineWrapper(a);
+        ), 2, rowIndex);
     }
 
-    private SimpleTimeLineWrapper velocity(){
-        VelocityTimeLine a = new VelocityTimeLine(
+    private void velocity(int rowIndex){
+         subTimelines.add(new Label("Velocity"),0, rowIndex);
+         subTimelines.add(new Label("mm/ms"),1, rowIndex);
+         subTimelines.add(new VelocityTimeLine(
                 getLength(),
                 inspectedTimeLine.getHeight(),
                 detailScale,
                 new SimpleStringProperty("Velocity"),
                 activePage,
                 inspectedTimeLine.getTopicSetID()
-        );
-        return new SimpleTimeLineWrapper(a);
+        ), 2, rowIndex);
     }
 
 
-    private List<SimpleTimeLineWrapper> characteristicTimeLines(List<Characteristic> characteristics){
-        return characteristics.stream()
-                .map(numberCharacteristic -> new SimpleTimeLineWrapper(
-                        new DetailCharacteristicTimeLine(
-                                getLength(),
-                                inspectedTimeLine.getHeight(),
-                                detailScale,
-                                new SimpleStringProperty(numberCharacteristic.getName()),
-                                activePage,
-                                inspectedTimeLine.getTopicSetID(),
-                                numberCharacteristic
-                        )
-                ))
-                .collect(Collectors.toList());
+    private void characteristicTimeLines(List<Characteristic> characteristics, int rowIndex){
+        for (int i = 0; i < characteristics.size() ; i++) {
+            Characteristic characteristic = characteristics.get(i);
+            int rowPosition = rowIndex + i;
+            subTimelines.add(new Label(characteristic.getName()),0, rowPosition);
+            subTimelines.add(new Label(characteristic.getUnitName()),1, rowPosition);
+            subTimelines.add(new DetailCharacteristicTimeLine(
+                    getLength(),
+                    inspectedTimeLine.getHeight(),
+                    detailScale,
+                    new SimpleStringProperty(characteristic.getName()),
+                    activePage,
+                    inspectedTimeLine.getTopicSetID(),
+                    characteristics.get(i)
+            ), 2, rowPosition);
+        }
     }
 
     private double getLength(){

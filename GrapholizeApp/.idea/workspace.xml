@@ -451,6 +451,10 @@
       <workItem from="1582032708084" duration="11132000" />
       <workItem from="1582117670888" duration="18362000" />
       <workItem from="1582292135759" duration="992000" />
+      <workItem from="1582305678423" duration="543000" />
+      <workItem from="1582306602910" duration="1453000" />
+      <workItem from="1582373164296" duration="647000" />
+      <workItem from="1582376412879" duration="5682000" />
     </task>
     <servers />
   </component>
@@ -555,11 +559,6 @@
           <url>file://$PROJECT_DIR$/src/main/test/New/Characteristics/CharacteristicVelocityAverageTest.java</url>
           <line>39</line>
           <option name="timeStamp" value="125" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" type="java-line">
-          <url>file://$PROJECT_DIR$/src/main/java/New/Characteristics/CharacteristicVelocityAverage.java</url>
-          <line>39</line>
-          <option name="timeStamp" value="126" />
         </line-breakpoint>
       </breakpoints>
     </breakpoint-manager>

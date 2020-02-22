@@ -6,8 +6,8 @@ import java.util.List;
 
 public class CharacteristicTotalDurationStrokes extends Characteristic<Long> {
 
-    public CharacteristicTotalDurationStrokes(String name) {
-        super(name);
+    public CharacteristicTotalDurationStrokes(String name, String unitName) {
+        super(name, unitName);
     }
 
     @Override

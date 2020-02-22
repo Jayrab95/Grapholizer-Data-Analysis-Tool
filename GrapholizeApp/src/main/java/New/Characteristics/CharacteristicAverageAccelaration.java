@@ -7,8 +7,8 @@ import java.util.List;
 
 public class CharacteristicAverageAccelaration extends Characteristic<Double>{
 
-    public CharacteristicAverageAccelaration(String name) {
-        super(name);
+    public CharacteristicAverageAccelaration(String name, String unitName) {
+        super(name, unitName);
     }
 
     @Override
