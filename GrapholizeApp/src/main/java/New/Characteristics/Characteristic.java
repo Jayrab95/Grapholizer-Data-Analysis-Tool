@@ -18,9 +18,14 @@ public abstract class Characteristic<T extends Number> {
     }
 
     @Override
+    public String toString() {
+        return name;
+    }
+
+    @Override
     public boolean equals(Object obj) {
         if(obj instanceof Characteristic){
-            if(name.equals(((Characteristic) obj).getName()))return true;
+            if(name.equals(((Characteristic) obj).getName())) return true;
             else return false;
         }
         return false ;

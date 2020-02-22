@@ -14,9 +14,9 @@ import New.util.Import.JsonLoader;
 import New.util.Import.PageDataReader;
 import New.util.Import.ProjectLoader;
 
+import New.util.javafx.JavaFxUtil;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
-import javafx.scene.Scene;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.VBox;
 import javafx.stage.FileChooser;
@@ -46,7 +46,8 @@ public class MainSceneController {
     private Optional<MainCanvas> optionalCanvas;
     private Optional<ContentSwitcher> optionalContentSwitcher;
     private Optional<TimeLineContainer> optionalTimeLineContainer;
-    /* Internal State Of Application */
+
+    /** Internal State Of Application */
     Session _session;
 
     Path raw_data_file; //TODO Lukas there should be a better way than keeping it here
@@ -59,13 +60,12 @@ public class MainSceneController {
         optionalTimeLineContainer = Optional.empty();
         characteristicList = new HashSet<>();
         initCharacteristics();
-
     }
 
     @FXML
     private void exportDataToCSV(){
         try {
-           FXMLLoader loader = openWindowReturnController("fxml/views/ExportDialog.fxml"
+           FXMLLoader loader = JavaFxUtil.openWindowReturnController(this.getClass(),"fxml/views/ExportDialog.fxml"
                    , "CSV-Export"
                    ,800,400);
            if(raw_data_file == null) throw new NullPointerException();
@@ -227,24 +227,6 @@ public class MainSceneController {
         return sFile;
     }
 
-    /**
-     *
-     * @param fxmlPath Absolute path to the fxml file to load
-     * @param stageTitle Name of newly opened window
-     * @param width width of the opened window
-     * @param height height of the opened window
-     * @return FXMLLoader of the given fxml file
-     * @throws IOException when the fxml file can not be located
-     */
-    private FXMLLoader openWindowReturnController(String fxmlPath, String stageTitle, int width, int height) throws IOException {
-            FXMLLoader loader = new FXMLLoader(getClass().getClassLoader().getResource(fxmlPath));
-            Scene scene = new Scene(loader.load(), width, height);
-            Stage stage = new Stage();
-            stage.setTitle(stageTitle);
-            stage.setScene(scene);
-            stage.show();
-            return loader;
-    }
 
     void initializeProject(){
         //_session = new Session(new JsonLoader().load("src\\main\\resources\\data\\lukas_test_1.json"));
@@ -268,15 +250,15 @@ public class MainSceneController {
     }
 
     private void initCharacteristics() {
-        characteristicList.add(new CharacteristicVelocityAverage("Velocity Average"));
-        characteristicList.add(new CharacteristicAverageLengthOfStrokes("Average Stroke Length"));
-        characteristicList.add(new CharacteristicAverageAccelaration("Average Acceleration"));
-        characteristicList.add(new CharacteristicAverageStrokeDuration("Average Stroke Duration"));
+        characteristicList.add(new CharacteristicVelocityAverage("Velocity Average mm/ms"));
+        characteristicList.add(new CharacteristicAverageLengthOfStrokes("Average Stroke Length /mm"));
+        characteristicList.add(new CharacteristicAverageAccelaration("Average Acceleration mm/ms^2"));
+        characteristicList.add(new CharacteristicAverageStrokeDuration("Average Stroke Duration /ms"));
         characteristicList.add(new CharacteristicTotalPenUpPause("Pen Up Pause"));
         characteristicList.add(new CharacteristicNumOfStrokes("Number of Strokes"));
         characteristicList.add(new CharacteristicTotalDurationStrokes("total stroke durations"));
         characteristicList.add(new CharacteristicTotalVelocityInversions("Number of Velocity Inversions"));
-        characteristicList.add(new CharacteristicNormalizedJerk("Normalized Jerk"));
+        //TODO readd Normalized Jerk once finished
         characteristicList.add(new CharacteristicAveragePressure("Average Pressure"));
     }
 }

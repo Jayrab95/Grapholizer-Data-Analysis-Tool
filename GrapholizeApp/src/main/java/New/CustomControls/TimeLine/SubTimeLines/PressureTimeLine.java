@@ -26,11 +26,12 @@ public class PressureTimeLine extends DetailTimeLine {
                 for(int i = 0; i < dots.size() - 1; i++){
                     Dot d1 = dots.get(i);
                     Dot d2 = dots.get(i + 1);
-                    Line l = new Line(
+                    DetailLine l = new DetailLine(
                             (d1.getTimeStamp()) * scale.get(),
                             getHeight() - (d1.getForce() * getHeight()),
                             (d2.getTimeStamp()) * scale.get(),
-                            getHeight() - (d2.getForce() * getHeight())
+                            getHeight() - (d2.getForce() * getHeight()),
+                            scale
                     );
                     getChildren().add(l);
                 }

@@ -1,61 +1,41 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
-  <component name="ArtifactsWorkspaceSettings">
-    <artifacts-to-build>
-      <artifact name="GrapholizeAppAID.main:jar" />
-    </artifacts-to-build>
-  </component>
   <component name="ChangeListManager">
     <list default="true" id="f9c9e85c-b6d3-4a2f-99c7-3350288aea5b" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/src/main/java/New/Dialogues/DialogResults/FilterDialogResult.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/New/Dialogues/FilterSelectDialog.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/New/Execptions/NoTopicsException.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/New/Execptions/TopicEmptyOrIdenticalException.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/build/classes/java/main/New/util/javafx/JavaFxUtil.class" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/New/CustomControls/TimeLine/SubTimeLines/DetailLine.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/New/util/javafx/JavaFxUtil.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/test/New/Characteristics/CharacteristicVelocityAverageTest.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.gradle/5.2.1/executionHistory/executionHistory.bin" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/5.2.1/executionHistory/executionHistory.bin" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.gradle/5.2.1/executionHistory/executionHistory.lock" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/5.2.1/executionHistory/executionHistory.lock" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.gradle/5.2.1/fileHashes/fileHashes.bin" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/5.2.1/fileHashes/fileHashes.bin" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.gradle/5.2.1/fileHashes/fileHashes.lock" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/5.2.1/fileHashes/fileHashes.lock" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.gradle/5.2.1/javaCompile/classAnalysis.bin" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/5.2.1/javaCompile/classAnalysis.bin" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.gradle/5.2.1/javaCompile/javaCompile.lock" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/5.2.1/javaCompile/javaCompile.lock" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.gradle/5.2.1/javaCompile/taskHistory.bin" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/5.2.1/javaCompile/taskHistory.bin" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.gradle/buildOutputCleanup/buildOutputCleanup.lock" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/buildOutputCleanup/buildOutputCleanup.lock" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.gradle/buildOutputCleanup/cache.properties" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.gradle/buildOutputCleanup/outputFiles.bin" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/build/classes/java/main/New/Dialogues/TopicSetDialog$1.class" beforeDir="false" afterPath="$PROJECT_DIR$/build/classes/java/main/New/Dialogues/TopicSetDialog$1.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/build/classes/java/main/New/Dialogues/TopicSetDialog.class" beforeDir="false" afterPath="$PROJECT_DIR$/build/classes/java/main/New/Dialogues/TopicSetDialog.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/New/Controllers/CustomTimeLineController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/New/Controllers/CustomTimeLineController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/New/Controllers/SelectableTimeLineController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/New/Controllers/SelectableTimeLineController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/New/CustomControls/Containers/TimeLineContainer.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/New/CustomControls/Containers/TimeLineContainer.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/classes/java/main/New/Characteristics/Characteristic.class" beforeDir="false" afterPath="$PROJECT_DIR$/build/classes/java/main/New/Characteristics/Characteristic.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/classes/java/main/New/Characteristics/CharacteristicVelocityAverage.class" beforeDir="false" afterPath="$PROJECT_DIR$/build/classes/java/main/New/Characteristics/CharacteristicVelocityAverage.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/classes/java/main/New/Controllers/MainSceneController.class" beforeDir="false" afterPath="$PROJECT_DIR$/build/classes/java/main/New/Controllers/MainSceneController.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/classes/java/main/New/util/math/VelocityMathUtil.class" beforeDir="false" afterPath="$PROJECT_DIR$/build/classes/java/main/New/util/math/VelocityMathUtil.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/New/Characteristics/Characteristic.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/New/Characteristics/Characteristic.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/New/Characteristics/CharacteristicAverageAccelaration.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/New/Characteristics/CharacteristicAverageAccelaration.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/New/Characteristics/CharacteristicAverageLengthOfStrokes.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/New/Characteristics/CharacteristicAverageLengthOfStrokes.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/New/Characteristics/CharacteristicVelocityAverage.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/New/Characteristics/CharacteristicVelocityAverage.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/New/Controllers/MainSceneController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/New/Controllers/MainSceneController.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/New/CustomControls/TimeLine/SubTimeLines/PressureTimeLine.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/New/CustomControls/TimeLine/SubTimeLines/PressureTimeLine.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/New/Dialogues/DialogControls/TopicTextFieldCell.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/New/Dialogues/TopicSetDialog.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/New/Dialogues/TopicSetDialog.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/New/Execptions/AnnotationCopyCollideException.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/New/CustomControls/TimeLine/SubTimeLines/VelocityTimeLine.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/New/CustomControls/TimeLine/SubTimeLines/VelocityTimeLine.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/New/util/math/VelocityMathUtil.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/New/util/math/VelocityMathUtil.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/test/New/Characteristics/CharacteristicAverageAccelarationTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/test/New/Characteristics/CharacteristicAverageAccelarationTest.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/test/New/Characteristics/CharacteristicAverageLengthOfStrokesTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/test/New/Characteristics/CharacteristicAverageLengthOfStrokesTest.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/test/New/util/math/VelocityMathUtilTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/test/New/util/math/VelocityMathUtilTest.java" afterDir="false" />
     </list>
-    <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
     <option name="LAST_RESOLUTION" value="IGNORE" />
-  </component>
-  <component name="CodeStyleSettingsInfer">
-    <option name="done" value="true" />
-  </component>
-  <component name="DatabaseView">
-    <option name="SHOW_INTERMEDIATE" value="true" />
-    <option name="GROUP_DATA_SOURCES" value="true" />
-    <option name="GROUP_SCHEMA" value="true" />
-    <option name="GROUP_CONTENTS" value="false" />
-    <option name="SORT_POSITIONED" value="false" />
-    <option name="SHOW_EMPTY_GROUPS" value="false" />
-    <option name="AUTO_SCROLL_FROM_SOURCE" value="false" />
-    <option name="HIDDEN_KINDS">
-      <set />
-    </option>
-    <expand />
-    <select />
-  </component>
-  <component name="ExternalProjectsData">
-    <projectState path="$PROJECT_DIR$">
-      <ProjectState />
-    </projectState>
   </component>
   <component name="ExternalProjectsManager">
     <system id="GRADLE">
@@ -63,128 +43,15 @@
         <task path="$PROJECT_DIR$">
           <activation />
         </task>
-        <projects_view>
-          <tree_state>
-            <expand>
-              <path>
-                <item name="" type="6a2764b6:ExternalProjectsStructure$RootNode" />
-                <item name="GrapholizeAppAID" type="f1a62948:ProjectNode" />
-              </path>
-              <path>
-                <item name="" type="6a2764b6:ExternalProjectsStructure$RootNode" />
-                <item name="GrapholizeAppAID" type="f1a62948:ProjectNode" />
-                <item name="Source Sets" type="e897c970:GradleViewContributor$SourceSetsNode" />
-              </path>
-              <path>
-                <item name="" type="6a2764b6:ExternalProjectsStructure$RootNode" />
-                <item name="GrapholizeAppAID" type="f1a62948:ProjectNode" />
-                <item name="Tasks" type="e4a08cd1:TasksNode" />
-              </path>
-              <path>
-                <item name="" type="6a2764b6:ExternalProjectsStructure$RootNode" />
-                <item name="GrapholizeAppAID" type="f1a62948:ProjectNode" />
-                <item name="Tasks" type="e4a08cd1:TasksNode" />
-                <item name="application" type="c8890929:TasksNode$1" />
-              </path>
-              <path>
-                <item name="" type="6a2764b6:ExternalProjectsStructure$RootNode" />
-                <item name="GrapholizeAppAID" type="f1a62948:ProjectNode" />
-                <item name="Tasks" type="e4a08cd1:TasksNode" />
-                <item name="build" type="c8890929:TasksNode$1" />
-              </path>
-            </expand>
-            <select />
-          </tree_state>
-        </projects_view>
+        <projects_view />
       </state>
     </system>
-  </component>
-  <component name="FileTemplateManagerImpl">
-    <option name="RECENT_TEMPLATES">
-      <list>
-        <option value="JUnit5 Test Class" />
-        <option value="Interface" />
-        <option value="FxmlFile" />
-        <option value="FxmlFile" />
-        <option value="JUnit4 Test Class" />
-        <option value="Class" />
-      </list>
-    </option>
   </component>
   <component name="Git.Settings">
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$/.." />
   </component>
-  <component name="ProjectCodeStyleSettingsMigration">
-    <option name="version" value="1" />
-  </component>
-  <component name="ProjectId" id="1SyNplgZyBAO8VAf9WD9yMV7j40" />
   <component name="ProjectLevelVcsManager" settingsEditedManually="true">
     <ConfirmationsSetting value="2" id="Add" />
-  </component>
-  <component name="PropertiesComponent">
-    <property name="ASKED_ADD_EXTERNAL_FILES" value="true" />
-    <property name="Downloaded.Files.Path.Enabled" value="false" />
-    <property name="Repository.Attach.Annotations" value="false" />
-    <property name="Repository.Attach.JavaDocs" value="false" />
-    <property name="Repository.Attach.Sources" value="false" />
-    <property name="SHARE_PROJECT_CONFIGURATION_FILES" value="true" />
-    <property name="WebServerToolWindowFactoryState" value="false" />
-    <property name="aspect.path.notification.shown" value="true" />
-    <property name="com.intellij.testIntegration.createTest.CreateTestDialog.defaultLibrary" value="JUnit4" />
-    <property name="com.intellij.testIntegration.createTest.CreateTestDialog.defaultLibrarySuperClass.JUnit4" value="" />
-    <property name="com.intellij.testIntegration.createTest.CreateTestDialog.defaultLibrarySuperClass.JUnit5" value="" />
-    <property name="create.test.in.the.same.root" value="true" />
-    <property name="extract.method.default.visibility" value="private" />
-    <property name="last_opened_file_path" value="$USER_HOME$/.gradle/caches/modules-2/files-2.1/junit/junit/4.12/2973d150c0dc1fefe998f834810d68f278ea58ec" />
-    <property name="node.js.detected.package.eslint" value="true" />
-    <property name="node.js.detected.package.tslint" value="true" />
-    <property name="node.js.path.for.package.eslint" value="project" />
-    <property name="node.js.path.for.package.tslint" value="project" />
-    <property name="node.js.selected.package.eslint" value="(autodetect)" />
-    <property name="node.js.selected.package.tslint" value="(autodetect)" />
-    <property name="nodejs_interpreter_path.stuck_in_default_project" value="undefined stuck path" />
-    <property name="nodejs_npm_path_reset_for_default_project" value="true" />
-    <property name="nodejs_package_manager_path" value="npm" />
-    <property name="project.structure.last.edited" value="Modules" />
-    <property name="project.structure.proportion" value="0.15" />
-    <property name="project.structure.side.proportion" value="0.31954023" />
-    <property name="settings.editor.selected.configurable" value="reference.projectsettings.compiler.javacompiler" />
-  </component>
-  <component name="RecentsManager">
-    <key name="CreateTestDialog.RecentsKey">
-      <recent name="New.Characteristics" />
-      <recent name="New.util.math" />
-      <recent name="util.math" />
-    </key>
-    <key name="CreateTestDialog.Recents.Supers">
-      <recent name="" />
-    </key>
-    <key name="MoveClassesOrPackagesDialog.RECENTS_KEY">
-      <recent name="" />
-    </key>
-    <key name="CopyFile.RECENT_KEYS">
-      <recent name="C:\Users\jarab\Documents\FHNW\Semester 7\Projekt\IP6_Grapholize\GrapholizeApp\src\main\resources\data" />
-    </key>
-    <key name="CopyClassDialog.RECENTS_KEY">
-      <recent name="New.Characteristics" />
-      <recent name="New.CustomControls" />
-      <recent name="New.Controllers" />
-      <recent name="New.CustomControls.TimeLineElement" />
-      <recent name="New.CustomControls.TimeLine" />
-    </key>
-    <key name="MoveFile.RECENT_KEYS">
-      <recent name="C:\Users\lukat\Repos\repotest\IP6_Grapholize\GrapholizeApp\src" />
-      <recent name="C:\Users\lukat\Repos\repotest\IP6_Grapholize\GrapholizeApp\src\main" />
-      <recent name="C:\Users\jarab\Documents\FHNW\Semester 7\Projekt\IP6_Grapholize\GrapholizeApp\src\main\resources\data" />
-      <recent name="C:\Users\jarab\Documents\FHNW\Semester 7\Projekt\IP6_Grapholize\GrapholizeApp\src\main\resources\fxml" />
-      <recent name="C:\Users\jarab\Documents\FHNW\Semester 7\Projekt\IP6_Grapholize\GrapholizeApp\src\main\resources\views" />
-    </key>
-  </component>
-  <component name="RunAnythingCache">
-    <option name="myCommands">
-      <command value="gradle build" />
-      <command value="jilink" />
-    </option>
   </component>
   <component name="RunDashboard">
     <option name="ruleStates">
@@ -198,352 +65,10 @@
       </list>
     </option>
   </component>
-  <component name="RunManager" selected="Gradle.GrapholizeApp [run]">
-    <configuration default="true" type="Applet">
-      <option name="POLICY_FILE" value="$APPLICATION_HOME_DIR$/bin/appletviewer.policy" />
-      <method v="2">
-        <option name="Make" enabled="true" />
-      </method>
-    </configuration>
-    <configuration default="true" type="Application" factoryName="Application">
-      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$" />
-      <method v="2">
-        <option name="Make" enabled="true" />
-      </method>
-    </configuration>
-    <configuration name="GrapholizeApp [jar]" type="GradleRunConfiguration" factoryName="Gradle">
-      <ExternalSystemSettings>
-        <option name="executionName" />
-        <option name="externalProjectPath" value="$PROJECT_DIR$" />
-        <option name="externalSystemIdString" value="GRADLE" />
-        <option name="scriptParameters" />
-        <option name="taskDescriptions">
-          <list />
-        </option>
-        <option name="taskNames">
-          <list>
-            <option value="jar" />
-          </list>
-        </option>
-        <option name="vmOptions" />
-      </ExternalSystemSettings>
-      <GradleScriptDebugEnabled>true</GradleScriptDebugEnabled>
-      <method v="2" />
-    </configuration>
-    <configuration name="GrapholizeApp [run]" type="GradleRunConfiguration" factoryName="Gradle" temporary="true">
-      <ExternalSystemSettings>
-        <option name="executionName" />
-        <option name="externalProjectPath" value="$PROJECT_DIR$" />
-        <option name="externalSystemIdString" value="GRADLE" />
-        <option name="scriptParameters" />
-        <option name="taskDescriptions">
-          <list />
-        </option>
-        <option name="taskNames">
-          <list>
-            <option value="run" />
-          </list>
-        </option>
-        <option name="vmOptions" />
-      </ExternalSystemSettings>
-      <GradleScriptDebugEnabled>true</GradleScriptDebugEnabled>
-      <method v="2" />
-    </configuration>
-    <configuration name="All in GrapholizeAppAID.main" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
-      <module name="GrapholizeAppAID.main" />
-      <option name="PACKAGE_NAME" value="" />
-      <option name="TEST_OBJECT" value="package" />
-      <option name="WORKING_DIRECTORY" value="%MODULE_WORKING_DIR%" />
-      <method v="2">
-        <option name="Make" enabled="true" />
-      </method>
-    </configuration>
-    <configuration name="CharacteristicAverageStrokeDurationTest" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
-      <module name="GrapholizeAppAID.main" />
-      <extension name="coverage">
-        <pattern>
-          <option name="PATTERN" value="New.Characteristics.*" />
-          <option name="ENABLED" value="true" />
-        </pattern>
-      </extension>
-      <option name="PACKAGE_NAME" value="New.Characteristics" />
-      <option name="MAIN_CLASS_NAME" value="New.Characteristics.CharacteristicAverageStrokeDurationTest" />
-      <option name="TEST_OBJECT" value="class" />
-      <option name="WORKING_DIRECTORY" value="%MODULE_WORKING_DIR%" />
-      <method v="2">
-        <option name="Make" enabled="true" />
-      </method>
-    </configuration>
-    <configuration name="CharacteristicTotalPenUpPauseTest" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
-      <module name="GrapholizeAppAID.main" />
-      <extension name="coverage">
-        <pattern>
-          <option name="PATTERN" value="New.Characteristics.*" />
-          <option name="ENABLED" value="true" />
-        </pattern>
-      </extension>
-      <option name="PACKAGE_NAME" value="New.Characteristics" />
-      <option name="MAIN_CLASS_NAME" value="New.Characteristics.CharacteristicTotalPenUpPauseTest" />
-      <option name="TEST_OBJECT" value="class" />
-      <option name="WORKING_DIRECTORY" value="%MODULE_WORKING_DIR%" />
-      <method v="2">
-        <option name="Make" enabled="true" />
-      </method>
-    </configuration>
-    <configuration name="CharacteristicTotalVelocityInversionsTest" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
-      <module name="GrapholizeAppAID.main" />
-      <extension name="coverage">
-        <pattern>
-          <option name="PATTERN" value="New.Characteristics.*" />
-          <option name="ENABLED" value="true" />
-        </pattern>
-      </extension>
-      <option name="PACKAGE_NAME" value="New.Characteristics" />
-      <option name="MAIN_CLASS_NAME" value="New.Characteristics.CharacteristicTotalVelocityInversionsTest" />
-      <option name="TEST_OBJECT" value="class" />
-      <option name="WORKING_DIRECTORY" value="%MODULE_WORKING_DIR%" />
-      <method v="2">
-        <option name="Make" enabled="true" />
-      </method>
-    </configuration>
-    <configuration name="VelocityMathUtilTest" type="JUnit" factoryName="JUnit" nameIsGenerated="true">
-      <module name="GrapholizeAppAID.main" />
-      <extension name="coverage">
-        <pattern>
-          <option name="PATTERN" value="New.util.math.*" />
-          <option name="ENABLED" value="true" />
-        </pattern>
-      </extension>
-      <option name="PACKAGE_NAME" value="New.util.math" />
-      <option name="MAIN_CLASS_NAME" value="New.util.math.VelocityMathUtilTest" />
-      <option name="TEST_OBJECT" value="class" />
-      <option name="WORKING_DIRECTORY" value="%MODULE_WORKING_DIR%" />
-      <method v="2">
-        <option name="Make" enabled="true" />
-      </method>
-    </configuration>
-    <configuration default="true" type="JUnit" factoryName="JUnit">
-      <option name="TEST_OBJECT" value="class" />
-      <option name="WORKING_DIRECTORY" value="%MODULE_WORKING_DIR%" />
-      <method v="2">
-        <option name="Make" enabled="true" />
-      </method>
-    </configuration>
-    <configuration name="GrapholizeAppAID-1.0-SNAPSHOT.jar" type="JarApplication">
-      <option name="JAR_PATH" value="$PROJECT_DIR$/build/libs/GrapholizeAppAID-1.0-SNAPSHOT.jar" />
-      <option name="ALTERNATIVE_JRE_PATH" />
-      <module name="GrapholizeAppAID.main" />
-      <method v="2" />
-    </configuration>
-    <configuration default="true" type="TestNG">
-      <option name="TEST_OBJECT" value="CLASS" />
-      <option name="WORKING_DIRECTORY" value="%MODULE_WORKING_DIR%" />
-      <properties />
-      <listeners />
-      <method v="2">
-        <option name="Make" enabled="true" />
-      </method>
-    </configuration>
-    <configuration default="true" type="#org.jetbrains.idea.devkit.run.PluginConfigurationType">
-      <module name="" />
-      <option name="VM_PARAMETERS" value="-Xmx512m -Xms256m -XX:MaxPermSize=250m -ea" />
-      <option name="PROGRAM_PARAMETERS" />
-      <predefined_log_file enabled="true" id="idea.log" />
-      <method v="2">
-        <option name="Make" enabled="true" />
-      </method>
-    </configuration>
-    <list>
-      <item itemvalue="Gradle.GrapholizeApp [jar]" />
-      <item itemvalue="Gradle.GrapholizeApp [run]" />
-      <item itemvalue="JAR Application.GrapholizeAppAID-1.0-SNAPSHOT.jar" />
-      <item itemvalue="JUnit.VelocityMathUtilTest" />
-      <item itemvalue="JUnit.CharacteristicTotalVelocityInversionsTest" />
-      <item itemvalue="JUnit.All in GrapholizeAppAID.main" />
-      <item itemvalue="JUnit.CharacteristicTotalPenUpPauseTest" />
-      <item itemvalue="JUnit.CharacteristicAverageStrokeDurationTest" />
-    </list>
-    <recent_temporary>
-      <list>
-        <item itemvalue="Gradle.GrapholizeApp [run]" />
-        <item itemvalue="JUnit.All in GrapholizeAppAID.main" />
-        <item itemvalue="JUnit.CharacteristicAverageStrokeDurationTest" />
-        <item itemvalue="JUnit.CharacteristicTotalPenUpPauseTest" />
-        <item itemvalue="JUnit.CharacteristicTotalVelocityInversionsTest" />
-      </list>
-    </recent_temporary>
-  </component>
   <component name="SvnConfiguration">
     <configuration />
   </component>
   <component name="TaskManager">
-    <task active="true" id="Default" summary="Default task">
-      <changelist id="f9c9e85c-b6d3-4a2f-99c7-3350288aea5b" name="Default Changelist" comment="" />
-      <created>1572532060078</created>
-      <option name="number" value="Default" />
-      <option name="presentableId" value="Default" />
-      <updated>1572532060078</updated>
-      <workItem from="1572532061690" duration="1016000" />
-      <workItem from="1572961632830" duration="14078000" />
-      <workItem from="1573048336229" duration="5708000" />
-      <workItem from="1573110598761" duration="3256000" />
-      <workItem from="1573134495901" duration="23988000" />
-      <workItem from="1573306817790" duration="4086000" />
-      <workItem from="1573313157203" duration="25000" />
-      <workItem from="1573313238693" duration="1649000" />
-      <workItem from="1573387364361" duration="5826000" />
-      <workItem from="1573455050957" duration="3289000" />
-      <workItem from="1573462255470" duration="9000" />
-      <workItem from="1573470515550" duration="17991000" />
-      <workItem from="1573539213938" duration="3884000" />
-      <workItem from="1573564202890" duration="59021000" />
-      <workItem from="1574008494753" duration="2406000" />
-      <workItem from="1574075885937" duration="9741000" />
-      <workItem from="1574162271213" duration="7475000" />
-      <workItem from="1574173051195" duration="17159000" />
-      <workItem from="1574260312649" duration="48628000" />
-      <workItem from="1574757195118" duration="9684000" />
-      <workItem from="1574930041066" duration="14121000" />
-      <workItem from="1574946122404" duration="8091000" />
-      <workItem from="1574965823180" duration="1496000" />
-      <workItem from="1574968738667" duration="1827000" />
-      <workItem from="1575015968333" duration="1928000" />
-      <workItem from="1575052323705" duration="551000" />
-      <workItem from="1575462555568" duration="4713000" />
-      <workItem from="1575477145441" duration="1863000" />
-      <workItem from="1575550398889" duration="4252000" />
-      <workItem from="1575559558714" duration="2793000" />
-      <workItem from="1575632814630" duration="1517000" />
-      <workItem from="1575643835382" duration="1096000" />
-      <workItem from="1575645422355" duration="2508000" />
-      <workItem from="1575712386641" duration="2967000" />
-      <workItem from="1576265885664" duration="14110000" />
-      <workItem from="1576404363681" duration="7967000" />
-      <workItem from="1576477471200" duration="13564000" />
-      <workItem from="1577385297961" duration="675000" />
-      <workItem from="1577449000463" duration="1900000" />
-      <workItem from="1577451317759" duration="17047000" />
-      <workItem from="1577481762156" duration="1158000" />
-      <workItem from="1578669226039" duration="20561000" />
-      <workItem from="1578860236954" duration="3230000" />
-      <workItem from="1578987763220" duration="5209000" />
-      <workItem from="1580041595913" duration="18755000" />
-      <workItem from="1580123090148" duration="7997000" />
-      <workItem from="1580235301780" duration="921000" />
-      <workItem from="1580386687768" duration="18417000" />
-      <workItem from="1580488436342" duration="19000" />
-      <workItem from="1580572328025" duration="4915000" />
-      <workItem from="1580578459930" duration="1214000" />
-      <workItem from="1580825438059" duration="1568000" />
-      <workItem from="1580831310875" duration="3823000" />
-      <workItem from="1580835258963" duration="1831000" />
-      <workItem from="1580906127482" duration="6433000" />
-      <workItem from="1582032708084" duration="11132000" />
-      <workItem from="1582117670888" duration="18362000" />
-      <workItem from="1582292135759" duration="992000" />
-    </task>
     <servers />
-  </component>
-  <component name="TypeScriptGeneratedFilesManager">
-    <option name="version" value="1" />
-  </component>
-  <component name="Vcs.Log.Tabs.Properties">
-    <option name="TAB_STATES">
-      <map>
-        <entry key="MAIN">
-          <value>
-            <State>
-              <option name="COLUMN_ORDER" />
-            </State>
-          </value>
-        </entry>
-      </map>
-    </option>
-  </component>
-  <component name="VcsManagerConfiguration">
-    <option name="ADD_EXTERNAL_FILES_SILENTLY" value="true" />
-  </component>
-  <component name="XDebuggerManager">
-    <breakpoint-manager>
-      <breakpoints>
-        <line-breakpoint enabled="true" type="java-line">
-          <url>file://$PROJECT_DIR$/src/main/java/Controls/Timeline/Canvas/StrokeDurationTimeLineCanvas.java</url>
-          <line>30</line>
-          <option name="timeStamp" value="6" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" type="java-line">
-          <url>file://$PROJECT_DIR$/src/main/java/Controls/Timeline/Canvas/StrokeDurationTimeLineCanvas.java</url>
-          <line>40</line>
-          <option name="timeStamp" value="7" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" type="java-line">
-          <url>file://$PROJECT_DIR$/src/main/java/Controls/Timeline/Canvas/TimelineCanvas.java</url>
-          <line>63</line>
-          <option name="timeStamp" value="8" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" type="java-line">
-          <url>file://$PROJECT_DIR$/src/main/java/Controls/Timeline/Canvas/StrokeDurationTimeLineCanvas.java</url>
-          <line>22</line>
-          <option name="timeStamp" value="9" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" type="java-line">
-          <url>file://$PROJECT_DIR$/src/main/java/Controls/Container/TimeLineContainer.java</url>
-          <line>239</line>
-          <option name="timeStamp" value="33" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" type="java-line">
-          <url>file://$PROJECT_DIR$/src/main/java/New/Model/Entities/Segment.java</url>
-          <line>49</line>
-          <option name="timeStamp" value="69" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" type="java-line">
-          <url>file://$PROJECT_DIR$/src/main/java/New/Filters/VelocityFilter.java</url>
-          <line>34</line>
-          <option name="timeStamp" value="87" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" type="java-line">
-          <url>file://$PROJECT_DIR$/src/main/java/New/CustomControls/TimeLine/TimeUnitPane.java</url>
-          <line>60</line>
-          <option name="timeStamp" value="95" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" type="java-line">
-          <url>file://$PROJECT_DIR$/src/main/java/New/Filters/StrokeColorFilter.java</url>
-          <line>22</line>
-          <option name="timeStamp" value="96" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" type="java-line">
-          <url>file://$PROJECT_DIR$/src/main/java/New/CustomControls/TimeLine/CustomTimeLinePane.java</url>
-          <line>349</line>
-          <option name="timeStamp" value="111" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" type="java-line">
-          <url>file://$PROJECT_DIR$/src/main/java/New/Observables/ObservablePage.java</url>
-          <line>177</line>
-          <option name="timeStamp" value="113" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" type="java-line">
-          <url>file://$PROJECT_DIR$/src/main/java/New/Observables/ObservablePage.java</url>
-          <line>199</line>
-          <option name="timeStamp" value="116" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" type="java-line">
-          <url>file://$PROJECT_DIR$/src/main/java/New/Observables/ObservablePage.java</url>
-          <line>187</line>
-          <option name="timeStamp" value="117" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" type="java-line">
-          <url>file://$PROJECT_DIR$/src/main/java/New/Observables/ObservablePage.java</url>
-          <line>211</line>
-          <option name="timeStamp" value="118" />
-        </line-breakpoint>
-      </breakpoints>
-    </breakpoint-manager>
-    <watches-manager>
-      <configuration name="Remote">
-        <watch expression="canvas" language="JAVA" />
-        <watch expression="dots.get(0)" />
-        <watch expression="canvas.children.get(0)" />
-      </configuration>
-    </watches-manager>
   </component>
 </project>

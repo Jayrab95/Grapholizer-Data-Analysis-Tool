@@ -8,7 +8,11 @@ import java.util.List;
 
 import static org.junit.Assert.*;
 
-public class CharacteristicAverageAccelarationTest {
+public class CharacteristicVelocityAverageTest {
+
+    /*@Test
+    public void getVelocitySteps() {
+    }*/
 
     @Test
     public void calculate() {
@@ -32,7 +36,7 @@ public class CharacteristicAverageAccelarationTest {
             dotLists.get(1).add(new Dot(x2s[i],y2s[i],0,timeStamps2[i]));
         }
 
-        double result = new CharacteristicAverageAccelaration("Characert").calculate(dotLists);
-        assertEquals(4.612527201645239,result, 0.0000001);
+        double result = new CharacteristicVelocityAverage("Characert").calculate(dotLists);
+        assertEquals(72.41157640591915, result, 0.00001);
     }
 }
