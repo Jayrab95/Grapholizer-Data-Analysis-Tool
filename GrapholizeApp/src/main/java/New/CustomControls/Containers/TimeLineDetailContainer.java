@@ -13,6 +13,7 @@ import javafx.beans.property.DoubleProperty;
 import javafx.beans.property.SimpleDoubleProperty;
 import javafx.beans.property.SimpleObjectProperty;
 import javafx.beans.property.SimpleStringProperty;
+import javafx.geometry.Insets;
 import javafx.scene.control.Label;
 import javafx.scene.control.ScrollPane;
 
@@ -20,19 +21,17 @@ import javafx.scene.control.ScrollPane;
 import New.Observables.ObservablePage;
 
 import javafx.scene.control.Slider;
-import javafx.scene.layout.GridPane;
-import javafx.scene.layout.Pane;
-import javafx.scene.layout.VBox;
+import javafx.scene.layout.*;
 import javafx.scene.paint.Color;
 
 import java.util.List;
-import java.util.stream.Collectors;
 
-public class TimeLineDetailContainer extends ScrollPane {
+public class TimeLineDetailContainer extends Pane {
 
     private SelectableTimeLinePane inspectedTimeLine;
     private ScrollPane timelineScrollPane;
-    private GridPane subTimelines;
+    private VBox timelines;
+    private GridPane subTimelineTags;
     private Slider scaleSlider;
     private double totalLength;
 
@@ -47,24 +46,34 @@ public class TimeLineDetailContainer extends ScrollPane {
         detailScale = new SimpleDoubleProperty(0.05);
         scaleSlider = initializeSlider(detailScale.get());
         detailScale.bind(scaleSlider.valueProperty());
+
+        timelines = new VBox();
+        timelineScrollPane = new ScrollPane();
+        subTimelineTags = new GridPane();
+
         generateDetailContainer();
     }
 
     private void generateDetailContainer(){
-        timelineScrollPane = new ScrollPane();
-        subTimelines = new GridPane();
-        subTimelines.autosize();
-        subTimelines.setVgap(10d);
-        copy(0);
-        pressure(1);
-        velocity(2);
-        characteristicTimeLines(CharacteristicList.characteristics(),3);
+        subTimelineTags.getColumnConstraints().add(new ColumnConstraints(200)); //first column width
+        subTimelineTags.getColumnConstraints().add(new ColumnConstraints(50)); //second column width
+        subTimelineTags.setVgap(10d); //vertical space between elements in container
+        subTimelineTags.setPadding(new Insets(5,5,5,10));
+        timelines.setSpacing(10d);
+        timelines.setPadding(new Insets(5,5,5,5));
+
+        initializeStrokeTimeline(0);
+        initializePressureTimeline(1);
+        initializeVelocityTimeline(2);
+        initializecharacteristicTimeLines(CharacteristicList.characteristics(),3);
 
         /*detailScale.addListener((obs, oldVal, newVal) -> {
             subTimelines.setPrefWidth(totalLength * newVal.doubleValue());
         });*/
-        //timelineScrollPane.setContent(subTimelines);
-        this.setContent(new VBox(scaleSlider, subTimelines));
+        timelineScrollPane.setContent(timelines);
+        HBox timelinecontainer = new HBox(subTimelineTags, timelineScrollPane);
+        timelinecontainer.setMaxWidth(1500);
+        this.getChildren().add(new VBox(scaleSlider, timelinecontainer));
     }
 
     private Slider initializeSlider(double initScale){
@@ -79,10 +88,11 @@ public class TimeLineDetailContainer extends ScrollPane {
         return slider;
     }
 
-    private void copy(int rowIndex){
-        subTimelines.add(new Label("Strokes"),0, rowIndex);
-        subTimelines.add(new Label("Unit"),1, rowIndex);
-        subTimelines.add(new AnnotationTimeLinePane(
+    private void initializeStrokeTimeline(int rowIndex){
+        subTimelineTags.add(new Label("Strokes"),0, rowIndex);
+        subTimelineTags.add(new Label("Unit"),1, rowIndex);
+        subTimelineTags.getRowConstraints().add(new RowConstraints(inspectedTimeLine.getHeight()));
+        timelines.getChildren().add(new AnnotationTimeLinePane(
                 getLength(),
                 inspectedTimeLine.getHeight(),
                 detailScale,
@@ -90,13 +100,14 @@ public class TimeLineDetailContainer extends ScrollPane {
                 new SimpleObjectProperty<Color>(Color.BLACK),
                 inspectedTimeLine.getAnnotations(),
                 inspectedTimeLine.getTopicSetID()
-        ), 2 ,rowIndex);
+        ));
     }
 
-    private void pressure(int rowIndex){
-        subTimelines.add(new Label("Pressure"),0, rowIndex);
-        subTimelines.add(new Label("some Unit"),1, rowIndex);
-        subTimelines.add(new PressureTimeLine(
+    private void initializePressureTimeline(int rowIndex){
+        subTimelineTags.add(new Label("Pressure"),0, rowIndex);
+        subTimelineTags.add(new Label("some Unit"),1, rowIndex);
+        subTimelineTags.getRowConstraints().add(new RowConstraints(inspectedTimeLine.getHeight()));
+        timelines.getChildren().add(new PressureTimeLine(
                 getLength(),
                 inspectedTimeLine.getHeight(),
                 detailScale,
@@ -104,30 +115,32 @@ public class TimeLineDetailContainer extends ScrollPane {
                 activePage,
                 inspectedTimeLine,
                 inspectedTimeLine.getTopicSetID()
-        ), 2, rowIndex);
+        ));
     }
 
-    private void velocity(int rowIndex){
-         subTimelines.add(new Label("Velocity"),0, rowIndex);
-         subTimelines.add(new Label("mm/ms"),1, rowIndex);
-         subTimelines.add(new VelocityTimeLine(
+    private void initializeVelocityTimeline(int rowIndex){
+         subTimelineTags.add(new Label("Velocity"),0, rowIndex);
+         subTimelineTags.add(new Label("mm/ms"),1, rowIndex);
+         subTimelineTags.getRowConstraints().add(new RowConstraints(inspectedTimeLine.getHeight()));
+         timelines.getChildren().add(new VelocityTimeLine(
                 getLength(),
                 inspectedTimeLine.getHeight(),
                 detailScale,
                 new SimpleStringProperty("Velocity"),
                 activePage,
                 inspectedTimeLine.getTopicSetID()
-        ), 2, rowIndex);
+        ));
     }
 
 
-    private void characteristicTimeLines(List<Characteristic> characteristics, int rowIndex){
+    private void initializecharacteristicTimeLines(List<Characteristic> characteristics, int rowIndex){
         for (int i = 0; i < characteristics.size() ; i++) {
             Characteristic characteristic = characteristics.get(i);
             int rowPosition = rowIndex + i;
-            subTimelines.add(new Label(characteristic.getName()),0, rowPosition);
-            subTimelines.add(new Label(characteristic.getUnitName()),1, rowPosition);
-            subTimelines.add(new DetailCharacteristicTimeLine(
+            subTimelineTags.add(new Label(characteristic.getName()),0, rowPosition);
+            subTimelineTags.add(new Label(characteristic.getUnitName()),1, rowPosition);
+            subTimelineTags.getRowConstraints().add(new RowConstraints(inspectedTimeLine.getHeight()));
+            timelines.getChildren().add(new DetailCharacteristicTimeLine(
                     getLength(),
                     inspectedTimeLine.getHeight(),
                     detailScale,
@@ -135,7 +148,7 @@ public class TimeLineDetailContainer extends ScrollPane {
                     activePage,
                     inspectedTimeLine.getTopicSetID(),
                     characteristics.get(i)
-            ), 2, rowPosition);
+            ));
         }
     }
 
