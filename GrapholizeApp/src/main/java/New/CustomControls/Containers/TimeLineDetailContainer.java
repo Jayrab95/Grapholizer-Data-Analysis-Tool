@@ -8,6 +8,7 @@ import New.CustomControls.TimeLine.SubTimeLines.DetailCharacteristicTimeLine;
 import New.CustomControls.TimeLine.SubTimeLines.PressureTimeLine;
 import New.CustomControls.TimeLine.SubTimeLines.VelocityTimeLine;
 import New.CustomControls.TimeLine.TimeLinePane;
+import New.CustomControls.TimeLine.TimeUnitPane;
 import New.util.CharacteristicList;
 import javafx.beans.property.DoubleProperty;
 import javafx.beans.property.SimpleDoubleProperty;
@@ -30,10 +31,10 @@ public class TimeLineDetailContainer extends Pane {
 
     private SelectableTimeLinePane inspectedTimeLine;
     private ScrollPane timelineScrollPane;
-    private VBox timelines;
+    private VBox subTimelines;
     private GridPane subTimelineTags;
     private Slider scaleSlider;
-    private double totalLength;
+    private TimeUnitPane unitPane;
 
     ObservablePage activePage;
     DoubleProperty detailScale;
@@ -47,9 +48,10 @@ public class TimeLineDetailContainer extends Pane {
         scaleSlider = initializeSlider(detailScale.get());
         detailScale.bind(scaleSlider.valueProperty());
 
-        timelines = new VBox();
+        subTimelines = new VBox();
         timelineScrollPane = new ScrollPane();
         subTimelineTags = new GridPane();
+        unitPane = new TimeUnitPane(detailScale,20, inspectedTimeLine.totalLengthProperty());
 
         generateDetailContainer();
     }
@@ -58,19 +60,17 @@ public class TimeLineDetailContainer extends Pane {
         subTimelineTags.getColumnConstraints().add(new ColumnConstraints(200)); //first column width
         subTimelineTags.getColumnConstraints().add(new ColumnConstraints(50)); //second column width
         subTimelineTags.setVgap(10d); //vertical space between elements in container
-        subTimelineTags.setPadding(new Insets(5,5,5,10));
-        timelines.setSpacing(10d);
-        timelines.setPadding(new Insets(5,5,5,5));
+        subTimelineTags.setPadding(new Insets(70,5,5,10));
+        subTimelines.setSpacing(10d);
+        subTimelines.setPadding(new Insets(25,5,5,5));
 
+        subTimelines.getChildren().add(unitPane); //add time scale
         initializeStrokeTimeline(0);
         initializePressureTimeline(1);
         initializeVelocityTimeline(2);
         initializecharacteristicTimeLines(CharacteristicList.characteristics(),3);
 
-        /*detailScale.addListener((obs, oldVal, newVal) -> {
-            subTimelines.setPrefWidth(totalLength * newVal.doubleValue());
-        });*/
-        timelineScrollPane.setContent(timelines);
+        timelineScrollPane.setContent(subTimelines);
         HBox timelinecontainer = new HBox(subTimelineTags, timelineScrollPane);
         timelinecontainer.setMaxWidth(1500);
         this.getChildren().add(new VBox(scaleSlider, timelinecontainer));
@@ -92,7 +92,7 @@ public class TimeLineDetailContainer extends Pane {
         subTimelineTags.add(new Label("Strokes"),0, rowIndex);
         subTimelineTags.add(new Label("Unit"),1, rowIndex);
         subTimelineTags.getRowConstraints().add(new RowConstraints(inspectedTimeLine.getHeight()));
-        timelines.getChildren().add(new AnnotationTimeLinePane(
+        subTimelines.getChildren().add(new AnnotationTimeLinePane(
                 getLength(),
                 inspectedTimeLine.getHeight(),
                 detailScale,
@@ -107,7 +107,7 @@ public class TimeLineDetailContainer extends Pane {
         subTimelineTags.add(new Label("Pressure"),0, rowIndex);
         subTimelineTags.add(new Label("some Unit"),1, rowIndex);
         subTimelineTags.getRowConstraints().add(new RowConstraints(inspectedTimeLine.getHeight()));
-        timelines.getChildren().add(new PressureTimeLine(
+        subTimelines.getChildren().add(new PressureTimeLine(
                 getLength(),
                 inspectedTimeLine.getHeight(),
                 detailScale,
@@ -122,7 +122,7 @@ public class TimeLineDetailContainer extends Pane {
          subTimelineTags.add(new Label("Velocity"),0, rowIndex);
          subTimelineTags.add(new Label("mm/ms"),1, rowIndex);
          subTimelineTags.getRowConstraints().add(new RowConstraints(inspectedTimeLine.getHeight()));
-         timelines.getChildren().add(new VelocityTimeLine(
+         subTimelines.getChildren().add(new VelocityTimeLine(
                 getLength(),
                 inspectedTimeLine.getHeight(),
                 detailScale,
@@ -132,7 +132,6 @@ public class TimeLineDetailContainer extends Pane {
         ));
     }
 
-
     private void initializecharacteristicTimeLines(List<Characteristic> characteristics, int rowIndex){
         for (int i = 0; i < characteristics.size() ; i++) {
             Characteristic characteristic = characteristics.get(i);
@@ -140,7 +139,7 @@ public class TimeLineDetailContainer extends Pane {
             subTimelineTags.add(new Label(characteristic.getName()),0, rowPosition);
             subTimelineTags.add(new Label(characteristic.getUnitName()),1, rowPosition);
             subTimelineTags.getRowConstraints().add(new RowConstraints(inspectedTimeLine.getHeight()));
-            timelines.getChildren().add(new DetailCharacteristicTimeLine(
+            subTimelines.getChildren().add(new DetailCharacteristicTimeLine(
                     getLength(),
                     inspectedTimeLine.getHeight(),
                     detailScale,

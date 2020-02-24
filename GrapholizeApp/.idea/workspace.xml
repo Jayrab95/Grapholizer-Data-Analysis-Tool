@@ -444,7 +444,9 @@
       <workItem from="1582373164296" duration="647000" />
       <workItem from="1582376412879" duration="11289000" />
       <workItem from="1582395355547" duration="955000" />
-      <workItem from="1582396562087" duration="1018000" />
+      <workItem from="1582396562087" duration="1683000" />
+      <workItem from="1582403972472" duration="4045000" />
+      <workItem from="1582527239882" duration="681000" />
     </task>
     <servers />
   </component>
@@ -504,11 +506,6 @@
           <url>file://$PROJECT_DIR$/src/main/java/New/Filters/VelocityFilter.java</url>
           <line>34</line>
           <option name="timeStamp" value="87" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" type="java-line">
-          <url>file://$PROJECT_DIR$/src/main/java/New/CustomControls/TimeLine/TimeUnitPane.java</url>
-          <line>60</line>
-          <option name="timeStamp" value="95" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="java-line">
           <url>file://$PROJECT_DIR$/src/main/java/New/Filters/StrokeColorFilter.java</url>

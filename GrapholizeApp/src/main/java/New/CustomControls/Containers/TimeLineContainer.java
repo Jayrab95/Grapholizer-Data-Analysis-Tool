@@ -109,6 +109,7 @@ public class TimeLineContainer extends VBox {
         scrollPane_inner.setContent(vBox_TimeLineBox);
 
         unitPane = new TimeUnitPane(scale,20,totalWidth);
+        unitPane.setPadding(new Insets(0,0,0,120));
         vBox_OuterScrollPane.getChildren().add(unitPane);
         vBox_OuterScrollPane.getChildren().add(scrollPane_inner);
 
