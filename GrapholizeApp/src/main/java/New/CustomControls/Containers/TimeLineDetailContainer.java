@@ -42,7 +42,6 @@ public class TimeLineDetailContainer extends Pane {
     public TimeLineDetailContainer(TimeLinePane inspectedTimeLine, ObservablePage activePage){
         this.inspectedTimeLine = (SelectableTimeLinePane)inspectedTimeLine;
         this.activePage = activePage;
-        this.totalLength = inspectedTimeLine.getTotalLength();
         //Initialize Scaler;
         detailScale = new SimpleDoubleProperty(0.05);
         scaleSlider = initializeSlider(detailScale.get());
