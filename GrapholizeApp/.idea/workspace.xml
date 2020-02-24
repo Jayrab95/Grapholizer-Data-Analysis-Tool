@@ -446,7 +446,7 @@
       <workItem from="1582395355547" duration="955000" />
       <workItem from="1582396562087" duration="1683000" />
       <workItem from="1582403972472" duration="4045000" />
-      <workItem from="1582527239882" duration="681000" />
+      <workItem from="1582527239882" duration="1420000" />
     </task>
     <servers />
   </component>
@@ -546,6 +546,14 @@
           <url>file://$PROJECT_DIR$/src/main/test/New/Characteristics/CharacteristicVelocityAverageTest.java</url>
           <line>39</line>
           <option name="timeStamp" value="125" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-method">
+          <url>file://$PROJECT_DIR$/src/main/java/New/CustomControls/Containers/TimeLineContainer.java</url>
+          <line>273</line>
+          <properties class="New.CustomControls.Containers.TimeLineContainer" method="createNewTimeLineOutOfCombinedElement">
+            <option name="EMULATED" value="true" />
+          </properties>
+          <option name="timeStamp" value="129" />
         </line-breakpoint>
       </breakpoints>
     </breakpoint-manager>

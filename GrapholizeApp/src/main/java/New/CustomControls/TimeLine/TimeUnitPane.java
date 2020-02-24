@@ -57,6 +57,7 @@ public class TimeUnitPane extends VBox {
         });
 
         totalwidth.addListener((observableValue,oldVal,newValue) -> {
+            System.out.println("Was here totalLength: ");
             this.setWidth((double)newValue);
             recalculateUnits(scale.get(), totalwidth.get(),false);
         });
