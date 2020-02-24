@@ -43,7 +43,6 @@ public class TimeUnitPane extends VBox {
         setPrefHeight(height);
         setWidth(totalwidth.get());
         setPrefWidth(totalwidth.get());
-        setPadding(new Insets(0,0,0,120));
 
         labelLayer = new TilePane();
         labelLayer.setPrefRows(1);
@@ -58,6 +57,7 @@ public class TimeUnitPane extends VBox {
         });
 
         totalwidth.addListener((observableValue,oldVal,newValue) -> {
+            System.out.println("Was here totalLength: ");
             this.setWidth((double)newValue);
             recalculateUnits(scale.get(), totalwidth.get(),false);
         });
@@ -96,9 +96,6 @@ public class TimeUnitPane extends VBox {
         long rounded_spacing = Math.round(spacing);
         labelLayer.prefTileWidthProperty().setValue(rounded_spacing);
         markerLayer.prefTileWidthProperty().setValue(rounded_spacing);
-        /*System.out.println("scale: " + scale);
-        System.out.println("rounded_spacing: " + rounded_spacing);
-        System.out.println("tileWidth: " + markerLayer.getTileWidth());*/
         return rounded_spacing;
     }
 
