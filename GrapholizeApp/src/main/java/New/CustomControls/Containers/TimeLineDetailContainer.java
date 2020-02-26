@@ -88,7 +88,7 @@ public class TimeLineDetailContainer extends Pane {
     }
 
     private void initializeStrokeTimeline(int rowIndex){
-        subTimelineTags.add(new Label("Strokes"),0, rowIndex);
+        subTimelineTags.add(new Label("Segments"),0, rowIndex);
         subTimelineTags.add(new Label("Unit"),1, rowIndex);
         subTimelineTags.getRowConstraints().add(new RowConstraints(inspectedTimeLine.getHeight()));
         subTimelines.getChildren().add(new AnnotationTimeLinePane(

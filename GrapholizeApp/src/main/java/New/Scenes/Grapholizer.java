@@ -27,7 +27,8 @@ public class Grapholizer extends Application {
 
     @Override
     public void stop() throws IOException {
-        controller._session.getZ_Helper().cleanUp();
+        if(controller._session.getZ_Helper() != null)
+            controller._session.getZ_Helper().cleanUp();
     }
     public static void main(String[] args) {
         launch();
