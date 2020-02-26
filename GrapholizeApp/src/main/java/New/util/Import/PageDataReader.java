@@ -64,8 +64,9 @@ public class PageDataReader implements Loader {
             if(i == 0){
                 //TODO create a sensible first stroke
                 int signalBit = st.read();
-                if (signalBit == 1) {
+                while (signalBit == 1) { //skip all voice memos
                     JumpAmount(108, st); //Skip the length of a voice memo
+                    signalBit = st.read();
                 }
                 JumpAmount(5, st); //Skip over color and thickness
                 byte[] integerBuffer = new byte[4];
@@ -91,8 +92,9 @@ public class PageDataReader implements Loader {
     private static Stroke ReadStroke(FileInputStream st, long start) throws IOException{
         //TODO create a sensible first stroke
         int signalBit = st.read();
-        if (signalBit == 1) {
+        while (signalBit == 1) {
             JumpAmount(108, st); //Skip the length of a voice memo
+            st.read();
         }
         JumpAmount(5, st); //Skip over color and thickness
         byte[] integerBuffer = new byte[4];
@@ -102,7 +104,11 @@ public class PageDataReader implements Loader {
         //Read Timestamps
         long timeStamp = ReadLong(st, longBuffer) - start;
         //Read Dots
-        return ReadDots(timeStamp, numOfDots, st, start);
+        Stroke result =  ReadDots(timeStamp, numOfDots, st, start);
+        int extraDataNum = st.read();
+        if (extraDataNum == 0) JumpAmount(-1, st); //Reset the read ahead
+        JumpAmount(extraDataNum, st); // Skip the extra data if it exists
+        return result;
     }
 
     /*Fills Stroke Object with dots while advancing the filePointer*/
@@ -113,7 +119,6 @@ public class PageDataReader implements Loader {
         List<Dot> dots = new ArrayList<Dot>();
         long totalTime = timeStamp;
         for (int i = 0; i < numberOfDots; i++) {
-
             //TODO normalisierung der x , y Koordinaten, überhaupt nötig bei M1 Stift?
             //(x or y dot code from N2) / MAX(width, height)
             float x = ReadFloat(st, floatBuffer);
@@ -126,12 +131,6 @@ public class PageDataReader implements Loader {
             Dot dot = new Dot(x, y, force, dotTimeStamp);
             dots.add(dot);
         }
-
-
-        int extraDataNum = st.read();
-        if (extraDataNum == 0) JumpAmount(-1, st); //Reset the read ahead
-        JumpAmount(extraDataNum, st); // Skip the extra data if it exists
-
         Stroke res = new Stroke(timeStamp, totalTime, dots);
         return res;
     }
