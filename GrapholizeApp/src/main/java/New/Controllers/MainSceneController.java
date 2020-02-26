@@ -48,7 +48,7 @@ public class MainSceneController {
     private Optional<TimeLineContainer> optionalTimeLineContainer;
 
     /** Internal State Of Application */
-    Session _session;
+    public Session _session;
 
     Path raw_data_file; //TODO Lukas there should be a better way than keeping it here
 
