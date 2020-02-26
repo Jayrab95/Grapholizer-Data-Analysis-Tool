@@ -179,19 +179,13 @@ public class TimeLineContainer extends VBox {
             addTimeLinePane(pane);
         }
         else{
-            addTimeLinePane(createNewTimeLinePane(t, p, Optional.empty()));
+            addTimeLinePane(createNewTimeLinePane(t, p, false));
         }
     }
 
 
     public void createNewTimeLine(){
-        Optional<TopicSet> tag = openTimeLineCreationDialog(
-                TXT_TL_CREATION_TITLE,
-                TXT_TL_CREATION_HEADER,
-                TXT_TL_CREATION_TEXT,
-                TXT_TL_TIMELINETAG_LABEL,
-                Optional.empty(),
-                false);
+        Optional<TopicSet> tag = createTopicSetDialog();
         Optional<FilterForSegmentsDialog.FilterDialogResult> filtered = Optional.empty();
         //TODO: Until filter has been reworked, this functionality is offline
         /*
@@ -216,7 +210,7 @@ public class TimeLineContainer extends VBox {
             }
             else{
                 ObservableTopicSet newTag = timeLineContainerController.createNewTimeLineTag(tag.get());
-                TimeLinePane timeLinePane = createNewTimeLinePane(newTag, timeLineContainerController.getPage(),Optional.empty());
+                TimeLinePane timeLinePane = createNewTimeLinePane(newTag, timeLineContainerController.getPage(),false);
                 addTimeLinePane(timeLinePane);
             }
         }
@@ -226,13 +220,7 @@ public class TimeLineContainer extends VBox {
         if(!selectedTimeLine.timeLineSelected()){
             throw new NoTimeLineSelectedException();
         }
-        Optional<TopicSet> tag = openTimeLineCreationDialog(
-                TXT_TL_CREATION_TITLE,
-                TXT_TL_CREATION_HEADER,
-                TXT_TL_CREATION_TEXT,
-                TXT_TL_TIMELINETAG_LABEL,
-                Optional.empty(),
-                false);
+        Optional<TopicSet> tag =createTopicSetDialog();
         if(tag.isPresent()){
             ObservableTopicSet newTag = timeLineContainerController.createNewTimeLineTag(tag.get());
             TimeLinePane timeLinePane = createNewTimeLineTagOutOfSelected(newTag, timeLineContainerController.getPage());
@@ -241,13 +229,7 @@ public class TimeLineContainer extends VBox {
     }
 
     public void createNewTimeLineOutOfSelectedDots() throws NoTimeLineSelectedException {
-        Optional<TopicSet> tag = openTimeLineCreationDialog(
-                TXT_TL_CREATION_TITLE,
-                TXT_TL_CREATION_HEADER,
-                TXT_TL_CREATION_TEXT,
-                TXT_TL_TIMELINETAG_LABEL,
-                Optional.empty(),
-                false);
+        Optional<TopicSet> tag = createTopicSetDialog();
         if(tag.isPresent()){
             ObservableTopicSet newTag = timeLineContainerController.createNewTimeLineTag(tag.get());
             TimeLinePane timeLinePane = createNewTimeLinePaneOutOfSelectedDots(newTag, timeLineContainerController.getPage());
@@ -257,13 +239,7 @@ public class TimeLineContainer extends VBox {
 
     public void createNewTimeLineOutOfFilteredAnnotations(){
         Optional<AnnotationFilterDialogResult> filter;
-        Optional<TopicSet> tag = openTimeLineCreationDialog(
-                TXT_TL_CREATION_TITLE,
-                TXT_TL_CREATION_HEADER,
-                TXT_TL_CREATION_TEXT,
-                TXT_TL_TIMELINETAG_LABEL,
-                Optional.empty(),
-                false);
+        Optional<TopicSet> tag = createTopicSetDialog();
         if(tag.isPresent()){
             ObservableTopicSet newTag = timeLineContainerController.createNewTimeLineTag(tag.get());
             TimeLinePane timeLinePane = createNewTimeLinePaneOutOfSelectedDots(newTag, timeLineContainerController.getPage());
@@ -272,14 +248,7 @@ public class TimeLineContainer extends VBox {
     }
 
     public void createNewTimeLineOutOfCombinedElement(Segment a){
-        Optional<TopicSet> tag = openTimeLineCreationDialog(
-                TXT_TL_CREATION_TITLE,
-                TXT_TL_CREATION_HEADER,
-                TXT_TL_CREATION_TEXT,
-                TXT_TL_TIMELINETAG_LABEL,
-                Optional.empty(),
-                false
-        );
+        Optional<TopicSet> tag = createTopicSetDialog();
         if(tag.isPresent()){
             ObservableTopicSet newTag = timeLineContainerController.createNewTimeLineTag(tag.get());
             TimeLinePane timeLinePane = createNewTimeLinePaneOutOfCombined(newTag, timeLineContainerController.getPage(), a);
@@ -287,15 +256,20 @@ public class TimeLineContainer extends VBox {
         }
     }
 
-    private TimeLinePane createNewTimeLinePane(ObservableTopicSet tag, ObservablePage page, Optional<List<AnnotationRectangle>> annotations){
-        CustomTimeLinePane newTimeLine = annotations.isPresent() ?
-                new CustomTimeLinePane(timeLineContainerController.getPage().getDuration(), timeLinesHeight, scale, tag, page, this, annotations.get()) :
-                new CustomTimeLinePane(timeLineContainerController.getPage().getDuration(), timeLinesHeight, scale, tag, page, this);
-        return newTimeLine;
+    private TimeLinePane createNewTimeLinePane(ObservableTopicSet tag, ObservablePage page, boolean copyFromSelected){
+        CustomTimeLinePane result;
+        if(copyFromSelected){
+            selectedTimeLine.getMissingTopics(tag).forEach(topic -> tag.addTopic(topic));
+            result = new CustomTimeLinePane(timeLineContainerController.getPage().getDuration(), timeLinesHeight, scale, tag, page, this, selectedTimeLine.generateMissingSegments(tag.getTopicsObservableList()));
+        }
+        else{
+            result = new CustomTimeLinePane(timeLineContainerController.getPage().getDuration(), timeLinesHeight, scale, tag, page, this);
+        }
+        return result;
     }
 
     private TimeLinePane createNewTimeLineTagOutOfSelected(ObservableTopicSet newTimeLineTag, ObservablePage page){
-        return createNewTimeLinePane(newTimeLineTag, page, Optional.of(selectedTimeLine.getSelectedAnnotations()));
+        return createNewTimeLinePane(newTimeLineTag, page, true);
     }
 
     private TimeLinePane createNewTimeLinePaneOutOfSelectedDots(ObservableTopicSet newTimeLineTag, ObservablePage page){
@@ -324,17 +298,31 @@ public class TimeLineContainer extends VBox {
     }
 
     public void editTimeLine(ObservableTopicSet oldTag){
-        Optional<TopicSet> tag = openTimeLineCreationDialog(
+        Optional<TopicSet> tag = editDialog(oldTag);
+        if (tag.isPresent()){
+
+            timeLineContainerController.editTimeLineTag(oldTag, tag.get());
+        }
+    }
+
+    private Optional<TopicSet> createTopicSetDialog(){
+        return openTimeLineCreationDialog(
+                TXT_TL_CREATION_TITLE,
+                TXT_TL_CREATION_HEADER,
+                TXT_TL_CREATION_TEXT,
+                TXT_TL_TIMELINETAG_LABEL,
+                Optional.empty(),
+                false);
+    }
+
+    private Optional<TopicSet> editDialog(ObservableTopicSet oldTag){
+        return openTimeLineCreationDialog(
                 TXT_TL_EDIT_TITLE,
                 TXT_TL_EDIT_HEADER,
                 TXT_TL_EDIT_TEXT,
                 TXT_TL_TIMELINETAG_LABEL,
                 Optional.of(oldTag.getInner()),
                 true);
-        if (tag.isPresent()){
-
-            timeLineContainerController.editTimeLineTag(oldTag, tag.get());
-        }
     }
 
     public boolean removeTimeLine(CustomTimeLinePane timeLine){

@@ -73,6 +73,13 @@ public class MovableAnnotationRectangle extends SelectableAnnotationRectangle {
         return right;
     }
 
+    public ObservableTopicSet getObservableTopicSet() {
+        return observableTopicSet;
+    }
+
+    public ObservableSegment getObservableSegment() {
+        return observableSegment;
+    }
 
     private void move(double newTimeStart){
         double delta = (newTimeStart - getX()) / scale.get();
@@ -249,7 +256,6 @@ public class MovableAnnotationRectangle extends SelectableAnnotationRectangle {
 
         @Override
         protected void handleMouseDrag(MouseEvent e) {
-            double timeStop = parent.getTimeStop();
             double traveledDistance = startX - (e.getSceneX());
             if(e.getSceneX() < startX){
                 //traveldirection: left. traveledDistance is positive
@@ -258,7 +264,7 @@ public class MovableAnnotationRectangle extends SelectableAnnotationRectangle {
                     parent.setWidth(parent.getWidth() + traveledDistance);
                 }
                 else{
-                    parent.setX((dragBounds[0]/scale.get()));
+                    parent.setX((dragBounds[0]));
                 }
             }
             else{

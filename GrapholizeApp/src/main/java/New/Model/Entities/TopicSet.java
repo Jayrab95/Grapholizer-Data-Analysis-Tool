@@ -69,12 +69,34 @@ public class TopicSet {
         return topicsMap.get(mainTopicID);
     }
 
+    public Topic getTopic(String topicID){
+        return topicsMap.get(topicID);
+    }
+
+    public Optional<Topic> getTopicWithName(String topicName){
+        return topicsMap.values().stream().filter(topic -> topic.getTopicName().equals(topicName)).findFirst();
+    }
+
     public void addTopic(Topic t){
         this.topicsMap.put(t.getTopicID(), t);
     }
 
     public void removeTopic(Topic t){
         this.topicsMap.remove(t.getTopicID());
+    }
+
+    //Very simple way of creating new topic id.
+    public String generateTopicID(String topicName){
+        String topicID = topicName;
+        int i = 0;
+        boolean loop = true;
+        while(loop){
+            //Stream requires a temp variable otherwise compiler complains. (Also avoids potential concurrency issues)
+            int finalI = i;
+            loop = getTopics().stream().anyMatch(t -> t.getTopicID().equals(String.format("%s_%d", topicID, finalI)));
+            if(loop){i++;}
+        }
+        return String.format("%s_%d", topicID, i);
     }
 
     @Override

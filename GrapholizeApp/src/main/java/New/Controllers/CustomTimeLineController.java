@@ -8,6 +8,7 @@ import New.CustomControls.Annotation.AnnotationRectangle;
 import New.CustomControls.TimeLine.SelectableTimeLinePane;
 import New.Execptions.NoTimeLineSelectedException;
 import New.Model.Entities.Segment;
+import New.Model.Entities.Topic;
 import New.Observables.*;
 
 import java.util.*;
@@ -171,6 +172,43 @@ public class CustomTimeLineController {
         segments.stream()
                 .filter(s -> s.fitsCriteria(topicFilters))
                 .forEach(s -> s.setSelected(true));
+    }
+
+    public void addMissingTopics(List<Topic> topics){
+        observableTimeLine.getMissingTopics(observableTopicSet).forEach(topic -> observableTopicSet.addTopic(topic));
+        /*
+        Optional<ObservableTopicSet> originTopicSet = observableTimeLine.getSelectedSegmentationTopicSet();
+        if(originTopicSet.isPresent()){
+            for(Topic originSuperSetTopic : originTopicSet.get().getTopicsObservableList()){
+                if(observableTopicSet.getTopicsObservableList().stream().noneMatch(topic -> topic.getTopicName().equals(originSuperSetTopic.getTopicName()))){
+                    observableTopicSet.addTopic(new Topic(originSuperSetTopic.getTopicName(), observableTopicSet.generateTopicId(originSuperSetTopic.getTopicName())));
+                }
+            }
+        }
+         */
+    }
+
+    public Segment[] generateMissingSegments(){
+        return observableTimeLine.generateMissingSegments(observableTopicSet.getTopicsObservableList());
+        /*
+        List<AnnotationRectangle> selectedAnnotations = getSelectedAnnotations();
+        Segment[] res = new Segment[selectedAnnotations.size()];
+        for(int i = 0; i < selectedAnnotations.size(); i++){
+            AnnotationRectangle a = selectedAnnotations.get(i);
+            Segment newSegment = new Segment(a.getTimeStart(), a.getTimeStop());
+            if(a instanceof MovableAnnotationRectangle){
+                for(Topic t : ((MovableAnnotationRectangle)a).getObservableTopicSet().getTopicsObservableList()){
+                    Optional<Topic> optionalTopic = observableTopicSet.getTopicsObservableList().stream().filter(top -> top.getTopicName().equals(t.getTopicName())).findFirst();
+                    if(optionalTopic.isPresent()){
+                        newSegment.putAnnotation(optionalTopic.get().getTopicID(), ((MovableAnnotationRectangle)a).getObservableSegment().getAnnotation(t.getTopicID()));
+                    }
+                }
+            }
+            res[i] = newSegment;
+        }
+        return res;
+
+         */
     }
 
 }
