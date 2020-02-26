@@ -189,7 +189,7 @@ public class ObservablePage implements Selector {
                         foundSegment = true;
                     }
                     seg.add(s.getObservableDots().get(i));
-                    if(i == s.getObservableDots().size() && seg.size() > 1){
+                    if(i == (s.getObservableDots().size() - 1) && seg.size() > 1){
                         //Add the segment to the result list if the end of the loop has been reached.
                         res.add(new LinkedList(seg));
                     }
