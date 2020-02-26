@@ -157,8 +157,11 @@ public class MovableAnnotationRectangle extends SelectableAnnotationRectangle {
     @Override
     protected void handleMousePress(MouseEvent event){
         super.handleMousePress(event);
-        System.out.println("MousePress in Movable");
-        if(event.getButton() == MouseButton.SECONDARY){
+        //Todo: Can this if/else stucture be improved somehow?
+        if(event.getClickCount() == 2 && event.getButton().equals(MouseButton.PRIMARY)){
+            openEditDialog();
+        }
+        else if(event.getButton() == MouseButton.SECONDARY){
             getElementSpecificContextMenu().show(this, event.getScreenX(), event.getScreenY());
         }
         else if(left.contains(event.getX(), event.getY())){

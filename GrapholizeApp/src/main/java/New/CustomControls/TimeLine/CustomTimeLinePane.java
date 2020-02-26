@@ -353,7 +353,11 @@ public class CustomTimeLinePane extends SelectableTimeLinePane {
                 else{
                     //If no collisions were detected, copy the annotations into this timeline.
                     if (dialog.isCombined()) {
-                        addAnnotation(new Segment(boundaries.get()[0], boundaries.get()[1]));
+                        Segment s = new Segment(boundaries.get()[0], boundaries.get()[1]);
+                        for(TopicTextControl ttc : dialog.getControls()){
+                            s.putAnnotation(ttc.getTopicID(), ttc.getTextFieldText());
+                        }
+                        addAnnotation(s);
                     }
                     else {
                         for(List<ObservableDot> segment : p.getSelectedDotSegments()){

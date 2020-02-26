@@ -64,7 +64,7 @@ public class CustomTimeLineController {
     }
 
     public boolean copiedAnnotationsCollideWithOtherAnnotations(Optional<double[]> combined){
-        //Reason for passing an option: Boundaries only need to be calculated once. The caller (CustomTimeLinePane)
+        //Reason for passing an optional: Boundaries only need to be calculated once. The caller (CustomTimeLinePane)
         //needs the boundaries to create the annotation.
         if(combined.isPresent()){
             return timeRangeCollidesWithOtherAnnotations(combined.get()[0], combined.get()[1]);
