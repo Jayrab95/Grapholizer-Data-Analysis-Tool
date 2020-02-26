@@ -29,6 +29,7 @@ public abstract class SelectableTimeLinePane extends TimeLinePane implements Tim
         parent.getSelectedTimeLine().addObserver(this);
     }
 
+    //TODO: Bug: concurrent modification exception
     public void deselectAllElements(SelectableAnnotationRectangle selected){
         for(Node n : getChildren()){
             if(n instanceof AnnotationRectangle){

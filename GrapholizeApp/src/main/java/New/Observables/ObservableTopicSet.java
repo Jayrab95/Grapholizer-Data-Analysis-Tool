@@ -102,4 +102,8 @@ public class ObservableTopicSet {
         //inner.removeTopic(t);
     }
 
+    public String generateTopicId(String topicName){
+        return inner.generateTopicID(topicName);
+    }
+
 }

@@ -46,7 +46,7 @@ public class TopicSetDialog extends Dialog<TopicSet> {
         }
         else{
             textField_topicSetName.setText("New set");
-            colorPicker.setValue(Color.BLUE);
+            colorPicker.setValue(Color.CYAN);
         }
         this.topicSetNameProperty = new SimpleStringProperty();
         this.topicSetNameProperty.bind(textField_topicSetName.textProperty());
@@ -69,12 +69,15 @@ public class TopicSetDialog extends Dialog<TopicSet> {
                     comboBox_mainTopic.getItems().addAll(c.getAddedSubList());
                     comboBox_mainTopic.getItems().removeAll(c.getRemoved());
                 }
+                if(comboBox_mainTopic.getSelectionModel().isEmpty()){
+                    comboBox_mainTopic.getSelectionModel().select(0);
+                }
             }
         });
-        if(topicSetOptional.isPresent()){
-            comboBox_mainTopic.getItems().addAll(topicSetOptional.get().getTopics());
-            comboBox_mainTopic.setValue(topicSetOptional.get().getMainTopic());
-        }
+
+
+
+
         mainTopic = new SimpleObjectProperty<>();
         mainTopic.bind(comboBox_mainTopic.valueProperty());
 
@@ -82,6 +85,7 @@ public class TopicSetDialog extends Dialog<TopicSet> {
 
         if(topicSetOptional.isPresent()){
             tableView_Topics.getItems().addAll(topicSetOptional.get().getTopics());
+            comboBox_mainTopic.setValue(topicSetOptional.get().getMainTopic());
         }
         this.topics = tableView_Topics.getItems();
 

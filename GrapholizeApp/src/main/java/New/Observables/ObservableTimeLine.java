@@ -1,12 +1,17 @@
 package New.Observables;
 
 import New.CustomControls.Annotation.AnnotationRectangle;
+import New.CustomControls.Annotation.MovableAnnotationRectangle;
 import New.CustomControls.Annotation.SelectableAnnotationRectangle;
+import New.CustomControls.TimeLine.CustomTimeLinePane;
 import New.CustomControls.TimeLine.SelectableTimeLinePane;
 import New.Interfaces.Observer.TimeLineObserver;
+import New.Model.Entities.Segment;
+import New.Model.Entities.Topic;
 
 import java.util.LinkedList;
 import java.util.List;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 public class ObservableTimeLine {
@@ -48,6 +53,10 @@ public class ObservableTimeLine {
         }
     }
 
+    public Optional<ObservableTopicSet> getSelectedSegmentationTopicSet(){
+        return selectedTimeLine instanceof CustomTimeLinePane ? Optional.of(((CustomTimeLinePane)selectedTimeLine).getObservableTopicSet()) : Optional.empty();
+    }
+
     public boolean equals(SelectableTimeLinePane timeLinePane){
         return selectedTimeLine == timeLinePane;
     }
@@ -64,5 +73,37 @@ public class ObservableTimeLine {
         for(TimeLineObserver observer : observers){
             observer.update(this);
         }
+    }
+
+    public List<Topic> getMissingTopics(ObservableTopicSet targetTopicSet){
+        Optional<ObservableTopicSet> optional = getSelectedSegmentationTopicSet();
+        if(optional.isPresent()){
+            //If the selected segmentation has a topic set (ie. it is not the stroke timeline), then
+            //return a list of all topics that are missing from the target set (topics, whose >name< does
+            //not appear in the target topicSet.
+            return getSelectedSegmentationTopicSet().get().getTopicsObservableList().stream()
+                    .filter(originTopic -> targetTopicSet.getTopicsObservableList().stream().noneMatch(targetTopic -> targetTopic.getTopicName().equals(originTopic.getTopicName())))
+                    .map(originTopic -> new Topic(originTopic.getTopicName(), targetTopicSet.generateTopicId(originTopic.getTopicName())))
+                    .collect(Collectors.toList());
+        }
+        return List.of();
+    }
+    public Segment[] generateMissingSegments(List<Topic> targetTopics){
+        List<AnnotationRectangle> selectedAnnotations = getSelectedAnnotations();
+        Segment[] res = new Segment[selectedAnnotations.size()];
+        for(int i = 0; i < selectedAnnotations.size(); i++){
+            AnnotationRectangle a = selectedAnnotations.get(i);
+            Segment newSegment = new Segment(a.getTimeStart(), a.getTimeStop());
+            if(a instanceof MovableAnnotationRectangle){
+                for(Topic t : ((MovableAnnotationRectangle)a).getObservableTopicSet().getTopicsObservableList()){
+                    Optional<Topic> optionalTopic = targetTopics.stream().filter(top -> top.getTopicName().equals(t.getTopicName())).findFirst();
+                    if(optionalTopic.isPresent()){
+                        newSegment.putAnnotation(optionalTopic.get().getTopicID(), ((MovableAnnotationRectangle)a).getObservableSegment().getAnnotation(t.getTopicID()));
+                    }
+                }
+            }
+            res[i] = newSegment;
+        }
+        return res;
     }
 }
