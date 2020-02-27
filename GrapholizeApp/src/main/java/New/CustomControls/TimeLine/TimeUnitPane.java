@@ -1,6 +1,7 @@
 package New.CustomControls.TimeLine;
 
 import javafx.beans.property.DoubleProperty;
+import javafx.beans.property.SimpleDoubleProperty;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.control.Label;
@@ -14,7 +15,8 @@ public class TimeUnitPane extends VBox {
         TEN_SECONDS("s", 0.05d, 10000,10),
         SECONDS("s", 0.1d, 1000,1),
         HUNDRED_MILLISECONDS(" hms", 0.6d, 100,1),
-        UPPER_LIMIT(" ", 1.0d, 1, 1);
+        UPPER_LIMIT(" ", 1.1d, 1, 1);
+
         public final String label;
         public final double threshhold;
         public final int msRatio;
@@ -35,9 +37,11 @@ public class TimeUnitPane extends VBox {
     private TilePane markerLayer;
 
     public TimeUnitPane(DoubleProperty scale, double height, DoubleProperty totalwidth) {
-        this.scale = scale;
+        this.scale = new SimpleDoubleProperty(scale.get());
+        this.scale.bind(scale);
         this.height = height;
-        this.totalwidth = totalwidth;
+        this.totalwidth = new SimpleDoubleProperty(totalwidth.get());
+        this.totalwidth.bind(totalwidth);
 
         setHeight(height);
         setPrefHeight(height);
@@ -52,23 +56,22 @@ public class TimeUnitPane extends VBox {
         labelLayer.setPrefWidth(totalwidth.get() * scale.get());
         this.getChildren().addAll(labelLayer, markerLayer);
 
-        scale.addListener((observableValue,oldValue,newValue) -> {
-            recalculateUnits(scale.get(),totalwidth.get(), false);
+        this.scale.addListener((observableValue,oldValue,newValue) -> {
+            recalculateUnits(scale.get(),totalwidth.get(), false,false);
         });
 
-        totalwidth.addListener((observableValue,oldVal,newValue) -> {
-            System.out.println("Was here totalLength: ");
+        this.totalwidth.addListener((observableValue,oldVal,newValue) -> {
             this.setWidth((double)newValue);
-            recalculateUnits(scale.get(), totalwidth.get(),false);
+            recalculateUnits(scale.get(), totalwidth.get(), true,false);
         });
 
-        recalculateUnits(scale.get(),totalwidth.get(), true);
+        recalculateUnits(scale.get(),totalwidth.get(), true,true);
     }
 
-    public void recalculateUnits(double scale, double totalWidth, boolean isNotInitialize){
+    public void recalculateUnits(double scale, double totalWidth, boolean hasWidthChanged,boolean isNotInitialize){
         boolean hasChanged = ChooseRightUnit(scale);
         int gapNumber = (int)totalWidth/unit.msRatio;
-        if(hasChanged || isNotInitialize) {
+        if(hasWidthChanged || hasChanged || isNotInitialize) {
             labelLayer.getChildren().clear();
             markerLayer.getChildren().clear();
             fillLabelLayer(gapNumber);
