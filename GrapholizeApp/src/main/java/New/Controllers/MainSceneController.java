@@ -67,9 +67,9 @@ public class MainSceneController {
         try {
            FXMLLoader loader = JavaFxUtil.openWindowReturnController(this.getClass(),"fxml/views/ExportDialog.fxml"
                    , "CSV-Export"
-                   ,800,400);
+                   ,900,450);
            if(raw_data_file == null) throw new NullPointerException();
-           ((ExportDialogController) loader.getController()).initialize(
+           else ((ExportDialogController) loader.getController()).initialize(
                      _session.getActiveProject().getTopicSets()
                     ,_session.getActiveProject().getParticipantIDs()
                     ,characteristicList
@@ -117,7 +117,7 @@ public class MainSceneController {
     @FXML
     private void saveProjectTo() {
         try {
-            File sFile = openFileDialog("Save Dialog"
+            File sFile = JavaFxUtil.openFileDialog("Save Dialog"
                     , "Save Project"
                     , true
                     , "*.zip", "*.grapholizer");
@@ -165,7 +165,7 @@ public class MainSceneController {
      */
     private void export(IExporter exporter, ExportConfig config, String ... filefilters) {
         try {
-            File sFile = openFileDialog("Export Data"
+            File sFile = JavaFxUtil.openFileDialog("Export Data"
                     , "Export"
                     , true
                     , filefilters);
@@ -179,7 +179,7 @@ public class MainSceneController {
 
     private void loadDataFromFiles(Loader loader, String ... fileExtensions) {
         try {
-            File sFile = openFileDialog("Load Dialog"
+            File sFile = JavaFxUtil.openFileDialog("Load Dialog"
                     , "Load Data"
                     , false
                     , fileExtensions);
@@ -204,29 +204,6 @@ public class MainSceneController {
                     , ex.getMessage());
         }
     }
-
-    /**
-     *
-     * @param windowTitle The title of the newly opened window
-     * @param chooserTitle The title of the file chooser
-     * @param isSaveDialog true if this it is indended to save the file
-     * @param fileFilters A list of String representing the allowed file endings
-     * @return Returns the chosen file or null if no file was picked
-     */
-    private File openFileDialog(String windowTitle , String chooserTitle, boolean isSaveDialog, String ... fileFilters) {
-        FileChooser fileChooser = new FileChooser();
-        fileChooser.setTitle(chooserTitle);
-        fileChooser.getExtensionFilters().add(
-                new FileChooser.ExtensionFilter("Supported Formats", fileFilters)
-        );
-        Stage stage = new Stage();
-        stage.setTitle(windowTitle);
-        File sFile;
-        if(isSaveDialog) sFile = fileChooser.showSaveDialog(stage);
-        else sFile = fileChooser.showOpenDialog(stage);
-        return sFile;
-    }
-
 
     void initializeProject(){
         //_session = new Session(new JsonLoader().load("src\\main\\resources\\data\\lukas_test_1.json"));

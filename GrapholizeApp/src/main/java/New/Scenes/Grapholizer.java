@@ -18,18 +18,12 @@ public class Grapholizer extends Application {
     @Override
     public void start(Stage stage) throws Exception{
         FXMLLoader root = new FXMLLoader(this.getClass().getClassLoader().getResource("fxml/views/MainScene.fxml"));
-        this.controller = root.getController();
         Scene scene = new Scene(root.load(), 300, 275); //TODO choose sensible window size on basis of desktop size
         stage.setTitle("Grapholizer");
         stage.setScene(scene);
         stage.show();
     }
 
-    @Override
-    public void stop() throws IOException {
-        if(controller._session.getZ_Helper() != null)
-            controller._session.getZ_Helper().cleanUp();
-    }
     public static void main(String[] args) {
         launch();
     }

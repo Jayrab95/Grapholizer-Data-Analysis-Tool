@@ -9,19 +9,19 @@
 <?import javafx.scene.layout.GridPane?>
 <?import javafx.scene.layout.RowConstraints?>
 
-<AnchorPane prefHeight="420.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="New.Controllers.ExportDialogController">
+<AnchorPane prefHeight="450.0" prefWidth="900.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="New.Controllers.ExportDialogController">
    <padding>
       <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
    </padding>
    <children>
-      <GridPane layoutX="10.0" layoutY="14.0" prefHeight="354.0" prefWidth="594.0">
+      <GridPane layoutX="10.0" layoutY="15.0" prefHeight="336.0" prefWidth="862.0">
         <columnConstraints>
-            <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
-          <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
-          <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
-            <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
-            <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
-            <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+            <ColumnConstraints hgrow="SOMETIMES" maxWidth="115.2" minWidth="10.0" prefWidth="113.59999389648438" />
+          <ColumnConstraints hgrow="SOMETIMES" maxWidth="128.800048828125" minWidth="10.0" prefWidth="119.20000610351563" />
+          <ColumnConstraints hgrow="SOMETIMES" maxWidth="140.0" minWidth="10.0" prefWidth="119.199951171875" />
+            <ColumnConstraints hgrow="SOMETIMES" maxWidth="167.99998779296874" minWidth="10.0" prefWidth="131.19998168945312" />
+            <ColumnConstraints hgrow="SOMETIMES" maxWidth="203.20001220703125" minWidth="10.0" prefWidth="189.60001831054694" />
+            <ColumnConstraints hgrow="SOMETIMES" maxWidth="179.1999389648438" minWidth="10.0" prefWidth="179.1999389648438" />
         </columnConstraints>
         <rowConstraints>
           <RowConstraints maxHeight="87.99999389648437" minHeight="2.400002861022955" prefHeight="26.400014495849604" vgrow="SOMETIMES" />
@@ -29,16 +29,16 @@
           <RowConstraints maxHeight="73.40001220703124" minHeight="7.199951171875" prefHeight="67.79997558593749" vgrow="SOMETIMES" />
         </rowConstraints>
          <children>
-            <ListView fx:id="view_participantsID" prefHeight="200.0" prefWidth="200.0" GridPane.rowIndex="1">
+            <ListView fx:id="view_participantsID" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" prefHeight="200.0" prefWidth="100.0" GridPane.rowIndex="1">
                <padding>
                   <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
                </padding>
             </ListView>
-            <ListView fx:id="selection_participantsID" prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="1" GridPane.rowIndex="1" />
-            <ListView fx:id="view_timelineTopics" prefHeight="258.0" prefWidth="98.0" GridPane.columnIndex="2" GridPane.rowIndex="1" />
+            <ListView fx:id="selection_participantsID" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" prefHeight="200.0" prefWidth="100.0" GridPane.columnIndex="1" GridPane.rowIndex="1" />
+            <ListView fx:id="view_timelineTopics" prefHeight="238.0" prefWidth="142.0" GridPane.columnIndex="2" GridPane.rowIndex="1" />
             <ListView fx:id="selection_timelineTopics" prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="3" GridPane.rowIndex="1" />
-            <ListView fx:id="view_characteristics" prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="4" GridPane.rowIndex="1" />
-            <ListView fx:id="selection_characteristics" prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="5" GridPane.rowIndex="1" />
+            <ListView fx:id="view_characteristics" prefHeight="245.0" prefWidth="300.0" GridPane.columnIndex="4" GridPane.rowIndex="1" />
+            <ListView fx:id="selection_characteristics" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" prefHeight="238.0" prefWidth="174.0" GridPane.columnIndex="5" GridPane.rowIndex="1" />
             <Label GridPane.columnIndex="1" />
             <Label text="TopicSet " GridPane.columnIndex="2" />
             <Label GridPane.columnIndex="4" />
@@ -133,14 +133,14 @@
             <Label text="Selection" GridPane.columnIndex="5" />
          </children>
       </GridPane>
-      <GridPane layoutX="13.0" layoutY="374.0" prefHeight="40.0" prefWidth="582.0">
+      <GridPane layoutX="13.0" layoutY="380.0" prefHeight="34.0" prefWidth="835.0">
         <columnConstraints>
           <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
           <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
         </columnConstraints>
         <rowConstraints>
-          <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-            <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+          <RowConstraints maxHeight="15.000036621093749" minHeight="3.8000244140624986" prefHeight="11.000036621093749" vgrow="SOMETIMES" />
+            <RowConstraints maxHeight="30.9999755859375" minHeight="10.0" prefHeight="23.79996337890625" vgrow="SOMETIMES" />
         </rowConstraints>
          <children>
             <Button mnemonicParsing="false" onAction="#exportAction" text="Export" GridPane.columnIndex="1" GridPane.halignment="RIGHT" GridPane.rowIndex="1" />
