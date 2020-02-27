@@ -3,6 +3,7 @@ import New.Characteristics.*;
 import New.CustomControls.Containers.ContentSwitcher;
 import New.CustomControls.Containers.MainCanvas;
 import New.CustomControls.Containers.TimeLineContainer;
+import New.Dialogues.CSVExportDialog;
 import New.Interfaces.*;
 import New.Model.Entities.*;
 import New.Model.Session;
@@ -19,8 +20,6 @@ import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.VBox;
-import javafx.stage.FileChooser;
-import javafx.stage.Stage;
 
 import java.io.File;
 import java.io.IOException;
@@ -65,15 +64,17 @@ public class MainSceneController {
     @FXML
     private void exportDataToCSV(){
         try {
-           FXMLLoader loader = JavaFxUtil.openWindowReturnController(this.getClass(),"fxml/views/ExportDialog.fxml"
-                   , "CSV-Export"
-                   ,900,450);
-           if(raw_data_file == null) throw new NullPointerException();
-           else ((ExportDialogController) loader.getController()).initialize(
-                     _session.getActiveProject().getTopicSets()
-                    ,_session.getActiveProject().getParticipantIDs()
-                    ,characteristicList
-                    ,this);
+            if(raw_data_file == null) {throw new NullPointerException();}
+            else {
+                FXMLLoader loader = JavaFxUtil.openWindowReturnController(this.getClass(), "fxml/views/ExportDialog.fxml"
+                        , "CSV-Export"
+                        , 900, 450);
+                ((CSVExportDialog) loader.getController()).initialize(
+                        _session.getActiveProject().getTopicSets()
+                        , _session.getActiveProject().getParticipantIDs()
+                        , characteristicList
+                        , this);
+            }
         } catch (IOException e) {
             new DialogGenerator().simpleErrorDialog("Export Error"
                     , "While exporting an error occured."

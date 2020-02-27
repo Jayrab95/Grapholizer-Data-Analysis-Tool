@@ -1,5 +1,6 @@
-package New.Controllers;
+package New.Dialogues;
 import New.Characteristics.Characteristic;
+import New.Controllers.MainSceneController;
 import New.Interfaces.Controller;
 import New.Model.Entities.TopicSet;
 import New.util.DialogGenerator;
@@ -14,7 +15,7 @@ import java.util.List;
 import java.util.Set;
 import java.util.stream.Collectors;
 
-public class ExportDialogController implements Controller {
+public class CSVExportDialog implements Controller {
     @FXML
     private ListView<String> view_participantsID;
 
@@ -35,7 +36,7 @@ public class ExportDialogController implements Controller {
 
     MainSceneController callback_reference;
 
-    public ExportDialogController() { }
+    public CSVExportDialog() { }
 
     public void initialize(List<TopicSet> topicSets
             , Set<String> participantIDs
