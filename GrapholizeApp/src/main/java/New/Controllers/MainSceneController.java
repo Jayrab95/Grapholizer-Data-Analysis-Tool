@@ -3,6 +3,7 @@ import New.Characteristics.*;
 import New.CustomControls.Containers.ContentSwitcher;
 import New.CustomControls.Containers.MainCanvas;
 import New.CustomControls.Containers.TimeLineContainer;
+import New.Dialogues.CSVExportDialog;
 import New.Interfaces.*;
 import New.Model.Entities.*;
 import New.Model.Session;
@@ -19,8 +20,6 @@ import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.VBox;
-import javafx.stage.FileChooser;
-import javafx.stage.Stage;
 
 import java.io.File;
 import java.io.IOException;
@@ -48,7 +47,7 @@ public class MainSceneController {
     private Optional<TimeLineContainer> optionalTimeLineContainer;
 
     /** Internal State Of Application */
-    Session _session;
+    public Session _session;
 
     Path raw_data_file; //TODO Lukas there should be a better way than keeping it here
 
@@ -65,15 +64,17 @@ public class MainSceneController {
     @FXML
     private void exportDataToCSV(){
         try {
-           FXMLLoader loader = JavaFxUtil.openWindowReturnController(this.getClass(),"fxml/views/ExportDialog.fxml"
-                   , "CSV-Export"
-                   ,800,400);
-           if(raw_data_file == null) throw new NullPointerException();
-           ((ExportDialogController) loader.getController()).initialize(
-                     _session.getActiveProject().getTopicSets()
-                    ,_session.getActiveProject().getParticipantIDs()
-                    ,characteristicList
-                    ,this);
+            if(raw_data_file == null) {throw new NullPointerException();}
+            else {
+                FXMLLoader loader = JavaFxUtil.openWindowReturnController(this.getClass(), "fxml/views/ExportDialog.fxml"
+                        , "CSV-Export"
+                        , 900, 450);
+                ((CSVExportDialog) loader.getController()).initialize(
+                        _session.getActiveProject().getTopicSets()
+                        , _session.getActiveProject().getParticipantIDs()
+                        , characteristicList
+                        , this);
+            }
         } catch (IOException e) {
             new DialogGenerator().simpleErrorDialog("Export Error"
                     , "While exporting an error occured."
@@ -117,7 +118,7 @@ public class MainSceneController {
     @FXML
     private void saveProjectTo() {
         try {
-            File sFile = openFileDialog("Save Dialog"
+            File sFile = JavaFxUtil.openFileDialog("Save Dialog"
                     , "Save Project"
                     , true
                     , "*.zip", "*.grapholizer");
@@ -165,7 +166,7 @@ public class MainSceneController {
      */
     private void export(IExporter exporter, ExportConfig config, String ... filefilters) {
         try {
-            File sFile = openFileDialog("Export Data"
+            File sFile = JavaFxUtil.openFileDialog("Export Data"
                     , "Export"
                     , true
                     , filefilters);
@@ -179,7 +180,7 @@ public class MainSceneController {
 
     private void loadDataFromFiles(Loader loader, String ... fileExtensions) {
         try {
-            File sFile = openFileDialog("Load Dialog"
+            File sFile = JavaFxUtil.openFileDialog("Load Dialog"
                     , "Load Data"
                     , false
                     , fileExtensions);
@@ -204,29 +205,6 @@ public class MainSceneController {
                     , ex.getMessage());
         }
     }
-
-    /**
-     *
-     * @param windowTitle The title of the newly opened window
-     * @param chooserTitle The title of the file chooser
-     * @param isSaveDialog true if this it is indended to save the file
-     * @param fileFilters A list of String representing the allowed file endings
-     * @return Returns the chosen file or null if no file was picked
-     */
-    private File openFileDialog(String windowTitle , String chooserTitle, boolean isSaveDialog, String ... fileFilters) {
-        FileChooser fileChooser = new FileChooser();
-        fileChooser.setTitle(chooserTitle);
-        fileChooser.getExtensionFilters().add(
-                new FileChooser.ExtensionFilter("Supported Formats", fileFilters)
-        );
-        Stage stage = new Stage();
-        stage.setTitle(windowTitle);
-        File sFile;
-        if(isSaveDialog) sFile = fileChooser.showSaveDialog(stage);
-        else sFile = fileChooser.showOpenDialog(stage);
-        return sFile;
-    }
-
 
     void initializeProject(){
         //_session = new Session(new JsonLoader().load("src\\main\\resources\\data\\lukas_test_1.json"));

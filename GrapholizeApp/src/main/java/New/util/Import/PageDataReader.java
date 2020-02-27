@@ -130,7 +130,7 @@ public class PageDataReader implements Loader {
 
         int extraDataNum = st.read();
         if (extraDataNum == 0) JumpAmount(-1, st); //Reset the read ahead
-        JumpAmount(extraDataNum, st); // Skip the extra data if it exists
+        JumpAmount(extraDataNum, st); // Skip the extra highliter pen
 
         Stroke res = new Stroke(timeStamp, totalTime, dots);
         return res;

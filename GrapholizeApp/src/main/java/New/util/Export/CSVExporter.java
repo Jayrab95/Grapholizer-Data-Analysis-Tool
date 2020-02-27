@@ -28,7 +28,7 @@ public class CSVExporter implements IExporter {
     public boolean export(String filePath, Project proj, ExportConfig config) throws IOException, ExportException {
         proj.getTopicSetIDs().forEach(ID -> csvBuilders.put(ID, new CSVTableBuilder()));
         csvBuilders.forEach((k, csvBuilder) -> {
-            csvBuilder.addColumnHeader(k);
+            csvBuilder.addColumnHeader(proj.getTopicSet(k).getTag());
         });
         project = proj;
         this.config = config;
@@ -116,7 +116,7 @@ public class CSVExporter implements IExporter {
             //Add the maintopic always first
             builder.addColumnHeader(topicSet.getMainTopicID());
             topicSet.getTopics().forEach(topic -> {
-                if(topicSet.getMainTopicID() != topic.getTopicID()) builder.addColumnHeader(topic.getTopicID());
+                if(topicSet.getMainTopicID() != topic.getTopicID()) builder.addColumnHeader(topic.getTopicName());
             });
             //add all Characteristics
             config.characteristicList.forEach(characteristic -> builder.addColumnHeader(characteristic.getName()));

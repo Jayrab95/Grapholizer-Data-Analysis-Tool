@@ -1,7 +1,9 @@
-package New.Controllers;
+package New.Dialogues;
 import New.Characteristics.Characteristic;
+import New.Controllers.MainSceneController;
 import New.Interfaces.Controller;
 import New.Model.Entities.TopicSet;
+import New.util.DialogGenerator;
 import New.util.Export.CSVExporter;
 import New.util.Export.ExportConfig;
 
@@ -13,7 +15,7 @@ import java.util.List;
 import java.util.Set;
 import java.util.stream.Collectors;
 
-public class ExportDialogController implements Controller {
+public class CSVExportDialog implements Controller {
     @FXML
     private ListView<String> view_participantsID;
 
@@ -34,7 +36,7 @@ public class ExportDialogController implements Controller {
 
     MainSceneController callback_reference;
 
-    public ExportDialogController() { }
+    public CSVExportDialog() { }
 
     public void initialize(List<TopicSet> topicSets
             , Set<String> participantIDs
@@ -117,15 +119,43 @@ public class ExportDialogController implements Controller {
 
     @FXML
     private void exportAction() {
-        cancelAction();
-        callback_reference.exportWindowCallback(new CSVExporter(),
-                new ExportConfig(selection_participantsID.getItems()
-                        ,selection_timelineTopics.getItems().stream().map(t -> t.getTagID()).collect(Collectors.toList())
-                        ,selection_characteristics.getItems())
-             );
+
+        if(isSelectionValid()) {
+            cancelAction();
+            callback_reference.exportWindowCallback(new CSVExporter(),
+                    new ExportConfig(selection_participantsID.getItems()
+                            , selection_timelineTopics.getItems().stream().map(t -> t.getTagID()).collect(Collectors.toList())
+                            , selection_characteristics.getItems())
+            );
+        } else {
+            new DialogGenerator().simpleErrorDialog("Input Error"
+                    , "The current selection is not valid."
+                    , "maybe you did not select an element for all three dialogs");
+        }
     }
 
+    /**
+     * checks if any of the selected item lists is empty
+     * @return boolean true if in all selections there is at least one element
+     */
+    private boolean isSelectionValid() {
+        boolean topicsIsEmpty = selection_timelineTopics.getItems().isEmpty();
+        boolean participantsIsEmpty = selection_participantsID.getItems().isEmpty();
+        boolean characteristicsIsEmpty = selection_characteristics.getItems().isEmpty();
+
+        if(participantsIsEmpty || topicsIsEmpty || characteristicsIsEmpty) return false;
+
+        return true;
+    }
+
+    /**
+     *
+     * @param listview list view that the element should be added to
+     * @param element element that should be added to the listview
+     * @return boolean, true if adding the element was successful, ergo element was not already in the list
+     */
     private boolean addIfNotPresent(ListView listview, Object element) {
+        if(element == null) return false;
         for (Object item : listview.getItems()) {
             if(item.equals(element)){
                 return false;
@@ -135,9 +165,14 @@ public class ExportDialogController implements Controller {
         return true;
     }
 
+    /**
+     *
+     * @param listView the list view with the selected index
+     * @return boolean true if removing the element was successful, ergo (index > -1)
+     */
     private boolean removeWithNullCheck(ListView listView){
         int index = listView.getSelectionModel().getSelectedIndex();
-        if(index > -1){
+        if(index > -1){ //selected index is -1 if nothing is selected
             listView.getItems().remove(index);
             return true;
         }

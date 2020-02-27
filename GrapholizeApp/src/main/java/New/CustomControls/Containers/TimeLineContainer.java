@@ -73,7 +73,7 @@ public class TimeLineContainer extends VBox {
     private VBox vBox_OuterScrollPane = new VBox();
     private ScrollPane scrollPane_inner = new ScrollPane();
     private VBox vBox_TimeLineBox = new VBox();
-    TimeUnitPane unitPane;
+    private TimeUnitPane unitPane;
 
     private Button btn_CreateNewTimeLine;
     private Button btn_CreateNewTimeLineOutOfSelected;
@@ -135,7 +135,7 @@ public class TimeLineContainer extends VBox {
         getChildren().add(scaleSlider);
         getChildren().add(hbox_buttonHBox);
         getChildren().add(scrollPane_outer);
-        totalWidth = new SimpleDoubleProperty(page.getDuration());
+        totalWidth.set(page.getDuration());
         unitPane = new TimeUnitPane(scale,20,totalWidth);
         vBox_TimeLineBox.getChildren().clear();
 
