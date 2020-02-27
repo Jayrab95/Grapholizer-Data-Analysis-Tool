@@ -174,7 +174,7 @@ public class ObservablePage implements Selector {
      * Creates a list of all selected dot segments.
      * @return a list of segments of dots which are currently selected.
      */
-    public List<List<ObservableDot>> getSelectedDotSegments(){
+    public List<List<ObservableDot>> getSelectedDotSections(){
         List<List<ObservableDot>> res = new LinkedList<>();
         for (ObservableStroke s : getObservableStrokes()){
             //foundSegment marks whether the loop is currently within a segment of selected dots.

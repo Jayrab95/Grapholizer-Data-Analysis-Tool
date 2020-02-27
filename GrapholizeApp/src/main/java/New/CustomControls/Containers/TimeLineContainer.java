@@ -4,7 +4,6 @@ import New.Controllers.TimeLineContainerController;
 import New.CustomControls.TimeLine.CustomTimeLinePane;
 import New.CustomControls.TimeLine.StrokeDurationTimeLinePane;
 import New.CustomControls.TimeLine.TimeLinePane;
-import New.CustomControls.Annotation.AnnotationRectangle;
 
 import New.Dialogues.FilterForSegmentsDialog;
 import New.Dialogues.TopicSetDialog;
@@ -24,7 +23,6 @@ import javafx.geometry.Insets;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.layout.AnchorPane;
-import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
@@ -274,7 +272,7 @@ public class TimeLineContainer extends VBox {
 
     private TimeLinePane createNewTimeLinePaneOutOfSelectedDots(ObservableTopicSet newTimeLineTag, ObservablePage page){
         List<Segment> segments = new LinkedList();
-        for(List<ObservableDot> segment : page.getSelectedDotSegments()){
+        for(List<ObservableDot> segment : page.getSelectedDotSections()){
             segments.add(new Segment(
                     segment.get(0).getTimeStamp(),
                     segment.get(segment.size()-1).getTimeStamp()));

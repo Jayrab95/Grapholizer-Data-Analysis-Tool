@@ -21,7 +21,9 @@ public class ObservableSegment {
     public ObservableSegment(Segment original, ObservableTopicSet observableTopicSet){
         this.segment = original;
         this.timeStartProperty = new SimpleDoubleProperty(segment.getTimeStart());
-        this.timeStartProperty.addListener((observable, oldValue, newValue) -> segment.setTimeStart(newValue.doubleValue()));
+        this.timeStartProperty.addListener((observable, oldValue, newValue) -> {
+            segment.setTimeStart(newValue.doubleValue());
+        });
         this.timeStopProperty = new SimpleDoubleProperty(segment.getTimeStop());
         this.timeStopProperty.addListener((observable, oldValue, newValue) -> segment.setTimeStop(newValue.doubleValue()));
         this.mainTopicIDProperty = new SimpleStringProperty(observableTopicSet.getMainTopicID());

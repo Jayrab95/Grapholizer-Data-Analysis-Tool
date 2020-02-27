@@ -9,7 +9,6 @@ import New.Dialogues.FilterSelectDialog;
 import New.Dialogues.SegmentDialog;
 import New.Execptions.NoTimeLineSelectedException;
 import New.Model.Entities.Segment;
-import New.Model.Entities.Topic;
 import New.Observables.ObservableSegment;
 import New.Observables.ObservableDot;
 import New.Observables.ObservablePage;
@@ -360,7 +359,7 @@ public class CustomTimeLinePane extends SelectableTimeLinePane {
                         addAnnotation(s);
                     }
                     else {
-                        for(List<ObservableDot> segment : p.getSelectedDotSegments()){
+                        for(List<ObservableDot> segment : p.getSelectedDotSections()){
                             addAnnotation(new Segment(
                                     segment.get(0).getTimeStamp(),
                                     segment.get(segment.size()-1).getTimeStamp()));

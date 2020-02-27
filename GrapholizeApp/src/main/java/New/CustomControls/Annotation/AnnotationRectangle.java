@@ -16,9 +16,6 @@ public class AnnotationRectangle extends Rectangle {
     protected DoubleProperty startProperty;
     protected DoubleProperty durationProperty;
 
-    protected double duration;
-    protected double start;
-
     protected Label displayedText;
     protected Tooltip tooltip;
 
@@ -39,11 +36,8 @@ public class AnnotationRectangle extends Rectangle {
         this.durationProperty = new SimpleDoubleProperty(width);
         this.startProperty = new SimpleDoubleProperty(start);
 
-        this.durationProperty.bind(this.widthProperty().divide(this.scale));
-        this.startProperty.bind(this.xProperty().divide(this.scale));
-
-        this.duration = width;
-        this.start = start;
+        //this.durationProperty.bind(this.widthProperty().divide(this.scale));
+        //this.startProperty.bind(this.xProperty().divide(this.scale));
 
         this.displayedText = new Label(text.get());
         this.displayedText.textProperty().bind(text);
@@ -73,8 +67,9 @@ public class AnnotationRectangle extends Rectangle {
 
 
     protected void rescaleElement(){
-        setX(start * scale.get());
-        setWidth(duration * scale.get());
+
+        setX(startProperty.get() * scale.get());
+        setWidth(durationProperty.get() * scale.get());
     }
 
     protected void onScaleChange(){
@@ -95,5 +90,10 @@ public class AnnotationRectangle extends Rectangle {
 
     public Label getDisplayedText() {
         return displayedText;
+    }
+
+    protected void adjustStartAndDurationProperty(){
+        startProperty.set(getTimeStart());
+        durationProperty.set(getTimeStop() - getTimeStart());
     }
 }

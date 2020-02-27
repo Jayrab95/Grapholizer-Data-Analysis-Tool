@@ -43,8 +43,7 @@ public class MovableAnnotationRectangle extends SelectableAnnotationRectangle {
         this.observableTopicSet = set;
 
         t.getTimeStartProperty().bind(this.xProperty().divide(scale));
-        t.getTimeStopProperty().bind(this.xProperty().add(this.widthProperty()).divide(scale));
-
+        t.getTimeStopProperty().bind((this.xProperty().add(this.widthProperty())).divide(scale));
 
         this.left = new LeftDragRectangle(this);
         this.right = new RightDragRectangle(this);
@@ -201,8 +200,7 @@ public class MovableAnnotationRectangle extends SelectableAnnotationRectangle {
     @Override
     protected void handleMouseRelease(MouseEvent event){
         super.handleMouseRelease(event);
-        System.out.println("HandleMouseRelease in Movable");
-        //annotationSelectionController.selectOnlyDotsWithinTimeFrame(getTimeStart(), getTimeStop());
+        adjustStartAndDurationProperty();
         event.consume();
     }
     //endregion
@@ -287,8 +285,7 @@ public class MovableAnnotationRectangle extends SelectableAnnotationRectangle {
 
         @Override
         protected void handleMouseRelease(MouseEvent e) {
-            start=parent.getTimeStart();
-            duration = parent.getTimeStop() - parent.getTimeStart();
+            adjustStartAndDurationProperty();
             annotationSelectionController.selectOnlyDotsWithinTimeFrame(parent.getTimeStart(), parent.getTimeStop());
             e.consume();
         }
@@ -345,8 +342,7 @@ public class MovableAnnotationRectangle extends SelectableAnnotationRectangle {
 
         @Override
         protected void handleMouseRelease(MouseEvent e) {
-            start=parent.getTimeStart();
-            duration = parent.getTimeStop() - parent.getTimeStart();
+            adjustStartAndDurationProperty();
             annotationSelectionController.selectOnlyDotsWithinTimeFrame(parent.getTimeStart(), parent.getTimeStop());
             e.consume();
             //movableAnnotationController.adjustTimeStart();

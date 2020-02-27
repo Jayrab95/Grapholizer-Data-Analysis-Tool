@@ -31,12 +31,13 @@ public abstract class SelectableTimeLinePane extends TimeLinePane implements Tim
 
     //TODO: Bug: concurrent modification exception
     public void deselectAllElements(SelectableAnnotationRectangle selected){
-        for(Node n : getChildren()){
-            if(n instanceof AnnotationRectangle){
-                SelectableAnnotationRectangle ar = (SelectableAnnotationRectangle)n;
-                if(ar != selected){
-                    ar.setSelected(false);
-                }
+        List<SelectableAnnotationRectangle> rects = getChildren().stream()
+                .filter(node -> node instanceof SelectableAnnotationRectangle)
+                .map(node -> (SelectableAnnotationRectangle)node)
+                .collect(Collectors.toList());
+        for(SelectableAnnotationRectangle rect : rects){
+            if(rect != selected){
+                rect.setSelected(false);
             }
         }
     }
