@@ -22,6 +22,7 @@ public class DetailSegmentTimeLine extends DetailTimeLine {
             SegmentRectangle rect = new SegmentRectangle(
                     new SimpleObjectProperty<>(Color.PAPAYAWHIP),
                     new SimpleStringProperty(s.getAnnotation(mainTopicID)),
+                    new SimpleStringProperty(s.getAnnotation(mainTopicID)),
                     scale,
                     s.getDuration(),
                     50,

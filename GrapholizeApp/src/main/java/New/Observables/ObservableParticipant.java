@@ -26,26 +26,10 @@ public class ObservableParticipant {
         this.setParticipant(p.inner);
     }
 
-    public String getParticipantID(){return inner.getID();}
-
     public int getNumberOfPages(){return inner.getPages().size();}
 
     public ObservablePage getPage(int index) throws IndexOutOfBoundsException{
         return new ObservablePage(inner.getPage(index));
-    }
-
-    public List<ObservablePage> getAllPages(){
-        return inner.getPages().stream()
-                .map(p -> new ObservablePage(p))
-                .collect(Collectors.toList());
-    }
-
-    public void addObserver(ParticipantObserver obs) {
-        observers.add(obs);
-    }
-
-    public void removeObserver(ParticipantObserver obs) {
-        observers.remove(obs);
     }
 
     public void notifyObservers() {

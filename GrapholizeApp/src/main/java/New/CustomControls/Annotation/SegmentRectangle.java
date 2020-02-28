@@ -21,13 +21,13 @@ public class SegmentRectangle extends Rectangle {
 
 
 
-    public SegmentRectangle(ObjectProperty<Color> c, StringProperty text, DoubleProperty scaleProperty, double width, double height, double start){
+    public SegmentRectangle(ObjectProperty<Color> c, StringProperty toolTipTextProperty, StringProperty labelTextProperty, DoubleProperty scaleProperty, double width, double height, double start){
         this.segmentColorProperty = new SimpleObjectProperty<>(c.get());
         this.segmentColorProperty.bind(c);
         this.segmentColorProperty.addListener((observable, oldValue, newValue) -> onColorChange());
 
-        this.segmentTextProperty = new SimpleStringProperty(text.get());
-        this.segmentTextProperty.bind(text);
+        this.segmentTextProperty = new SimpleStringProperty(labelTextProperty.get());
+        this.segmentTextProperty.bind(labelTextProperty);
 
         this.scaleProperty = new SimpleDoubleProperty(scaleProperty.get());
         this.scaleProperty.bind(scaleProperty);
@@ -39,15 +39,15 @@ public class SegmentRectangle extends Rectangle {
         //this.durationProperty.bind(this.widthProperty().divide(this.scale));
         //this.startProperty.bind(this.xProperty().divide(this.scale));
 
-        this.displayedText = new Label(text.get());
-        this.displayedText.textProperty().bind(text);
+        this.displayedText = new Label(segmentTextProperty.get());
+        this.displayedText.textProperty().bind(segmentTextProperty);
         this.displayedText.setLabelFor(this);
         this.displayedText.translateXProperty().bind((this.xProperty().add((this.widthProperty()).divide(2))).subtract(this.displayedText.widthProperty().divide(2)));
         this.displayedText.setTranslateY((getHeight()/2) + (this.displayedText.getHeight()/2));
         this.displayedText.visibleProperty().bind(widthProperty().greaterThanOrEqualTo(this.displayedText.widthProperty()));
 
-        this.tooltip = new Tooltip(text.get());
-        this.tooltip.textProperty().bind(text);
+        this.tooltip = new Tooltip(toolTipTextProperty.get());
+        this.tooltip.textProperty().bind(toolTipTextProperty);
         Tooltip.install(this, tooltip);
 
         setHeight(height);

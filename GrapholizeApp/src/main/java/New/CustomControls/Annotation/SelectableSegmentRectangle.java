@@ -14,8 +14,9 @@ public class SelectableSegmentRectangle extends SegmentRectangle {
     private double temporaryPreviousStart;
     private double temporaryPreviousStop;
 
-    public SelectableSegmentRectangle(ObjectProperty<Color> c, StringProperty text, DoubleProperty scale, double width, double height, double start, SelectableTimeLinePane parent, Selector s ) {
-        super(c, text, scale, width, height, start);
+
+    public SelectableSegmentRectangle(ObjectProperty<Color> c, StringProperty toolTipTextProperty, StringProperty segmentLabelTextProperty, DoubleProperty scale, double width, double height, double start, SelectableTimeLinePane parent, Selector s ) {
+        super(c, toolTipTextProperty, segmentLabelTextProperty, scale, width, height, start);
 
         this.selected = new SimpleBooleanProperty(false);
         this.selected.addListener((observable, oldValue, newValue) -> onSelectionChange());

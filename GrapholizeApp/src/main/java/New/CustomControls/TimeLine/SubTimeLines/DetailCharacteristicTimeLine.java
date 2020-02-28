@@ -27,9 +27,11 @@ public class DetailCharacteristicTimeLine extends DetailTimeLine {
     protected void setUp() {
         for(Segment s : page.getPageProperty().get().getSegmentation(topicSetID)){
             Number d = characteristic.calculate(PageUtil.getDotSectionsForAnnotation(s, page.getAllStrokes()));
+            SimpleStringProperty prop = new SimpleStringProperty(characteristic.getName() + ": " + String.valueOf(d));
             SegmentRectangle rect = new SegmentRectangle(
                     new SimpleObjectProperty<>(Color.PAPAYAWHIP),
-                    new SimpleStringProperty(String.valueOf(d)),
+                    prop,
+                    prop,
                     scale,
                     s.getDuration(),
                     50,

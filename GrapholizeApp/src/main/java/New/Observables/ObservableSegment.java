@@ -6,7 +6,10 @@ import javafx.beans.property.DoubleProperty;
 import javafx.beans.property.SimpleDoubleProperty;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.property.StringProperty;
+import javafx.collections.FXCollections;
 import javafx.collections.ListChangeListener;
+import javafx.collections.MapChangeListener;
+import javafx.collections.ObservableMap;
 
 import java.util.Map;
 
@@ -17,6 +20,8 @@ public class ObservableSegment {
     private DoubleProperty timeStopProperty;
     private StringProperty mainTopicIDProperty;
     private StringProperty mainTopicAnnotationProperty;
+    private StringProperty toolTipTextProperty;
+    private ObservableMap<String, String> observableAnnotationMap;
 
     public ObservableSegment(Segment original, ObservableTopicSet observableTopicSet){
         this.segment = original;
@@ -31,9 +36,10 @@ public class ObservableSegment {
 
         this.mainTopicAnnotationProperty = new SimpleStringProperty(segment.getAnnotation(observableTopicSet.getMainTopicID()));
 
-        mainTopicIDProperty.addListener((observable, oldValue, newValue) ->
+        this.mainTopicIDProperty.addListener((observable, oldValue, newValue) ->
                 mainTopicAnnotationProperty.set(segment.getAnnotation(newValue))
         );
+
         observableTopicSet.getTopicsObservableList().addListener((ListChangeListener<Topic>) c -> {
             while(c.next()){
                 for(Topic t : c.getRemoved()){
@@ -41,6 +47,14 @@ public class ObservableSegment {
                 }
             }
         });
+
+        this.toolTipTextProperty = new SimpleStringProperty();
+        this.observableAnnotationMap = FXCollections.observableMap(segment.getAnnotationsMap());
+
+        this.observableAnnotationMap.addListener((MapChangeListener<String, String>) change -> {
+            this.toolTipTextProperty.set(generateText());
+        });
+        this.toolTipTextProperty.set(generateText());
     }
 
     //region Getters and Setters
@@ -80,19 +94,26 @@ public class ObservableSegment {
         return this.mainTopicAnnotationProperty;
     }
 
+    public StringProperty getToolTipTextProperty(){
+        return this.toolTipTextProperty;
+    }
+
     public void putAnnotation(String topicID, String annotation){
-        if(mainTopicIDProperty.get().equals(topicID)){
+        /*if(mainTopicIDProperty.get().equals(topicID)){
             mainTopicAnnotationProperty.set(annotation);
         }
-        segment.putAnnotation(topicID, annotation);
+         */
+        observableAnnotationMap.put(topicID, annotation);
+        //segment.putAnnotation(topicID, annotation);
     }
 
     private void removeAnnotation(String topicID){
-        segment.removeAnnotation(topicID);
+        observableAnnotationMap.remove(topicID);
+        //segment.removeAnnotation(topicID);
     }
 
     public String getAnnotation(String topicID){
-        return segment.getAnnotation(topicID);
+        return observableAnnotationMap.get(topicID);
     }
 
     private String generateText(){
@@ -100,6 +121,7 @@ public class ObservableSegment {
         for(String s : segment.getAnnotationsMap().keySet()){
             builder.append(String.format("%s: %s\n", s, segment.getAnnotation(s)));
         }
+        builder.append(String.format("%s: %s", "Duration:", String.valueOf(getDuration())));
         return builder.toString();
     }
 

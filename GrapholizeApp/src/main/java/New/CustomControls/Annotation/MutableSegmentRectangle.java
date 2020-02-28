@@ -34,7 +34,7 @@ public class MutableSegmentRectangle extends SelectableSegmentRectangle {
 
 
     public MutableSegmentRectangle(ObjectProperty<Color> c, DoubleProperty scale, ObservableSegment t, CustomTimeLinePane parent, Selector observableSegment, ObservableTopicSet set) {
-        super(c, t.getMainTopicAnnotationProperty(), scale, t.getDuration(), parent.getHeight(), t.getTimeStart(), parent, observableSegment);
+        super(c, t.getToolTipTextProperty(), t.getMainTopicAnnotationProperty() , scale, t.getDuration(), parent.getHeight(), t.getTimeStart(), parent, observableSegment);
 
         this.mutableSegmentController = new MutableSegmentController(t,parent);
         this.observableSegment =t;
