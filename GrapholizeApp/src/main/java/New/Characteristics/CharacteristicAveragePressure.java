@@ -11,7 +11,7 @@ public class CharacteristicAveragePressure extends Characteristic<Double> {
     }
 
     @Override
-    public Double calculate(List<List<Dot>> listDots) {
+    public Double calculateImplementation(List<List<Dot>> listDots) {
         int numberOfDots = 0;
         double forceSum = 0.0d;
         for (List<Dot> listDot : listDots) {

@@ -33,7 +33,7 @@ public class CharacteristicTotalDurationStrokesTest {
             dotLists.get(2).add(dot);
         }
 
-        long result = new CharacteristicTotalDurationStrokes("Charac1").calculate(dotLists);
+        long result = new CharacteristicTotalDurationStrokes("Charac1", "unit").calculateImplementation(dotLists);
         assertEquals(142,result);
     }
 }

@@ -27,7 +27,7 @@ public class CharacteristicAveragePressureTest {
             dotLists.get(1).add(dot);
         }
 
-        Double result = new CharacteristicAveragePressure("Charac1").calculate(dotLists);
+        Double result = new CharacteristicAveragePressure("Charac1","stiff").calculateImplementation(dotLists);
         assertEquals(0.5432857, result ,0.000001 );
     }
 }

@@ -27,7 +27,7 @@ public class CharacteristicAverageStrokeDurationTest {
             dotLists.get(1).add(dot);
         }
 
-        Double result = new CharacteristicAverageStrokeDuration("Charac1").calculate(dotLists);
+        Double result = new CharacteristicAverageStrokeDuration("Charac1","unit").calculateImplementation(dotLists);
         assertEquals(53, result ,0.000001 );
     }
 }

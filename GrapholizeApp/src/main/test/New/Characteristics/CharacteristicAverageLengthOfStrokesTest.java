@@ -30,7 +30,8 @@ public class CharacteristicAverageLengthOfStrokesTest {
             dotLists.get(1).add(new Dot(x2s[i],y2s[i],0,0));
         }
 
-        double result = new CharacteristicAverageLengthOfStrokes("Characert").calculate(dotLists);
+        double result = new CharacteristicAverageLengthOfStrokes("Characert", "unit")
+                .calculateImplementation(dotLists);
         assertEquals(2868.5017109125406,result, 0.00001);
     }
 }

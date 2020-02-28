@@ -12,7 +12,7 @@ public class CharacteristicTotalLengthOfStrokes extends Characteristic<Double> {
     }
 
     @Override
-    public Double calculate(List<List<Dot>> dotlists) {
+    public Double calculateImplementation(List<List<Dot>> dotlists) {
         double totalLength = 0;
         for (List<Dot> dotlist : dotlists) {
             Dot lastDot = null;

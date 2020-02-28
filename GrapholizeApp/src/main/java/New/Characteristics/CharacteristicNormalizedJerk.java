@@ -13,7 +13,7 @@ public class CharacteristicNormalizedJerk extends Characteristic<Double> {
     }
 
     @Override
-    public Double calculate(List<List<Dot>> dotLists) {
+    public Double calculateImplementation(List<List<Dot>> dotLists) {
         double normalizedJerkSum = 0;
         for (List<Dot> dotList : dotLists) {
             List<Double> jerks = new LinkedList<>();
@@ -60,6 +60,6 @@ public class CharacteristicNormalizedJerk extends Characteristic<Double> {
     private double getStrokeLength(List<Dot> dotList) {
         List<List<Dot>> dotLists = new LinkedList<>();
         dotLists.add(dotList);
-        return new CharacteristicTotalLengthOfStrokes("tempCharac", "tempUnit").calculate(dotLists);
+        return new CharacteristicTotalLengthOfStrokes("tempCharac", "tempUnit").calculateImplementation(dotLists);
     }
 }

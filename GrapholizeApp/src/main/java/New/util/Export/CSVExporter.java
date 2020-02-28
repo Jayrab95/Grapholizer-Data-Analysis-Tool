@@ -47,10 +47,11 @@ public class CSVExporter implements IExporter {
             generatedCSV.append(csvTableBuilder.build());
         });
 
-        //Write the file
+        //Create File if it doesn't exist
         if(!Files.exists(Path.of(filePath))) {
             Files.createFile(Path.of(filePath));
         }
+
         BufferedWriter buffWriter = Files.newBufferedWriter(Path.of(filePath), StandardOpenOption.WRITE);
         buffWriter.write(generatedCSV.toString());
         buffWriter.flush();
@@ -103,8 +104,7 @@ public class CSVExporter implements IExporter {
 
     private void calculateAndAddCharacteristics(Segment seg, CSVTableBuilder builder, int rowIndex, Page page) {
         config.characteristicList.forEach(characteristic -> {
-            List<List<Dot>> allDots = PageUtil.getDotSectionsForAnnotation(seg,page.getStrokes());
-            Number result = characteristic.calculate(allDots);
+            Number result = characteristic.calculate(seg,page.getStrokes());
             builder.addDataToRow(rowIndex, result.toString());
         });
     }

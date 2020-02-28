@@ -11,7 +11,7 @@ public class CharacteristicTotalPenUpPause extends Characteristic<Long> {
     }
 
     @Override
-    public Long calculate(List<List<Dot>> dotLists) {
+    public Long calculateImplementation(List<List<Dot>> dotLists) {
         long lastTimestamp = 0;
         long totalPause = 0;
         for (int i = 0; i < dotLists.size(); i++) {

@@ -11,6 +11,6 @@ public class CharacteristicTotalDurationAnnotation extends Characteristic<Double
     }
 
     @Override
-    public Double calculate(List<List<Dot>> dots) {return 0d;}
+    public Double calculateImplementation(List<List<Dot>> dots) {return 0d;}
 
 }

@@ -12,8 +12,6 @@ import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.property.StringProperty;
 import javafx.scene.paint.Color;
 
-import java.util.List;
-
 public class DetailCharacteristicTimeLine extends TimeLinePane {
     Characteristic<Number> characteristic;
     ObservablePage page;
@@ -30,7 +28,7 @@ public class DetailCharacteristicTimeLine extends TimeLinePane {
 
     protected void setUp() {
         for(Segment s : page.getPageProperty().get().getSegmentation(topicSetID)){
-            Number d = characteristic.calculate(PageUtil.getDotSectionsForAnnotation(s, page.getAllStrokes()));
+            Number d = characteristic.calculate(s, page.getAllStrokes());
             AnnotationRectangle rect = new AnnotationRectangle(
                     new SimpleObjectProperty<>(Color.PAPAYAWHIP),
                     new SimpleStringProperty(String.valueOf(d)),

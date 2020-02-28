@@ -12,7 +12,7 @@ public class CharacteristicAverageLengthOfStrokes extends Characteristic<Double>
     }
 
     @Override
-    public Double calculate(List<List<Dot>> dotlists) {
+    public Double calculateImplementation(List<List<Dot>> dotlists) {
         int numberOfStrokes = dotlists.size();
         double totalLength = 0;
         for (List<Dot> dotlist : dotlists) {

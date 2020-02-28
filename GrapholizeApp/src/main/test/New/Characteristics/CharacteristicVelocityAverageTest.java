@@ -36,7 +36,8 @@ public class CharacteristicVelocityAverageTest {
             dotLists.get(1).add(new Dot(x2s[i],y2s[i],0,timeStamps2[i]));
         }
 
-        double result = new CharacteristicVelocityAverage("Characert").calculate(dotLists);
+        double result = new CharacteristicVelocityAverage("Characert", "unit")
+                .calculateImplementation(dotLists);
         assertEquals(72.41157640591915, result, 0.00001);
     }
 }
