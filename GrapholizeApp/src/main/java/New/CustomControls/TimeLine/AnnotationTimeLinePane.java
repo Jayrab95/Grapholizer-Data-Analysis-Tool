@@ -1,6 +1,6 @@
 package New.CustomControls.TimeLine;
 
-import New.CustomControls.Annotation.AnnotationRectangle;
+import New.CustomControls.Annotation.SegmentRectangle;
 import New.Model.Entities.Segment;
 import javafx.beans.property.DoubleProperty;
 import javafx.beans.property.ObjectProperty;
@@ -13,7 +13,8 @@ import java.util.List;
 public class AnnotationTimeLinePane extends TimeLinePane {
 
     ObjectProperty<Color>c;
-    public AnnotationTimeLinePane(double totalLength, double height, DoubleProperty scaleProp, StringProperty name, ObjectProperty<Color> c, List<AnnotationRectangle>l, String id) {
+    StringProperty mainTopicIDProperty;
+    public AnnotationTimeLinePane(double totalLength, double height, DoubleProperty scaleProp, StringProperty name, ObjectProperty<Color> c, List<SegmentRectangle>l, String id) {
         super(totalLength, height, scaleProp, name, id);
         this.c=c;
         addAnnotations(l);
@@ -21,9 +22,9 @@ public class AnnotationTimeLinePane extends TimeLinePane {
 
     //TODO: This somehow needs to receive the main topic
     private void addAnnotation(Segment a){
-        getChildren().add(new AnnotationRectangle(
+        getChildren().add(new SegmentRectangle(
                 c,
-                new SimpleStringProperty(),
+                new SimpleStringProperty(a.getAnnotation(mainTopicIDProperty.get())),
                 scale,
                 a.getDuration(),
                 this.getHeight(),
@@ -31,9 +32,10 @@ public class AnnotationTimeLinePane extends TimeLinePane {
                 ));
     }
 
-    private void addAnnotations(List<AnnotationRectangle> annotations){
-        for(AnnotationRectangle a : annotations){
+    private void addAnnotations(List<SegmentRectangle> annotations){
+        for(SegmentRectangle a : annotations){
             Segment newSegment = new Segment(a.getTimeStart(), a.getTimeStop());
+
             addAnnotation(newSegment);
         }
     }

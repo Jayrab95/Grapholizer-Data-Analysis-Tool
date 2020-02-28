@@ -66,7 +66,7 @@ public class Page {
     public List<Segment> getSegmentation(String key){
         //TODO: quick build around
         if(key.equals("Stroke duration")){return getStrokeSegments();}
-        if(!timeLines.keySet().contains(key)){
+        else if(!timeLines.keySet().contains(key)){
             timeLines.put(key, new LinkedList<>());
         }
         return timeLines.get(key);

@@ -1,6 +1,6 @@
 package New.Observables;
 
-import New.CustomControls.Annotation.AnnotationRectangle;
+import New.CustomControls.Annotation.SegmentRectangle;
 import New.Interfaces.Selector;
 import New.Model.Entities.*;
 import New.util.PageUtil;
@@ -95,7 +95,7 @@ public class ObservablePage implements Selector {
                 .count() > 0;
     }
 
-    public boolean listCollidesWithOtherAnnotations(String key, List<AnnotationRectangle> annotations){
+    public boolean listCollidesWithOtherAnnotations(String key, List<SegmentRectangle> annotations){
         return annotations.stream()
                 .filter(a -> collidesWithOtherElements(key, a.getTimeStart(), a.getTimeStop()))
                 .count() > 0;
@@ -107,10 +107,10 @@ public class ObservablePage implements Selector {
      * @param rects the annotation rectangles of the timeline.
      * @return a list of dot lists (dot sections)
      */
-    public List<List<Dot>> getAllDotSectionsForTopicSet(List<AnnotationRectangle> rects){
+    public List<List<Dot>> getAllDotSectionsForTopicSet(List<SegmentRectangle> rects){
         List<List<Dot>> res = new LinkedList<>();
 
-        for(AnnotationRectangle ar : rects){
+        for(SegmentRectangle ar : rects){
             //reqStrokes contains all strokes that overlap with the bounds of this annotation.
             List<Stroke> reqStrokes = inner.get().getStrokes().stream()
                     .filter(observableStroke -> observableStroke.getTimeEnd() >= ar.getTimeStart() && observableStroke.getTimeStart() <= ar.getTimeStop())
@@ -129,7 +129,7 @@ public class ObservablePage implements Selector {
      * @return A list of dot sections or an empty list if no suitable dots were found.
      */
     @Deprecated
-    public List<List<Dot>> getDotSectionsForElements(List<AnnotationRectangle> elements){
+    public List<List<Dot>> getDotSectionsForElements(List<SegmentRectangle> elements){
         //Only proceed with filtering if even necessary.
         if(inner.get().getStrokes().size() > 0 && elements.size() > 0){
 
@@ -150,7 +150,7 @@ public class ObservablePage implements Selector {
             //If no dots were found, abort and return an empty list.
             if(allDotsInTimeRange.size() > 0){
                 List<List<Dot>> dotSections = new LinkedList<>();
-                for(AnnotationRectangle elem : elements){
+                for(SegmentRectangle elem : elements){
                     /* This lambda statement filters for all dots within the total dot list that lie within
                      * the iterated element's time range and puts them into a new list (dot section for this element)
                      */

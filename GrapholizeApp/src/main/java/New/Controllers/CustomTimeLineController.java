@@ -1,10 +1,9 @@
 package New.Controllers;
 
-import New.CustomControls.Annotation.MovableAnnotationRectangle;
-import New.CustomControls.Annotation.SelectableAnnotationRectangle;
+import New.CustomControls.Annotation.MutableSegmentRectangle;
 import New.CustomControls.TimeLine.CustomTimeLinePane;
 import New.CustomControls.Containers.TimeLineContainer;
-import New.CustomControls.Annotation.AnnotationRectangle;
+import New.CustomControls.Annotation.SegmentRectangle;
 import New.CustomControls.TimeLine.SelectableTimeLinePane;
 import New.Execptions.NoTimeLineSelectedException;
 import New.Model.Entities.Segment;
@@ -43,8 +42,8 @@ public class CustomTimeLineController {
 
 
     public double[] getCombinedAnnotationBoundaries(){
-        List<AnnotationRectangle> selectedAnnotations = observableTimeLine.getSelectedAnnotations();
-        Comparator<AnnotationRectangle> comp = Comparator.comparing(AnnotationRectangle::getTimeStart);
+        List<SegmentRectangle> selectedAnnotations = observableTimeLine.getSelectedAnnotations();
+        Comparator<SegmentRectangle> comp = Comparator.comparing(SegmentRectangle::getTimeStart);
         Collections.sort(selectedAnnotations, comp);
         double timeStart = selectedAnnotations.get(0).getTimeStart();
         double timeStop = selectedAnnotations.get(selectedAnnotations.size() - 1).getTimeStop();
@@ -59,7 +58,7 @@ public class CustomTimeLineController {
         return new double[]{l.get(0).getTimeStamp(), l.get(l.size() - 1).getTimeStamp()};
     }
 
-    public List<AnnotationRectangle> getSelectedAnnotations(){
+    public List<SegmentRectangle> getSelectedAnnotations(){
         return observableTimeLine.getSelectedAnnotations();
     }
 
@@ -167,7 +166,7 @@ public class CustomTimeLineController {
         page.removeAnnotation(observableTopicSet.getTopicSetID(), a.getSegment());
     }
 
-    public void filterSelect(SelectableTimeLinePane caller, Map<String, String> topicFilters, List<MovableAnnotationRectangle> segments){
+    public void filterSelect(SelectableTimeLinePane caller, Map<String, String> topicFilters, List<MutableSegmentRectangle> segments){
         observableTimeLine.setSelectedTimeLine(caller);
         segments.stream()
                 .filter(s -> s.fitsCriteria(topicFilters))

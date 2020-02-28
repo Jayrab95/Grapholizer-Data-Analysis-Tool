@@ -2,6 +2,12 @@ package New.Model.Entities;
 
 import java.util.Random;
 
+/**
+ * The SimpleColor class represents the color of a topic set.
+ * It consists of a red, green, blue and opacity value (doubles)
+ * These SimpleColor objects can later be converted into JavaFX Color objects using
+ * the ColorConverter class.
+ */
 public class SimpleColor {
 
     private double r;

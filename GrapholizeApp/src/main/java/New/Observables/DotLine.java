@@ -16,13 +16,8 @@ public class DotLine  extends Line {
 
     private BooleanProperty lineSelected;
     private ObjectProperty<Color> lineColor;
-    //private BooleanProperty strokeSelected;
-    //private BooleanBinding dotBinding;
-
     private ObservableDot dot1;
     private ObservableDot dot2;
-
-    //private ObservableList<BooleanProperty> dotsSelectedProperties;
 
 
     public DotLine(ObservableDot dot1, ObservableDot dot2, DoubleProperty scale){
@@ -43,26 +38,6 @@ public class DotLine  extends Line {
         //Perhaps the content switcher should not set the page on initialization
         this.lineSelected.bind(dot1.getSelectedProperty());
         this.lineColor.bind(dot1.getColorProperty());
-
-
-        /*dot2.getSelectedProperty().addListener(observable -> lineSelected.set(dot1.isSelected() && dot2.isSelected()));
-
-
-
-        this.dotsSelectedProperties = FXCollections.observableArrayList(dot1.getSelectedProperty(), dot2.getSelectedProperty());
-        this.dotsSelectedProperties.addListener((InvalidationListener) observable -> {
-            lineSelected.set(dotsSelectedProperties.stream().allMatch(BooleanProperty::get));
-            System.out.println("Line selected!!!");
-        });
-        //Source: http://andresalmiray.com/creating-aggregate-javafx-bindings/
-        this.dotBinding = Bindings.createBooleanBinding(
-                () -> dotsSelectedProperties.stream().allMatch(BooleanProperty::get),
-                dotsSelectedProperties
-        );
-
-        //this.dotBinding.addListener(observable -> lineSelected.set(dotBinding.getValue()));
-
-         */
 
         this.lineSelected.addListener(observable -> setStyle());
 

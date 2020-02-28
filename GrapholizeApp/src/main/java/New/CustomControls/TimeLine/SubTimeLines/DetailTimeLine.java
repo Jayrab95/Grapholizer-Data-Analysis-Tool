@@ -12,7 +12,6 @@ public abstract class DetailTimeLine extends TimeLinePane {
             , ObservablePage p, String topicSetID) {
         super(totalLength, height, scaleProp, name, topicSetID);
         this.page = p;
-        setUp();
     }
 
     protected abstract void setUp();

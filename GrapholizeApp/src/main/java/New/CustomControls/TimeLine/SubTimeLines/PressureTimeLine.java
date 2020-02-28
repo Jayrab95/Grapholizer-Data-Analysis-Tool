@@ -14,7 +14,7 @@ public class PressureTimeLine extends DetailTimeLine {
 
     public PressureTimeLine(double totalLength, double height, DoubleProperty scaleProp, StringProperty name, ObservablePage p, SelectableTimeLinePane parent, String topic) {
         super(totalLength, height, scaleProp, name, p, topic);
-        //setUp();
+        setUp();
     }
 
     @Override

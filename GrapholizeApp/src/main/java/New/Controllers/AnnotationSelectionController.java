@@ -1,6 +1,6 @@
 package New.Controllers;
 
-import New.CustomControls.Annotation.SelectableAnnotationRectangle;
+import New.CustomControls.Annotation.SelectableSegmentRectangle;
 import New.CustomControls.TimeLine.SelectableTimeLinePane;
 import New.Interfaces.Selector;
 
@@ -18,7 +18,7 @@ public class AnnotationSelectionController {
      * Selects the parent timeline if it is not currently selected and also deselects all elements if CTRL isn't held down.
      * @param CtrlHeld Is CTRL currently held down? (Multiselect)
      */
-    public void selectTimeLine(boolean CtrlHeld, SelectableAnnotationRectangle selected){
+    public void selectTimeLine(boolean CtrlHeld, SelectableSegmentRectangle selected){
         if(!parent.isSelected()){
             parent.setTimeLineSelected(true);
         }

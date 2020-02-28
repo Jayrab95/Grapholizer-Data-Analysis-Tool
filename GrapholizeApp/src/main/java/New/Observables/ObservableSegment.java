@@ -95,6 +95,14 @@ public class ObservableSegment {
         return segment.getAnnotation(topicID);
     }
 
+    private String generateText(){
+        StringBuilder builder = new StringBuilder();
+        for(String s : segment.getAnnotationsMap().keySet()){
+            builder.append(String.format("%s: %s\n", s, segment.getAnnotation(s)));
+        }
+        return builder.toString();
+    }
+
     //endregion
 
     //region annotation accessors

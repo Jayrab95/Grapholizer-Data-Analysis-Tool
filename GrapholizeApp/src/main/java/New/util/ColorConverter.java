@@ -3,7 +3,10 @@ package New.util;
 import New.Model.Entities.SimpleColor;
 import javafx.scene.paint.Color;
 
-
+/**
+ * The ColorConverter offers two methods to convert JavaFX Color object into a SimpleColor
+ * object and vice versa.
+ */
 public class ColorConverter {
 
     /**

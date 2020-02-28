@@ -2,8 +2,8 @@ package New.CustomControls.TimeLine;
 
 import New.Controllers.CustomTimeLineController;
 import New.CustomControls.Containers.TimeLineContainer;
-import New.CustomControls.Annotation.AnnotationRectangle;
-import New.CustomControls.Annotation.MovableAnnotationRectangle;
+import New.CustomControls.Annotation.SegmentRectangle;
+import New.CustomControls.Annotation.MutableSegmentRectangle;
 import New.Dialogues.DialogControls.TopicTextControl;
 import New.Dialogues.FilterSelectDialog;
 import New.Dialogues.SegmentDialog;
@@ -65,13 +65,11 @@ public class CustomTimeLinePane extends SelectableTimeLinePane {
         this.p = p;
 
         this.contextMenu = generateContextMenu();
+        generateSegmentRectangles();
 
-        //this.setOnMouseClicked(event -> handleMouseClick(event));
         this.setOnMousePressed(event -> handleTimelineMousePress(event));
         this.setOnMouseDragged(event -> handleTimelineMouseDrag(event));
         this.setOnMouseReleased(event -> handleTimelineMouseRelease(event));
-
-        //p.addObserver(this);
     }
 
     public CustomTimeLinePane(double width, double height, DoubleProperty scaleProp, ObservableTopicSet tag, ObservablePage p, TimeLineContainer parent, Segment[] segments) {
@@ -79,14 +77,22 @@ public class CustomTimeLinePane extends SelectableTimeLinePane {
         addAnnotations(segments);
     }
 
-    public CustomTimeLinePane(double width, double height, DoubleProperty scaleProp, ObservableTopicSet tag, ObservablePage p, TimeLineContainer parent, List<AnnotationRectangle> annotations) {
-        this(width, height, scaleProp, tag, p, parent);
-        addAnnotations(annotations);
-    }
-
     public CustomTimeLinePane(double width, double height, DoubleProperty scaleProp, ObservableTopicSet tag, ObservablePage p, TimeLineContainer parent, Segment a) {
         this(width, height, scaleProp, tag, p, parent);
         addAnnotation(a);
+    }
+
+    private void generateSegmentRectangles(){
+        for(Segment s : this.p.getPageProperty().get().getSegmentation(this.observableTopicSet.getTopicSetID())){
+            MutableSegmentRectangle mov = new MutableSegmentRectangle(
+                    observableTopicSet.getColorProperty(),
+                    scale,
+                    new ObservableSegment(s, observableTopicSet),
+                    this,
+                    p,
+                    observableTopicSet);
+            getChildren().addAll(mov, mov.getDisplayedText());
+        }
     }
 
     public String getTimeLineName(){
@@ -99,7 +105,7 @@ public class CustomTimeLinePane extends SelectableTimeLinePane {
 
     private void addAnnotation(Segment a){
         customTimeLineController.addAnnotation(a);
-        MovableAnnotationRectangle mov = new MovableAnnotationRectangle(
+        MutableSegmentRectangle mov = new MutableSegmentRectangle(
                 observableTopicSet.getColorProperty(),
                 scale,
                 new ObservableSegment(a, observableTopicSet),
@@ -109,21 +115,10 @@ public class CustomTimeLinePane extends SelectableTimeLinePane {
         getChildren().addAll(mov, mov.getDisplayedText());
     }
 
-    private void addAnnotations(List<AnnotationRectangle> annotations){
-        for(AnnotationRectangle a : annotations){
-            Segment newSegment = new Segment(a.getTimeStart(), a.getTimeStop());
-            addAnnotation(newSegment);
-        }
-    }
-
     private void addAnnotations(Segment[] segments){
         for(Segment a : segments){
             addAnnotation(a);
         }
-    }
-
-    private void removeAnnotation(AnnotationRectangle rect, ObservableSegment a){
-        getChildren().remove(rect);
     }
 
     /**
@@ -136,8 +131,8 @@ public class CustomTimeLinePane extends SelectableTimeLinePane {
         double upperBounds = getWidth();
         //The children list is not sorted and can also include handles of annotations
         for(Node n : getChildren()){
-            if(n instanceof AnnotationRectangle){
-                AnnotationRectangle rect = (AnnotationRectangle)n;
+            if(n instanceof SegmentRectangle){
+                SegmentRectangle rect = (SegmentRectangle)n;
                 double nTimeStart = rect.getX();
                 double nTimeStop = rect.getX() + rect.getWidth();
                 if(nTimeStop < xPosition && nTimeStop > lowerBounds) {
@@ -172,9 +167,9 @@ public class CustomTimeLinePane extends SelectableTimeLinePane {
     private void handleFilterSelectClick(){
         Optional<Map<String, String>> o =  new FilterSelectDialog(observableTopicSet.getInner()).showAndWait();
         if(o.isPresent()){
-            List<MovableAnnotationRectangle> children = getChildren().stream()
-                    .filter(node -> node instanceof MovableAnnotationRectangle)
-                    .map(node -> (MovableAnnotationRectangle) node)
+            List<MutableSegmentRectangle> children = getChildren().stream()
+                    .filter(node -> node instanceof MutableSegmentRectangle)
+                    .map(node -> (MutableSegmentRectangle) node)
                     .collect(Collectors.toList());
             customTimeLineController.filterSelect(this, o.get(), children);
         }
@@ -374,7 +369,7 @@ public class CustomTimeLinePane extends SelectableTimeLinePane {
         dialog.showAndWait();
     }
 
-    public void deleteSegment(MovableAnnotationRectangle a, ObservableSegment observableSegment){
+    public void deleteSegment(MutableSegmentRectangle a, ObservableSegment observableSegment){
         getChildren().removeAll(a, a.getLeft(), a.getRight(), a.getDisplayedText());
         customTimeLineController.removeAnnotation(observableSegment);
     }

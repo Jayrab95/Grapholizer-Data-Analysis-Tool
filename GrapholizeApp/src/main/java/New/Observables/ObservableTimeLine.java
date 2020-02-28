@@ -1,8 +1,8 @@
 package New.Observables;
 
-import New.CustomControls.Annotation.AnnotationRectangle;
-import New.CustomControls.Annotation.MovableAnnotationRectangle;
-import New.CustomControls.Annotation.SelectableAnnotationRectangle;
+import New.CustomControls.Annotation.SegmentRectangle;
+import New.CustomControls.Annotation.MutableSegmentRectangle;
+import New.CustomControls.Annotation.SelectableSegmentRectangle;
 import New.CustomControls.TimeLine.CustomTimeLinePane;
 import New.CustomControls.TimeLine.SelectableTimeLinePane;
 import New.Interfaces.Observer.TimeLineObserver;
@@ -35,14 +35,14 @@ public class ObservableTimeLine {
     // Could be optimized by making the selection dependant on the observableSegment, rather than the children.
     // The rectangle's selectedProperty binds itself to the OSegment's selected property.
     // This way, you can just search through the list of selectable segments on the page, rather than the children.
-    public List<AnnotationRectangle> getSelectedAnnotations(){
+    public List<SegmentRectangle> getSelectedAnnotations(){
         //The children first need to be filtered to see whether or not they're actually rectangles (Can also be drag rect or label)
         //Then the nodes acquire the correct cast
         //finally, they're filtered for selection
         return selectedTimeLine.getChildren().stream()
-                .filter(node -> node instanceof SelectableAnnotationRectangle)
-                .map(node -> (SelectableAnnotationRectangle)node)
-                .filter(SelectableAnnotationRectangle::isSelected)
+                .filter(node -> node instanceof SelectableSegmentRectangle)
+                .map(node -> (SelectableSegmentRectangle)node)
+                .filter(SelectableSegmentRectangle::isSelected)
                 .collect(Collectors.toList());
     }
 
@@ -89,16 +89,16 @@ public class ObservableTimeLine {
         return List.of();
     }
     public Segment[] generateMissingSegments(List<Topic> targetTopics){
-        List<AnnotationRectangle> selectedAnnotations = getSelectedAnnotations();
+        List<SegmentRectangle> selectedAnnotations = getSelectedAnnotations();
         Segment[] res = new Segment[selectedAnnotations.size()];
         for(int i = 0; i < selectedAnnotations.size(); i++){
-            AnnotationRectangle a = selectedAnnotations.get(i);
+            SegmentRectangle a = selectedAnnotations.get(i);
             Segment newSegment = new Segment(a.getTimeStart(), a.getTimeStop());
-            if(a instanceof MovableAnnotationRectangle){
-                for(Topic t : ((MovableAnnotationRectangle)a).getObservableTopicSet().getTopicsObservableList()){
+            if(a instanceof MutableSegmentRectangle){
+                for(Topic t : ((MutableSegmentRectangle)a).getObservableTopicSet().getTopicsObservableList()){
                     Optional<Topic> optionalTopic = targetTopics.stream().filter(top -> top.getTopicName().equals(t.getTopicName())).findFirst();
                     if(optionalTopic.isPresent()){
-                        newSegment.putAnnotation(optionalTopic.get().getTopicID(), ((MovableAnnotationRectangle)a).getObservableSegment().getAnnotation(t.getTopicID()));
+                        newSegment.putAnnotation(optionalTopic.get().getTopicID(), ((MutableSegmentRectangle)a).getObservableSegment().getAnnotation(t.getTopicID()));
                     }
                 }
             }

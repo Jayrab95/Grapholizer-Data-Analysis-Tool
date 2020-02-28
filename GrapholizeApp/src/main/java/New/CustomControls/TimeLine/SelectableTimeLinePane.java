@@ -1,8 +1,8 @@
 package New.CustomControls.TimeLine;
 
 import New.Controllers.SelectableTimeLineController;
-import New.CustomControls.Annotation.AnnotationRectangle;
-import New.CustomControls.Annotation.SelectableAnnotationRectangle;
+import New.CustomControls.Annotation.SegmentRectangle;
+import New.CustomControls.Annotation.SelectableSegmentRectangle;
 import New.CustomControls.Containers.TimeLineContainer;
 import New.Interfaces.Observer.TimeLineObserver;
 import New.Observables.ObservableTimeLine;
@@ -10,7 +10,6 @@ import javafx.beans.property.BooleanProperty;
 import javafx.beans.property.DoubleProperty;
 import javafx.beans.property.SimpleBooleanProperty;
 import javafx.beans.property.StringProperty;
-import javafx.scene.Node;
 
 import java.util.Comparator;
 import java.util.List;
@@ -30,22 +29,22 @@ public abstract class SelectableTimeLinePane extends TimeLinePane implements Tim
     }
 
     //TODO: Bug: concurrent modification exception
-    public void deselectAllElements(SelectableAnnotationRectangle selected){
-        List<SelectableAnnotationRectangle> rects = getChildren().stream()
-                .filter(node -> node instanceof SelectableAnnotationRectangle)
-                .map(node -> (SelectableAnnotationRectangle)node)
+    public void deselectAllElements(SelectableSegmentRectangle selected){
+        List<SelectableSegmentRectangle> rects = getChildren().stream()
+                .filter(node -> node instanceof SelectableSegmentRectangle)
+                .map(node -> (SelectableSegmentRectangle)node)
                 .collect(Collectors.toList());
-        for(SelectableAnnotationRectangle rect : rects){
+        for(SelectableSegmentRectangle rect : rects){
             if(rect != selected){
                 rect.setSelected(false);
             }
         }
     }
 
-    public List<AnnotationRectangle> getAnnotations(){
+    public List<SegmentRectangle> getAnnotations(){
         return getChildren().stream()
-                .filter(n -> n instanceof AnnotationRectangle)
-                .map(n -> (AnnotationRectangle)n)
+                .filter(n -> n instanceof SegmentRectangle)
+                .map(n -> (SegmentRectangle)n)
                 .sorted(Comparator.comparing(a -> a.getTimeStart()))
                 .collect(Collectors.toList());
     }
@@ -65,6 +64,7 @@ public abstract class SelectableTimeLinePane extends TimeLinePane implements Tim
         }
     }
 
+    //TODO: Replace with binding
     @Override
     public void update(ObservableTimeLine sender){
         if(!sender.equals(this)){

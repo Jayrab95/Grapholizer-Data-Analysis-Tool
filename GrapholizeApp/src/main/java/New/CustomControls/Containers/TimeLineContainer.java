@@ -172,8 +172,7 @@ public class TimeLineContainer extends VBox {
     private void loadTimeLine(ObservableTopicSet t, ObservablePage p, Optional<List<Segment>> annotations){
         if(annotations.isPresent()){
             CustomTimeLinePane pane;
-            Segment[] array = annotations.get().stream().toArray(n -> new Segment[n]);
-            pane = new CustomTimeLinePane(totalWidth.get(), timeLinesHeight, scale, t, p, this, array);
+            pane = new CustomTimeLinePane(totalWidth.get(), timeLinesHeight, scale, t, p, this);
             addTimeLinePane(pane);
         }
         else{

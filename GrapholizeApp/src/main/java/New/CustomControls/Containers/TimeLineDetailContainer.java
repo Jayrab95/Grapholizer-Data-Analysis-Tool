@@ -1,14 +1,9 @@
 package New.CustomControls.Containers;
 
 import New.Characteristics.Characteristic;
-import New.CustomControls.Annotation.AnnotationRectangle;
-import New.CustomControls.TimeLine.AnnotationTimeLinePane;
-import New.CustomControls.TimeLine.SelectableTimeLinePane;
-import New.CustomControls.TimeLine.SubTimeLines.DetailCharacteristicTimeLine;
-import New.CustomControls.TimeLine.SubTimeLines.PressureTimeLine;
-import New.CustomControls.TimeLine.SubTimeLines.VelocityTimeLine;
-import New.CustomControls.TimeLine.TimeLinePane;
-import New.CustomControls.TimeLine.TimeUnitPane;
+import New.CustomControls.Annotation.SegmentRectangle;
+import New.CustomControls.TimeLine.*;
+import New.CustomControls.TimeLine.SubTimeLines.*;
 import New.util.CharacteristicList;
 import javafx.beans.property.DoubleProperty;
 import javafx.beans.property.SimpleDoubleProperty;
@@ -64,10 +59,11 @@ public class TimeLineDetailContainer extends Pane {
         subTimelines.setPadding(new Insets(25,5,5,5));
 
         subTimelines.getChildren().add(unitPane); //add time scale
-        initializeStrokeTimeline(0);
-        initializePressureTimeline(1);
-        initializeVelocityTimeline(2);
-        initializecharacteristicTimeLines(CharacteristicList.characteristics(),3);
+        initializeSegmentTimeLine(0);
+        initializeStrokeDetailTimeLine(1);
+        initializePressureTimeline(2);
+        initializeVelocityTimeline(3);
+        initializecharacteristicTimeLines(CharacteristicList.characteristics(),4);
 
         timelineScrollPane.setContent(subTimelines);
         HBox timelinecontainer = new HBox(subTimelineTags, timelineScrollPane);
@@ -87,20 +83,36 @@ public class TimeLineDetailContainer extends Pane {
         return slider;
     }
 
-    private void initializeStrokeTimeline(int rowIndex){
+
+    private void initializeSegmentTimeLine(int rowIndex){
         subTimelineTags.add(new Label("Segments"),0, rowIndex);
-        subTimelineTags.add(new Label("Unit"),1, rowIndex);
+        subTimelineTags.add(new Label("Maintopic"),1, rowIndex);
         subTimelineTags.getRowConstraints().add(new RowConstraints(inspectedTimeLine.getHeight()));
-        subTimelines.getChildren().add(new AnnotationTimeLinePane(
+        subTimelines.getChildren().add(new DetailSegmentTimeLine(
                 getLength(),
-                inspectedTimeLine.getHeight(),
-                detailScale,
-                inspectedTimeLine.getTimeLineNameProperty(),
-                new SimpleObjectProperty<Color>(Color.BLACK),
-                inspectedTimeLine.getAnnotations(),
+                inspectedTimeLine.getHeight()
+                , detailScale,
+                new SimpleStringProperty("Segments"),
+                activePage,
+                inspectedTimeLine.getTopicSetID(),
+                inspectedTimeLine instanceof CustomTimeLinePane ? ((CustomTimeLinePane)inspectedTimeLine).getObservableTopicSet().getMainTopicID() : ""
+        ));
+    }
+
+    private void initializeStrokeDetailTimeLine(int rowIndex){
+        subTimelineTags.add(new Label("Strokes"),0, rowIndex);
+        subTimelineTags.add(new Label("Milliseconds"),1, rowIndex);
+        subTimelineTags.getRowConstraints().add(new RowConstraints(inspectedTimeLine.getHeight()));
+        subTimelines.getChildren().add(new DetailStrokesTimeLine(
+                getLength(),
+                inspectedTimeLine.getHeight()
+                , detailScale,
+                new SimpleStringProperty("Segments"),
+                activePage,
                 inspectedTimeLine.getTopicSetID()
         ));
     }
+
 
     private void initializePressureTimeline(int rowIndex){
         subTimelineTags.add(new Label("Pressure"),0, rowIndex);
@@ -152,7 +164,7 @@ public class TimeLineDetailContainer extends Pane {
 
     private double getLength(){
         double end = 0;
-        for(AnnotationRectangle r : inspectedTimeLine.getAnnotations()){
+        for(SegmentRectangle r : inspectedTimeLine.getAnnotations()){
             if(end < r.getTimeStop()){end = r.getTimeStop();}
         }
         return end;

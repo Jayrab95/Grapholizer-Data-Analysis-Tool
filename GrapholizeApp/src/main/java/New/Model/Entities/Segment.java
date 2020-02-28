@@ -42,6 +42,10 @@ public class Segment {
 
     public double getDuration(){return timeStop - timeStart;}
 
+    public Map<String, String> getAnnotationsMap() {
+        return annotationsMap;
+    }
+
     public String getAnnotation(String topicID){
         if(!annotationsMap.containsKey(topicID)){
             annotationsMap.put(topicID, "");

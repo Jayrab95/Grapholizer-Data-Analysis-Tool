@@ -13,7 +13,7 @@ public class VelocityTimeLine extends DetailTimeLine {
 
     public VelocityTimeLine(double totalLength, double height, DoubleProperty scaleProp, StringProperty name, ObservablePage p, String topic) {
         super(totalLength, height, scaleProp, name, p, topic);
-
+        setUp();
     }
 
     @Override
