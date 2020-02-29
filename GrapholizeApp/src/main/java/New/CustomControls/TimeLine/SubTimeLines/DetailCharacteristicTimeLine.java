@@ -15,12 +15,10 @@ import javafx.scene.paint.Color;
 public class DetailCharacteristicTimeLine extends DetailTimeLine {
 
     Characteristic<Number> characteristic;
-    ObservablePage page;
 
 
     public DetailCharacteristicTimeLine(double totalLength, double height, DoubleProperty scaleProp, StringProperty name, ObservablePage p, String topicSetID, Characteristic<Number> characteristic) {
         super(totalLength, height, scaleProp, name, p, topicSetID);
-        this.page = p;
         this.characteristic = characteristic;
         setUp();
     }
