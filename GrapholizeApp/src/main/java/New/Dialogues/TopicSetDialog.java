@@ -94,7 +94,8 @@ public class TopicSetDialog extends Dialog<TopicSet> {
         Button btn_AddTopic = new Button("Add Topic");
         btn_AddTopic.setOnAction(event -> {
             if(!(textField_topicName.getText().isBlank() || tableView_Topics.getItems().stream().anyMatch(t -> t.toString().equals(textField_topicName.getText())))){
-                String topicID = textField_topicName.getText();
+                String topicID = String.format("%s_%s",textField_topicName.getText(), UUID.randomUUID().toString());
+                /*
                 int i = 0;
                 boolean loop = true;
                 while(loop){
@@ -103,6 +104,8 @@ public class TopicSetDialog extends Dialog<TopicSet> {
                     loop = tableView_Topics.getItems().stream().anyMatch(t -> t.getTopicID().equals(String.format("%s_%d", topicID, finalI)));
                     if(loop){i++;}
                 }
+
+                 */
                 Topic t = new Topic(textField_topicName.getText(),topicID );
                 tableView_Topics.getItems().add(t);
             }

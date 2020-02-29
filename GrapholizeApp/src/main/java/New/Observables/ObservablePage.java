@@ -11,14 +11,10 @@ import javafx.collections.ObservableList;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
 
-import java.util.Collections;
-import java.util.LinkedList;
-import java.util.List;
-import java.util.Optional;
+import java.util.*;
 import java.util.stream.Collectors;
 
 public class ObservablePage implements Selector {
-    //private Page inner;
 
     private ObservableList<ObservableStroke> strokes;
 
@@ -75,12 +71,12 @@ public class ObservablePage implements Selector {
         inner.get().getSegmentation(topicSetKey).remove(a);
     }
 
-    public boolean containsTag(String tag){
-        return inner.get().getTimeLines().containsKey(tag);
+    public boolean containsSetID(String setID){
+        return inner.get().getTimeLines().containsKey(setID);
     }
 
     public Optional<List<Segment>> getAnnotationSet(String topicSetID){
-        if(containsTag(topicSetID)){
+        if(containsSetID(topicSetID)){
             return Optional.of(inner.get().getSegmentation(topicSetID));
         }
         return Optional.empty();

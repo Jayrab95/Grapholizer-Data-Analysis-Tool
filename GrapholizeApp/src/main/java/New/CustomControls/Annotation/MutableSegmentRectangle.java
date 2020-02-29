@@ -60,6 +60,8 @@ public class MutableSegmentRectangle extends SelectableSegmentRectangle {
         setOnMouseDragged(e-> handleMouseDrag(e));
         setOnMouseReleased(e-> handleMouseRelease(e));
 
+        tooltip.setOnShowing(event -> this.toolTipTextProperty.set(this.observableSegment.generateText()));
+
     }
 
     public DragRectangle getLeft() {

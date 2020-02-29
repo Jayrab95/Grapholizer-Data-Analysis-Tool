@@ -87,6 +87,7 @@ public class TopicSet {
 
     //Very simple way of creating new topic id.
     public String generateTopicID(String topicName){
+        /*
         String topicID = topicName;
         int i = 0;
         boolean loop = true;
@@ -97,6 +98,12 @@ public class TopicSet {
             if(loop){i++;}
         }
         return String.format("%s_%d", topicID, i);
+         */
+        return String.format("%s_%s", topicName, UUID.randomUUID().toString());
+    }
+
+    public Collection<String> getTopicIDs(){
+        return Collections.unmodifiableCollection(topicsMap.keySet());
     }
 
     @Override

@@ -2,6 +2,7 @@ package New.Model;
 
 
 import New.Model.Entities.Project;
+import New.Model.Entities.TopicSet;
 import New.Observables.ObservablePage;
 import New.Observables.ObservableParticipant;
 import New.Observables.ObservableProject;
@@ -24,6 +25,7 @@ public class Session {
     }
 
     public ObservableProject getActiveProject() {
+        cleanUp();
         return activeProject;
     }
 
@@ -37,25 +39,12 @@ public class Session {
 
     public void setProject(Project p){
         activeProject.setInnerProject(p);
-        //The other changes are handled by content switcher
-        //activeParticipant.setParticipant(p.getParticipant(p.getParticipantIDs().iterator().next()));
-        //activePage.setPage(activeParticipant.getPage(0));
     }
 
-    /*
-    //TODO: Are these needed? The content switcher now does the switching.
-    //Should content switcher receive a reference to the session instead? Or keep it the way it is?
-    public void switchParticipant(String participantKey){
-        activeParticipant.setParticipant(activeProject.getParticipant(participantKey));
-        activePage.setPage(activeParticipant.getPage(0));
+    private void cleanUp(){
+        activeProject.cleanUp();
     }
 
-    public void switchPage(int pageIndex){
-        //TODO: Does there need to be a check if the index is legal?
-        activePage.setPage(activeParticipant.getPage(pageIndex));
-    }
-
-     */
 
     public ZipHelper getZ_Helper() {
         return z_Helper;

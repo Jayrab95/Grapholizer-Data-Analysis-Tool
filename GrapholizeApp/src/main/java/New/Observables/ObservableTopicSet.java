@@ -12,7 +12,9 @@ import javafx.collections.ListChangeListener;
 import javafx.collections.ObservableList;
 import javafx.scene.paint.Color;
 
+import java.util.Collection;
 import java.util.List;
+import java.util.Set;
 import java.util.stream.Collectors;
 
 public class ObservableTopicSet {
@@ -106,4 +108,7 @@ public class ObservableTopicSet {
         return inner.generateTopicID(topicName);
     }
 
+    public Collection<String> getTopicIDs(){
+        return inner.getTopicIDs();
+    }
 }
