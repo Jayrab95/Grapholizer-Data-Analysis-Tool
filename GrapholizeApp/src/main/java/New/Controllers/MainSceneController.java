@@ -99,9 +99,10 @@ public class MainSceneController {
     private void loadProjectZip() {
         try {
             ProjectLoader pLoader = new ProjectLoader();
-            loadDataFromFiles(pLoader, "*.zip", "*.grapholizer");
-            raw_data_file = pLoader.getZipHelper().getPathTempData();
-            _session.setZ_Helper(pLoader.getZipHelper());
+            if(loadDataFromFiles(pLoader, "*.zip", "*.grapholizer")) {
+                pLoader.getZipHelper().getPathTempData();
+                _session.setZ_Helper(pLoader.getZipHelper());
+            }
         }catch(IOException ex) {
             new DialogGenerator().simpleErrorDialog("Load Error"
                     , "While temp-file cleanup an error occured."
@@ -130,7 +131,6 @@ public class MainSceneController {
                 Files.newBufferedReader(raw_data_file).lines().forEach(l -> sBuilder.append(l));
                 _session.getZ_Helper().writeRawData(sBuilder.toString());
                 _session.getZ_Helper().replaceData();
-
                 save();
             } else {
                 throw new IOException("No directory or file has been entered");
@@ -178,7 +178,7 @@ public class MainSceneController {
         }
     }
 
-    private void loadDataFromFiles(Loader loader, String ... fileExtensions) {
+    private boolean loadDataFromFiles(Loader loader, String ... fileExtensions) {
         try {
             File sFile = JavaFxUtil.openFileDialog("Load Dialog"
                     , "Load Data"
@@ -198,12 +198,14 @@ public class MainSceneController {
                     raw_data_file = Path.of(absFilePath);
                 }
                 initializeProject();
+                return true;
             }
         }catch(IOException ex) {
             new DialogGenerator().simpleErrorDialog("Input Error"
                     , "File could not be loaded"
                     , ex.getMessage());
         }
+        return false;
     }
 
     void initializeProject(){
