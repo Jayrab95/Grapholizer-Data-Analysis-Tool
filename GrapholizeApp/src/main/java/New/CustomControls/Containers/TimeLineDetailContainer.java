@@ -22,9 +22,10 @@ import javafx.scene.paint.Color;
 
 import java.util.List;
 
-public class TimeLineDetailContainer extends Pane {
+public class TimeLineDetailContainer extends ScrollPane {
 
     private SelectableTimeLinePane inspectedTimeLine;
+    private ScrollPane containerScroll;
     private ScrollPane timelineScrollPane;
     private VBox subTimelines;
     private GridPane subTimelineTags;
@@ -37,11 +38,13 @@ public class TimeLineDetailContainer extends Pane {
     public TimeLineDetailContainer(TimeLinePane inspectedTimeLine, ObservablePage activePage){
         this.inspectedTimeLine = (SelectableTimeLinePane)inspectedTimeLine;
         this.activePage = activePage;
+        this.setHbarPolicy(ScrollBarPolicy.NEVER);
         //Initialize Scaler;
         detailScale = new SimpleDoubleProperty(0.05);
         scaleSlider = initializeSlider(detailScale.get());
         detailScale.bind(scaleSlider.valueProperty());
 
+        containerScroll = new ScrollPane();
         subTimelines = new VBox();
         timelineScrollPane = new ScrollPane();
         subTimelineTags = new GridPane();
@@ -51,8 +54,8 @@ public class TimeLineDetailContainer extends Pane {
     }
 
     private void generateDetailContainer(){
-        subTimelineTags.getColumnConstraints().add(new ColumnConstraints(200)); //first column width
-        subTimelineTags.getColumnConstraints().add(new ColumnConstraints(50)); //second column width
+        subTimelineTags.getColumnConstraints().add(new ColumnConstraints(180)); //first column width
+        subTimelineTags.getColumnConstraints().add(new ColumnConstraints(60)); //second column width
         subTimelineTags.setVgap(10d); //vertical space between elements in container
         subTimelineTags.setPadding(new Insets(70,5,5,10));
         subTimelines.setSpacing(10d);
@@ -68,7 +71,7 @@ public class TimeLineDetailContainer extends Pane {
         timelineScrollPane.setContent(subTimelines);
         HBox timelinecontainer = new HBox(subTimelineTags, timelineScrollPane);
         timelinecontainer.setMaxWidth(1500);
-        this.getChildren().add(new VBox(scaleSlider, timelinecontainer));
+        this.setContent(new VBox(scaleSlider, timelinecontainer));
     }
 
     private Slider initializeSlider(double initScale){

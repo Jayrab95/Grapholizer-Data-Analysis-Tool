@@ -14,7 +14,7 @@ public class CharacteristicVelocityVerticalAverage extends Characteristic<Double
     }
 
     @Override
-    public Double calculate(List<List<Dot>> dotLists) {
+    public Double calculateImplementation(List<List<Dot>> dotLists) {
         List<Double> result = new LinkedList<>();
         for (List<Dot> dots : dotLists) {
             Dot lastDot = null;

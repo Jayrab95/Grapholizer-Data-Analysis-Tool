@@ -13,6 +13,7 @@ import javafx.beans.property.StringProperty;
 import javafx.scene.paint.Color;
 
 public class DetailCharacteristicTimeLine extends DetailTimeLine {
+
     Characteristic<Number> characteristic;
     ObservablePage page;
 
@@ -26,7 +27,7 @@ public class DetailCharacteristicTimeLine extends DetailTimeLine {
 
     protected void setUp() {
         for(Segment s : page.getPageProperty().get().getSegmentation(topicSetID)){
-            Number d = characteristic.calculate(PageUtil.getDotSectionsForAnnotation(s, page.getAllStrokes()));
+            Number d = characteristic.calculate(s, page.getAllStrokes());
             SimpleStringProperty prop = new SimpleStringProperty(characteristic.getName() + ": " + String.valueOf(d));
             SegmentRectangle rect = new SegmentRectangle(
                     new SimpleObjectProperty<>(Color.PAPAYAWHIP),

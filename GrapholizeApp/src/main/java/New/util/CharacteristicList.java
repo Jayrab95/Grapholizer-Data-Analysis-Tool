@@ -16,6 +16,7 @@ public class CharacteristicList {
         characteristicList.add(new CharacteristicTotalVelocityInversions("Number of Velocity Inversions", "none"));
         characteristicList.add(new CharacteristicNormalizedJerk("Normalized Jerk", "none"));
         characteristicList.add(new CharacteristicAveragePressure("Average Pressure", "find out"));
+        characteristicList.add(new CharacteristicSegmentDuration("Segmentation Duration", "ms"));
         return characteristicList;
     }
 
@@ -31,6 +32,7 @@ public class CharacteristicList {
         characteristicList.add(new CharacteristicTotalVelocityInversions("Number of Velocity Inversions", "none"));
         characteristicList.add(new CharacteristicNormalizedJerk("Normalized Jerk", "none"));
         characteristicList.add(new CharacteristicAveragePressure("Average Pressure", "find out"));
+        characteristicList.add(new CharacteristicSegmentDuration("Segmentation Duration", "ms"));
         return characteristicList;
     }
 

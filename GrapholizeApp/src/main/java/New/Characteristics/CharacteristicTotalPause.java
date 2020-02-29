@@ -11,6 +11,6 @@ public class CharacteristicTotalPause extends Characteristic<Integer> {
     }
 
     @Override
-    public Integer calculate(List<List<Dot>> dots) {throw new UnsupportedOperationException();}
+    public Integer calculateImplementation(List<List<Dot>> dots) {throw new UnsupportedOperationException();}
 
 }

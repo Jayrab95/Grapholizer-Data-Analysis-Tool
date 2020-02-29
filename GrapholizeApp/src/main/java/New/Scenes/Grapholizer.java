@@ -31,13 +31,18 @@ public class Grapholizer extends Application {
      */
     private void initializeCleanUpSteps(Stage stage, MainSceneController controller) {
         stage.setOnHidden( e -> {
-                try{
-                   if(controller._session.getZ_Helper() != null)
-                       controller._session.getZ_Helper().cleanUp(); //Delete the temporary files if they exist
-                }catch(IOException exp) {
-                    DialogGenerator.simpleErrorDialog("Cleanup Error"
-                    , "Error while cleaning temporary files"
-                    , "while removing tempory data an Read Write error occured" );
+                if(controller != null) {
+                    System.out.println("is not null");
+                    try {
+                        if (controller._session.getZ_Helper() != null)
+                            controller._session.getZ_Helper().cleanUp(); //Delete the temporary files if they exist
+                    } catch (IOException exp) {
+                        DialogGenerator.simpleErrorDialog("Cleanup Error"
+                                , "Error while cleaning temporary files"
+                                , "while removing tempory data an Read Write error occured");
+                    }
+                }else {
+                    System.out.println("is null");
                 }
         });
     }

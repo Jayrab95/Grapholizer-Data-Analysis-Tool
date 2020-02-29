@@ -11,7 +11,7 @@ public class CharacteristicTotalDurationStrokes extends Characteristic<Long> {
     }
 
     @Override
-    public Long calculate(List<List<Dot>> dotLists) {
+    public Long calculateImplementation(List<List<Dot>> dotLists) {
         long totalDuration = 0;
         for (List<Dot> dotList : dotLists) {
             totalDuration += dotList.get(

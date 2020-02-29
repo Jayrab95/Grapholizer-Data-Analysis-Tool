@@ -32,7 +32,7 @@ public class CharacteristicAverageAccelarationTest {
             dotLists.get(1).add(new Dot(x2s[i],y2s[i],0,timeStamps2[i]));
         }
 
-        double result = new CharacteristicAverageAccelaration("Characert").calculate(dotLists);
-        assertEquals(4.612527201645239,result, 0.0000001);
+        double result = new CharacteristicAverageAccelaration("Characert", "unit").calculateImplementation(dotLists);
+        assertEquals(11.272928409958201,result, 0.00001);
     }
 }

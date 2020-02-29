@@ -1,6 +1,9 @@
 package New.Characteristics;
 
 import New.Model.Entities.Dot;
+import New.Model.Entities.Segment;
+import New.Model.Entities.Stroke;
+import New.util.PageUtil;
 
 import java.util.List;
 
@@ -13,7 +16,12 @@ public abstract class Characteristic<T extends Number> {
         this.unitName = unitName;
     }
 
-    public abstract T calculate(List<List<Dot>> data);
+    public T calculate(Segment seg, List<Stroke> strokes) {
+        return calculateImplementation(PageUtil.getDotSectionsForAnnotation(seg,strokes));
+    }
+
+    protected abstract T calculateImplementation(List<List<Dot>> data);
+
 
     public String getName(){
         return name;

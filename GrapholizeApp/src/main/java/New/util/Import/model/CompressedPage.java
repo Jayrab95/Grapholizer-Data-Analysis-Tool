@@ -1,4 +1,4 @@
-package New.util.Import;
+package New.util.Import.model;
 
 import java.util.List;
 

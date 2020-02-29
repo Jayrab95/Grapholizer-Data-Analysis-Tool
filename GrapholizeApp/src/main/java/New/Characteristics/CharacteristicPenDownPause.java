@@ -2,9 +2,7 @@ package New.Characteristics;
 
 import New.Model.Entities.Dot;
 
-import java.util.LinkedList;
 import java.util.List;
-import java.util.Optional;
 
 public class CharacteristicPenDownPause extends Characteristic<Long> {
 
@@ -13,7 +11,7 @@ public class CharacteristicPenDownPause extends Characteristic<Long> {
     }
 
     @Override
-    public Long calculate(List<List<Dot>> dotLists) {
+    public Long calculateImplementation(List<List<Dot>> dotLists) {
         long totalPenDownPause = 0;
         for (List<Dot> dotList : dotLists) {
             for (Dot dot : dotList) {

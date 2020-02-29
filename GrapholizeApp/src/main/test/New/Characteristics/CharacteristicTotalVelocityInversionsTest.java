@@ -32,7 +32,8 @@ public class CharacteristicTotalVelocityInversionsTest {
             dotLists.get(1).add(new Dot(x2s[i],y2s[i],0,timeStamps2[i]));
         }
 
-        int result = new CharacteristicTotalVelocityInversions("Characert").calculate(dotLists);
+        int result = new CharacteristicTotalVelocityInversions("Characert", "unit")
+                .calculateImplementation(dotLists);
         assertEquals(6,result);
     }
 
@@ -58,7 +59,8 @@ public class CharacteristicTotalVelocityInversionsTest {
             dotLists.get(1).add(new Dot(x2s[i],y2s[i],0,timeStamps2[i]));
         }
 
-        int result = new CharacteristicTotalVelocityInversions("Characert").calculate(dotLists);
+        int result = new CharacteristicTotalVelocityInversions("Characert", "unit")
+                .calculateImplementation(dotLists);
         assertEquals(6,result);
     }
 }

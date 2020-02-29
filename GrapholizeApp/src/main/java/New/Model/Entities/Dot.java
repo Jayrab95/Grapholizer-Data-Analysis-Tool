@@ -1,6 +1,6 @@
 package New.Model.Entities;
 
-import New.util.Import.CompressedDot;
+import New.util.Import.model.CompressedDot;
 
 public class Dot {
 

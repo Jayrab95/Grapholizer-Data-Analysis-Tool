@@ -12,7 +12,7 @@ public class CharacteristicAverageAccelaration extends Characteristic<Double>{
     }
 
     @Override
-    public Double calculate(List<List<Dot>> dotLists) {
+    public Double calculateImplementation(List<List<Dot>> dotLists) {
         double totalAcceleration = 0;
         int accelarationCounter = 0;
         for (List<Dot> dotList : dotLists) {
@@ -26,11 +26,11 @@ public class CharacteristicAverageAccelaration extends Characteristic<Double>{
                             lastDot.getX(), lastDot.getY()
                             , dot.getX(), dot.getY(), timeDifference
                     );
-                    totalAcceleration += VelocityMathUtil.acceleration(
+                    totalAcceleration += Math.abs(VelocityMathUtil.acceleration(
                             lastVelocity
                             ,velocity
                             , timeDifference
-                    );
+                    ));
                     lastVelocity = velocity;
                 }
                 lastDot = dot;

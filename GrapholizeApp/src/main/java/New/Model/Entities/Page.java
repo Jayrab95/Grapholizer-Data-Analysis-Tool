@@ -1,7 +1,7 @@
 package New.Model.Entities;
 
-import New.util.Import.CompressedPage;
-import New.util.Import.CompressedStroke;
+import New.util.Import.model.CompressedPage;
+import New.util.Import.model.CompressedStroke;
 
 import java.util.*;
 

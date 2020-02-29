@@ -1,4 +1,6 @@
-package New.util.Import;
+package New.util.Import.model;
+
+import New.util.Import.model.CompressedPage;
 
 import java.util.List;
 

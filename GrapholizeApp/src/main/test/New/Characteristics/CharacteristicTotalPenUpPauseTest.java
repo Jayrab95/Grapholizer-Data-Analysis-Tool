@@ -33,7 +33,7 @@ public class CharacteristicTotalPenUpPauseTest {
             dotLists.get(2).add(dot);
         }
 
-        long result = new CharacteristicTotalPenUpPause("Charac1").calculate(dotLists);
+        long result = new CharacteristicTotalPenUpPause("Charac1", "unit").calculateImplementation(dotLists);
         assertEquals(10928,result);
     }
 }

@@ -1,4 +1,6 @@
-package New.util.Import;
+package New.util.Import.model;
+
+import New.util.Import.model.CompressedDot;
 
 import java.util.List;
 

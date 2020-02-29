@@ -1,7 +1,7 @@
 package New.Model.Entities;
 
-import New.util.Import.CompressedPage;
-import New.util.Import.CompressedParticipant;
+import New.util.Import.model.CompressedPage;
+import New.util.Import.model.CompressedParticipant;
 
 import java.util.LinkedList;
 import java.util.List;

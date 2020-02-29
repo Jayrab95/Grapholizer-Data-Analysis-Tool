@@ -12,7 +12,7 @@ public class CharacteristicTotalVelocityInversions extends Characteristic<Intege
     }
 
     @Override
-    public Integer calculate(List<List<Dot>> dotLists) {
+    public Integer calculateImplementation(List<List<Dot>> dotLists) {
         int velocityInversions = 0;
         for (List<Dot> dotList : dotLists) {
             velocityInversions += calculateInversions(dotList);

@@ -12,12 +12,12 @@ public class PageDataReader implements Loader {
     private final String PREFIX_PARTICIPANT_ID = "PAGEDATA";
 
     public Project load(String path) throws IOException{
-
         try(FileInputStream stream = new FileInputStream(path)) {
             if (IsFileValid(stream)) {
                 PageMetaData pmd = ReadMetaData(stream);
                 List<Stroke> strokes = ParseContentBody(pmd.getNumberOfStrokes(), stream);
-                Participant newPart = new Participant(PREFIX_PARTICIPANT_ID + "_" + (Long.toString(pmd.getCreateTimeStamp())));
+                Participant newPart = new Participant(PREFIX_PARTICIPANT_ID + "_"
+                        + (Long.toString(pmd.getCreateTimeStamp())));
                 //TODO: Replace ID with actual ID
                 newPart.addPage(new Page(pmd, strokes, "ID"));
                 return new Project(List.of(newPart), List.of());
@@ -26,8 +26,6 @@ public class PageDataReader implements Loader {
             }
         }
     }
-
-
 
     private static boolean IsFileValid(FileInputStream st) throws IOException{
         //TODO Check other hints that might prove the validity of the file
@@ -118,7 +116,6 @@ public class PageDataReader implements Loader {
             //(x or y dot code from N2) / MAX(width, height)
             float x = ReadFloat(st, floatBuffer);
             float y = ReadFloat(st, floatBuffer);
-
             float force = ReadFloat(st, floatBuffer); //this might be a shitty idea
 
             int timeDiff = st.read();
