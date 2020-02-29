@@ -326,9 +326,9 @@ public class TimeLineContainer extends VBox {
         if(DialogGenerator.confirmationDialogue(
                 TXT_TL_DELETE_TITLE,
                 TXT_TL_DELETE_HEADER,
-                String.format(TXT_TL_DELETE_TEXT)
+                String.format(TXT_TL_DELETE_TEXT, timeLine.getTimeLineName())
         )){
-            timeLineContainerController.removeTimeLine(timeLine.getTimeLineName());
+            timeLineContainerController.removeTimeLine(timeLine.getTopicSetID());
             getChildren().remove(timeLine);
             return true;
         }

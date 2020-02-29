@@ -6,10 +6,8 @@ import javafx.beans.property.DoubleProperty;
 import javafx.beans.property.SimpleDoubleProperty;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.property.StringProperty;
-import javafx.collections.FXCollections;
-import javafx.collections.ListChangeListener;
-import javafx.collections.MapChangeListener;
-import javafx.collections.ObservableMap;
+import javafx.collections.*;
+import javafx.collections.ObservableList;
 
 import java.util.Map;
 
@@ -22,6 +20,8 @@ public class ObservableSegment {
     private StringProperty mainTopicAnnotationProperty;
     private StringProperty toolTipTextProperty;
     private ObservableMap<String, String> observableAnnotationMap;
+
+    private ObservableList<Topic> observableList;
 
     public ObservableSegment(Segment original, ObservableTopicSet observableTopicSet){
         this.segment = original;
@@ -40,6 +40,9 @@ public class ObservableSegment {
                 mainTopicAnnotationProperty.set(segment.getAnnotation(newValue))
         );
 
+        this.observableList = FXCollections.unmodifiableObservableList(observableTopicSet.getTopicsObservableList());
+        /*
+        Eager removal of topics.
         observableTopicSet.getTopicsObservableList().addListener((ListChangeListener<Topic>) c -> {
             while(c.next()){
                 for(Topic t : c.getRemoved()){
@@ -47,6 +50,8 @@ public class ObservableSegment {
                 }
             }
         });
+
+         */
 
         this.toolTipTextProperty = new SimpleStringProperty();
         this.observableAnnotationMap = FXCollections.observableMap(segment.getAnnotationsMap());
@@ -116,10 +121,10 @@ public class ObservableSegment {
         return observableAnnotationMap.get(topicID);
     }
 
-    private String generateText(){
+    public String generateText(){
         StringBuilder builder = new StringBuilder();
-        for(String s : segment.getAnnotationsMap().keySet()){
-            builder.append(String.format("%s: %s\n", s, segment.getAnnotation(s)));
+        for(Topic t : observableList){
+            builder.append(String.format("%s: %s\n", t.getTopicName(), segment.getAnnotation(t.getTopicID())));
         }
         builder.append(String.format("%s: %s", "Duration:", String.valueOf(getDuration())));
         return builder.toString();

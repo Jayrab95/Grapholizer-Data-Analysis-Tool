@@ -11,6 +11,7 @@ public class SegmentRectangle extends Rectangle {
 
     protected ObjectProperty<Color> segmentColorProperty;
     protected StringProperty segmentTextProperty;
+    protected StringProperty toolTipTextProperty;
     protected DoubleProperty scaleProperty;
 
     protected DoubleProperty startProperty;
@@ -29,6 +30,8 @@ public class SegmentRectangle extends Rectangle {
         this.segmentTextProperty = new SimpleStringProperty(labelTextProperty.get());
         this.segmentTextProperty.bind(labelTextProperty);
 
+        this.toolTipTextProperty = new SimpleStringProperty(toolTipTextProperty.get());
+
         this.scaleProperty = new SimpleDoubleProperty(scaleProperty.get());
         this.scaleProperty.bind(scaleProperty);
         this.scaleProperty.addListener((observable, oldValue, newValue) -> onScaleChange());
@@ -46,8 +49,8 @@ public class SegmentRectangle extends Rectangle {
         this.displayedText.setTranslateY((getHeight()/2) + (this.displayedText.getHeight()/2));
         this.displayedText.visibleProperty().bind(widthProperty().greaterThanOrEqualTo(this.displayedText.widthProperty()));
 
-        this.tooltip = new Tooltip(toolTipTextProperty.get());
-        this.tooltip.textProperty().bind(toolTipTextProperty);
+        this.tooltip = new Tooltip(this.toolTipTextProperty.get());
+        this.tooltip.textProperty().bind(this.toolTipTextProperty);
         Tooltip.install(this, tooltip);
 
         setHeight(height);

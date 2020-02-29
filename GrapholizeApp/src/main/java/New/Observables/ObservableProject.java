@@ -6,11 +6,13 @@ import New.Execptions.TimelineTagNotUniqueException;
 import New.Interfaces.Observer.ProjectObserver;
 import New.Model.Entities.Participant;
 import New.Model.Entities.Project;
+import New.Model.Entities.Segment;
 import New.Model.Entities.TopicSet;
 import New.util.ColorConverter;
 import javafx.beans.property.ObjectProperty;
 import javafx.beans.property.SimpleObjectProperty;
 import javafx.scene.paint.Color;
+import jdk.internal.joptsimple.util.KeyValuePair;
 
 import java.util.*;
 
@@ -27,26 +29,6 @@ public class ObservableProject {
         //observableTimeLineTags = FXCollections.emptyObservableList();
         this.observers = new LinkedList<>();
         generateObservableTopicSets(inner);
-
-        /*
-        //https://docs.oracle.com/javase/8/javafx/api/javafx/collections/ListChangeListener.Change.html
-        //https://dzone.com/articles/javafx-collections-observablelist-and-observablema
-        //http://what-when-how.com/javafx-2/understanding-observable-collections-collections-and-concurrency-javafx-2-part-2/
-        observableTimeLineTags.addListener(new ListChangeListener<ObservableTimeLineTag>() {
-            @Override
-            public void onChanged(Change<? extends ObservableTimeLineTag> c) {
-                while(c.next()){
-                    for(ObservableTimeLineTag t : c.getAddedSubList()){
-
-                    }
-                    for(ObservableTimeLineTag t : c.getRemoved()){
-
-                    }
-                }
-            }
-        });
-
-         */
     }
 
     private void generateObservableTopicSets(Project p){
@@ -183,5 +165,42 @@ public class ObservableProject {
         for(ProjectObserver obs : observers){
             obs.update(this);
         }
+    }
+
+    public void cleanUp(){
+        for(String id : getParticipantIDs()){
+            ObservableParticipant p = getParticipant(id);
+            for(int i = 0; i < p.getNumberOfPages(); i++){
+                ObservablePage page = p.getPage(i);
+                removeLooseSegmentations(page);
+                removeLooseTopicIDsInSegments(page);
+            }
+        }
+    }
+
+    //TODO: Consider moving these to OPage;
+    private void removeLooseSegmentations(ObservablePage page){
+        Map<String, List<Segment>> pageSegmentations = page.getPageProperty().get().getTimeLines();
+        List<String> looseSetIDs = new LinkedList<>();
+        for(String setID : pageSegmentations.keySet()){
+            if(!getTopicSetIDs().contains(setID)){
+                looseSetIDs.add(setID);
+            }
+        }
+        looseSetIDs.forEach(s -> pageSegmentations.remove(s));
+    }
+
+    private void removeLooseTopicIDsInSegments(ObservablePage page){
+        page.getPageProperty().get().getTimeLines().entrySet().forEach(entry ->{
+            entry.getValue().parallelStream().forEach(segment -> {
+                List<String>looseTopicIDs = new LinkedList<>();
+                for(String topicID : segment.getAnnotationsMap().keySet()){
+                    if(!getTimeLineTag(entry.getKey()).getTopicIDs().contains(topicID)){
+                        looseTopicIDs.add(topicID);
+                    }
+                }
+                looseTopicIDs.forEach(s -> segment.removeAnnotation(s));
+            });
+        });
     }
 }

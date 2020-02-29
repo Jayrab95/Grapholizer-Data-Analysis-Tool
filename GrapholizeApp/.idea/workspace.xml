@@ -1,111 +1,47 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
-  <component name="ChangeListManager">
-    <list default="true" id="a0918809-4f09-4299-8e44-b37a26ca5ae8" name="Default Changelist" comment="" />
-    <option name="SHOW_DIALOG" value="false" />
-    <option name="HIGHLIGHT_CONFLICTS" value="false" />
-    <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
-    <option name="LAST_RESOLUTION" value="IGNORE" />
-  </component>
-  <component name="PerforceDirect.Settings">
-    <option name="myCanGoOffline" value="false" />
-    <option name="ENABLED" value="false" />
-  </component>
-  <component name="ProjectId" id="1YUCgfSwTo1gwFH1cO4kc6gMyTS" />
-  <component name="ProjectLevelVcsManager" settingsEditedManually="true">
-    <ConfirmationsSetting value="1" id="Add" />
-  </component>
-  <component name="ProjectViewState">
-    <option name="hideEmptyMiddlePackages" value="true" />
-    <option name="showExcludedFiles" value="true" />
-    <option name="showLibraryContents" value="true" />
-  </component>
-  <component name="PropertiesComponent">
-    <property name="RunOnceActivity.ShowReadmeOnStart" value="true" />
-    <property name="WebServerToolWindowFactoryState" value="false" />
-    <property name="aspect.path.notification.shown" value="true" />
-    <property name="node.js.detected.package.eslint" value="true" />
-    <property name="node.js.detected.package.tslint" value="true" />
-    <property name="node.js.path.for.package.eslint" value="project" />
-    <property name="node.js.path.for.package.tslint" value="project" />
-    <property name="node.js.selected.package.eslint" value="(autodetect)" />
-    <property name="node.js.selected.package.tslint" value="(autodetect)" />
-  </component>
   <component name="RunManager">
-    <configuration name="Grapholizer" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
-      <option name="MAIN_CLASS_NAME" value="New.Scenes.Grapholizer" />
-      <module name="GrapholizeAppAID.main" />
-      <extension name="coverage">
-        <pattern>
-          <option name="PATTERN" value="New.Scenes.*" />
-          <option name="ENABLED" value="true" />
-        </pattern>
-      </extension>
-      <method v="2">
-        <option name="Make" enabled="true" />
-      </method>
+    <configuration name="GrapholizeApp [run]" type="GradleRunConfiguration" factoryName="Gradle" temporary="true">
+      <ExternalSystemSettings>
+        <option name="executionName" />
+        <option name="externalProjectPath" value="$PROJECT_DIR$" />
+        <option name="externalSystemIdString" value="GRADLE" />
+        <option name="scriptParameters" />
+        <option name="taskDescriptions">
+          <list />
+        </option>
+        <option name="taskNames">
+          <list>
+            <option value="run" />
+          </list>
+        </option>
+        <option name="vmOptions" />
+      </ExternalSystemSettings>
+      <GradleScriptDebugEnabled>true</GradleScriptDebugEnabled>
+      <method v="2" />
     </configuration>
     <recent_temporary>
       <list>
-        <item itemvalue="Application.Grapholizer" />
+        <item itemvalue="Gradle.GrapholizeApp [run]" />
       </list>
     </recent_temporary>
   </component>
-  <component name="SvnConfiguration">
-    <configuration>C:\Users\lukat\AppData\Roaming\Subversion</configuration>
-  </component>
-  <component name="TaskManager">
-    <task active="true" id="Default" summary="Default task">
-      <changelist id="a0918809-4f09-4299-8e44-b37a26ca5ae8" name="Default Changelist" comment="" />
-      <created>1582986392656</created>
-      <option name="number" value="Default" />
-      <option name="presentableId" value="Default" />
-      <updated>1582986392656</updated>
-      <workItem from="1582986398858" duration="1392000" />
-      <workItem from="1582987906049" duration="3154000" />
-    </task>
-    <servers />
-  </component>
-  <component name="TypeScriptGeneratedFilesManager">
-    <option name="version" value="1" />
-  </component>
-  <component name="VcsManagerConfiguration">
-    <option name="PERFORM_UPDATE_IN_BACKGROUND" value="false" />
-    <option name="PERFORM_COMMIT_IN_BACKGROUND" value="false" />
-    <option name="PERFORM_EDIT_IN_BACKGROUND" value="false" />
-    <option name="PERFORM_CHECKOUT_IN_BACKGROUND" value="false" />
-    <option name="PERFORM_ADD_REMOVE_IN_BACKGROUND" value="false" />
-    <option name="LIMIT_HISTORY" value="false" />
-    <option name="SHOW_UNVERSIONED_FILES_WHILE_COMMIT" value="false" />
-    <ignored-roots>
-      <path value="$PROJECT_DIR$/.." />
-    </ignored-roots>
-  </component>
   <component name="WindowStateProjectService">
-    <state width="1493" height="210" key="GridCell.Tab.0.bottom" timestamp="1582992376164">
-      <screen x="0" y="0" width="1536" height="824" />
+    <state width="736" height="231" key="GridCell.Tab.0.bottom" timestamp="1582996346704">
+      <screen x="0" y="0" width="1368" height="872" />
     </state>
-    <state width="1493" height="210" key="GridCell.Tab.0.bottom/0.0.1536.824@0.0.1536.824" timestamp="1582992376164" />
-    <state width="1493" height="210" key="GridCell.Tab.0.center" timestamp="1582992376164">
-      <screen x="0" y="0" width="1536" height="824" />
+    <state width="736" height="231" key="GridCell.Tab.0.bottom/0.0.1368.872@0.0.1368.872" timestamp="1582996346704" />
+    <state width="736" height="231" key="GridCell.Tab.0.center" timestamp="1582996346704">
+      <screen x="0" y="0" width="1368" height="872" />
     </state>
-    <state width="1493" height="210" key="GridCell.Tab.0.center/0.0.1536.824@0.0.1536.824" timestamp="1582992376164" />
-    <state width="1493" height="210" key="GridCell.Tab.0.left" timestamp="1582992376164">
-      <screen x="0" y="0" width="1536" height="824" />
+    <state width="736" height="231" key="GridCell.Tab.0.center/0.0.1368.872@0.0.1368.872" timestamp="1582996346704" />
+    <state width="736" height="231" key="GridCell.Tab.0.left" timestamp="1582996346704">
+      <screen x="0" y="0" width="1368" height="872" />
     </state>
-    <state width="1493" height="210" key="GridCell.Tab.0.left/0.0.1536.824@0.0.1536.824" timestamp="1582992376164" />
-    <state width="1493" height="210" key="GridCell.Tab.0.right" timestamp="1582992376164">
-      <screen x="0" y="0" width="1536" height="824" />
+    <state width="736" height="231" key="GridCell.Tab.0.left/0.0.1368.872@0.0.1368.872" timestamp="1582996346704" />
+    <state width="736" height="231" key="GridCell.Tab.0.right" timestamp="1582996346704">
+      <screen x="0" y="0" width="1368" height="872" />
     </state>
-    <state width="1493" height="210" key="GridCell.Tab.0.right/0.0.1536.824@0.0.1536.824" timestamp="1582992376164" />
-    <state x="277" y="55" key="SettingsEditor" timestamp="1582987067314">
-      <screen x="0" y="0" width="1536" height="824" />
-    </state>
-    <state x="277" y="55" key="SettingsEditor/0.0.1536.824@0.0.1536.824" timestamp="1582987067314" />
-  </component>
-  <component name="hg4idea.settings">
-    <option name="CHECK_INCOMING_OUTGOING" value="false" />
-    <option name="myIgnoreWhitespacesInAnnotations" value="false" />
-    <option name="ROOT_SYNC" value="DONT_SYNC" />
+    <state width="736" height="231" key="GridCell.Tab.0.right/0.0.1368.872@0.0.1368.872" timestamp="1582996346704" />
   </component>
 </project>
