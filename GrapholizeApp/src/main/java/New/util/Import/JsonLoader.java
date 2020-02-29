@@ -3,12 +3,13 @@ package New.util.Import;
 import New.Interfaces.Loader;
 import New.Model.Entities.Participant;
 import New.Model.Entities.Project;
+import New.util.Import.model.CompressedParticipant;
 import com.google.gson.Gson;
 
 import java.io.BufferedReader;
 import java.io.FileInputStream;
-import java.io.IOException;
 import java.io.InputStreamReader;
+import java.io.IOException;
 import java.util.*;
 
 public class JsonLoader implements Loader {

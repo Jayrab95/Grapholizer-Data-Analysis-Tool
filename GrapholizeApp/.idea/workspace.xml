@@ -67,11 +67,14 @@
     <key name="CreateTestDialog.RecentsKey">
       <recent name="New.Characteristics" />
     </key>
+    <key name="MoveClassesOrPackagesDialog.RECENTS_KEY">
+      <recent name="New.util.Import.model" />
+    </key>
     <key name="CreateTestDialog.Recents.Supers">
       <recent name="" />
     </key>
   </component>
-  <component name="RunManager" selected="JUnit.CharacteristicSegmentDurationTest">
+  <component name="RunManager" selected="JUnit.All in GrapholizeAppAID.main">
     <configuration name="Grapholizer" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
       <option name="MAIN_CLASS_NAME" value="New.Scenes.Grapholizer" />
       <module name="GrapholizeAppAID.main" />
@@ -98,6 +101,14 @@
         <option name="Make" enabled="true" />
       </method>
     </configuration>
+    <configuration name="All in GrapholizeAppAID.main" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
+      <module name="GrapholizeAppAID.main" />
+      <option name="PACKAGE_NAME" value="" />
+      <option name="TEST_OBJECT" value="package" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
     <configuration name="CharacteristicSegmentDurationTest" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
       <module name="GrapholizeAppAID.main" />
       <extension name="coverage">
@@ -115,8 +126,9 @@
     </configuration>
     <recent_temporary>
       <list>
-        <item itemvalue="JUnit.CharacteristicSegmentDurationTest" />
+        <item itemvalue="JUnit.All in GrapholizeAppAID.main" />
         <item itemvalue="Application.Grapholizer" />
+        <item itemvalue="JUnit.CharacteristicSegmentDurationTest" />
         <item itemvalue="Application.HelloFX" />
       </list>
     </recent_temporary>
@@ -139,7 +151,11 @@
       <workItem from="1582792024883" duration="1244000" />
       <workItem from="1582793302625" duration="238000" />
       <workItem from="1582796095259" duration="4409000" />
-      <workItem from="1582902560381" duration="4955000" />
+      <workItem from="1582902560381" duration="7673000" />
+      <workItem from="1582911073513" duration="719000" />
+      <workItem from="1582912871070" duration="941000" />
+      <workItem from="1582979439467" duration="1080000" />
+      <workItem from="1582983478864" duration="1107000" />
     </task>
     <servers />
   </component>
@@ -173,46 +189,54 @@
       <screen x="0" y="0" width="1536" height="824" />
     </state>
     <state x="574" y="122" key="#com.intellij.ide.util.MemberChooser/0.0.1536.824@0.0.1536.824" timestamp="1582904792515" />
+    <state x="499" y="192" key="#com.intellij.ide.util.PackageChooserDialog" timestamp="1582911384814">
+      <screen x="0" y="0" width="1536" height="824" />
+    </state>
+    <state x="499" y="192" key="#com.intellij.ide.util.PackageChooserDialog/0.0.1536.824@0.0.1536.824" timestamp="1582911384814" />
+    <state x="566" y="297" width="403" height="236" key="#com.intellij.refactoring.move.moveClassesOrPackages.MoveClassesOrPackagesDialog.classes" timestamp="1582911387424">
+      <screen x="0" y="0" width="1536" height="824" />
+    </state>
+    <state x="566" y="297" width="403" height="236" key="#com.intellij.refactoring.move.moveClassesOrPackages.MoveClassesOrPackagesDialog.classes/0.0.1536.824@0.0.1536.824" timestamp="1582911387424" />
     <state x="577" y="154" key="FileChooserDialogImpl" timestamp="1582905705747">
       <screen x="0" y="0" width="1536" height="824" />
     </state>
     <state x="577" y="154" key="FileChooserDialogImpl/0.0.1536.824@0.0.1536.824" timestamp="1582905705747" />
-    <state width="1493" height="165" key="GridCell.Tab.0.bottom" timestamp="1582907426810">
+    <state width="1493" height="462" key="GridCell.Tab.0.bottom" timestamp="1582984651930">
       <screen x="0" y="0" width="1536" height="824" />
     </state>
-    <state width="1493" height="165" key="GridCell.Tab.0.bottom/0.0.1536.824@0.0.1536.824" timestamp="1582907426810" />
-    <state width="1493" height="165" key="GridCell.Tab.0.center" timestamp="1582907426810">
+    <state width="1493" height="462" key="GridCell.Tab.0.bottom/0.0.1536.824@0.0.1536.824" timestamp="1582984651930" />
+    <state width="1493" height="462" key="GridCell.Tab.0.center" timestamp="1582984651930">
       <screen x="0" y="0" width="1536" height="824" />
     </state>
-    <state width="1493" height="165" key="GridCell.Tab.0.center/0.0.1536.824@0.0.1536.824" timestamp="1582907426810" />
-    <state width="1493" height="165" key="GridCell.Tab.0.left" timestamp="1582907426810">
+    <state width="1493" height="462" key="GridCell.Tab.0.center/0.0.1536.824@0.0.1536.824" timestamp="1582984651930" />
+    <state width="1493" height="462" key="GridCell.Tab.0.left" timestamp="1582984651930">
       <screen x="0" y="0" width="1536" height="824" />
     </state>
-    <state width="1493" height="165" key="GridCell.Tab.0.left/0.0.1536.824@0.0.1536.824" timestamp="1582907426810" />
-    <state width="1493" height="165" key="GridCell.Tab.0.right" timestamp="1582907426810">
+    <state width="1493" height="462" key="GridCell.Tab.0.left/0.0.1536.824@0.0.1536.824" timestamp="1582984651930" />
+    <state width="1493" height="462" key="GridCell.Tab.0.right" timestamp="1582984651930">
       <screen x="0" y="0" width="1536" height="824" />
     </state>
-    <state width="1493" height="165" key="GridCell.Tab.0.right/0.0.1536.824@0.0.1536.824" timestamp="1582907426810" />
-    <state width="1493" height="165" key="GridCell.Tab.1.bottom" timestamp="1582907426810">
+    <state width="1493" height="462" key="GridCell.Tab.0.right/0.0.1536.824@0.0.1536.824" timestamp="1582984651930" />
+    <state width="1493" height="291" key="GridCell.Tab.1.bottom" timestamp="1582910314753">
       <screen x="0" y="0" width="1536" height="824" />
     </state>
-    <state width="1493" height="165" key="GridCell.Tab.1.bottom/0.0.1536.824@0.0.1536.824" timestamp="1582907426810" />
-    <state width="1493" height="165" key="GridCell.Tab.1.center" timestamp="1582907426810">
+    <state width="1493" height="291" key="GridCell.Tab.1.bottom/0.0.1536.824@0.0.1536.824" timestamp="1582910314753" />
+    <state width="1493" height="291" key="GridCell.Tab.1.center" timestamp="1582910314753">
       <screen x="0" y="0" width="1536" height="824" />
     </state>
-    <state width="1493" height="165" key="GridCell.Tab.1.center/0.0.1536.824@0.0.1536.824" timestamp="1582907426810" />
-    <state width="1493" height="165" key="GridCell.Tab.1.left" timestamp="1582907426810">
+    <state width="1493" height="291" key="GridCell.Tab.1.center/0.0.1536.824@0.0.1536.824" timestamp="1582910314753" />
+    <state width="1493" height="291" key="GridCell.Tab.1.left" timestamp="1582910314753">
       <screen x="0" y="0" width="1536" height="824" />
     </state>
-    <state width="1493" height="165" key="GridCell.Tab.1.left/0.0.1536.824@0.0.1536.824" timestamp="1582907426810" />
-    <state width="1493" height="165" key="GridCell.Tab.1.right" timestamp="1582907426810">
+    <state width="1493" height="291" key="GridCell.Tab.1.left/0.0.1536.824@0.0.1536.824" timestamp="1582910314753" />
+    <state width="1493" height="291" key="GridCell.Tab.1.right" timestamp="1582910314753">
       <screen x="0" y="0" width="1536" height="824" />
     </state>
-    <state width="1493" height="165" key="GridCell.Tab.1.right/0.0.1536.824@0.0.1536.824" timestamp="1582907426810" />
-    <state x="277" y="0" key="SettingsEditor" timestamp="1582905900463">
+    <state width="1493" height="291" key="GridCell.Tab.1.right/0.0.1536.824@0.0.1536.824" timestamp="1582910314753" />
+    <state x="277" y="0" key="SettingsEditor" timestamp="1582984547910">
       <screen x="0" y="0" width="1536" height="824" />
     </state>
-    <state x="277" y="0" key="SettingsEditor/0.0.1536.824@0.0.1536.824" timestamp="1582905900463" />
+    <state x="277" y="0" key="SettingsEditor/0.0.1536.824@0.0.1536.824" timestamp="1582984547910" />
     <state x="540" y="115" key="com.intellij.testIntegration.createTest.CreateTestDialog" timestamp="1582906926403">
       <screen x="0" y="0" width="1536" height="824" />
     </state>
@@ -227,25 +251,30 @@
       <breakpoints>
         <line-breakpoint enabled="true" type="java-line">
           <url>file://$PROJECT_DIR$/src/main/java/New/util/Import/PageDataReader.java</url>
-          <line>43</line>
+          <line>41</line>
           <option name="timeStamp" value="1" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" type="java-line">
-          <url>file://$PROJECT_DIR$/src/main/java/New/Scenes/Grapholizer.java</url>
-          <line>34</line>
-          <option name="timeStamp" value="6" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" type="java-line">
-          <url>file://$PROJECT_DIR$/src/main/java/New/Controllers/MainSceneController.java</url>
-          <line>103</line>
-          <option name="timeStamp" value="7" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="java-line">
           <url>file://$PROJECT_DIR$/src/main/java/New/util/Export/CSVExporter.java</url>
           <line>54</line>
           <option name="timeStamp" value="8" />
         </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/src/main/java/New/CustomControls/Containers/TimeLineContainer.java</url>
+          <line>173</line>
+          <option name="timeStamp" value="13" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/src/main/java/New/Scenes/Grapholizer.java</url>
+          <line>33</line>
+          <option name="timeStamp" value="14" />
+        </line-breakpoint>
       </breakpoints>
     </breakpoint-manager>
+    <watches-manager>
+      <configuration name="Application">
+        <watch expression="((Page)((LinkedList)((Participant)((HashMap.Node)((HashMap)_session.activeProject.inner.participants).entrySet().toArray()[0]).getValue()).pages).get(0)).timeLines" custom="New.Model.Entities.Participant,New.Model.Entities.Page,java.util.LinkedList,java.util.HashMap.Node,java.util.HashMap" />
+      </configuration>
+    </watches-manager>
   </component>
 </project>

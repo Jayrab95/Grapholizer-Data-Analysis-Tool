@@ -1,19 +1,12 @@
 package New.Observables;
 
-import New.Interfaces.Observable;
-import New.Interfaces.Observer.DotObserver;
-import New.Interfaces.Observer.Observer;
 import New.Model.Entities.Dot;
 import javafx.beans.property.BooleanProperty;
 import javafx.beans.property.ObjectProperty;
 import javafx.beans.property.SimpleBooleanProperty;
-import New.util.Import.CompressedDot;
+import New.util.Import.model.CompressedDot;
 import javafx.beans.property.SimpleObjectProperty;
 import javafx.scene.paint.Color;
-
-import java.util.ArrayList;
-import java.util.LinkedList;
-import java.util.List;
 
 public class ObservableDot extends Dot implements Comparable<Dot>{
 

@@ -1,7 +1,7 @@
 package New.Model.Entities;
 
-import New.util.Import.CompressedDot;
-import New.util.Import.CompressedStroke;
+import New.util.Import.model.CompressedDot;
+import New.util.Import.model.CompressedStroke;
 
 import java.util.LinkedList;
 import java.util.List;

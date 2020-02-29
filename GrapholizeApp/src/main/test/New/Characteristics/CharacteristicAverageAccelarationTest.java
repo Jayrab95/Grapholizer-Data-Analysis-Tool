@@ -33,6 +33,6 @@ public class CharacteristicAverageAccelarationTest {
         }
 
         double result = new CharacteristicAverageAccelaration("Characert", "unit").calculateImplementation(dotLists);
-        assertEquals(4.612527201645239,result, 0.0000001);
+        assertEquals(11.272928409958201,result, 0.00001);
     }
 }
