@@ -56,7 +56,7 @@ public class CustomTimeLinePane extends SelectableTimeLinePane {
     private ContextMenu contextMenu;
 
     public CustomTimeLinePane(double width, double height, DoubleProperty scaleProp, ObservableTopicSet tag, ObservablePage p, TimeLineContainer parent) {
-        super(width, height, scaleProp, tag.getTagProperty(), parent, tag.getTopicSetID());
+        super(width, height, scaleProp, tag.getNameProperty(), parent, tag.getTopicSetID());
         this.observableTopicSet = tag;
         customTimeLineController = new CustomTimeLineController(tag, p, parent);
         anchor = new Light.Point();

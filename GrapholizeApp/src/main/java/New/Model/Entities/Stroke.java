@@ -57,6 +57,8 @@ public class Stroke {
         return timeEnd;
     }
 
+    public long getDuration(){ return timeEnd - timeStart;}
+
     //Todo: Perhaps return a clone of dots. Dots should not be modifiable. Depending on the size of the list, this could hurt the performance however.
     public List<Dot> getDots() {
         return dots;

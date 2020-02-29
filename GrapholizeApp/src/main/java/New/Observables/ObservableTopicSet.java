@@ -58,7 +58,7 @@ public class ObservableTopicSet {
         return tagProperty.get();
     }
 
-    public StringProperty getTagProperty() {
+    public StringProperty getNameProperty() {
         return tagProperty;
     }
 

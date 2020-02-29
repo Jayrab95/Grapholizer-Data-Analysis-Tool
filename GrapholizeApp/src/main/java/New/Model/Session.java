@@ -24,10 +24,12 @@ public class Session {
         this.activePage = new ObservablePage(activeParticipant.getPage(0));
     }
 
-    public ObservableProject getActiveProject() {
-        cleanUp();
+    public ObservableProject getActiveProject(boolean cleanUp) {
+        if(cleanUp){this.cleanUp();}
         return activeProject;
     }
+
+
 
     public ObservableParticipant getActiveParticipant() {
         return activeParticipant;
@@ -41,7 +43,7 @@ public class Session {
         activeProject.setInnerProject(p);
     }
 
-    private void cleanUp(){
+    public void cleanUp(){
         activeProject.cleanUp();
     }
 

@@ -1,9 +1,7 @@
 package New.CustomControls.Containers;
 
 import New.Controllers.TimeLineContainerController;
-import New.CustomControls.TimeLine.CustomTimeLinePane;
-import New.CustomControls.TimeLine.StrokeDurationTimeLinePane;
-import New.CustomControls.TimeLine.TimeLinePane;
+import New.CustomControls.TimeLine.*;
 
 import New.Dialogues.FilterForSegmentsDialog;
 import New.Dialogues.TopicSetDialog;
@@ -12,7 +10,6 @@ import New.Execptions.TimeLineTagException;
 import New.Interfaces.Observer.Observer;
 import New.Model.Entities.Segment;
 import New.Model.Entities.TopicSet;
-import New.CustomControls.TimeLine.TimeUnitPane;
 import New.Observables.*;
 import New.util.DialogGenerator;
 
@@ -139,13 +136,22 @@ public class TimeLineContainer extends VBox {
         unitPane = new TimeUnitPane(scale,20,totalWidth);
         vBox_TimeLineBox.getChildren().clear();
 
-        StrokeDurationTimeLinePane strokePane = new StrokeDurationTimeLinePane(timeLineContainerController.getPage().getDuration(), timeLinesHeight, scale, timeLineContainerController.getPage(), this);
+        UnmodifiableSelectableTimeLinePane strokePane = new UnmodifiableSelectableTimeLinePane(
+                totalWidth.get(),
+                timeLinesHeight,
+                scale,
+                project.getObservableTopicSet(project.getStrokeSetID()),
+                page,
+                this
+        );
         addTimeLinePane(strokePane);
 
-        //TODO: Observe if A: This actually works and B: if there are any memory leaks when chaning project.
+
         for(String topicSetID : project.getTopicSetIDs()){
-            ObservableTopicSet tag = project.getTimeLineTag(topicSetID);
-            loadTimeLine(tag, page, page.getAnnotationSet(topicSetID));
+            if(!topicSetID.equals(project.getStrokeSetID())){
+                ObservableTopicSet tag = project.getObservableTopicSet(topicSetID);
+                loadTimeLine(tag, page, page.getAnnotationSet(topicSetID));
+            }
         }
     }
 

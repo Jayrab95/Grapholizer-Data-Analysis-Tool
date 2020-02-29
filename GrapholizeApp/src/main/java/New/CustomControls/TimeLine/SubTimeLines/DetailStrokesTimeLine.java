@@ -28,7 +28,7 @@ public class DetailStrokesTimeLine extends DetailTimeLine {
                 SegmentRectangle rect = new SegmentRectangle(
                         new SimpleObjectProperty<>(Color.PAPAYAWHIP),
                         new SimpleStringProperty(String.format("Duration: %d", duration)),
-                        new SimpleStringProperty(String.format("Duration: %d", duration)),
+                        new SimpleStringProperty(String.valueOf(duration)),
                         scale,
                         duration,
                         50,

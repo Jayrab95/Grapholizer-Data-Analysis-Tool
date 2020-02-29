@@ -57,6 +57,9 @@ public class ObservableSegment {
         this.observableAnnotationMap = FXCollections.observableMap(segment.getAnnotationsMap());
 
         this.observableAnnotationMap.addListener((MapChangeListener<String, String>) change -> {
+            if(change.getKey().equals(mainTopicIDProperty.get())){
+                mainTopicAnnotationProperty.set(segment.getAnnotation(mainTopicIDProperty.get()));
+            }
             this.toolTipTextProperty.set(generateText());
         });
         this.toolTipTextProperty.set(generateText());
@@ -126,7 +129,7 @@ public class ObservableSegment {
         for(Topic t : observableList){
             builder.append(String.format("%s: %s\n", t.getTopicName(), segment.getAnnotation(t.getTopicID())));
         }
-        builder.append(String.format("%s: %s", "Duration:", String.valueOf(getDuration())));
+        builder.append(String.format("%s: %s%s", "Duration:", String.valueOf((long)getDuration()), " ms"));
         return builder.toString();
     }
 

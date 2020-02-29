@@ -54,7 +54,7 @@ public class TimeLineContainerController {
     public ObservableTopicSet createNewTimeLineTag(TopicSet t){
         //TopicSet newTag = new TopicSet(tag, ColorConverter.convertJavaFXColorToModelColor(c));
         ObservableTopicSet oTag = new ObservableTopicSet(t);
-        project.insertTimeLineTag(t);
+        project.putTopicSet(t);
         return oTag;
     }
 

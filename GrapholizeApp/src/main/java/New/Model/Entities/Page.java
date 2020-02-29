@@ -53,20 +53,8 @@ public class Page {
 
     public Map<String, List<Segment>> getTimeLines(){return this.timeLines;}
 
-
-    //TODO: This is a quick build around perhaps it would make sense to add in a stroke segmentation per default.
-    public List getStrokeSegments(){
-        List<Segment> res = new LinkedList();
-        for(Stroke s : getStrokes()){
-            res.add(new Segment(s.getTimeStart(), s.getTimeEnd()));
-        }
-        return res;
-    }
-
     public List<Segment> getSegmentation(String key){
-        //TODO: quick build around
-        if(key.equals("Stroke duration")){return getStrokeSegments();}
-        else if(!timeLines.keySet().contains(key)){
+        if(!timeLines.keySet().contains(key)){
             timeLines.put(key, new LinkedList<>());
         }
         return timeLines.get(key);

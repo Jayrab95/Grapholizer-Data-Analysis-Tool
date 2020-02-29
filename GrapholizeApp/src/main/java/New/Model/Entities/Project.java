@@ -1,5 +1,6 @@
 package New.Model.Entities;
 
+import java.util.Collection;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
@@ -38,5 +39,24 @@ public class Project {
 
     public Set<String> getTopicSetIDs(){return projectTags.keySet();}
 
+    public Collection<Participant> getAllParticipants(){
+        return participants.values();
+    }
+
+    public Collection<TopicSet> getAllTopicSets(){
+        return projectTags.values();
+    }
+
+    public void putTopicSet(TopicSet ts){
+        projectTags.put(ts.getTagID(),ts);
+    }
+
+    public void putAllTopicSets(Map<String, TopicSet> map){
+        projectTags.putAll(map);
+    }
+
+    public TopicSet removeTopicSet(String id){
+        return projectTags.remove(id);
+    }
 
 }

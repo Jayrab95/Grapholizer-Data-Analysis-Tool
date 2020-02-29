@@ -35,7 +35,7 @@ public class ProjectLoader implements Loader {
     }
 
     private Project mergeDataAndTimelinesJson(Project projData, Project projTimelines) {
-        projData.getProjectTagsMap().putAll(projTimelines.getProjectTagsMap());
+        projData.putAllTopicSets(projTimelines.getProjectTagsMap());
         projData.getParticipantsMap().forEach((key, dataPart) -> {
             Participant timePart = projTimelines.getParticipantsMap().get(key);
             List<Page> dataPages = dataPart.getPages();

@@ -70,8 +70,8 @@ public class MainSceneController {
                         , "CSV-Export"
                         , 900, 450);
                 ((CSVExportDialog) loader.getController()).initialize(
-                        _session.getActiveProject().getTopicSets()
-                        , _session.getActiveProject().getParticipantIDs()
+                        _session.getActiveProject(true).getTopicSets()
+                        , _session.getActiveProject(false).getParticipantIDs()
                         , characteristicList
                         , this);
             }
@@ -146,7 +146,7 @@ public class MainSceneController {
         try {
             ZipHelper zHelper = _session.getZ_Helper();
             if (zHelper != null) {
-                String content = new ProjectSerializer().serialize(_session.getActiveProject().getInner());
+                String content = new ProjectSerializer().serialize(_session.getActiveProject(true).getInner());
                 zHelper.writeTimelines(content);
                 zHelper.replaceTimelines();
             } else {
@@ -170,7 +170,7 @@ public class MainSceneController {
                     , "Export"
                     , true
                     , filefilters);
-            exporter.export(sFile.getAbsolutePath(), _session.getActiveProject().getInner(), config);
+            exporter.export(sFile.getAbsolutePath(), _session.getActiveProject(true).getInner(), config);
         }catch(IOException ex) {
             new DialogGenerator().simpleErrorDialog("Failed to Export"
                     , "During writing the file an error occured"
@@ -214,7 +214,7 @@ public class MainSceneController {
         //_session.setZ_Helper(loader.getZipHelper());
         if(optionalContentSwitcher.isEmpty()){
             System.out.println("new switcher");
-            optionalContentSwitcher = Optional.of(new ContentSwitcher(_session.getActiveProject(),_session.getActiveParticipant(), _session.getActivePage()));
+            optionalContentSwitcher = Optional.of(new ContentSwitcher(_session.getActiveProject(false),_session.getActiveParticipant(), _session.getActivePage()));
             anchorPane_canvasContainer.getChildren().add(optionalContentSwitcher.get());
         }
         if(optionalCanvas.isEmpty()){
@@ -224,7 +224,7 @@ public class MainSceneController {
         }
         if(optionalTimeLineContainer.isEmpty()){
             System.out.println("new container");
-            optionalTimeLineContainer = Optional.of(new TimeLineContainer(_session.getActiveProject(), _session.getActivePage(), 0.2));
+            optionalTimeLineContainer = Optional.of(new TimeLineContainer(_session.getActiveProject(false), _session.getActivePage(), 0.2));
             scrollPane_TimeLines.getChildren().add(optionalTimeLineContainer.get());
         }
     }

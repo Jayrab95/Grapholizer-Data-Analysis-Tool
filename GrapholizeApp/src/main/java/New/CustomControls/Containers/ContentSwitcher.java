@@ -8,7 +8,7 @@ import New.Observables.ObservableProject;
 import javafx.scene.control.ComboBox;
 import javafx.scene.layout.HBox;
 
-public class ContentSwitcher extends HBox implements ProjectObserver {
+public class ContentSwitcher extends HBox {
 
     private ObservableProject project;
     private ObservableParticipant participant;
@@ -20,7 +20,7 @@ public class ContentSwitcher extends HBox implements ProjectObserver {
     private ComboBox<Integer> comboBox_Pages;
 
     public ContentSwitcher(ObservableProject project, ObservableParticipant activeParticipant, ObservablePage activePage){
-        project.addObserver(this);
+        project.getProjectProperty().addListener(observable -> update());
         this.contentSwitcherController = new ContentSwitcherController(project, activeParticipant, activePage);
 
         this.project = project;
@@ -84,8 +84,7 @@ public class ContentSwitcher extends HBox implements ProjectObserver {
         contentSwitcherController.setPage(newVal - 1);
     }
 
-    @Override
-    public void update(ObservableProject sender) {
+    public void update() {
         initializeComboBoxes();
     }
 }

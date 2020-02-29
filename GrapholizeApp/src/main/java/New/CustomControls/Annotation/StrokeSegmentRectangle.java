@@ -15,7 +15,7 @@ public class StrokeSegmentRectangle extends SelectableSegmentRectangle {
 
     private ObservableStroke s;
     public StrokeSegmentRectangle(ObjectProperty<Color> c, DoubleProperty scale, ObservableStroke s, SelectableTimeLinePane parent, Selector se) {
-        super(c, new SimpleStringProperty("Duration: " + s.getDuration()), new SimpleStringProperty(), scale, s.getDuration(), parent.getHeight(), s.getTimeStart(), parent, se);
+        super(c, new SimpleStringProperty("Duration: " + s.getDuration()), new SimpleStringProperty(), scale, s.getDuration(), s.getTimeStart(), parent, se);
         this.s = s;
         s.getSelectedBooleanProperty().bindBidirectional(this.selected);
     }
