@@ -18,6 +18,8 @@ import javafx.beans.property.DoubleProperty;
 import javafx.scene.Node;
 import javafx.scene.control.*;
 import javafx.scene.effect.Light;
+import javafx.scene.input.KeyCode;
+import javafx.scene.input.KeyEvent;
 import javafx.scene.input.MouseButton;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.paint.Color;
@@ -47,10 +49,14 @@ public class CustomTimeLinePane extends SelectableTimeLinePane {
     public static final String TXT_COLLIDEHANDLER_MSG =
             "One or more annotations that you are attempting to copy would collide with other existing annotations. \n"
             +"Would you like to create a new timeline for these new annotations?";
+    public static final String TXT_DELETEALLSELECTED_TITLE = "Delete all selected annotations";
+    public static final String TXT_DELETEALLSELECTED_HEADER = "Delete all selected annotations";
+    public static final String TXT_DELETEALLSELECTED_TEXT = "Are you sure you want to delete all selected annotations? This action cannot be undone.";
 
     private Light.Point anchor;
     private Rectangle selection;
     private double[] dragBounds;
+    private boolean selectMode;
     private ObservableTopicSet observableTopicSet;
     private ObservablePage observablePage;
     private CustomTimeLineController customTimeLineController;
@@ -71,6 +77,14 @@ public class CustomTimeLinePane extends SelectableTimeLinePane {
         this.setOnMousePressed(event -> handleTimelineMousePress(event));
         this.setOnMouseDragged(event -> handleTimelineMouseDrag(event));
         this.setOnMouseReleased(event -> handleTimelineMouseRelease(event));
+
+        this.setOnKeyPressed(event -> {
+            System.out.println("CTL detected keystroke");
+            if(isSelected()){
+                System.out.println("CTL " + timeLineName + " is selected");
+                handleKeyPress(event);
+            }
+        });
     }
 
     public CustomTimeLinePane(double width, double height, DoubleProperty scaleProp, ObservableTopicSet tag, ObservablePage observablePage, TimeLineContainer parent, Set<Segment> segments) {
@@ -148,6 +162,17 @@ public class CustomTimeLinePane extends SelectableTimeLinePane {
         return new double[]{lowerBounds, upperBounds};
     }
 
+    private void handleKeyPress(KeyEvent event){
+        switch(event.getCode()){
+            case DELETE:
+                System.out.println("CTL detected DEL");
+                handleDeletePress();
+                break;
+        }
+    }
+
+    private void handleDeletePress(){ customTimeLineController.deleteSelectedRectangles();}
+
     private ContextMenu generateContextMenu(){
         //TODO: Find better way to extend context menu functionality
         MenuItem item_filterSelect = new MenuItem("Filter select");
@@ -202,8 +227,7 @@ public class CustomTimeLinePane extends SelectableTimeLinePane {
             event.consume();
         }
         else{
-            //If an element was clicked => set Selected Element. The element can now be dragged.
-            //Reset selection
+
 
             dragBounds = getBounds(event.getX());
 
@@ -218,15 +242,22 @@ public class CustomTimeLinePane extends SelectableTimeLinePane {
             selection.setX(event.getX());
             selection.setY(0);
 
-            selection.setFill(null); // transparent
-            selection.setStroke(Color.BLACK); // border
-            selection.getStrokeDashArray().add(10.0);
+            if(event.isControlDown()){
+                selectMode = true;
+                selection.setFill(new Color(0,0,1,0.5)); //transparent blue
+            }
+            else{
+                selection.setFill(null); // transparent
+                selection.setStroke(Color.BLACK); // border
+                selection.getStrokeDashArray().add(10.0);
+            }
+
         }
     }
 
     private void handleTimelineMouseDrag(MouseEvent event){
         if(event.getButton().equals(MouseButton.PRIMARY)){
-            if(event.getX() > dragBounds[0] && event.getX() < dragBounds[1]){
+            if(selectMode || (event.getX() > dragBounds[0] && event.getX() < dragBounds[1]) ){
                 selection.setWidth(Math.abs(event.getX() - anchor.getX()));
                 selection.setX(Math.min(anchor.getX(), event.getX()));
             }
@@ -240,37 +271,42 @@ public class CustomTimeLinePane extends SelectableTimeLinePane {
 
     private void handleTimelineMouseRelease(MouseEvent e){
         if(e.getButton().equals(MouseButton.PRIMARY)){
-            if(selection.getWidth() > 0){
-                //Call annotation creation dialogue
-                double timeStart = selection.getX() / scale.get();
-                double timeStop = (selection.getX() + selection.getWidth()) / scale.get();
-                Segment s = new Segment(timeStart, timeStop);
-                SegmentDialog dialog = new SegmentDialog(
-                        "New segment",
-                        "Create new segment",
-                        "Enter a text for your annotation. (The annotation text can also be empty).",
-                        observableTopicSet.getTopicsObservableList(),
-                        Optional.of(s),
-                        false
-                );
-                dialog.setResultConverter(b -> {
-                    if (b == dialog.getButtonTypeOK()) {
-                        for(TopicTextControl ttc : dialog.getControls()){
-                            s.putAnnotation(ttc.getTopicID(), ttc.getTextFieldText());
-                        }
-                        addAnnotation(s);
-                    }
-                    return null;
-                });
-                dialog.showAndWait();
+            if(selectMode){
+                //TODO
+                // Select all segments within selection.
             }
+            else {
+                if(selection.getWidth() > 0){
+                    //Call annotation creation dialogue
+                    double timeStart = selection.getX() / scale.get();
+                    double timeStop = (selection.getX() + selection.getWidth()) / scale.get();
+                    Segment s = new Segment(timeStart, timeStop);
+                    SegmentDialog dialog = new SegmentDialog(
+                            "New segment",
+                            "Create new segment",
+                            "Enter a text for your annotation. (The annotation text can also be empty).",
+                            observableTopicSet.getTopicsObservableList(),
+                            Optional.of(s),
+                            false
+                    );
+                    dialog.setResultConverter(b -> {
+                        if (b == dialog.getButtonTypeOK()) {
+                            for(TopicTextControl ttc : dialog.getControls()){
+                                s.putAnnotation(ttc.getTopicID(), ttc.getTextFieldText());
+                            }
+                            addAnnotation(s);
+                        }
+                        return null;
+                    });
+                    dialog.showAndWait();
+                }
 
-            //Reset SelectionRectangle
-            selection.setWidth(0);
-            selection.setHeight(0);
-            getChildren().remove(selection);
+                //Reset SelectionRectangle
+                selection.setWidth(0);
+                selection.setHeight(0);
+                getChildren().remove(selection);
+            }
         }
-
     }
 
 

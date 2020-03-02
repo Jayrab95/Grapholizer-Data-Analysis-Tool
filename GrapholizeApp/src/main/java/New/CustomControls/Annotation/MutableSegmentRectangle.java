@@ -151,6 +151,10 @@ public class MutableSegmentRectangle extends SelectableSegmentRectangle {
         }
     }
 
+    public void deleteSegment(){
+        mutableSegmentController.removeElement(this);
+    }
+
     //region TimeLineElement handlers
 
     @Override
@@ -177,24 +181,27 @@ public class MutableSegmentRectangle extends SelectableSegmentRectangle {
     }
 
     private void handleMouseDrag(MouseEvent event){
-        if(event.getButton() == MouseButton.SECONDARY){}
-        else if(left.contains(event.getX(), event.getY())){
-            left.handleMousePress(event);
-        }
-        else if(right.contains(event.getX(), event.getY())){
-            right.handleMousePress(event);
-        }
-        else{
-            double newPosition = event.getX() - mouseDelta;
-            if(newPosition > dragBounds[0] && newPosition + getWidth() < dragBounds[1]){
-                move(newPosition);
+        if(event.getButton() == MouseButton.PRIMARY){
+            if(left.contains(event.getX(), event.getY())){
+                left.handleMousePress(event);
+            }
+            else if(right.contains(event.getX(), event.getY())){
+                right.handleMousePress(event);
             }
             else{
-                double temporaryOutOfBoundsPos = newPosition < dragBounds[0] ? dragBounds[0] + 0.1 : dragBounds[1] - getWidth() - 0.1;
-                move(temporaryOutOfBoundsPos);
+                double newPosition = event.getX() - mouseDelta;
+                if(newPosition > dragBounds[0] && newPosition + getWidth() < dragBounds[1]){
+                    move(newPosition);
+                }
+                else{
+                    double temporaryOutOfBoundsPos = newPosition < dragBounds[0] ? dragBounds[0] + 0.1 : dragBounds[1] - getWidth() - 0.1;
+                    move(temporaryOutOfBoundsPos);
+                }
+                event.consume();
             }
-            event.consume();
         }
+        if(event.getButton() == MouseButton.SECONDARY){}
+
     }
 
     @Override

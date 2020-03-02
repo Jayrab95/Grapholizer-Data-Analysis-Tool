@@ -112,6 +112,8 @@ public class TimeLineContainer extends VBox {
 
         InitializeButtonHBox();
         InitializeContainer(project, page);
+
+
     }
 
     private void InitializeButtonHBox(){
