@@ -9,9 +9,7 @@ import New.Interfaces.Observer.TimeLineObserver;
 import New.Model.Entities.Segment;
 import New.Model.Entities.Topic;
 
-import java.util.LinkedList;
-import java.util.List;
-import java.util.Optional;
+import java.util.*;
 import java.util.stream.Collectors;
 
 public class ObservableTimeLine {
@@ -88,9 +86,9 @@ public class ObservableTimeLine {
         }
         return List.of();
     }
-    public Segment[] generateMissingSegments(List<Topic> targetTopics){
+    public Set<Segment> generateMissingSegments(List<Topic> targetTopics){
         List<SegmentRectangle> selectedAnnotations = getSelectedAnnotations();
-        Segment[] res = new Segment[selectedAnnotations.size()];
+        Set<Segment> res = new TreeSet<>();
         for(int i = 0; i < selectedAnnotations.size(); i++){
             SegmentRectangle a = selectedAnnotations.get(i);
             Segment newSegment = new Segment(a.getTimeStart(), a.getTimeStop());
@@ -102,7 +100,7 @@ public class ObservableTimeLine {
                     }
                 }
             }
-            res[i] = newSegment;
+            res.add(newSegment);
         }
         return res;
     }

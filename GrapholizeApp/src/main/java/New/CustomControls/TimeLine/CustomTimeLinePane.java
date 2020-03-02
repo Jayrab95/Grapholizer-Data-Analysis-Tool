@@ -26,6 +26,7 @@ import javafx.scene.shape.Rectangle;
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;
+import java.util.Set;
 import java.util.stream.Collectors;
 
 public class CustomTimeLinePane extends SelectableTimeLinePane {
@@ -51,18 +52,18 @@ public class CustomTimeLinePane extends SelectableTimeLinePane {
     private Rectangle selection;
     private double[] dragBounds;
     private ObservableTopicSet observableTopicSet;
-    private ObservablePage p;
+    private ObservablePage observablePage;
     private CustomTimeLineController customTimeLineController;
     private ContextMenu contextMenu;
 
-    public CustomTimeLinePane(double width, double height, DoubleProperty scaleProp, ObservableTopicSet tag, ObservablePage p, TimeLineContainer parent) {
+    public CustomTimeLinePane(double width, double height, DoubleProperty scaleProp, ObservableTopicSet tag, ObservablePage observablePage, TimeLineContainer parent) {
         super(width, height, scaleProp, tag.getNameProperty(), parent, tag.getTopicSetID());
         this.observableTopicSet = tag;
-        customTimeLineController = new CustomTimeLineController(tag, p, parent);
+        customTimeLineController = new CustomTimeLineController(tag, observablePage, parent);
         anchor = new Light.Point();
         selection = new Rectangle();
         dragBounds = new double[2];
-        this.p = p;
+        this.observablePage = observablePage;
 
         this.contextMenu = generateContextMenu();
         generateSegmentRectangles();
@@ -72,24 +73,24 @@ public class CustomTimeLinePane extends SelectableTimeLinePane {
         this.setOnMouseReleased(event -> handleTimelineMouseRelease(event));
     }
 
-    public CustomTimeLinePane(double width, double height, DoubleProperty scaleProp, ObservableTopicSet tag, ObservablePage p, TimeLineContainer parent, Segment[] segments) {
-        this(width, height, scaleProp, tag, p, parent);
+    public CustomTimeLinePane(double width, double height, DoubleProperty scaleProp, ObservableTopicSet tag, ObservablePage observablePage, TimeLineContainer parent, Set<Segment> segments) {
+        this(width, height, scaleProp, tag, observablePage, parent);
         addAnnotations(segments);
     }
 
-    public CustomTimeLinePane(double width, double height, DoubleProperty scaleProp, ObservableTopicSet tag, ObservablePage p, TimeLineContainer parent, Segment a) {
-        this(width, height, scaleProp, tag, p, parent);
+    public CustomTimeLinePane(double width, double height, DoubleProperty scaleProp, ObservableTopicSet tag, ObservablePage observablePage, TimeLineContainer parent, Segment a) {
+        this(width, height, scaleProp, tag, observablePage, parent);
         addAnnotation(a);
     }
 
     private void generateSegmentRectangles(){
-        for(Segment s : this.p.getPageProperty().get().getSegmentation(this.observableTopicSet.getTopicSetID())){
+        for(Segment s : this.observablePage.getPageProperty().get().getSegmentation(this.observableTopicSet.getTopicSetID())){
             MutableSegmentRectangle mov = new MutableSegmentRectangle(
                     observableTopicSet.getColorProperty(),
                     scale,
                     new ObservableSegment(s, observableTopicSet),
                     this,
-                    p,
+                    observablePage,
                     observableTopicSet);
             getChildren().addAll(mov, mov.getDisplayedText());
         }
@@ -110,12 +111,12 @@ public class CustomTimeLinePane extends SelectableTimeLinePane {
                 scale,
                 new ObservableSegment(a, observableTopicSet),
                 this,
-                p,
+                observablePage,
                 observableTopicSet);
         getChildren().addAll(mov, mov.getDisplayedText());
     }
 
-    private void addAnnotations(Segment[] segments){
+    private void addAnnotations(Set<Segment> segments){
         for(Segment a : segments){
             addAnnotation(a);
         }
@@ -151,6 +152,8 @@ public class CustomTimeLinePane extends SelectableTimeLinePane {
         //TODO: Find better way to extend context menu functionality
         MenuItem item_filterSelect = new MenuItem("Filter select");
         item_filterSelect.setOnAction(event -> handleFilterSelectClick());
+        MenuItem item_createNegativeTimeLine = new MenuItem("Create negative timeline");
+        item_createNegativeTimeLine.setOnAction(event -> handelContextCreateNegativeTimeLineClick());
         MenuItem item_createNewTimeLine = new MenuItem("Create new time line out of selected elements");
         item_createNewTimeLine.setOnAction(event -> handleContextCreateNewTimeLineClick());
         MenuItem item_copyAnnotations = new MenuItem("Copy selected annotations into this timeline");
@@ -161,7 +164,7 @@ public class CustomTimeLinePane extends SelectableTimeLinePane {
         item_editTimeLine.setOnAction(event -> customTimeLineController.editTimeLine());
         MenuItem item_removeTimeLine = new MenuItem("Remove this timeline");
         item_removeTimeLine.setOnAction(event -> customTimeLineController.removeTimeLine(this));
-        return new ContextMenu(item_filterSelect, item_createNewTimeLine, item_editTimeLine, item_copyAnnotations, item_createAnnotationsOutOfDots, item_removeTimeLine);
+        return new ContextMenu(item_filterSelect, item_createNegativeTimeLine, item_createNewTimeLine, item_editTimeLine, item_copyAnnotations, item_createAnnotationsOutOfDots, item_removeTimeLine);
     }
 
     private void handleFilterSelectClick(){
@@ -173,6 +176,10 @@ public class CustomTimeLinePane extends SelectableTimeLinePane {
                     .collect(Collectors.toList());
             customTimeLineController.filterSelect(this, o.get(), children);
         }
+    }
+
+    private void handelContextCreateNegativeTimeLineClick(){
+        customTimeLineController.createNegativeTimeLine();
     }
 
     private void handleContextCreateNewTimeLineClick(){
@@ -294,7 +301,7 @@ public class CustomTimeLinePane extends SelectableTimeLinePane {
                             optional = Optional.empty();
                         }
                         try {
-                            customTimeLineController.createNewTimeLine(optional);
+                            customTimeLineController.createNewTimeLine(optional, true);
                         } catch (NoTimeLineSelectedException ex) {
                             DialogGenerator.simpleErrorDialog("Creation Error","Error while creating timeline", ex.toString());
                         }
@@ -339,7 +346,7 @@ public class CustomTimeLinePane extends SelectableTimeLinePane {
                             Optional.of(new Segment(boundaries.get()[0], boundaries.get()[1])) :
                             Optional.empty();
                     try {
-                        customTimeLineController.createNewTimeLine(annotation);
+                        customTimeLineController.createNewTimeLine(annotation, false);
                     } catch (NoTimeLineSelectedException ex) {
                         DialogGenerator.simpleErrorDialog("Creation Error","Error while creating timeline", ex.toString());
                     }
@@ -354,7 +361,7 @@ public class CustomTimeLinePane extends SelectableTimeLinePane {
                         addAnnotation(s);
                     }
                     else {
-                        for(List<ObservableDot> segment : p.getSelectedDotSections()){
+                        for(List<ObservableDot> segment : observablePage.getSelectedDotSections()){
                             addAnnotation(new Segment(
                                     segment.get(0).getTimeStamp(),
                                     segment.get(segment.size()-1).getTimeStamp()));

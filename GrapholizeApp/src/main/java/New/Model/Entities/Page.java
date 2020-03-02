@@ -10,14 +10,14 @@ public class Page {
     private transient final List<Stroke> strokes;
     private final String pageID;
 
-    private Map<String, List<Segment>> timeLines;
+    private Map<String, Set<Segment>> segmentationsMap;
 
     //TODO: Load page annotations and add them to map
     public Page (PageMetaData pageMetaData, List<Stroke> strokes, String pageID){
         this.pageID = pageID;
         this.pageMetaData = pageMetaData;
         this.strokes = strokes;
-        timeLines = new HashMap<>();
+        segmentationsMap = new HashMap<>();
     }
 
     public Page (CompressedPage cp) {
@@ -30,7 +30,7 @@ public class Page {
         for (CompressedStroke cstroke : cp.Strokes) {
             strokes.add(new Stroke(cstroke, initialTimestamp));
         }
-        timeLines = new HashMap<>();
+        segmentationsMap = new HashMap<>();
         //TODO: get ID out of compressed Page!
         this.pageID = "";
     }
@@ -47,17 +47,28 @@ public class Page {
         return pageID;
     }
 
-    public double getDuration(){
+    /**
+     * Returns the total duration of this page, defined as the timeEnd timestamp of the last stroke of this page.
+     * @return the total duration of this page.
+     */
+    public double getPageDuration(){
         return strokes.get(strokes.size()-1).getTimeEnd();
     }
 
-    public Map<String, List<Segment>> getTimeLines(){return this.timeLines;}
+    public Map<String, Set<Segment>> getSegmentationsMap(){return this.segmentationsMap;}
 
-    public List<Segment> getSegmentation(String key){
-        if(!timeLines.keySet().contains(key)){
-            timeLines.put(key, new LinkedList<>());
+    /**
+     * Returns the segmentation which belongs to the given super set key. The returned segmentation is stored in a TreeSet<Segment>, meaning that
+     * the segments are sorted by their start time.
+     * If there is currently no entry for the given super set key, a new entry is created and stored in the segmentation map(new, empty TreeSet).
+     * @param key the super set ID which serves as the key of the segmentation.
+     * @return An existing segmentation if the map contains a segmentation under the given key, or a new empty segmentation if no prior segmentation has been defined under the given key.
+     */
+    public Set<Segment> getSegmentation(String key){
+        if(!segmentationsMap.keySet().contains(key)){
+            segmentationsMap.put(key, new TreeSet<>());
         }
-        return timeLines.get(key);
+        return segmentationsMap.get(key);
     }
 
 }

@@ -153,13 +153,21 @@ public class CustomTimeLineController {
     public void createNewTimeLine() throws NoTimeLineSelectedException {
         parent.createNewTimeLineOutOfSelectedElements();
     }
-    public void createNewTimeLine(Optional<Segment> combined) throws NoTimeLineSelectedException {
+    public void createNewTimeLine(Optional<Segment> combined, boolean selected) throws NoTimeLineSelectedException {
         if(combined.isPresent()){
             parent.createNewTimeLineOutOfCombinedElement(combined.get());
         }
         else{
-            parent.createNewTimeLineOutOfSelectedElements();
+            if (selected) {
+                parent.createNewTimeLineOutOfSelectedElements();
+            } else {
+                parent.createNewTimeLineOutOfSelectedDots();
+            }
         }
+    }
+
+    public void createNegativeTimeLine(){
+        parent.createNegativeTimeLine(observableTopicSet.getTopicSetID());
     }
 
     public void removeAnnotation(ObservableSegment a){
@@ -187,7 +195,7 @@ public class CustomTimeLineController {
          */
     }
 
-    public Segment[] generateMissingSegments(){
+    public Set<Segment> generateMissingSegments(){
         return observableTimeLine.generateMissingSegments(observableTopicSet.getTopicsObservableList());
         /*
         List<AnnotationRectangle> selectedAnnotations = getSelectedAnnotations();

@@ -6,6 +6,7 @@ import New.Model.Entities.Stroke;
 
 import java.util.LinkedList;
 import java.util.List;
+import java.util.Set;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
@@ -23,7 +24,7 @@ public class PageUtil {
      * @param strokes All strokes that need to be examined (generally all strokes on a page)
      * @return list of dot sections
      */
-    public static List<List<Dot>> getDotSectionsForAnnotations(List<Segment> segments, List<Stroke> strokes){
+    public static List<List<Dot>> getDotSectionsForAnnotations(Set<Segment> segments, List<Stroke> strokes){
 
         List<List<Dot>> res = new LinkedList<>();
         for(Segment a : segments) {

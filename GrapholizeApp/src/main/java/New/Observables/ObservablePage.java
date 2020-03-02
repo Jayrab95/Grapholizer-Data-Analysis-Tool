@@ -72,10 +72,10 @@ public class ObservablePage implements Selector {
     }
 
     public boolean containsSetID(String setID){
-        return inner.get().getTimeLines().containsKey(setID);
+        return inner.get().getSegmentationsMap().containsKey(setID);
     }
 
-    public Optional<List<Segment>> getAnnotationSet(String topicSetID){
+    public Optional<Set<Segment>> getAnnotationSet(String topicSetID){
         if(containsSetID(topicSetID)){
             return Optional.of(inner.get().getSegmentation(topicSetID));
         }
@@ -224,7 +224,33 @@ public class ObservablePage implements Selector {
         return inner.get().getPageMetaData();
     }
 
-    public double getDuration(){return inner.get().getDuration();}
+    public double getDuration(){return inner.get().getPageDuration();}
+
+    /**
+     * Returns a set of segments which represents unmarked spaces within the segmentation defined under the given key.
+     * @param superSetKey the super set ID of the segmentation which needs to be inverted
+     * @return a set of inverted segments
+     */
+    public Set<Segment> getNegativeSegmentation(String superSetKey){
+        Set<Segment> res = new TreeSet<>();
+        Set<Segment> segmentation = inner.get().getSegmentation(superSetKey);
+        Iterator<Segment> it = segmentation.iterator();
+        double lastStop = 0;
+        while(it.hasNext()){
+            Segment s = it.next();
+            Segment resSegment = new Segment(lastStop, s.getTimeStart());
+            if(resSegment.getDuration() > 0){
+                res.add(resSegment);
+            }
+            lastStop = s.getTimeStop();
+        }
+        //Create a last segment that fills up the space between the last segment and right border.
+        Segment lastSeg = new Segment(lastStop, getDuration());
+        if(lastSeg.getDuration() > 0){
+            res.add(lastSeg);
+        }
+        return res;
+    }
 
     @Override
     public void select(double timeStart, double timeEnd) {

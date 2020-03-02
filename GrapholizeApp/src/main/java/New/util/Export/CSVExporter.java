@@ -2,7 +2,6 @@ package New.util.Export;
 
 import New.Interfaces.IExporter;
 import New.Model.Entities.*;
-import New.util.PageUtil;
 
 import java.io.BufferedWriter;
 import java.io.IOException;
@@ -11,8 +10,8 @@ import java.nio.file.Path;
 import java.nio.file.StandardOpenOption;
 import java.rmi.server.ExportException;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
+import java.util.Set;
 
 public class CSVExporter implements IExporter {
 
@@ -66,14 +65,14 @@ public class CSVExporter implements IExporter {
 
     private void processPage(Participant part, Page page) {
         System.out.println("process Page");
-        page.getTimeLines().forEach((topicSetID, segmentations) -> {
+        page.getSegmentationsMap().forEach((topicSetID, segmentations) -> {
             if(config.topicSetIDs.contains(topicSetID))
             processSegmentation(part.getID(), topicSetID, segmentations, csvBuilders.get(topicSetID), page);
         });
     }
 
     private void processSegmentation(String partID, String topicSetID
-            , List<Segment> segmentations, CSVTableBuilder tableBuilder, Page page){
+            , Set<Segment> segmentations, CSVTableBuilder tableBuilder, Page page){
         System.out.println("process Segmentation");
         segmentations.forEach(segment -> {
             int index = tableBuilder.addRow(partID);

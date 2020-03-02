@@ -3,7 +3,7 @@ package New.Model.Entities;
 import java.util.HashMap;
 import java.util.Map;
 
-public class Segment {
+public class Segment implements Comparable<Segment> {
 
     private double timeStart;
     private double timeStop;
@@ -98,7 +98,8 @@ public class Segment {
     }
 
 
-
-
-
+    @Override
+    public int compareTo(Segment o) {
+        return Double.compare(this.getTimeStart(), o.getTimeStart());
+    }
 }

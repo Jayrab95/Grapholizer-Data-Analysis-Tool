@@ -10,6 +10,7 @@ import javafx.beans.property.DoubleProperty;
 
 import java.util.List;
 import java.util.Optional;
+import java.util.Set;
 
 public class UnmodifiableSelectableTimeLinePane extends SelectableTimeLinePane {
 
@@ -22,7 +23,7 @@ public class UnmodifiableSelectableTimeLinePane extends SelectableTimeLinePane {
         setUp(oPage.getAnnotationSet(ts.getTopicSetID()));
     }
 
-    private void setUp(Optional<List<Segment>> segments){
+    private void setUp(Optional<Set<Segment>> segments){
 
         if(segments.isPresent()){
             segments.get().forEach(segment -> {

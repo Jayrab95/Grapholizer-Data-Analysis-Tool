@@ -41,7 +41,7 @@ public class ProjectLoader implements Loader {
             List<Page> dataPages = dataPart.getPages();
             List<Page> timePages = timePart.getPages();
             for (int i = 0; i < dataPages.size(); i++) {
-                dataPages.get(i).getTimeLines().putAll(timePages.get(i).getTimeLines());
+                dataPages.get(i).getSegmentationsMap().putAll(timePages.get(i).getSegmentationsMap());
             }
         });
         return projData;

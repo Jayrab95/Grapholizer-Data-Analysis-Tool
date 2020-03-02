@@ -25,9 +25,7 @@ import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
 import javafx.stage.Stage;
 
-import java.util.LinkedList;
-import java.util.List;
-import java.util.Optional;
+import java.util.*;
 
 public class TimeLineContainer extends VBox {
     //region static strings
@@ -175,7 +173,7 @@ public class TimeLineContainer extends VBox {
         vBox_TimeLineBox.getChildren().add(new TimeLineWrapper(timeLinePane));
     }
 
-    private void loadTimeLine(ObservableTopicSet t, ObservablePage p, Optional<List<Segment>> annotations){
+    private void loadTimeLine(ObservableTopicSet t, ObservablePage p, Optional<Set<Segment>> annotations){
         if(annotations.isPresent()){
             CustomTimeLinePane pane;
             pane = new CustomTimeLinePane(totalWidth.get(), timeLinesHeight, scale, t, p, this);
@@ -231,6 +229,15 @@ public class TimeLineContainer extends VBox {
         }
     }
 
+    public void createNegativeTimeLine(String originSetID){
+        Optional<TopicSet> tag = createTopicSetDialog();
+        if(tag.isPresent()){
+            ObservableTopicSet newTag = timeLineContainerController.createNewTimeLineTag(tag.get());
+            TimeLinePane timeLinePane = createNewTimeLinePaneOutOfAnnotations(newTag, p, p.getNegativeSegmentation(originSetID));
+            addTimeLinePane(timeLinePane);
+        }
+    }
+
     public void createNewTimeLineOutOfSelectedDots() throws NoTimeLineSelectedException {
         Optional<TopicSet> tag = createTopicSetDialog();
         if(tag.isPresent()){
@@ -276,13 +283,13 @@ public class TimeLineContainer extends VBox {
     }
 
     private TimeLinePane createNewTimeLinePaneOutOfSelectedDots(ObservableTopicSet newTimeLineTag, ObservablePage page){
-        List<Segment> segments = new LinkedList();
+        Set<Segment> segments = new TreeSet<>();
         for(List<ObservableDot> segment : page.getSelectedDotSections()){
             segments.add(new Segment(
                     segment.get(0).getTimeStamp(),
                     segment.get(segment.size()-1).getTimeStamp()));
         }
-        return new CustomTimeLinePane(timeLineContainerController.getPage().getDuration(), timeLinesHeight, scale, newTimeLineTag, page, this, segments.toArray(new Segment[segments.size()]));
+        return new CustomTimeLinePane(timeLineContainerController.getPage().getDuration(), timeLinesHeight, scale, newTimeLineTag, page, this, segments);
     }
 
     private TimeLinePane createNewTimeLinePaneOutOfCombined(ObservableTopicSet tag, ObservablePage page, Segment segment){
@@ -290,7 +297,7 @@ public class TimeLineContainer extends VBox {
         return newTimeLine;
     }
 
-    private TimeLinePane createNewTimeLinePaneOutOfAnnotations(ObservableTopicSet tag, ObservablePage page, Segment[] segments){
+    private TimeLinePane createNewTimeLinePaneOutOfAnnotations(ObservableTopicSet tag, ObservablePage page, Set<Segment> segments){
         return new CustomTimeLinePane(timeLineContainerController.getPage().getDuration(), timeLinesHeight, scale, tag, page, this, segments);
     }
 

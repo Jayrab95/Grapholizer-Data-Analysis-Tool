@@ -4,10 +4,8 @@ import New.Execptions.TimeLineTagEmptyException;
 import New.Execptions.TimeLineTagException;
 import New.Execptions.TimelineTagNotUniqueException;
 import New.Model.Entities.*;
-import New.util.ColorConverter;
 import javafx.beans.property.ObjectProperty;
 import javafx.beans.property.SimpleObjectProperty;
-import javafx.scene.paint.Color;
 
 import java.util.*;
 
@@ -129,7 +127,7 @@ public class ObservableProject {
 
     //TODO: Consider moving these to OPage;
     private void removeLooseSegmentations(Page page){
-        Map<String, List<Segment>> pageSegmentations = page.getTimeLines();
+        Map<String, Set<Segment>> pageSegmentations = page.getSegmentationsMap();
         List<String> looseSetIDs = new LinkedList<>();
         for(String setID : pageSegmentations.keySet()){
             if(!getTopicSetIDs().contains(setID)){
@@ -140,7 +138,7 @@ public class ObservableProject {
     }
 
     private void removeLooseTopicIDsInSegments(Page page){
-        page.getTimeLines().entrySet().forEach(entry ->{
+        page.getSegmentationsMap().entrySet().forEach(entry ->{
             entry.getValue().parallelStream().forEach(segment -> {
                 List<String>looseTopicIDs = new LinkedList<>();
                 for(String topicID : segment.getAnnotationsMap().keySet()){
