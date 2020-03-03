@@ -8,6 +8,7 @@ import javafx.beans.property.ObjectProperty;
 import javafx.beans.property.SimpleObjectProperty;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import javafx.collections.ObservableMap;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
 
@@ -19,7 +20,6 @@ public class ObservablePage implements Selector {
     private ObservableList<ObservableStroke> strokes;
 
     private final ObjectProperty<Page> inner;
-    private ObservableList<Dot> selectedDots;
 
     public ObservablePage(Page inner){
         strokes = FXCollections.observableList(generateStrokes(inner));
@@ -64,11 +64,11 @@ public class ObservablePage implements Selector {
     }
 
     public void addSegment(String topicSetKey, Segment a){
-        inner.get().getSegmentation(topicSetKey).add(a);
+        inner.get().putSegmentIntoSegmentation(topicSetKey, a);
     }
 
     public void removeAnnotation(String topicSetKey, Segment a){
-        inner.get().getSegmentation(topicSetKey).remove(a);
+        inner.get().removeSegmentFromSegmentation(topicSetKey, a);
     }
 
     public boolean containsSetID(String setID){

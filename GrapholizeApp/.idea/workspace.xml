@@ -2,7 +2,6 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="0387dcf3-ee2d-4573-8b9a-9bb47958d2fb" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/.idea/vcs.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.gradle/5.2.1/executionHistory/executionHistory.bin" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/5.2.1/executionHistory/executionHistory.bin" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.gradle/5.2.1/executionHistory/executionHistory.lock" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/5.2.1/executionHistory/executionHistory.lock" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.gradle/5.2.1/fileHashes/fileHashes.bin" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/5.2.1/fileHashes/fileHashes.bin" afterDir="false" />
@@ -11,39 +10,130 @@
       <change beforePath="$PROJECT_DIR$/.gradle/5.2.1/javaCompile/javaCompile.lock" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/5.2.1/javaCompile/javaCompile.lock" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.gradle/buildOutputCleanup/buildOutputCleanup.lock" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/buildOutputCleanup/buildOutputCleanup.lock" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/build/classes/java/main/New/Controllers/CustomTimeLineController.class" beforeDir="false" afterPath="$PROJECT_DIR$/build/classes/java/main/New/Controllers/CustomTimeLineController.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/build/classes/java/main/New/CustomControls/Containers/TimeLineContainer$AnnotationFilterDialogResult.class" beforeDir="false" afterPath="$PROJECT_DIR$/build/classes/java/main/New/CustomControls/Containers/TimeLineContainer$AnnotationFilterDialogResult.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/build/classes/java/main/New/CustomControls/Containers/TimeLineContainer$TimeLineInformation.class" beforeDir="false" afterPath="$PROJECT_DIR$/build/classes/java/main/New/CustomControls/Containers/TimeLineContainer$TimeLineInformation.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/build/classes/java/main/New/CustomControls/Containers/TimeLineContainer$TimeLineWrapper.class" beforeDir="false" afterPath="$PROJECT_DIR$/build/classes/java/main/New/CustomControls/Containers/TimeLineContainer$TimeLineWrapper.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/build/classes/java/main/New/CustomControls/Containers/TimeLineContainer$TopicCreationDialogResult.class" beforeDir="false" afterPath="$PROJECT_DIR$/build/classes/java/main/New/CustomControls/Containers/TimeLineContainer$TopicCreationDialogResult.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/build/classes/java/main/New/CustomControls/Containers/TimeLineContainer.class" beforeDir="false" afterPath="$PROJECT_DIR$/build/classes/java/main/New/CustomControls/Containers/TimeLineContainer.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/build/classes/java/main/New/CustomControls/TimeLine/CustomTimeLinePane.class" beforeDir="false" afterPath="$PROJECT_DIR$/build/classes/java/main/New/CustomControls/TimeLine/CustomTimeLinePane.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/build/classes/java/main/New/CustomControls/TimeLine/SubTimeLines/DetailCharacteristicTimeLine.class" beforeDir="false" afterPath="$PROJECT_DIR$/build/classes/java/main/New/CustomControls/TimeLine/SubTimeLines/DetailCharacteristicTimeLine.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/build/classes/java/main/New/CustomControls/TimeLine/SubTimeLines/DetailSegmentTimeLine.class" beforeDir="false" afterPath="$PROJECT_DIR$/build/classes/java/main/New/CustomControls/TimeLine/SubTimeLines/DetailSegmentTimeLine.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/build/classes/java/main/New/CustomControls/TimeLine/SubTimeLines/DetailStrokesTimeLine.class" beforeDir="false" afterPath="$PROJECT_DIR$/build/classes/java/main/New/CustomControls/TimeLine/SubTimeLines/DetailStrokesTimeLine.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/build/classes/java/main/New/CustomControls/TimeLine/UnmodifiableSelectableTimeLinePane.class" beforeDir="false" afterPath="$PROJECT_DIR$/build/classes/java/main/New/CustomControls/TimeLine/UnmodifiableSelectableTimeLinePane.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/build/classes/java/main/New/Model/Entities/Page.class" beforeDir="false" afterPath="$PROJECT_DIR$/build/classes/java/main/New/Model/Entities/Page.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/build/classes/java/main/New/Model/Entities/Segment.class" beforeDir="false" afterPath="$PROJECT_DIR$/build/classes/java/main/New/Model/Entities/Segment.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/build/classes/java/main/New/Observables/ObservablePage.class" beforeDir="false" afterPath="$PROJECT_DIR$/build/classes/java/main/New/Observables/ObservablePage.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/build/classes/java/main/New/Observables/ObservableProject.class" beforeDir="false" afterPath="$PROJECT_DIR$/build/classes/java/main/New/Observables/ObservableProject.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/build/classes/java/main/New/Observables/ObservableTimeLine.class" beforeDir="false" afterPath="$PROJECT_DIR$/build/classes/java/main/New/Observables/ObservableTimeLine.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/build/classes/java/main/New/util/Export/CSVExporter.class" beforeDir="false" afterPath="$PROJECT_DIR$/build/classes/java/main/New/util/Export/CSVExporter.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/build/classes/java/main/New/util/Import/ProjectLoader.class" beforeDir="false" afterPath="$PROJECT_DIR$/build/classes/java/main/New/util/Import/ProjectLoader.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/build/classes/java/main/New/util/PageUtil.class" beforeDir="false" afterPath="$PROJECT_DIR$/build/classes/java/main/New/util/PageUtil.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/build/resources/main/data/newTest.zip" beforeDir="false" afterPath="$PROJECT_DIR$/build/resources/main/data/newTest.zip" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/New/Controllers/CustomTimeLineController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/New/Controllers/CustomTimeLineController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/classes/java/main/New/Controllers/ContentSwitcherController.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/classes/java/main/New/Controllers/CustomTimeLineController.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/classes/java/main/New/Controllers/MainSceneController.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/classes/java/main/New/Controllers/MutableSegmentController.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/classes/java/main/New/Controllers/TimeLineContainerController.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/classes/java/main/New/CustomControls/Annotation/MutableSegmentRectangle$1.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/classes/java/main/New/CustomControls/Annotation/MutableSegmentRectangle$DragRectangle.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/classes/java/main/New/CustomControls/Annotation/MutableSegmentRectangle$LeftDragRectangle.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/classes/java/main/New/CustomControls/Annotation/MutableSegmentRectangle$RightDragRectangle.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/classes/java/main/New/CustomControls/Annotation/MutableSegmentRectangle.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/classes/java/main/New/CustomControls/Annotation/StrokeSegmentRectangle.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/classes/java/main/New/CustomControls/Containers/ContentSwitcher.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/classes/java/main/New/CustomControls/Containers/FilterContainer.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/classes/java/main/New/CustomControls/Containers/MainCanvas.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/classes/java/main/New/CustomControls/Containers/SimpleTimeLineWrapper.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/classes/java/main/New/CustomControls/Containers/TimeLineContainer$AnnotationFilterDialogResult.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/classes/java/main/New/CustomControls/Containers/TimeLineContainer$TimeLineInformation.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/classes/java/main/New/CustomControls/Containers/TimeLineContainer$TimeLineWrapper.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/classes/java/main/New/CustomControls/Containers/TimeLineContainer$TopicCreationDialogResult.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/classes/java/main/New/CustomControls/Containers/TimeLineContainer.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/classes/java/main/New/CustomControls/Containers/TimeLineDetailContainer.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/classes/java/main/New/CustomControls/Containers/TimeLineInformation.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/classes/java/main/New/CustomControls/Containers/TimeLineInformationSimple.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/classes/java/main/New/CustomControls/TimeLine/CustomTimeLinePane.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/classes/java/main/New/CustomControls/TimeLine/StrokeDurationTimeLinePane.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/classes/java/main/New/CustomControls/TimeLine/SubTimeLines/DetailCharacteristicTimeLine.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/classes/java/main/New/CustomControls/TimeLine/SubTimeLines/DetailLine.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/classes/java/main/New/CustomControls/TimeLine/SubTimeLines/DetailSegmentTimeLine.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/classes/java/main/New/CustomControls/TimeLine/SubTimeLines/DetailStrokesTimeLine.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/classes/java/main/New/CustomControls/TimeLine/SubTimeLines/DetailTimeLine.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/classes/java/main/New/CustomControls/TimeLine/SubTimeLines/PressureTimeLine.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/classes/java/main/New/CustomControls/TimeLine/SubTimeLines/VelocityTimeLine.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/classes/java/main/New/CustomControls/TimeLine/TimeUnitPane$Unit.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/classes/java/main/New/CustomControls/TimeLine/TimeUnitPane.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/classes/java/main/New/CustomControls/TimeLine/UnmodifiableSelectableTimeLinePane.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/classes/java/main/New/Dialogues/CSVExportDialog.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/classes/java/main/New/Dialogues/CustomTimeLineAnnotationDialog.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/classes/java/main/New/Dialogues/DialogControls/TopicTextControl.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/classes/java/main/New/Dialogues/DialogResults/FilterDialogResult.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/classes/java/main/New/Dialogues/FilterForSegmentsDialog$FilterDialogResult.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/classes/java/main/New/Dialogues/FilterForSegmentsDialog$FilterEntry.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/classes/java/main/New/Dialogues/FilterForSegmentsDialog.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/classes/java/main/New/Dialogues/FilterSelectDialog$1.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/classes/java/main/New/Dialogues/FilterSelectDialog$TopicFilter.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/classes/java/main/New/Dialogues/FilterSelectDialog.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/classes/java/main/New/Dialogues/SegmentDialog.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/classes/java/main/New/Dialogues/TopicSetDialog$1.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/classes/java/main/New/Dialogues/TopicSetDialog.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/classes/java/main/New/Execptions/ExporterException.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/classes/java/main/New/Execptions/NoTimeLineSelectedException.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/classes/java/main/New/Execptions/NoTopicsException.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/classes/java/main/New/Execptions/TimeLineTagEmptyException.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/classes/java/main/New/Execptions/TimeLineTagException.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/classes/java/main/New/Execptions/TimeLineTagNotFoundException.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/classes/java/main/New/Execptions/TimelineTagNotUniqueException.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/classes/java/main/New/Execptions/TopicEmptyOrIdenticalException.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/classes/java/main/New/Filters/DefaultFilter.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/classes/java/main/New/Filters/Filter.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/classes/java/main/New/Filters/PressureFilter.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/classes/java/main/New/Filters/StrokeColorFilter.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/classes/java/main/New/Filters/VelocityFilter.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/classes/java/main/New/Interfaces/Controller.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/classes/java/main/New/Interfaces/IExporter.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/classes/java/main/New/Interfaces/Loader.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/classes/java/main/New/Interfaces/Observable.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/classes/java/main/New/Interfaces/Observer/AnnotationObserver.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/classes/java/main/New/Interfaces/Observer/DotObserver.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/classes/java/main/New/Interfaces/Observer/FilterObserver.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/classes/java/main/New/Interfaces/Observer/Observer.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/classes/java/main/New/Interfaces/Observer/PageObserver.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/classes/java/main/New/Interfaces/Observer/ParticipantObserver.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/classes/java/main/New/Interfaces/Observer/ProjectObserver.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/classes/java/main/New/Interfaces/Observer/StrokeObserver.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/classes/java/main/New/Interfaces/Observer/TimeLineTagObserver.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/classes/java/main/New/Interfaces/Serializer.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/classes/java/main/New/Model/Entities/Page.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/classes/java/main/New/Model/Entities/PageMetaData.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/classes/java/main/New/Model/Entities/Participant.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/classes/java/main/New/Model/Entities/Project.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/classes/java/main/New/Model/Entities/SimpleColor.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/classes/java/main/New/Model/Entities/Timeline.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/classes/java/main/New/Model/Entities/Topic.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/classes/java/main/New/Model/Entities/TopicSet.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/classes/java/main/New/Model/Session.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/classes/java/main/New/Observables/DotLine.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/classes/java/main/New/Observables/Observable.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/classes/java/main/New/Observables/ObservableDot.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/classes/java/main/New/Observables/ObservableFilterCollection.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/classes/java/main/New/Observables/ObservablePage.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/classes/java/main/New/Observables/ObservableParticipant.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/classes/java/main/New/Observables/ObservableProject.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/classes/java/main/New/Observables/ObservableSegment.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/classes/java/main/New/Observables/ObservableStroke.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/classes/java/main/New/Observables/ObservableTimeLine.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/classes/java/main/New/Observables/ObservableTopicSet$1.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/classes/java/main/New/Observables/ObservableTopicSet.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/classes/java/main/New/Scenes/Grapholizer.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/classes/java/main/New/util/CharacteristicList.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/classes/java/main/New/util/ColorConverter.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/classes/java/main/New/util/DialogGenerator.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/classes/java/main/New/util/Export/CSVExporter.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/classes/java/main/New/util/Export/CSVTableBuilder.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/classes/java/main/New/util/Export/ExportConfig.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/classes/java/main/New/util/Export/JsonSerializer.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/classes/java/main/New/util/Export/ProjectSerializer.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/classes/java/main/New/util/Import/JsonLoader.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/classes/java/main/New/util/Import/PageDataReader.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/classes/java/main/New/util/Import/ProjectLoader.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/classes/java/main/New/util/Import/model/CompressedPage.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/classes/java/main/New/util/Import/model/CompressedParticipant.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/classes/java/main/New/util/PageUtil.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/classes/java/main/New/util/ZipHelper.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/classes/java/main/New/util/datagenerator/CircleGenerator.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/classes/java/main/New/util/datagenerator/DataGenerator.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/classes/java/main/New/util/javafx/JavaFxUtil.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/classes/java/main/New/util/math/DotSearch.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/classes/java/main/New/util/math/VelocityMathUtil.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/New/CustomControls/Annotation/MutableSegmentRectangle.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/New/CustomControls/Annotation/MutableSegmentRectangle.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/New/CustomControls/Containers/TimeLineContainer.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/New/CustomControls/Containers/TimeLineContainer.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/New/CustomControls/TimeLine/CustomTimeLinePane.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/New/CustomControls/TimeLine/CustomTimeLinePane.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/New/CustomControls/TimeLine/UnmodifiableSelectableTimeLinePane.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/New/CustomControls/TimeLine/UnmodifiableSelectableTimeLinePane.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/New/CustomControls/TimeLine/SelectableTimeLinePane.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/New/CustomControls/TimeLine/SelectableTimeLinePane.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/New/Model/Entities/Page.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/New/Model/Entities/Page.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/New/Model/Entities/Segment.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/New/Model/Entities/Segment.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/New/Observables/ObservablePage.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/New/Observables/ObservablePage.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/New/Observables/ObservableProject.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/New/Observables/ObservableProject.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/New/Observables/ObservableSegment.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/New/Observables/ObservableSegment.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/New/Observables/ObservableTimeLine.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/New/Observables/ObservableTimeLine.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/New/util/Export/CSVExporter.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/New/util/Export/CSVExporter.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/New/util/Import/ProjectLoader.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/New/util/Import/ProjectLoader.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/New/util/PageUtil.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/New/util/PageUtil.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/data/newTest.zip" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/data/newTest.zip" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="false" />
@@ -164,22 +254,22 @@
       <screen x="0" y="0" width="1368" height="872" />
     </state>
     <state x="0" y="0" key="#com.intellij.refactoring.rename.AutomaticRenamingDialog/0.0.1368.872@0.0.1368.872" timestamp="1583063844813" />
-    <state width="1326" height="227" key="GridCell.Tab.0.bottom" timestamp="1583142965081">
+    <state width="1326" height="227" key="GridCell.Tab.0.bottom" timestamp="1583242792996">
       <screen x="0" y="0" width="1368" height="872" />
     </state>
-    <state width="1326" height="227" key="GridCell.Tab.0.bottom/0.0.1368.872@0.0.1368.872" timestamp="1583142965081" />
-    <state width="1326" height="227" key="GridCell.Tab.0.center" timestamp="1583142965081">
+    <state width="1326" height="227" key="GridCell.Tab.0.bottom/0.0.1368.872@0.0.1368.872" timestamp="1583242792996" />
+    <state width="1326" height="227" key="GridCell.Tab.0.center" timestamp="1583242792996">
       <screen x="0" y="0" width="1368" height="872" />
     </state>
-    <state width="1326" height="227" key="GridCell.Tab.0.center/0.0.1368.872@0.0.1368.872" timestamp="1583142965081" />
-    <state width="1326" height="227" key="GridCell.Tab.0.left" timestamp="1583142965081">
+    <state width="1326" height="227" key="GridCell.Tab.0.center/0.0.1368.872@0.0.1368.872" timestamp="1583242792996" />
+    <state width="1326" height="227" key="GridCell.Tab.0.left" timestamp="1583242792996">
       <screen x="0" y="0" width="1368" height="872" />
     </state>
-    <state width="1326" height="227" key="GridCell.Tab.0.left/0.0.1368.872@0.0.1368.872" timestamp="1583142965081" />
-    <state width="1326" height="227" key="GridCell.Tab.0.right" timestamp="1583142965081">
+    <state width="1326" height="227" key="GridCell.Tab.0.left/0.0.1368.872@0.0.1368.872" timestamp="1583242792996" />
+    <state width="1326" height="227" key="GridCell.Tab.0.right" timestamp="1583242792996">
       <screen x="0" y="0" width="1368" height="872" />
     </state>
-    <state width="1326" height="227" key="GridCell.Tab.0.right/0.0.1368.872@0.0.1368.872" timestamp="1583142965081" />
+    <state width="1326" height="227" key="GridCell.Tab.0.right/0.0.1368.872@0.0.1368.872" timestamp="1583242792996" />
     <state width="1326" height="281" key="GridCell.Tab.1.bottom" timestamp="1583008237674">
       <screen x="0" y="0" width="1368" height="872" />
     </state>
@@ -204,14 +294,14 @@
       <screen x="0" y="0" width="1368" height="872" />
     </state>
     <state x="377" y="167" width="613" height="536" key="find.popup/0.0.1368.872@0.0.1368.872" timestamp="1583065230467" />
-    <state width="381" height="60" key="javadoc.popup.new" timestamp="1583067694049">
+    <state width="381" height="60" key="javadoc.popup.new" timestamp="1583242784377">
       <screen x="0" y="0" width="1368" height="872" />
     </state>
-    <state width="381" height="60" key="javadoc.popup.new/0.0.1368.872@0.0.1368.872" timestamp="1583067694049" />
-    <state x="343" y="200" key="run.anything.popup" timestamp="1583064030794">
+    <state width="381" height="60" key="javadoc.popup.new/0.0.1368.872@0.0.1368.872" timestamp="1583242784377" />
+    <state x="344" y="201" key="run.anything.popup" timestamp="1583177377182">
       <screen x="0" y="0" width="1368" height="872" />
     </state>
-    <state x="343" y="200" key="run.anything.popup/0.0.1368.872@0.0.1368.872" timestamp="1583064030794" />
+    <state x="344" y="201" key="run.anything.popup/0.0.1368.872@0.0.1368.872" timestamp="1583177377182" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>

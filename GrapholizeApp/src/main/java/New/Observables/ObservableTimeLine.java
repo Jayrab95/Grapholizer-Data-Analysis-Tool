@@ -8,15 +8,17 @@ import New.CustomControls.TimeLine.SelectableTimeLinePane;
 import New.Interfaces.Observer.TimeLineObserver;
 import New.Model.Entities.Segment;
 import New.Model.Entities.Topic;
+import javafx.collections.FXCollections;
 
 import java.util.*;
 import java.util.stream.Collectors;
 
 public class ObservableTimeLine {
+
     private SelectableTimeLinePane selectedTimeLine;
     private List<TimeLineObserver> observers;
 
-    public ObservableTimeLine(){
+    public ObservableTimeLine(ObservablePage p){
         observers = new LinkedList<>();
     }
 
@@ -49,6 +51,10 @@ public class ObservableTimeLine {
             this.selectedTimeLine = timeLine;
             notifyObservers();
         }
+    }
+
+    public String getSegmentationName(){
+        return selectedTimeLine.getTimeLineName();
     }
 
     public Optional<ObservableTopicSet> getSelectedSegmentationTopicSet(){
@@ -86,6 +92,7 @@ public class ObservableTimeLine {
         }
         return List.of();
     }
+
     public Set<Segment> generateMissingSegments(List<Topic> targetTopics){
         List<SegmentRectangle> selectedAnnotations = getSelectedAnnotations();
         Set<Segment> res = new TreeSet<>();
@@ -103,5 +110,19 @@ public class ObservableTimeLine {
             res.add(newSegment);
         }
         return res;
+    }
+
+    public boolean selectedSegmentationIsCustom(){
+        return selectedTimeLine instanceof CustomTimeLinePane;
+    }
+
+    public void deleteSelectedSegments(){
+        if(selectedSegmentationIsCustom()){
+            for(SegmentRectangle sr : getSelectedAnnotations()){
+                MutableSegmentRectangle msr = (MutableSegmentRectangle)sr;
+                ((CustomTimeLinePane)selectedTimeLine).deleteSegment(msr, msr.getObservableSegment());
+            }
+
+        }
     }
 }
