@@ -53,10 +53,9 @@ public class CustomTimeLinePane extends SelectableTimeLinePane {
     public static final String TXT_DELETEALLSELECTED_HEADER = "Delete all selected annotations";
     public static final String TXT_DELETEALLSELECTED_TEXT = "Are you sure you want to delete all selected annotations? This action cannot be undone.";
 
-    private Light.Point anchor;
-    private Rectangle selection;
+
     private double[] dragBounds;
-    private boolean selectMode;
+
     private ObservableTopicSet observableTopicSet;
     private ObservablePage observablePage;
     private CustomTimeLineController customTimeLineController;
@@ -66,17 +65,14 @@ public class CustomTimeLinePane extends SelectableTimeLinePane {
         super(width, height, scaleProp, tag.getNameProperty(), parent, tag.getTopicSetID());
         this.observableTopicSet = tag;
         customTimeLineController = new CustomTimeLineController(tag, observablePage, parent);
-        anchor = new Light.Point();
-        selection = new Rectangle();
+
         dragBounds = new double[2];
         this.observablePage = observablePage;
 
         this.contextMenu = generateContextMenu();
         generateSegmentRectangles();
 
-        this.setOnMousePressed(event -> handleTimelineMousePress(event));
-        this.setOnMouseDragged(event -> handleTimelineMouseDrag(event));
-        this.setOnMouseReleased(event -> handleTimelineMouseRelease(event));
+
 
     }
 
@@ -207,14 +203,18 @@ public class CustomTimeLinePane extends SelectableTimeLinePane {
     }
 
     //Source: https://coderanch.com/t/689100/java/rectangle-dragging-image
-    private void handleTimelineMousePress(MouseEvent event){
+
+    @Override
+    public void handleTimelineMousePress(MouseEvent event){
         if(event.getButton() == MouseButton.SECONDARY){
             contextMenu.show(this, event.getScreenX(), event.getScreenY());
             event.consume();
         }
         else{
+            super.handleTimelineMousePress(event);
+            /*
             this.setTimeLineSelected(true);
-            dragBounds = getBounds(event.getX());
+
 
             //Prepare selection
             getChildren().add(selection);
@@ -231,7 +231,10 @@ public class CustomTimeLinePane extends SelectableTimeLinePane {
                 selectMode = true;
                 selection.setFill(new Color(0,0,1,0.5)); //transparent blue
             }
-            else{
+
+             */
+            if(!selectMode){
+                dragBounds = getBounds(event.getX());
                 selection.setFill(null); // transparent
                 selection.setStroke(Color.BLACK); // border
                 selection.getStrokeDashArray().add(10.0);
@@ -240,7 +243,8 @@ public class CustomTimeLinePane extends SelectableTimeLinePane {
         }
     }
 
-    private void handleTimelineMouseDrag(MouseEvent event){
+    @Override
+    protected void handleTimelineMouseDrag(MouseEvent event){
         if(event.getButton().equals(MouseButton.PRIMARY)){
             if(selectMode || (event.getX() > dragBounds[0] && event.getX() < dragBounds[1]) ){
                 selection.setWidth(Math.abs(event.getX() - anchor.getX()));
@@ -254,7 +258,8 @@ public class CustomTimeLinePane extends SelectableTimeLinePane {
         }
     }
 
-    private void handleTimelineMouseRelease(MouseEvent e){
+    @Override
+    protected void handleTimelineMouseRelease(MouseEvent e){
         if(e.getButton().equals(MouseButton.PRIMARY)){
                 if(selection.getWidth() > 0){
                     //Call annotation creation dialogue

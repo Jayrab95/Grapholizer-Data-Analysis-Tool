@@ -36,9 +36,11 @@ public class UnmodifiableSelectableTimeLinePane extends SelectableTimeLinePane {
                         segment.getDuration(),
                         segment.getTimeStart(),
                         this,
-                        p
+                        p,
+                        oSegment
                 );
                 this.getChildren().add(selectableSegmentRectangle);
+                this.observableSegments.add(oSegment);
             });
         }
     }

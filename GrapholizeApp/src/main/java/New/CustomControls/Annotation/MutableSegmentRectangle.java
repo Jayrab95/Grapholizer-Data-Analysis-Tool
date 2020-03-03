@@ -34,10 +34,10 @@ public class MutableSegmentRectangle extends SelectableSegmentRectangle {
 
 
     public MutableSegmentRectangle(ObjectProperty<Color> c, DoubleProperty scale, ObservableSegment observableSegment, CustomTimeLinePane parent, Selector oPage, ObservableTopicSet set) {
-        super(c, observableSegment.getToolTipTextProperty(), observableSegment.getMainTopicAnnotationProperty() , scale, observableSegment.getDuration(), observableSegment.getTimeStart(), parent, oPage);
+        super(c, observableSegment.getToolTipTextProperty(), observableSegment.getMainTopicAnnotationProperty() , scale, observableSegment.getDuration(), observableSegment.getTimeStart(), parent, oPage, observableSegment);
 
         this.mutableSegmentController = new MutableSegmentController(observableSegment,parent);
-        this.observableSegment =observableSegment;
+        this.observableSegment = observableSegment;
         this.observableTopicSet = set;
 
         observableSegment.getTimeStartProperty().bind(this.xProperty().divide(scale));
@@ -160,56 +160,62 @@ public class MutableSegmentRectangle extends SelectableSegmentRectangle {
 
     @Override
     protected void handleMousePress(MouseEvent event){
-        super.handleMousePress(event);
-        //Todo: Can this if/else stucture be improved somehow?
-        if(event.getClickCount() == 2 && event.getButton().equals(MouseButton.PRIMARY)){
-            openEditDialog();
-        }
-        else if(event.getButton() == MouseButton.SECONDARY){
-            getElementSpecificContextMenu().show(this, event.getScreenX(), event.getScreenY());
-        }
-        else if(left.contains(event.getX(), event.getY())){
-            left.handleMousePress(event);
-        }
-        else if(right.contains(event.getX(), event.getY())){
-            right.handleMousePress(event);
-        }
-        else{
-            mouseDelta = event.getX() - getX();
-            dragBounds = mutableSegmentController.getBounds(event.getX());
-        }
-        event.consume();
-    }
-
-    private void handleMouseDrag(MouseEvent event){
-        if(event.getButton() == MouseButton.PRIMARY){
-            if(left.contains(event.getX(), event.getY())){
+        if(!event.isShiftDown()){
+            super.handleMousePress(event);
+            //Todo: Can this if/else stucture be improved somehow?
+            if(event.getClickCount() == 2 && event.getButton().equals(MouseButton.PRIMARY)){
+                openEditDialog();
+            }
+            else if(event.getButton() == MouseButton.SECONDARY){
+                getElementSpecificContextMenu().show(this, event.getScreenX(), event.getScreenY());
+            }
+            else if(left.contains(event.getX(), event.getY())){
                 left.handleMousePress(event);
             }
             else if(right.contains(event.getX(), event.getY())){
                 right.handleMousePress(event);
             }
             else{
-                double newPosition = event.getX() - mouseDelta;
-                if(newPosition > dragBounds[0] && newPosition + getWidth() < dragBounds[1]){
-                    move(newPosition);
+                mouseDelta = event.getX() - getX();
+                dragBounds = mutableSegmentController.getBounds(event.getX());
+            }
+            event.consume();
+        }
+    }
+
+    private void handleMouseDrag(MouseEvent event){
+        if(!event.isShiftDown()){
+            if(event.getButton() == MouseButton.PRIMARY){
+                if(left.contains(event.getX(), event.getY())){
+                    left.handleMousePress(event);
+                }
+                else if(right.contains(event.getX(), event.getY())){
+                    right.handleMousePress(event);
                 }
                 else{
-                    double temporaryOutOfBoundsPos = newPosition < dragBounds[0] ? dragBounds[0] + 0.1 : dragBounds[1] - getWidth() - 0.1;
-                    move(temporaryOutOfBoundsPos);
+                    double newPosition = event.getX() - mouseDelta;
+                    if(newPosition > dragBounds[0] && newPosition + getWidth() < dragBounds[1]){
+                        move(newPosition);
+                    }
+                    else{
+                        double temporaryOutOfBoundsPos = newPosition < dragBounds[0] ? dragBounds[0] + 0.1 : dragBounds[1] - getWidth() - 0.1;
+                        move(temporaryOutOfBoundsPos);
+                    }
+                    event.consume();
                 }
-                event.consume();
             }
+            if(event.getButton() == MouseButton.SECONDARY){}
         }
-        if(event.getButton() == MouseButton.SECONDARY){}
-
     }
 
     @Override
     protected void handleMouseRelease(MouseEvent event){
-        super.handleMouseRelease(event);
-        adjustStartAndDurationProperty();
-        event.consume();
+        if(!event.isShiftDown()){
+            super.handleMouseRelease(event);
+            adjustStartAndDurationProperty();
+            event.consume();
+        }
+
     }
     //endregion
 
@@ -217,6 +223,7 @@ public class MutableSegmentRectangle extends SelectableSegmentRectangle {
         return mutableSegmentController.fitsFilterCriteria(filter);
     }
 
+    //region DragRectangles
     private abstract class DragRectangle extends Rectangle {
 
         protected SegmentRectangle parent;
@@ -356,7 +363,6 @@ public class MutableSegmentRectangle extends SelectableSegmentRectangle {
             //movableAnnotationController.adjustTimeStart();
         }
     }
-
-
+    //endregion
 
 }

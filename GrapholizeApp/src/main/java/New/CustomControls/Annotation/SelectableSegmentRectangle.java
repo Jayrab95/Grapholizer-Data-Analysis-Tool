@@ -3,6 +3,7 @@ package New.CustomControls.Annotation;
 import New.Controllers.AnnotationSelectionController;
 import New.CustomControls.TimeLine.SelectableTimeLinePane;
 import New.Interfaces.Selector;
+import New.Observables.ObservableSegment;
 import javafx.beans.property.*;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.paint.Color;
@@ -15,10 +16,11 @@ public class SelectableSegmentRectangle extends SegmentRectangle {
     private double temporaryPreviousStop;
 
 
-    public SelectableSegmentRectangle(ObjectProperty<Color> c, StringProperty toolTipTextProperty, StringProperty segmentLabelTextProperty, DoubleProperty scale, double width, double start, SelectableTimeLinePane parent, Selector s ) {
+    public SelectableSegmentRectangle(ObjectProperty<Color> c, StringProperty toolTipTextProperty, StringProperty segmentLabelTextProperty, DoubleProperty scale, double width, double start, SelectableTimeLinePane parent, Selector s, ObservableSegment oSegment) {
         super(c, toolTipTextProperty, segmentLabelTextProperty, scale, width, parent.getHeight(), start);
 
         this.selected = new SimpleBooleanProperty(false);
+        this.selected.bindBidirectional(oSegment.getSelectedProperty());
         this.selected.addListener((observable, oldValue, newValue) -> onSelectionChange());
 
         this.annotationSelectionController = new AnnotationSelectionController(parent, s);
@@ -51,8 +53,7 @@ public class SelectableSegmentRectangle extends SegmentRectangle {
     }
 
     protected void handleMousePress(MouseEvent e){
-        System.out.println("Mouse Down on selectionRect");
-        annotationSelectionController.selectTimeLine(e.isControlDown(), this);
+        annotationSelectionController.selectTimeLine((e.isControlDown() || e.isAltDown()), this);
         temporaryPreviousStart = getTimeStart();
         temporaryPreviousStop = getTimeStop();
     }
