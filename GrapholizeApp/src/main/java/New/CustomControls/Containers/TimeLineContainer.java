@@ -19,6 +19,7 @@ import javafx.event.ActionEvent;
 import javafx.geometry.Insets;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
+import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
@@ -113,8 +114,11 @@ public class TimeLineContainer extends VBox {
         InitializeButtonHBox();
         InitializeContainer(project, page);
 
+        this.setOnKeyPressed(event -> handleKeyStrokeEvent(event));
 
     }
+
+
 
     private void InitializeButtonHBox(){
         btn_CreateNewTimeLine = new Button("Create new timeline");
@@ -166,7 +170,7 @@ public class TimeLineContainer extends VBox {
 
     public ObservableTimeLine getSelectedTimeLine() {
         if(selectedTimeLine == null){
-            selectedTimeLine = new ObservableTimeLine();
+            selectedTimeLine = new ObservableTimeLine(p);
         }
         return selectedTimeLine;
     }
@@ -359,6 +363,26 @@ public class TimeLineContainer extends VBox {
         }
     }
 
+    private void handleKeyStrokeEvent(KeyEvent event){
+        switch(event.getCode()){
+            case DELETE:
+                handleDelete();
+                break;
+            default:
+                break;
+        }
+    }
+
+    private void handleDelete(){
+        if(selectedTimeLine.selectedSegmentationIsCustom()
+                && selectedTimeLine.getSelectedAnnotations().size() > 0
+                && DialogGenerator.confirmationDialogue(
+                        "Delete selected segments",
+                "Delete selected segments from " + selectedTimeLine.getSegmentationName(),
+                "Are you sure you want to delete all selected segments from the segmentation " + selectedTimeLine.getSegmentationName() + "?")){
+            selectedTimeLine.deleteSelectedSegments();
+        }
+    }
 
 
     private Optional<FilterForSegmentsDialog.FilterDialogResult> filterForAnnotationsDialog(String title, String header, String text){
@@ -375,15 +399,7 @@ public class TimeLineContainer extends VBox {
     }
 
     //region CreateNewTimeLineDialogue
-    //https://code.makery.ch/blog/javafx-dialogs-official/
-    //https://examples.javacodegeeks.com/desktop-java/javafx/dialog-javafx/javafx-dialog-example/
-    //https://docs.oracle.com/javase/8/javafx/api/javafx/scene/control/Dialog.html#resultConverterProperty--
-    //TODO: perhaps extract dialog into separate class
-    //TODO: onlyCreate is a cheap solution to keep the dialog reusable. Perhaps there's a better solution?
-    // Problem: The option to filter for other annotations on a specific timeline should only show up when creating a new timeline
-    // and not when using any of the other options to create a timeline.
-    // Possible solution: create a separate dialog only for the search/filtering of annotations, then open the regular create dialog.
-    // Afterwards, use one of the creation methods that takes an annotation array.
+
     private Optional<TopicSet> openTimeLineCreationDialog(String dialogTitle, String dialogHeader, String dialogText, String labelText, Optional<TopicSet> optional, boolean editCall){
         /*
         This dialog is specific to the creation of timelines and contains some more complex logic

@@ -71,4 +71,12 @@ public class Page {
         return segmentationsMap.get(key);
     }
 
+    public void putSegmentIntoSegmentation(String setID, Segment s){
+        getSegmentation(setID).add(s);
+    }
+
+    public void removeSegmentFromSegmentation(String setID, Segment s){
+        getSegmentation(setID).remove(s);
+    }
+
 }

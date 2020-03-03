@@ -63,10 +63,10 @@ set CMD_LINE_ARGS=%*
 :execute
 @rem Setup the command line
 
-set CLASSPATH=%APP_HOME%\lib\GrapholizeAppAID-1.0-SNAPSHOT.jar;%APP_HOME%\lib\gson-2.7.jar;%APP_HOME%\lib\zip4j-2.1.2.jar;%APP_HOME%\lib\commons-lang3-3.0.jar;%APP_HOME%\lib\javafx-fxml-13-win.jar;%APP_HOME%\lib\javafx-controls-13-win.jar;%APP_HOME%\lib\javafx-controls-13.jar;%APP_HOME%\lib\javafx-graphics-13-win.jar;%APP_HOME%\lib\javafx-graphics-13.jar;%APP_HOME%\lib\javafx-base-13-win.jar;%APP_HOME%\lib\javafx-base-13.jar
+set CLASSPATH=%APP_HOME%\lib\GrapholizeAppAID-1.0-SNAPSHOT.jar;%APP_HOME%\lib\gson-2.7.jar;%APP_HOME%\lib\zip4j-2.1.2.jar;%APP_HOME%\lib\commons-lang3-3.0.jar;%APP_HOME%\lib\junit-4.12.jar;%APP_HOME%\lib\javafx-fxml-13-win.jar;%APP_HOME%\lib\javafx-controls-13-win.jar;%APP_HOME%\lib\javafx-controls-13.jar;%APP_HOME%\lib\javafx-graphics-13-win.jar;%APP_HOME%\lib\javafx-graphics-13.jar;%APP_HOME%\lib\javafx-base-13-win.jar;%APP_HOME%\lib\javafx-base-13.jar;%APP_HOME%\lib\hamcrest-core-1.3.jar
 
 @rem Execute GrapholizeAppAID
-"%JAVA_EXE%" %DEFAULT_JVM_OPTS% %JAVA_OPTS% %GRAPHOLIZE_APP_AID_OPTS%  -classpath "%CLASSPATH%" New.Scenes.HelloFX %CMD_LINE_ARGS%
+"%JAVA_EXE%" %DEFAULT_JVM_OPTS% %JAVA_OPTS% %GRAPHOLIZE_APP_AID_OPTS%  -classpath "%CLASSPATH%" New.Scenes.Grapholizer %CMD_LINE_ARGS%
 
 :end
 @rem End local scope for the variables with windows NT shell

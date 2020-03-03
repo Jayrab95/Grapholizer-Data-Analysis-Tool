@@ -33,15 +33,16 @@ public class MutableSegmentRectangle extends SelectableSegmentRectangle {
     private DragRectangle right;
 
 
-    public MutableSegmentRectangle(ObjectProperty<Color> c, DoubleProperty scale, ObservableSegment t, CustomTimeLinePane parent, Selector observableSegment, ObservableTopicSet set) {
-        super(c, t.getToolTipTextProperty(), t.getMainTopicAnnotationProperty() , scale, t.getDuration(), t.getTimeStart(), parent, observableSegment);
+    public MutableSegmentRectangle(ObjectProperty<Color> c, DoubleProperty scale, ObservableSegment observableSegment, CustomTimeLinePane parent, Selector oPage, ObservableTopicSet set) {
+        super(c, observableSegment.getToolTipTextProperty(), observableSegment.getMainTopicAnnotationProperty() , scale, observableSegment.getDuration(), observableSegment.getTimeStart(), parent, oPage);
 
-        this.mutableSegmentController = new MutableSegmentController(t,parent);
-        this.observableSegment =t;
+        this.mutableSegmentController = new MutableSegmentController(observableSegment,parent);
+        this.observableSegment =observableSegment;
         this.observableTopicSet = set;
 
-        t.getTimeStartProperty().bind(this.xProperty().divide(scale));
-        t.getTimeStopProperty().bind((this.xProperty().add(this.widthProperty())).divide(scale));
+        observableSegment.getTimeStartProperty().bind(this.xProperty().divide(scale));
+        observableSegment.getTimeStopProperty().bind((this.xProperty().add(this.widthProperty())).divide(scale));
+        observableSegment.getSelectedProperty().bindBidirectional(this.selected);
 
         this.left = new LeftDragRectangle(this);
         this.right = new RightDragRectangle(this);
@@ -60,7 +61,7 @@ public class MutableSegmentRectangle extends SelectableSegmentRectangle {
         setOnMouseDragged(e-> handleMouseDrag(e));
         setOnMouseReleased(e-> handleMouseRelease(e));
 
-        tooltip.setOnShowing(event -> this.toolTipTextProperty.set(this.observableSegment.generateText()));
+        tooltip.setOnShowing(event -> this.toolTipTextProperty.set(this.observableSegment.generateToolTipText()));
 
     }
 

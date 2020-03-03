@@ -5,6 +5,7 @@ import New.CustomControls.Annotation.SegmentRectangle;
 import New.CustomControls.Annotation.SelectableSegmentRectangle;
 import New.CustomControls.Containers.TimeLineContainer;
 import New.Interfaces.Observer.TimeLineObserver;
+import New.Observables.ObservableSegment;
 import New.Observables.ObservableTimeLine;
 import javafx.beans.property.BooleanProperty;
 import javafx.beans.property.DoubleProperty;
@@ -19,6 +20,7 @@ public abstract class SelectableTimeLinePane extends TimeLinePane implements Tim
 
     private SelectableTimeLineController selectableTimeLineController;
     private BooleanProperty timeLineSelectedProperty;
+    List<ObservableSegment> containedSegments;
 
     protected SelectableTimeLinePane(double width, double height, DoubleProperty scaleProp, StringProperty name, TimeLineContainer parent, String id) {
         super(width, height, scaleProp, name, id);
