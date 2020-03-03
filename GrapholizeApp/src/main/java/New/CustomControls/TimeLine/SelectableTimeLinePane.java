@@ -14,13 +14,15 @@ import javafx.beans.property.StringProperty;
 
 import java.util.Comparator;
 import java.util.List;
+import java.util.Set;
+import java.util.TreeSet;
 import java.util.stream.Collectors;
 
 public abstract class SelectableTimeLinePane extends TimeLinePane implements TimeLineObserver {
 
     private SelectableTimeLineController selectableTimeLineController;
     private BooleanProperty timeLineSelectedProperty;
-    List<ObservableSegment> containedSegments;
+    protected Set<ObservableSegment> observableSegments;
 
     protected SelectableTimeLinePane(double width, double height, DoubleProperty scaleProp, StringProperty name, TimeLineContainer parent, String id) {
         super(width, height, scaleProp, name, id);
@@ -28,9 +30,9 @@ public abstract class SelectableTimeLinePane extends TimeLinePane implements Tim
         this.timeLineSelectedProperty = new SimpleBooleanProperty(false);
 
         parent.getSelectedTimeLine().addObserver(this);
+        this.observableSegments = new TreeSet<>();
     }
 
-    //TODO: Bug: concurrent modification exception
     public void deselectAllElements(SelectableSegmentRectangle selected){
         List<SelectableSegmentRectangle> rects = getChildren().stream()
                 .filter(node -> node instanceof SelectableSegmentRectangle)
@@ -74,4 +76,6 @@ public abstract class SelectableTimeLinePane extends TimeLinePane implements Tim
             deselectAllElements(null);
         }
     }
+
+
 }

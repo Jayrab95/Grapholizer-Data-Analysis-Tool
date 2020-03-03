@@ -8,7 +8,7 @@ import javafx.collections.ObservableList;
 
 import java.util.Map;
 
-public class ObservableSegment {
+public class ObservableSegment implements Comparable<ObservableSegment> {
     private Segment segment;
 
     private DoubleProperty timeStartProperty;
@@ -122,6 +122,10 @@ public class ObservableSegment {
         return this.selectedProperty;
     }
 
+    public boolean isWithinTimeRange(double start, double stop){
+        return this.getTimeStart() >= start && this.getTimeStop() <= stop;
+    }
+
     public void putAnnotation(String topicID, String annotation){
         /*if(mainTopicIDProperty.get().equals(topicID)){
             mainTopicAnnotationProperty.set(annotation);
@@ -172,6 +176,11 @@ public class ObservableSegment {
             }
         }
         return true;
+    }
+
+    @Override
+    public int compareTo(ObservableSegment o) {
+        return Double.compare(getTimeStart(), o.getTimeStart());
     }
     //endregion
 }

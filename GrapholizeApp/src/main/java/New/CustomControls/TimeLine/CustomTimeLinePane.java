@@ -78,13 +78,6 @@ public class CustomTimeLinePane extends SelectableTimeLinePane {
         this.setOnMouseDragged(event -> handleTimelineMouseDrag(event));
         this.setOnMouseReleased(event -> handleTimelineMouseRelease(event));
 
-        this.setOnKeyPressed(event -> {
-            System.out.println("CTL detected keystroke");
-            if(isSelected()){
-                System.out.println("CTL " + timeLineName + " is selected");
-                handleKeyPress(event);
-            }
-        });
     }
 
     public CustomTimeLinePane(double width, double height, DoubleProperty scaleProp, ObservableTopicSet tag, ObservablePage observablePage, TimeLineContainer parent, Set<Segment> segments) {
@@ -99,14 +92,16 @@ public class CustomTimeLinePane extends SelectableTimeLinePane {
 
     private void generateSegmentRectangles(){
         for(Segment s : this.observablePage.getPageProperty().get().getSegmentation(this.observableTopicSet.getTopicSetID())){
+            ObservableSegment oSegment = new ObservableSegment(s, observableTopicSet);
             MutableSegmentRectangle mov = new MutableSegmentRectangle(
                     observableTopicSet.getColorProperty(),
                     scale,
-                    new ObservableSegment(s, observableTopicSet),
+                    oSegment,
                     this,
                     observablePage,
                     observableTopicSet);
             getChildren().addAll(mov, mov.getDisplayedText());
+            this.observableSegments.add(oSegment);
         }
     }
 
@@ -120,14 +115,16 @@ public class CustomTimeLinePane extends SelectableTimeLinePane {
 
     private void addAnnotation(Segment a){
         customTimeLineController.addAnnotation(a);
+        ObservableSegment oSegment = new ObservableSegment(a, observableTopicSet);
         MutableSegmentRectangle mov = new MutableSegmentRectangle(
                 observableTopicSet.getColorProperty(),
                 scale,
-                new ObservableSegment(a, observableTopicSet),
+                oSegment,
                 this,
                 observablePage,
                 observableTopicSet);
         getChildren().addAll(mov, mov.getDisplayedText());
+        this.observableSegments.add(oSegment);
     }
 
     private void addAnnotations(Set<Segment> segments){
@@ -161,17 +158,6 @@ public class CustomTimeLinePane extends SelectableTimeLinePane {
         }
         return new double[]{lowerBounds, upperBounds};
     }
-
-    private void handleKeyPress(KeyEvent event){
-        switch(event.getCode()){
-            case DELETE:
-                System.out.println("CTL detected DEL");
-                handleDeletePress();
-                break;
-        }
-    }
-
-    private void handleDeletePress(){ customTimeLineController.deleteSelectedRectangles();}
 
     private ContextMenu generateContextMenu(){
         //TODO: Find better way to extend context menu functionality
@@ -227,8 +213,7 @@ public class CustomTimeLinePane extends SelectableTimeLinePane {
             event.consume();
         }
         else{
-
-
+            this.setTimeLineSelected(true);
             dragBounds = getBounds(event.getX());
 
             //Prepare selection
@@ -271,42 +256,45 @@ public class CustomTimeLinePane extends SelectableTimeLinePane {
 
     private void handleTimelineMouseRelease(MouseEvent e){
         if(e.getButton().equals(MouseButton.PRIMARY)){
-            if(selectMode){
-                //TODO
-                // Select all segments within selection.
-            }
-            else {
                 if(selection.getWidth() > 0){
                     //Call annotation creation dialogue
                     double timeStart = selection.getX() / scale.get();
                     double timeStop = (selection.getX() + selection.getWidth()) / scale.get();
-                    Segment s = new Segment(timeStart, timeStop);
-                    SegmentDialog dialog = new SegmentDialog(
-                            "New segment",
-                            "Create new segment",
-                            "Enter a text for your annotation. (The annotation text can also be empty).",
-                            observableTopicSet.getTopicsObservableList(),
-                            Optional.of(s),
-                            false
-                    );
-                    dialog.setResultConverter(b -> {
-                        if (b == dialog.getButtonTypeOK()) {
-                            for(TopicTextControl ttc : dialog.getControls()){
-                                s.putAnnotation(ttc.getTopicID(), ttc.getTextFieldText());
-                            }
-                            addAnnotation(s);
-                        }
-                        return null;
-                    });
-                    dialog.showAndWait();
-                }
 
-                //Reset SelectionRectangle
-                selection.setWidth(0);
-                selection.setHeight(0);
-                getChildren().remove(selection);
+                    if(selectMode){
+                        observableSegments.stream()
+                                .filter(observableSegment -> observableSegment.isWithinTimeRange(timeStart, timeStop))
+                                .forEach(observableSegment -> observableSegment.setSelected(true));
+                    }
+
+                    else {
+                        Segment s = new Segment(timeStart, timeStop);
+                        SegmentDialog dialog = new SegmentDialog(
+                                "New segment",
+                                "Create new segment",
+                                "Enter a text for your annotation. (The annotation text can also be empty).",
+                                observableTopicSet.getTopicsObservableList(),
+                                Optional.of(s),
+                                false
+                        );
+                        dialog.setResultConverter(b -> {
+                            if (b == dialog.getButtonTypeOK()) {
+                                for(TopicTextControl ttc : dialog.getControls()){
+                                    s.putAnnotation(ttc.getTopicID(), ttc.getTextFieldText());
+                                }
+                                addAnnotation(s);
+                            }
+                            return null;
+                        });
+                        dialog.showAndWait();
+                    }
+                }
             }
-        }
+            //Reset SelectionRectangle
+            selection.setWidth(0);
+            selection.setHeight(0);
+            getChildren().remove(selection);
+            selectMode = false;
     }
 
 
@@ -414,6 +402,7 @@ public class CustomTimeLinePane extends SelectableTimeLinePane {
 
     public void deleteSegment(MutableSegmentRectangle a, ObservableSegment observableSegment){
         getChildren().removeAll(a, a.getLeft(), a.getRight(), a.getDisplayedText());
+        this.observableSegments.remove(observableSegment);
         customTimeLineController.removeAnnotation(observableSegment);
     }
 
