@@ -60,7 +60,7 @@ public class TimeLineContainer extends VBox {
     private double timeLinesHeight = 50;
     private DoubleProperty scale;
 
-    private ObservableTimeLine selectedTimeLine;
+    private ObservableSegmentation selectedTimeLine;
     private ObservablePage p;
 
     private TimeLineContainerController timeLineContainerController;
@@ -168,9 +168,9 @@ public class TimeLineContainer extends VBox {
         return slider;
     }
 
-    public ObservableTimeLine getSelectedTimeLine() {
+    public ObservableSegmentation getSelectedTimeLine() {
         if(selectedTimeLine == null){
-            selectedTimeLine = new ObservableTimeLine(p);
+            selectedTimeLine = new ObservableSegmentation();
         }
         return selectedTimeLine;
     }

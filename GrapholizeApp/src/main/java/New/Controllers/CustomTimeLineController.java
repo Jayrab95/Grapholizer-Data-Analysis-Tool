@@ -16,14 +16,14 @@ import java.util.stream.Collectors;
 public class CustomTimeLineController {
     private ObservableTopicSet observableTopicSet;
     private ObservablePage page;
-    private ObservableTimeLine observableTimeLine;
+    private ObservableSegmentation observableSegmentation;
     private TimeLineContainer parent;
 
     public CustomTimeLineController(ObservableTopicSet observableTopicSet, ObservablePage page, TimeLineContainer parent) {
         this.observableTopicSet = observableTopicSet;
         this.page = page;
         this.parent = parent;
-        this.observableTimeLine = parent.getSelectedTimeLine();
+        this.observableSegmentation = parent.getSelectedTimeLine();
     }
 
     public void addAnnotation(Segment a){
@@ -36,13 +36,13 @@ public class CustomTimeLineController {
 
     public void removeTimeLine(CustomTimeLinePane timeLine){
         if(parent.removeTimeLine(timeLine)){
-            observableTimeLine.removeObserver(timeLine);
+            //observableSegmentation.removeObserver(timeLine);
         }
     }
 
 
     public double[] getCombinedAnnotationBoundaries(){
-        List<SegmentRectangle> selectedAnnotations = observableTimeLine.getSelectedAnnotations();
+        List<SegmentRectangle> selectedAnnotations = observableSegmentation.getSelectedAnnotations();
         Comparator<SegmentRectangle> comp = Comparator.comparing(SegmentRectangle::getTimeStart);
         Collections.sort(selectedAnnotations, comp);
         double timeStart = selectedAnnotations.get(0).getTimeStart();
@@ -59,7 +59,7 @@ public class CustomTimeLineController {
     }
 
     public List<SegmentRectangle> getSelectedAnnotations(){
-        return observableTimeLine.getSelectedAnnotations();
+        return observableSegmentation.getSelectedAnnotations();
     }
 
     public boolean copiedAnnotationsCollideWithOtherAnnotations(Optional<double[]> combined){
@@ -83,7 +83,7 @@ public class CustomTimeLineController {
 
 
     public boolean selectedAnnotationsCollideWithOtherAnnotations(){
-        return page.listCollidesWithOtherAnnotations(observableTopicSet.getTopicSetID(), observableTimeLine.getSelectedAnnotations());
+        return page.listCollidesWithOtherAnnotations(observableTopicSet.getTopicSetID(), observableSegmentation.getSelectedAnnotations());
     }
 
 
@@ -175,22 +175,22 @@ public class CustomTimeLineController {
     }
 
     public void filterSelect(SelectableTimeLinePane caller, Map<String, String> topicFilters, List<MutableSegmentRectangle> segments){
-        observableTimeLine.setSelectedTimeLine(caller);
+        observableSegmentation.setSelectedTimeLine(caller);
         segments.stream()
                 .filter(s -> s.fitsCriteria(topicFilters))
                 .forEach(s -> s.setSelected(true));
     }
 
     public void addMissingTopics(List<Topic> topics){
-        observableTimeLine.getMissingTopics(observableTopicSet).forEach(topic -> observableTopicSet.addTopic(topic));
+        observableSegmentation.getMissingTopics(observableTopicSet).forEach(topic -> observableTopicSet.addTopic(topic));
     }
 
     public Set<Segment> generateMissingSegments(){
-        return observableTimeLine.generateMissingSegments(observableTopicSet.getTopicsObservableList());
+        return observableSegmentation.generateMissingSegments(observableTopicSet.getTopicsObservableList());
     }
 
     public void deleteSelectedRectangles(){
-        for(SegmentRectangle sr : observableTimeLine.getSelectedAnnotations()){
+        for(SegmentRectangle sr : observableSegmentation.getSelectedAnnotations()){
             ((MutableSegmentRectangle)sr).deleteSegment();
         }
     }

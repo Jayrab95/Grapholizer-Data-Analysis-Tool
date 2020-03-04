@@ -1,7 +1,7 @@
 package New.Interfaces.Observer;
 
-import New.Observables.ObservableTimeLine;
+import New.Observables.ObservableSegmentation;
 
 public interface TimeLineObserver {
-    void update(ObservableTimeLine sender);
+    void update(ObservableSegmentation sender);
 }

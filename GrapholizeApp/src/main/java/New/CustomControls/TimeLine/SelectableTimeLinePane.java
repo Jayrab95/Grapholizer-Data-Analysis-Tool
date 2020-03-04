@@ -4,12 +4,10 @@ import New.Controllers.SelectableTimeLineController;
 import New.CustomControls.Annotation.SegmentRectangle;
 import New.CustomControls.Annotation.SelectableSegmentRectangle;
 import New.CustomControls.Containers.TimeLineContainer;
-import New.Dialogues.DialogControls.TopicTextControl;
-import New.Dialogues.SegmentDialog;
 import New.Interfaces.Observer.TimeLineObserver;
-import New.Model.Entities.Segment;
 import New.Observables.ObservableSegment;
-import New.Observables.ObservableTimeLine;
+import New.Observables.ObservableSegmentation;
+import javafx.beans.binding.BooleanBinding;
 import javafx.beans.property.BooleanProperty;
 import javafx.beans.property.DoubleProperty;
 import javafx.beans.property.SimpleBooleanProperty;
@@ -23,7 +21,7 @@ import javafx.scene.shape.Rectangle;
 import java.util.*;
 import java.util.stream.Collectors;
 
-public abstract class SelectableTimeLinePane extends TimeLinePane implements TimeLineObserver {
+public abstract class SelectableTimeLinePane extends TimeLinePane {
 
     private SelectableTimeLineController selectableTimeLineController;
     private BooleanProperty timeLineSelectedProperty;
@@ -33,12 +31,19 @@ public abstract class SelectableTimeLinePane extends TimeLinePane implements Tim
     protected Rectangle selection;
     protected boolean selectMode;
 
+    protected ObservableSegmentation observableSegmentation;
+
     protected SelectableTimeLinePane(double width, double height, DoubleProperty scaleProp, StringProperty name, TimeLineContainer parent, String id) {
         super(width, height, scaleProp, name, id);
         selectableTimeLineController = new SelectableTimeLineController(parent.getSelectedTimeLine());
         this.timeLineSelectedProperty = new SimpleBooleanProperty(false);
 
-        parent.getSelectedTimeLine().addObserver(this);
+
+        parent.getSelectedTimeLine().getSelectedTimeLineProperty().addListener((observable, oldValue, newValue) ->{
+            if(newValue != this){
+                deselectSegmentation();
+            }
+        });
         this.observableSegments = new TreeSet<>();
 
         anchor = new Light.Point();
@@ -131,15 +136,13 @@ public abstract class SelectableTimeLinePane extends TimeLinePane implements Tim
         selectMode = false;
     }
 
+    private void deselectSegmentation(){
+        this.timeLineSelectedProperty.set(false);
+        deselectAllElements(null);
+    }
 
-
-    //TODO: Replace with binding
-    @Override
-    public void update(ObservableTimeLine sender){
-        if(!sender.equals(this)){
-            this.timeLineSelectedProperty.set(false);
-            deselectAllElements(null);
-        }
+    protected BooleanBinding selectedSegmentationIsNullProperty(){
+        return selectableTimeLineController.getSegmentationIsNullProperty();
     }
 
 

@@ -25,11 +25,9 @@ public class SelectableSegmentRectangle extends SegmentRectangle {
 
         this.annotationSelectionController = new AnnotationSelectionController(parent, s);
 
-        //setOnMouseClicked(e -> handleMouseClick(e));
         setOnMousePressed(this::handleMousePress);
         setOnMouseMoved(e -> e.consume());
         setOnMouseReleased(this::handleMouseRelease);
-        //setOnMouseClicked(e)
     }
 
     public BooleanProperty getSelectedBooleanProperty(){return this.selected;}
@@ -53,7 +51,7 @@ public class SelectableSegmentRectangle extends SegmentRectangle {
     }
 
     protected void handleMousePress(MouseEvent e){
-        annotationSelectionController.selectTimeLine((e.isControlDown() || e.isAltDown()), this);
+        annotationSelectionController.selectTimeLine((e.isControlDown()), this);
         temporaryPreviousStart = getTimeStart();
         temporaryPreviousStop = getTimeStop();
     }
@@ -61,8 +59,6 @@ public class SelectableSegmentRectangle extends SegmentRectangle {
     //TODO: Selection state is inconsistent at the moment
     //
     protected void handleMouseRelease(MouseEvent e){
-        System.out.println("Handlerelease in selectionRectangle called");
-
         if(getTimeStart() == temporaryPreviousStart && getTimeStop() == temporaryPreviousStop){
             toggleSelected();
         }
@@ -74,14 +70,13 @@ public class SelectableSegmentRectangle extends SegmentRectangle {
 
 
     private void onSelectionChange(){
-        System.out.println("on selection change called");
         if (selected.get()) {
             setStroke(Color.GREEN);
             setStrokeWidth(5);
             annotationSelectionController.selectDots(getTimeStart(), getTimeStop());
         }
         else {
-            setStroke(segmentColorProperty.get());
+            setStroke(null);
             annotationSelectionController.deselectDots(getTimeStart(), getTimeStop());
         }
     }

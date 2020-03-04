@@ -161,17 +161,16 @@ public class CustomTimeLinePane extends SelectableTimeLinePane {
         item_filterSelect.setOnAction(event -> handleFilterSelectClick());
         MenuItem item_createNegativeTimeLine = new MenuItem("Create negative timeline");
         item_createNegativeTimeLine.setOnAction(event -> handelContextCreateNegativeTimeLineClick());
-        MenuItem item_createNewTimeLine = new MenuItem("Create new time line out of selected elements");
-        item_createNewTimeLine.setOnAction(event -> handleContextCreateNewTimeLineClick());
         MenuItem item_copyAnnotations = new MenuItem("Copy selected annotations into this timeline");
         item_copyAnnotations.setOnAction(event -> handleContextCopyAnnotationsClick());
+        item_copyAnnotations.disableProperty().bind(selectedSegmentationIsNullProperty());
         MenuItem item_createAnnotationsOutOfDots = new MenuItem("Create annotations out of selected dots");
         item_createAnnotationsOutOfDots.setOnAction(event -> createAnnotationFromDotsDialogue());
         MenuItem item_editTimeLine = new MenuItem("Edit timeline tag");
         item_editTimeLine.setOnAction(event -> customTimeLineController.editTimeLine());
         MenuItem item_removeTimeLine = new MenuItem("Remove this timeline");
         item_removeTimeLine.setOnAction(event -> customTimeLineController.removeTimeLine(this));
-        return new ContextMenu(item_filterSelect, item_createNegativeTimeLine, item_createNewTimeLine, item_editTimeLine, item_copyAnnotations, item_createAnnotationsOutOfDots, item_removeTimeLine);
+        return new ContextMenu(item_filterSelect, item_createNegativeTimeLine, item_editTimeLine, item_copyAnnotations, item_createAnnotationsOutOfDots, item_removeTimeLine);
     }
 
     private void handleFilterSelectClick(){

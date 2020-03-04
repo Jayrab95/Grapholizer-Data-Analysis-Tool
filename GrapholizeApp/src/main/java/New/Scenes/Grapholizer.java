@@ -31,7 +31,7 @@ public class Grapholizer extends Application {
      */
     private void initializeCleanUpSteps(Stage stage, MainSceneController controller) {
         stage.setOnHidden( e -> {
-                if(controller != null) {
+                if(controller != null && controller._session != null) {
                     System.out.println("is not null");
                     try {
                         if (controller._session.getZ_Helper() != null)

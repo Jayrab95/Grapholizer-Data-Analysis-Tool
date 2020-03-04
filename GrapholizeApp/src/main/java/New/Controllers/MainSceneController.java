@@ -217,15 +217,16 @@ public class MainSceneController {
             optionalContentSwitcher = Optional.of(new ContentSwitcher(_session.getActiveProject(false),_session.getActiveParticipant(), _session.getActivePage()));
             anchorPane_canvasContainer.getChildren().add(optionalContentSwitcher.get());
         }
-        if(optionalCanvas.isEmpty()){
-            System.out.println("new canvas");
-            optionalCanvas = Optional.of(new MainCanvas(pmd.getPageWidth(), pmd.getPageHeight(), 5, _session.getActivePage()));
-            anchorPane_canvasContainer.getChildren().add(optionalCanvas.get());
-        }
+
         if(optionalTimeLineContainer.isEmpty()){
             System.out.println("new container");
             optionalTimeLineContainer = Optional.of(new TimeLineContainer(_session.getActiveProject(false), _session.getActivePage(), 0.2));
             scrollPane_TimeLines.getChildren().add(optionalTimeLineContainer.get());
+        }
+        if(optionalCanvas.isEmpty()){
+            System.out.println("new canvas");
+            optionalCanvas = Optional.of(new MainCanvas(pmd.getPageWidth(), pmd.getPageHeight(), 5, _session.getActivePage(), optionalTimeLineContainer.get().getSelectedTimeLine()));
+            anchorPane_canvasContainer.getChildren().add(optionalCanvas.get());
         }
     }
 }

@@ -36,9 +36,10 @@ public class MainCanvas extends VBox implements PageObserver, StrokeObserver, Fi
     private Rectangle selection;
 
     private ObservableFilterCollection ofc;
+    private ObservableSegmentation selectedTimeLine;
 
 
-    public MainCanvas(double initWidth, double initHeight, double initScale, ObservablePage obsPage){
+    public MainCanvas(double initWidth, double initHeight, double initScale, ObservablePage obsPage, ObservableSegmentation observableSegmentation){
         this.canvasWidth = initWidth;
         this.canvasHeight = initHeight;
         this.canvasScale = new SimpleDoubleProperty(initScale);
@@ -70,6 +71,11 @@ public class MainCanvas extends VBox implements PageObserver, StrokeObserver, Fi
         filterContainer = new FilterContainer(ofc);
         getChildren().addAll(scaleSlider, filterContainer,canvasContainer);
         addStrokes(obsPage);
+
+        this.selectedTimeLine = observableSegmentation;
+        observableSegmentation.getSelectedTimeLineProperty().addListener((observable, oldValue, newValue) -> {
+            obsPage.deselectAll();
+        });
     }
 
     private Slider initializeSlider(double init){
@@ -151,7 +157,7 @@ public class MainCanvas extends VBox implements PageObserver, StrokeObserver, Fi
     //Source: https://coderanch.com/t/689100/java/rectangle-dragging-image
     private void startSelection(MouseEvent event){
         selector.deselectAll();
-
+        selectedTimeLine.setSelectedTimeLine(null);
         System.out.println("Start Selection called");
         System.out.println("X:" + event.getX() + " Y:" + event.getY());
         anchor.setX(event.getX());
