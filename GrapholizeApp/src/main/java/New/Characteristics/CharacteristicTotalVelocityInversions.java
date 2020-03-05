@@ -35,7 +35,7 @@ public class CharacteristicTotalVelocityInversions extends Characteristic<Intege
                         , dot.getX(), dot.getY(), timeDifference
                 );
 
-                value += (velocity - value) / (smoothing); //Smoothe Velocity
+                value += (velocity - value) / (smoothing); //smoothe velocity
 
                 double acceleration = VelocityMathUtil.acceleration(
                         lastVelocity
@@ -45,7 +45,7 @@ public class CharacteristicTotalVelocityInversions extends Characteristic<Intege
 
                 double sign = Math.signum(acceleration);
                 if(sign != lastSign) velocityInversions ++;
-                lastVelocity = value;
+                lastVelocity = value; //
                 lastSign = sign;
             }
             lastDot = dot;

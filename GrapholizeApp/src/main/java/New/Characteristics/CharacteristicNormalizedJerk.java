@@ -23,18 +23,20 @@ public class CharacteristicNormalizedJerk extends Characteristic<Double> {
             for (Dot dot : dotList) {
                 if(lastDot != null) {
                     int timedifference = (int)(dot.getTimeStamp() - lastDot.getTimeStamp());
-                    double velocity = VelocityMathUtil.calculateVelocityBetweenDots(
+                    /*double velocity = VelocityMathUtil.calculateVelocityBetweenDots(
                             lastDot.getX()
                             , lastDot.getY()
                             , dot.getX()
                             , dot.getY()
                             , timedifference
-                    );
-                    /*double velocity = VelocityMathUtil.calculateVerticalVelocity(
+                    );*/
+
+                    double velocity = VelocityMathUtil.calculateVerticalVelocity(
                               lastDot.getY()
                             , dot.getX()
                             , timedifference
-                    );*/
+                    );
+
                     double acceleration = VelocityMathUtil.acceleration(
                             lastVelocity
                             ,velocity

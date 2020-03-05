@@ -61,6 +61,6 @@ public class CharacteristicTotalVelocityInversionsTest {
 
         int result = new CharacteristicTotalVelocityInversions("Characert", "unit")
                 .calculateImplementation(dotLists);
-        assertEquals(6,result);
+        assertEquals(5,result);
     }
 }

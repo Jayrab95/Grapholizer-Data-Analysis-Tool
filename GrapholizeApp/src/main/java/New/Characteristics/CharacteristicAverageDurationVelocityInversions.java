@@ -5,26 +5,31 @@ import New.util.math.VelocityMathUtil;
 
 import java.util.List;
 
-public class CharacteristicAverageDurationVelocityInversions extends Characteristic<Integer> {
+public class CharacteristicAverageDurationVelocityInversions extends Characteristic<Double> {
 
     public CharacteristicAverageDurationVelocityInversions(String name, String unitName) {
         super(name, unitName);
     }
 
     @Override
-    public Integer calculateImplementation(List<List<Dot>> dotLists) {
-        int velocityInversions = 0;
-        for (List<Dot> dotList : dotLists) {
-            velocityInversions += calculateInversions(dotList);
+    public Double calculateImplementation(List<List<Dot>> dotLists) {
+        if(dotLists.size() > 0) {
+            int velocityInversionsDuration = 0;
+            for (List<Dot> dotList : dotLists) {
+                velocityInversionsDuration += calculateInversions(dotList);
+            }
+            return velocityInversionsDuration / (double) dotLists.size();
         }
-        return velocityInversions;
+        return 0.0d;
     }
 
-    private int calculateInversions(List<Dot> dotList) {
+    private double calculateInversions(List<Dot> dotList) {
         Dot lastDot = null;
         int velocityInversions = 0;
         double lastSign = 0;
         double lastVelocity = 0;
+        double value = 0;
+        double smoothing = 3d;
         for (Dot dot : dotList) {
             if(lastDot != null) {
                 int timeDifference = (int)(dot.getTimeStamp() - lastDot.getTimeStamp());
@@ -32,19 +37,23 @@ public class CharacteristicAverageDurationVelocityInversions extends Characteris
                         lastDot.getX(), lastDot.getY()
                         , dot.getX(), dot.getY(), timeDifference
                 );
+
+                value += (velocity - value) / (smoothing); //smoothe velocity
+
                 double acceleration = VelocityMathUtil.acceleration(
                         lastVelocity
-                        ,velocity
+                        ,value
                         , timeDifference
                 );
                 double sign = Math.signum(acceleration);
                 if(sign != lastSign) velocityInversions ++;
-                lastVelocity = velocity;
+                lastVelocity = value;
                 lastSign = sign;
             }
             lastDot = dot;
         }
         //Remove first sign change from start of stroke
-        return velocityInversions - 1;
+        long totalTime = dotList.get(dotList.size() - 1).getTimeStamp() - dotList.get(0).getTimeStamp();
+        return totalTime/(double)velocityInversions;
     }
 }
