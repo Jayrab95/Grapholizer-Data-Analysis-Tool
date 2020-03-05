@@ -1,5 +1,6 @@
 package New.CustomControls.Containers;
 
+import New.CustomControls.TimeLine.SelectableTimeLinePane;
 import New.Filters.*;
 import New.Interfaces.Observer.FilterObserver;
 import New.Interfaces.Observer.PageObserver;
@@ -9,6 +10,7 @@ import New.Observables.*;
 import javafx.beans.property.DoubleProperty;
 import javafx.beans.property.SimpleDoubleProperty;
 
+import javafx.beans.value.ChangeListener;
 import javafx.scene.control.ScrollPane;
 import javafx.scene.control.Slider;
 import javafx.scene.effect.Light;

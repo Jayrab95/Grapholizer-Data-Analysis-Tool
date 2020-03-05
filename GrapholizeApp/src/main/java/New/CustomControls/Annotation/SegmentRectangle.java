@@ -1,6 +1,8 @@
 package New.CustomControls.Annotation;
 
 import javafx.beans.property.*;
+import javafx.beans.value.ChangeListener;
+import javafx.beans.value.WeakChangeListener;
 import javafx.scene.control.Label;
 import javafx.scene.control.Tooltip;
 import javafx.scene.paint.Color;
@@ -19,7 +21,6 @@ public class SegmentRectangle extends Rectangle {
 
     protected Label displayedText;
     protected Tooltip tooltip;
-
 
 
     public SegmentRectangle(ObjectProperty<Color> c, StringProperty toolTipTextProperty, StringProperty labelTextProperty, DoubleProperty scaleProperty, double width, double height, double start){
@@ -99,4 +100,5 @@ public class SegmentRectangle extends Rectangle {
         startProperty.set(getTimeStart());
         durationProperty.set(getTimeStop() - getTimeStart());
     }
+
 }
