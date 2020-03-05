@@ -52,8 +52,5 @@ public class VelocityTimeLine extends DetailTimeLine {
                 }
             }
         }
-
-
-
     }
 }

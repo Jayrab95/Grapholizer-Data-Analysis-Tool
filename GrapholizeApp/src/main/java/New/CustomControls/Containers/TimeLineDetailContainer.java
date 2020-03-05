@@ -144,6 +144,18 @@ public class TimeLineDetailContainer extends ScrollPane {
                 activePage,
                 inspectedTimeLine.getTopicSetID()
         ));
+
+        subTimelineTags.add(new Label("Velocity Buttered"),0, rowIndex);
+        subTimelineTags.add(new Label("mm/ms"),1, rowIndex);
+        subTimelineTags.getRowConstraints().add(new RowConstraints(inspectedTimeLine.getHeight()));
+        subTimelines.getChildren().add(new VelocityButteredTimeLine(
+                getLength(),
+                inspectedTimeLine.getHeight(),
+                detailScale,
+                new SimpleStringProperty("Velocity"),
+                activePage,
+                inspectedTimeLine.getTopicSetID()
+        ));
     }
 
     private void initializecharacteristicTimeLines(List<Characteristic> characteristics, int rowIndex){

@@ -18,12 +18,6 @@ public class VelocityMathUtil {
             , float x2, float y2
             , int timeDifference
     ) {
-        //Convert all points to mm coordinates
-        /*double x1Mm = convertToMillimeterCoords(x1);
-        double y1Mm = convertToMillimeterCoords(y1);
-        double x2Mm = convertToMillimeterCoords(x2);
-        double y2Mm = convertToMillimeterCoords(y2);*/
-        //calculate the distance of two points with euclidean norm
         double distanceVecX = x1 - x2;
         double distanceVecY = y1 - y2;
         double vecLenghtMm = convertToMillimeterCoords(
@@ -60,12 +54,18 @@ public class VelocityMathUtil {
     public static double normalizedJerk(List<Double> jerkPoints, long duration, double length) {
         //Summ up all the jerks
         if(length == 0) return 0d;
-        double normJerk;
+        double normJerk = 0;
+        double jerkSum = 0;
+        for (int i = 0; i < jerkPoints.size(); i++) {
+            double value = jerkPoints.get(i);
+            jerkSum += Math.pow(value,2.0d);
+        }
+        /*
         Optional<Double> accelerationSum = jerkPoints.stream().reduce((d1, d2) ->
                 Math.pow(d1,2.0d) + Math.pow(d2,2.0d)
-        );
-        if(accelerationSum.isPresent() && jerkPoints.size() != 0){
-            double squaredJerkSum = accelerationSum.get() / (double) jerkPoints.size();
+        );*/
+        if(jerkPoints.size() != 0){
+            double squaredJerkSum = jerkSum / (double) jerkPoints.size();
             double integratedSquaredJerk = squaredJerkSum * duration;
             double powerDuration = Math.pow(duration,5.0d);
             double squaredLength = Math.pow(length,2.0d);
@@ -113,5 +113,4 @@ public class VelocityMathUtil {
     public static double convertInchToCm(double inches){
         return inches * CM_TO_INCH_RATIO;
     }
-
 }

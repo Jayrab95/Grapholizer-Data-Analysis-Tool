@@ -34,7 +34,6 @@ public class Stroke {
     public Stroke(Stroke s){
         this.timeStart = s.timeStart;
         this.timeEnd = s.timeEnd;
-        //TODO: Do the dots need to be cloned? Can a copy of the stroke (or observableStroke) simply take the list reference?
         this.dots = s.dots;
     }
 
@@ -44,7 +43,10 @@ public class Stroke {
         dots = new LinkedList<>();
         long accumulator = this.timeStart;
         for (CompressedDot compressedDot : cs.CompressedDots) {
-            accumulator += compressedDot.TimeDiff;
+            //no unsigned bytes in java
+            int temp = compressedDot.TimeDiff;
+            if(temp < 0) temp = temp & 0xff; //remove minus sign
+            accumulator += temp;
             dots.add(new Dot(compressedDot, accumulator));
         }
     }
