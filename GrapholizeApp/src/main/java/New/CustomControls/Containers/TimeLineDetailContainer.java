@@ -66,7 +66,7 @@ public class TimeLineDetailContainer extends ScrollPane {
         initializeStrokeDetailTimeLine(1);
         initializePressureTimeline(2);
         initializeVelocityTimeline(3);
-        initializecharacteristicTimeLines(CharacteristicList.characteristics(),4);
+        initializecharacteristicTimeLines(CharacteristicList.characteristics(),5);
 
         timelineScrollPane.setContent(subTimelines);
         HBox timelinecontainer = new HBox(subTimelineTags, timelineScrollPane);
@@ -145,8 +145,8 @@ public class TimeLineDetailContainer extends ScrollPane {
                 inspectedTimeLine.getTopicSetID()
         ));
 
-        subTimelineTags.add(new Label("Velocity Buttered"),0, rowIndex);
-        subTimelineTags.add(new Label("mm/ms"),1, rowIndex);
+        subTimelineTags.add(new Label("Velocity Buttered"),0, rowIndex + 1);
+        subTimelineTags.add(new Label("mm/ms"),1, rowIndex + 1);
         subTimelineTags.getRowConstraints().add(new RowConstraints(inspectedTimeLine.getHeight()));
         subTimelines.getChildren().add(new VelocityButteredTimeLine(
                 getLength(),

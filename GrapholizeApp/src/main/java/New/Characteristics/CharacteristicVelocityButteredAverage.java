@@ -29,7 +29,7 @@ public class CharacteristicVelocityButteredAverage extends Characteristic<Double
                         ,nextDot.getX(),nextDot.getY()
                         , timeDifference
                 );
-                value += (velocity - value) / (smoothing);
+                value += (velocity - value) / (smoothing); //Smoothe the output
                 result.add(value);
             }
         }

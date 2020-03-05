@@ -5,9 +5,9 @@ import New.util.math.VelocityMathUtil;
 
 import java.util.List;
 
-public class CharacteristicTotalVelocityInversions extends Characteristic<Integer> {
+public class CharacteristicAverageDurationVelocityInversions extends Characteristic<Integer> {
 
-    public CharacteristicTotalVelocityInversions(String name, String unitName) {
+    public CharacteristicAverageDurationVelocityInversions(String name, String unitName) {
         super(name, unitName);
     }
 
@@ -25,8 +25,6 @@ public class CharacteristicTotalVelocityInversions extends Characteristic<Intege
         int velocityInversions = 0;
         double lastSign = 0;
         double lastVelocity = 0;
-        double value = 0;
-        double smoothing = 3d;
         for (Dot dot : dotList) {
             if(lastDot != null) {
                 int timeDifference = (int)(dot.getTimeStamp() - lastDot.getTimeStamp());
@@ -34,18 +32,14 @@ public class CharacteristicTotalVelocityInversions extends Characteristic<Intege
                         lastDot.getX(), lastDot.getY()
                         , dot.getX(), dot.getY(), timeDifference
                 );
-
-                value += (velocity - value) / (smoothing); //Smoothe Velocity
-
                 double acceleration = VelocityMathUtil.acceleration(
                         lastVelocity
                         ,velocity
                         , timeDifference
                 );
-
                 double sign = Math.signum(acceleration);
                 if(sign != lastSign) velocityInversions ++;
-                lastVelocity = value;
+                lastVelocity = velocity;
                 lastSign = sign;
             }
             lastDot = dot;
