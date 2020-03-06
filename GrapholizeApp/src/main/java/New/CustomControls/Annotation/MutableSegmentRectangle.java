@@ -48,7 +48,7 @@ public class MutableSegmentRectangle extends SelectableSegmentRectangle {
         this.right = new RightDragRectangle(this);
 
 
-        selected.addListener((observable, oldValue, newValue) -> {
+        this.selected.addListener((observable, oldValue, newValue) -> {
             if(newValue){
                 mutableSegmentController.enableResize(left, right);
             }

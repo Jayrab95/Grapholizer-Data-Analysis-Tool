@@ -1,5 +1,6 @@
 package New.CustomControls.Containers;
 
+import New.CustomControls.TimeLine.SelectableTimeLinePane;
 import New.Filters.*;
 import New.Interfaces.Observer.FilterObserver;
 import New.Interfaces.Observer.PageObserver;
@@ -9,6 +10,8 @@ import New.Observables.*;
 import javafx.beans.property.DoubleProperty;
 import javafx.beans.property.SimpleDoubleProperty;
 
+import javafx.beans.value.ChangeListener;
+import javafx.scene.Node;
 import javafx.scene.control.ScrollPane;
 import javafx.scene.control.Slider;
 import javafx.scene.effect.Light;
@@ -51,14 +54,14 @@ public class MainCanvas extends VBox implements PageObserver, StrokeObserver, Fi
                 new VelocityFilter(obsPage));
         this.ofc.addObserver(this);
 
-        scaleSlider = initializeSlider(initScale);
+        this.scaleSlider = initializeSlider(initScale);
 
-        canvasScale.bind(scaleSlider.valueProperty());
-        canvasScale.addListener((observable, oldValue, newValue) -> resizeCanvas());
+        this.canvasScale.bind(this.scaleSlider.valueProperty());
+        this.canvasScale.addListener((observable, oldValue, newValue) -> resizeCanvas());
 
-        canvas = new Pane();
-        canvas.setPrefWidth(initWidth * canvasScale.get());
-        canvas.setPrefHeight(initHeight * canvasScale.get());
+        this.canvas = new Pane();
+        this.canvas.setPrefWidth(initWidth * canvasScale.get());
+        this.canvas.setPrefHeight(initHeight * canvasScale.get());
 
         obsPage.getPageProperty().addListener((observable, oldValue, newValue) -> addStrokes(obsPage));
 
@@ -91,6 +94,9 @@ public class MainCanvas extends VBox implements PageObserver, StrokeObserver, Fi
     }
 
     private void addStrokes(ObservablePage p){
+        for(Node n : canvas.getChildren()){
+            ((DotLine)n).unlink();
+        }
         canvas.getChildren().clear();
         for(ObservableStroke s : p.getObservableStrokes()){
             List<ObservableDot> dots = s.getObservableDots();
@@ -158,8 +164,6 @@ public class MainCanvas extends VBox implements PageObserver, StrokeObserver, Fi
     private void startSelection(MouseEvent event){
         selector.deselectAll();
         selectedTimeLine.setSelectedTimeLine(null);
-        System.out.println("Start Selection called");
-        System.out.println("X:" + event.getX() + " Y:" + event.getY());
         anchor.setX(event.getX());
         anchor.setY(event.getY());
         selection.setX(event.getX());
@@ -189,7 +193,6 @@ public class MainCanvas extends VBox implements PageObserver, StrokeObserver, Fi
 
     @Override
     public void update(ObservablePage sender) {
-        //p.registerStrokeObserver(this);
         addStrokes(sender);
         resetCanvas();
     }

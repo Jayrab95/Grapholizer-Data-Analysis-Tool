@@ -79,6 +79,7 @@ public class TimeLineContainer extends VBox {
 
     public TimeLineContainer(ObservableProject project, ObservablePage page, double initialScale){
         this.p = page;
+
         page.getPageProperty().addListener((observable, oldValue, newValue) -> {
             System.out.println("TimeLineContainer has detected a page change");
             InitializeContainer(project, page);
@@ -112,6 +113,10 @@ public class TimeLineContainer extends VBox {
         scrollPane_outer.setContent(vBox_OuterScrollPane);
 
         InitializeButtonHBox();
+
+        getChildren().add(scaleSlider);
+        getChildren().add(hbox_buttonHBox);
+        getChildren().add(scrollPane_outer);
         InitializeContainer(project, page);
 
         this.setOnKeyPressed(event -> handleKeyStrokeEvent(event));
@@ -128,18 +133,20 @@ public class TimeLineContainer extends VBox {
         hbox_buttonHBox = new HBox(btn_CreateNewTimeLine, btn_CreateNewTimeLineOutOfSelected);
     }
 
+    //TODO: Potential memory leak
+    // Children are cleared but might still be listening to certain properties.
     private void InitializeContainer(ObservableProject project, ObservablePage page){
         System.out.println("initialize timeline_container called");
+        getSelectedTimeLine().setSelectedTimeLine(null);
         //Step 1: Create the stroke timeline
         //Step 2: For each tag, create a new timeline and pass over the observble Tag and the page. Then create the annotations.
-        getChildren().clear();
-        getChildren().add(scaleSlider);
-        getChildren().add(hbox_buttonHBox);
-        getChildren().add(scrollPane_outer);
+        //getChildren().clear();
+
         totalWidth.set(page.getDuration());
-        unitPane = new TimeUnitPane(scale,20,totalWidth);
+        //unitPane = new TimeUnitPane(scale,20,totalWidth);
         vBox_TimeLineBox.getChildren().clear();
 
+        //TODO: POtential memory leak: Do generated segments still listen to external proprty?
         UnmodifiableSelectableTimeLinePane strokePane = new UnmodifiableSelectableTimeLinePane(
                 totalWidth.get(),
                 timeLinesHeight,
@@ -157,6 +164,9 @@ public class TimeLineContainer extends VBox {
                 loadTimeLine(tag, page, page.getAnnotationSet(topicSetID));
             }
         }
+
+        System.gc();
+        System.out.println("after  gc");
     }
 
     private Slider initializeSlider(double initScale){
