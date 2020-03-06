@@ -18,7 +18,7 @@ public class DotLine  extends Line {
     private ObjectProperty<Color> lineColor;
     private ObservableDot dot1;
     private ObservableDot dot2;
-
+    private DoubleProperty scaleProperty;
 
     public DotLine(ObservableDot dot1, ObservableDot dot2, DoubleProperty scale){
         this.dot1 = dot1;
@@ -47,7 +47,9 @@ public class DotLine  extends Line {
 
         setCoordinates(scale.get());
 
-        scale.addListener((observable, oldValue, newValue) -> {
+        this.scaleProperty = new SimpleDoubleProperty(scale.get());
+        this.scaleProperty.bind(scale);
+        this.scaleProperty.addListener((observable, oldValue, newValue) -> {
             if(newValue != null){
                 setCoordinates(newValue.doubleValue());
             }
@@ -75,6 +77,12 @@ public class DotLine  extends Line {
         setStartY(dot1.getY() * scale);
         setEndX(dot2.getX() * scale);
         setEndY(dot2.getY() * scale);
+    }
+
+    public void unlink(){
+        lineSelected.unbind();
+        lineColor.unbind();
+        scaleProperty.unbind();
     }
 
 }

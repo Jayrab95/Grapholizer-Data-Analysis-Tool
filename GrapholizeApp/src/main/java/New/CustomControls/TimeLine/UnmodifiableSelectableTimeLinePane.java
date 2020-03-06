@@ -29,14 +29,14 @@ public class UnmodifiableSelectableTimeLinePane extends SelectableTimeLinePane {
             segments.get().forEach(segment -> {
                 ObservableSegment oSegment = new ObservableSegment(segment, ts);
                 SelectableSegmentRectangle selectableSegmentRectangle = new SelectableSegmentRectangle(
-                        ts.getColorProperty(),
+                        this.ts.getColorProperty(),
                         oSegment.getToolTipTextProperty(),
                         oSegment.getMainTopicAnnotationProperty(),
-                        scale,
+                        this.scale,
                         segment.getDuration(),
                         segment.getTimeStart(),
                         this,
-                        p,
+                        this.p,
                         oSegment
                 );
                 this.getChildren().add(selectableSegmentRectangle);

@@ -23,6 +23,8 @@ public class ObservableProject {
         }
     }
 
+    //TODO: Potential memory leak?
+    // Are certain topic set properties still referenced?
     private void generateObservableTopicSets(Project p){
         observableTopicSets = new LinkedList<>();
         for(String s : p.getTopicSetIDs()){
@@ -88,7 +90,13 @@ public class ObservableProject {
     }
 
     public void setInnerProject(Project p){
+
+        generateObservableTopicSets(p);
+        if(!p.getTopicSetIDs().contains(strokeSetID)){
+            generateStrokeTopicSetAndSegmentations(p);
+        }
         this.innerProjectProperty.set(p);
+
     }
 
     public void putTopicSet(TopicSet t) {

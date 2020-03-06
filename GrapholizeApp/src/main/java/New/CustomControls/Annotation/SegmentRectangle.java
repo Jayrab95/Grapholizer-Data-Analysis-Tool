@@ -22,7 +22,6 @@ public class SegmentRectangle extends Rectangle {
     protected Label displayedText;
     protected Tooltip tooltip;
 
-
     public SegmentRectangle(ObjectProperty<Color> c, StringProperty toolTipTextProperty, StringProperty labelTextProperty, DoubleProperty scaleProperty, double width, double height, double start){
         this.segmentColorProperty = new SimpleObjectProperty<>(c.get());
         this.segmentColorProperty.bind(c);

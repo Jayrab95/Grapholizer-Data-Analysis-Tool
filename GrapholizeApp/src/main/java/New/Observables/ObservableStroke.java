@@ -43,9 +43,9 @@ public class ObservableStroke{
     private ObservableStroke(Stroke s){
         this.stroke = s;
         this.color = new SimpleObjectProperty<>(Color.BLACK);
-        observers = new ArrayList<>();
-        selected = new SimpleBooleanProperty(false);
-        selected.addListener((observable, oldValue, newValue) -> {
+        this.observers = new ArrayList<>();
+        this.selected = new SimpleBooleanProperty(false);
+        this.selected.addListener((observable, oldValue, newValue) -> {
             if(oldValue != newValue){
                 notifyObservers();
             }

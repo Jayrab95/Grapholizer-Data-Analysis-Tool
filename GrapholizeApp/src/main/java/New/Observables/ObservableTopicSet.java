@@ -27,15 +27,15 @@ public class ObservableTopicSet {
 
     public ObservableTopicSet(TopicSet inner){
         this.inner = inner;
-        tagProperty = new SimpleStringProperty(inner.getTag());
-        tagProperty.addListener((observable, oldValue, newValue) -> inner.setTag(newValue));
-        colorProperty = new SimpleObjectProperty<>(ColorConverter.convertModelColorToJavaFXColor(inner.getSimpleColor()));
-        colorProperty.addListener((observable, oldValue, newValue) -> inner.setSimpleColor(
+        this.tagProperty = new SimpleStringProperty(inner.getTag());
+        this.tagProperty.addListener((observable, oldValue, newValue) -> inner.setTag(newValue));
+        this.colorProperty = new SimpleObjectProperty<>(ColorConverter.convertModelColorToJavaFXColor(inner.getSimpleColor()));
+        this.colorProperty.addListener((observable, oldValue, newValue) -> inner.setSimpleColor(
                 ColorConverter.convertJavaFXColorToModelColor(newValue)));
-        mainTopicIDProperty = new SimpleStringProperty(inner.getMainTopicID());
-        mainTopicIDProperty.addListener((observable, oldValue, newValue) -> inner.setMainTopic(newValue));
-        topicsObservableList = FXCollections.observableList(inner.getTopics().stream().collect(Collectors.toList()));
-        topicsObservableList.addListener(new ListChangeListener<Topic>() {
+        this.mainTopicIDProperty = new SimpleStringProperty(inner.getMainTopicID());
+        this.mainTopicIDProperty.addListener((observable, oldValue, newValue) -> inner.setMainTopic(newValue));
+        this.topicsObservableList = FXCollections.observableList(inner.getTopics().stream().collect(Collectors.toList()));
+        this.topicsObservableList.addListener(new ListChangeListener<Topic>() {
             @Override
             public void onChanged(Change<? extends Topic> c) {
                 while(c.next()){

@@ -1,18 +1,21 @@
 package New.Filters;
 
+import New.Model.Entities.Page;
 import New.Observables.ObservablePage;
 import javafx.beans.property.BooleanProperty;
+import javafx.beans.property.ObjectProperty;
 import javafx.beans.property.SimpleBooleanProperty;
 import javafx.scene.paint.Color;
 
 public abstract class Filter {
     protected BooleanProperty filterActiveProperty;
+    protected ObjectProperty<Page> pageProperty;
     protected final String filterName;
     protected final ObservablePage p;
 
     public Filter(String filterName, ObservablePage p){
-        filterActiveProperty = new SimpleBooleanProperty(false);
-        filterActiveProperty.addListener((obs, oldVal, newVal) -> {
+        this.filterActiveProperty = new SimpleBooleanProperty(false);
+        this.filterActiveProperty.addListener((obs, oldVal, newVal) -> {
             if (newVal) {
                 applyFilter();
             } else {
@@ -21,7 +24,8 @@ public abstract class Filter {
         });
         this.filterName = filterName;
         this.p = p;
-        p.getPageProperty().addListener((observable, oldValue, newValue) -> handlePageChange(p));
+        this.pageProperty = p.getPageProperty();
+        this.pageProperty.addListener((observable, oldValue, newValue) -> handlePageChange(p));
         calculateMetrics(p);
     }
 

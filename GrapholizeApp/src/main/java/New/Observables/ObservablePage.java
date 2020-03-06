@@ -38,6 +38,8 @@ public class ObservablePage implements Selector {
         return inner;
     }
 
+    //TODO: Potential memory leak?
+    // Are strokes/dots still in memory somehow after page switch??
     public void setPage(Page newPage){
         System.out.println("setPage in ObservabelPage called");
         strokes = FXCollections.observableList(generateStrokes(newPage));
