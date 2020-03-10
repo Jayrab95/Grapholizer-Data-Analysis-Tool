@@ -9,6 +9,7 @@ import java.util.stream.Collectors;
 
 public class ObservableParticipant {
 
+    //TODO: Replace with ObjectProperty
     private Participant inner;
     private List<ParticipantObserver>observers;
 

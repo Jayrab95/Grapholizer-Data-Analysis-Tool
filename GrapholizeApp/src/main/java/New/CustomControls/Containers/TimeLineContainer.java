@@ -273,7 +273,7 @@ public class TimeLineContainer extends VBox {
         }
     }
 
-    public void createNewTimeLineOutOfCombinedElement(Segment a){
+    public void createNewTimeLineOutOfSet(Set<Segment> a){
         Optional<TopicSet> tag = createTopicSetDialog();
         if(tag.isPresent()){
             ObservableTopicSet newTag = timeLineContainerController.createNewTimeLineTag(tag.get());
@@ -281,6 +281,8 @@ public class TimeLineContainer extends VBox {
             addTimeLinePane(timeLinePane);
         }
     }
+
+
 
     private TimeLinePane createNewTimeLinePane(ObservableTopicSet tag, ObservablePage page, boolean copyFromSelected){
         CustomTimeLinePane result;
@@ -308,8 +310,8 @@ public class TimeLineContainer extends VBox {
         return new CustomTimeLinePane(timeLineContainerController.getPage().getDuration(), timeLinesHeight, scale, newTimeLineTag, page, this, segments);
     }
 
-    private TimeLinePane createNewTimeLinePaneOutOfCombined(ObservableTopicSet tag, ObservablePage page, Segment segment){
-        CustomTimeLinePane newTimeLine = new CustomTimeLinePane(timeLineContainerController.getPage().getDuration(), timeLinesHeight, scale, tag, page, this, segment);
+    private TimeLinePane createNewTimeLinePaneOutOfCombined(ObservableTopicSet tag, ObservablePage page, Set<Segment> segments){
+        CustomTimeLinePane newTimeLine = new CustomTimeLinePane(timeLineContainerController.getPage().getDuration(), timeLinesHeight, scale, tag, page, this, segments);
         return newTimeLine;
     }
 
@@ -385,7 +387,7 @@ public class TimeLineContainer extends VBox {
 
     private void handleDelete(){
         if(selectedTimeLine.selectedSegmentationIsCustom()
-                && selectedTimeLine.getSelectedAnnotations().size() > 0
+                && selectedTimeLine.getSelectedSegmentRectangles().size() > 0
                 && DialogGenerator.confirmationDialogue(
                         "Delete selected segments",
                 "Delete selected segments from " + selectedTimeLine.getSegmentationName(),

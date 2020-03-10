@@ -9,7 +9,7 @@ import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
 
 
-public class SegmentRectangle extends Rectangle {
+public class SegmentRectangle extends Rectangle implements Comparable<SegmentRectangle> {
 
     protected ObjectProperty<Color> segmentColorProperty;
     protected StringProperty segmentTextProperty;
@@ -100,4 +100,8 @@ public class SegmentRectangle extends Rectangle {
         durationProperty.set(getTimeStop() - getTimeStart());
     }
 
+    @Override
+    public int compareTo(SegmentRectangle o) {
+        return Double.compare(this.getTimeStart(), o.getTimeStart());
+    }
 }

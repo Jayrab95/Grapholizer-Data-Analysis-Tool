@@ -7,7 +7,6 @@ import New.CustomControls.TimeLine.SubTimeLines.*;
 import New.util.CharacteristicList;
 import javafx.beans.property.DoubleProperty;
 import javafx.beans.property.SimpleDoubleProperty;
-import javafx.beans.property.SimpleObjectProperty;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.geometry.Insets;
 import javafx.scene.control.Label;
@@ -18,7 +17,6 @@ import New.Observables.ObservablePage;
 
 import javafx.scene.control.Slider;
 import javafx.scene.layout.*;
-import javafx.scene.paint.Color;
 
 import java.util.List;
 
@@ -179,7 +177,7 @@ public class TimeLineDetailContainer extends ScrollPane {
 
     private double getLength(){
         double end = 0;
-        for(SegmentRectangle r : inspectedTimeLine.getAnnotations()){
+        for(SegmentRectangle r : inspectedTimeLine.getSegmentRectangles()){
             if(end < r.getTimeStop()){end = r.getTimeStop();}
         }
         return end;

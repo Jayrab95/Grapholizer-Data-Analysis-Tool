@@ -5,13 +5,12 @@ import New.CustomControls.Annotation.MutableSegmentRectangle;
 import New.CustomControls.Annotation.SelectableSegmentRectangle;
 import New.CustomControls.TimeLine.CustomTimeLinePane;
 import New.CustomControls.TimeLine.SelectableTimeLinePane;
-import New.CustomControls.TimeLine.TimeLinePane;
-import New.Interfaces.Observer.TimeLineObserver;
+import New.CustomControls.TimeLine.UnmodifiableSelectableTimeLinePane;
+import New.Execptions.NoTimeLineSelectedException;
 import New.Model.Entities.Segment;
 import New.Model.Entities.Topic;
 import javafx.beans.property.ObjectProperty;
 import javafx.beans.property.SimpleObjectProperty;
-import javafx.collections.FXCollections;
 
 import java.util.*;
 import java.util.stream.Collectors;
@@ -44,15 +43,27 @@ public class ObservableSegmentation {
     // Could be optimized by making the selection dependant on the observableSegment, rather than the children.
     // The rectangle's selectedProperty binds itself to the OSegment's selected property.
     // This way, you can just search through the list of selectable segments on the page, rather than the children.
-    public List<SegmentRectangle> getSelectedAnnotations(){
+    public Set<SegmentRectangle> getSelectedSegmentRectangles() {
         //The children first need to be filtered to see whether or not they're actually rectangles (Can also be drag rect or label)
         //Then the nodes acquire the correct cast
         //finally, they're filtered for selection
-        return selectedTimeLine.get().getChildren().stream()
-                .filter(node -> node instanceof SelectableSegmentRectangle)
-                .map(node -> (SelectableSegmentRectangle)node)
-                .filter(SelectableSegmentRectangle::isSelected)
-                .collect(Collectors.toList());
+        if(timeLineSelected()){
+            return selectedTimeLine.get().getChildren().stream()
+                    .filter(node -> node instanceof SelectableSegmentRectangle)
+                    .map(node -> (SelectableSegmentRectangle)node)
+                    .filter(SelectableSegmentRectangle::isSelected)
+                    .collect(Collectors.toSet());
+        }
+        return Set.of();
+    }
+
+    public Set<ObservableSegment> getSelectedSegments() {
+        if(timeLineSelected()){
+            return selectedTimeLine.get().getObservableSegments().stream()
+                    .filter(observableSegment -> observableSegment.isSelected())
+                    .collect(Collectors.toSet());
+        }
+        return Set.of();
     }
 
     public void setSelectedTimeLine(SelectableTimeLinePane timeLine){
@@ -66,7 +77,15 @@ public class ObservableSegmentation {
     }
 
     public Optional<ObservableTopicSet> getSelectedSegmentationTopicSet(){
-        return selectedTimeLine.get() instanceof CustomTimeLinePane ? Optional.of(((CustomTimeLinePane)selectedTimeLine.get()).getObservableTopicSet()) : Optional.empty();
+        //TODO: Unclean solution. Perhaps there needs to be some other class or interface that defines that the segmentationPane has a topic set
+        // (Which is currently not a given if it is a selecteableSegmentationPane)
+        if(selectedTimeLine.get() instanceof CustomTimeLinePane){
+            return Optional.of(((CustomTimeLinePane)selectedTimeLine.get()).getObservableTopicSet());
+        }
+        else if(selectedTimeLine.get() instanceof UnmodifiableSelectableTimeLinePane){
+            return Optional.of(((UnmodifiableSelectableTimeLinePane)selectedTimeLine.get()).getObservableTopicSet());
+        }
+        return Optional.empty();
     }
 
     public boolean equals(SelectableTimeLinePane timeLinePane){
@@ -88,10 +107,11 @@ public class ObservableSegmentation {
     }
 
     public Set<Segment> generateMissingSegments(List<Topic> targetTopics){
-        List<SegmentRectangle> selectedAnnotations = getSelectedAnnotations();
+        Set<SegmentRectangle> selectedAnnotations = getSelectedSegmentRectangles();
         Set<Segment> res = new TreeSet<>();
-        for(int i = 0; i < selectedAnnotations.size(); i++){
-            SegmentRectangle a = selectedAnnotations.get(i);
+        Iterator<SegmentRectangle> it = selectedAnnotations.iterator();
+        while(it.hasNext()){
+            SegmentRectangle a = it.next();
             Segment newSegment = new Segment(a.getTimeStart(), a.getTimeStop());
             if(a instanceof MutableSegmentRectangle){
                 for(Topic t : ((MutableSegmentRectangle)a).getObservableTopicSet().getTopicsObservableList()){
@@ -112,7 +132,7 @@ public class ObservableSegmentation {
 
     public void deleteSelectedSegments(){
         if(selectedSegmentationIsCustom()){
-            for(SegmentRectangle sr : getSelectedAnnotations()){
+            for(SegmentRectangle sr : getSelectedSegmentRectangles()){
                 MutableSegmentRectangle msr = (MutableSegmentRectangle)sr;
                 ((CustomTimeLinePane)selectedTimeLine.get()).deleteSegment(msr, msr.getObservableSegment());
             }

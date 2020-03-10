@@ -8,40 +8,41 @@ import New.Observables.ObservableSegment;
 import New.Observables.ObservableTopicSet;
 import javafx.beans.property.DoubleProperty;
 
-import java.util.List;
 import java.util.Optional;
 import java.util.Set;
 
 public class UnmodifiableSelectableTimeLinePane extends SelectableTimeLinePane {
 
-    private ObservablePage p;
-    private ObservableTopicSet ts;
-    public UnmodifiableSelectableTimeLinePane(double width, double height, DoubleProperty scaleProp, ObservableTopicSet ts, ObservablePage oPage, TimeLineContainer parent) {
-        super(width, height, scaleProp, ts.getNameProperty(), parent, ts.getTopicSetID());
-        this.p = oPage;
-        this.ts=ts;
-        setUp(oPage.getAnnotationSet(ts.getTopicSetID()));
+    private ObservableTopicSet observableTopicSet;
+    public UnmodifiableSelectableTimeLinePane(double width, double height, DoubleProperty scaleProp, ObservableTopicSet observableTopicSet, ObservablePage oPage, TimeLineContainer parent) {
+        super(width, height, scaleProp, observableTopicSet.getNameProperty(), parent, observableTopicSet.getTopicSetID());
+        this.observableTopicSet = observableTopicSet;
+        setUp(oPage.getAnnotationSet(observableTopicSet.getTopicSetID()), oPage);
     }
 
-    private void setUp(Optional<Set<Segment>> segments){
+    private void setUp(Optional<Set<Segment>> segments, ObservablePage p){
 
         if(segments.isPresent()){
             segments.get().forEach(segment -> {
-                ObservableSegment oSegment = new ObservableSegment(segment, ts);
+                ObservableSegment oSegment = new ObservableSegment(segment, observableTopicSet);
                 SelectableSegmentRectangle selectableSegmentRectangle = new SelectableSegmentRectangle(
-                        this.ts.getColorProperty(),
+                        this.observableTopicSet.getColorProperty(),
                         oSegment.getToolTipTextProperty(),
                         oSegment.getMainTopicAnnotationProperty(),
                         this.scale,
                         segment.getDuration(),
                         segment.getTimeStart(),
                         this,
-                        this.p,
+                        p,
                         oSegment
                 );
                 this.getChildren().add(selectableSegmentRectangle);
                 this.observableSegments.add(oSegment);
             });
         }
+    }
+
+    public ObservableTopicSet getObservableTopicSet() {
+        return observableTopicSet;
     }
 }

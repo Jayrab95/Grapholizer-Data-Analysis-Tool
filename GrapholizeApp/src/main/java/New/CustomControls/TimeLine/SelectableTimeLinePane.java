@@ -4,12 +4,9 @@ import New.Controllers.SelectableTimeLineController;
 import New.CustomControls.Annotation.SegmentRectangle;
 import New.CustomControls.Annotation.SelectableSegmentRectangle;
 import New.CustomControls.Containers.TimeLineContainer;
-import New.Interfaces.Observer.TimeLineObserver;
 import New.Observables.ObservableSegment;
-import New.Observables.ObservableSegmentation;
 import javafx.beans.binding.BooleanBinding;
 import javafx.beans.property.*;
-import javafx.beans.value.WeakChangeListener;
 import javafx.scene.effect.Light;
 import javafx.scene.input.MouseButton;
 import javafx.scene.input.MouseEvent;
@@ -30,10 +27,20 @@ public abstract class SelectableTimeLinePane extends TimeLinePane {
     protected Rectangle selection;
     protected boolean selectMode;
 
+    protected String selectedStyle = "-fx-padding: 10; -fx-border-style: solid inside; -fx-border-width: 2; -fx-border-insets: 5; -fx-border-radius: 5; -fx-background-color: palegreen";
+
     protected SelectableTimeLinePane(double width, double height, DoubleProperty scaleProp, StringProperty name, TimeLineContainer parent, String id) {
         super(width, height, scaleProp, name, id);
         selectableTimeLineController = new SelectableTimeLineController(parent.getSelectedTimeLine());
         this.timeLineSelectedProperty = new SimpleBooleanProperty(false);
+        this.timeLineSelectedProperty.addListener((observable, oldValue, newValue) -> {
+            if(newValue){
+                this.setStyle(selectedStyle);
+            }
+            else{
+                this.setStyle(defaultStyle);
+            }
+        });
 
         /*
         this.selectedSegmentationListener = new WeakChangeListener<>((observable, oldValue, newValue) ->{
@@ -73,12 +80,16 @@ public abstract class SelectableTimeLinePane extends TimeLinePane {
         }
     }
 
-    public List<SegmentRectangle> getAnnotations(){
+    public List<SegmentRectangle> getSegmentRectangles(){
         return getChildren().stream()
                 .filter(n -> n instanceof SegmentRectangle)
                 .map(n -> (SegmentRectangle)n)
                 .sorted(Comparator.comparing(a -> a.getTimeStart()))
                 .collect(Collectors.toList());
+    }
+
+    public Set<ObservableSegment> getObservableSegments() {
+        return observableSegments;
     }
 
     public boolean isSelected(){

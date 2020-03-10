@@ -185,7 +185,12 @@ public class MainCanvas extends VBox implements PageObserver, StrokeObserver, Fi
 
     private void endSelection(MouseEvent event){
         System.out.println("End selection called");
-        selector.selectRectUnscaled(selection.getX(), selection.getY(), selection.getWidth(), selection.getHeight(), canvasScale.get());
+        if (event.isShiftDown()) {
+            selector.selectRectUnscaled(selection.getX(), selection.getY(), selection.getWidth(), selection.getHeight(), canvasScale.get());
+        } else {
+            selector.selectOnlyRectUnscaled(selection.getX(), selection.getY(), selection.getWidth(), selection.getHeight(), canvasScale.get());
+        }
+        //Reset selection rectangle and remove it from canvas.
         selection.setWidth(0);
         selection.setHeight(0);
         canvas.getChildren().remove(selection);

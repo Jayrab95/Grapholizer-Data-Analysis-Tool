@@ -93,7 +93,7 @@ public class ObservablePage implements Selector {
                 .count() > 0;
     }
 
-    public boolean listCollidesWithOtherAnnotations(String key, List<SegmentRectangle> annotations){
+    public boolean collectionCollidesWithOtherElements(String key, Collection<SegmentRectangle> annotations){
         return annotations.stream()
                 .filter(a -> collidesWithOtherElements(key, a.getTimeStart(), a.getTimeStop()))
                 .count() > 0;
@@ -289,8 +289,27 @@ public class ObservablePage implements Selector {
     }
 
     @Override
+    public void selectOnlyRect(double x, double y, double width, double height) {
+        Rectangle rect = new Rectangle(x, y, width, height);
+        strokes.stream()
+                .flatMap(s -> s.getObservableDots().stream())
+                .forEach(d -> {
+                    if (rect.contains(d.getX(), d.getY())) {
+                        d.setSelected(true);
+                    } else {
+                        d.setSelected(false);
+                    }
+                });
+    }
+
+    @Override
     public void selectRectUnscaled(double x, double y, double width, double height, double scale) {
         selectRect(x/scale, y/scale, width/scale, height/scale);
+    }
+
+    @Override
+    public void selectOnlyRectUnscaled(double x, double y, double width, double height, double scale) {
+        selectOnlyRect(x/scale, y/scale, width/scale, height/scale);
     }
 
     @Override

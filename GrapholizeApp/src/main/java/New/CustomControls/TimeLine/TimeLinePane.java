@@ -6,7 +6,6 @@ import javafx.beans.property.SimpleDoubleProperty;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.property.StringProperty;
 import javafx.scene.layout.Pane;
-import javafx.scene.layout.StackPane;
 
 //Idea: make Timeline an interface? This way timeline operations can be called without referencing the actual control.
 //TODO: Separate TimeLinePane into view and controller.
@@ -18,7 +17,7 @@ public abstract class TimeLinePane extends Pane {
     protected final String topicSetID;
 
     //Todo: perhaps reference style from a style sheet.
-    protected String style = "-fx-padding: 10; -fx-border-style: solid inside; -fx-border-width: 2; -fx-border-insets: 5; -fx-border-radius: 5; -fx-border-color: blue; -fx-background-color: grey";
+    protected String defaultStyle = "-fx-padding: 10; -fx-border-style: solid inside; -fx-border-width: 2; -fx-border-insets: 5; -fx-border-radius: 5; -fx-background-color: grey";
 
     protected TimeLinePane(double totalLength, double height, DoubleProperty scaleProp, StringProperty name, String id){
         this.totalLength = new SimpleDoubleProperty(totalLength);
@@ -61,11 +60,11 @@ public abstract class TimeLinePane extends Pane {
     protected void resizeTimeLine(){
         setWidth(totalLength.get() * scale.get());
         setPrefWidth(totalLength.get() * scale.get());
-        setStyle(style);
+        setStyle(defaultStyle);
     }
 
     private void InitiateTimeLine() {
-        setStyle(style);
+        setStyle(defaultStyle);
     }
 
     public void cleanUp(){

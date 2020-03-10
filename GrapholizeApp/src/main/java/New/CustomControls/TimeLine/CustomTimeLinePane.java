@@ -17,13 +17,9 @@ import New.util.DialogGenerator;
 import javafx.beans.property.DoubleProperty;
 import javafx.scene.Node;
 import javafx.scene.control.*;
-import javafx.scene.effect.Light;
-import javafx.scene.input.KeyCode;
-import javafx.scene.input.KeyEvent;
 import javafx.scene.input.MouseButton;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.paint.Color;
-import javafx.scene.shape.Rectangle;
 
 import java.util.List;
 import java.util.Map;
@@ -159,18 +155,21 @@ public class CustomTimeLinePane extends SelectableTimeLinePane {
         //TODO: Find better way to extend context menu functionality
         MenuItem item_filterSelect = new MenuItem("Filter select");
         item_filterSelect.setOnAction(event -> handleFilterSelectClick());
-        MenuItem item_createNegativeTimeLine = new MenuItem("Create negative timeline");
+        MenuItem item_createNegativeTimeLine = new MenuItem("Create negative segmentation out of this segmentation");
         item_createNegativeTimeLine.setOnAction(event -> handelContextCreateNegativeTimeLineClick());
-        MenuItem item_copyAnnotations = new MenuItem("Copy selected annotations into this timeline");
+        MenuItem item_copyAnnotations = new MenuItem("Copy selected segments into this timeline");
         item_copyAnnotations.setOnAction(event -> handleContextCopyAnnotationsClick());
         item_copyAnnotations.disableProperty().bind(selectedSegmentationIsNullProperty());
-        MenuItem item_createAnnotationsOutOfDots = new MenuItem("Create annotations out of selected dots");
+        MenuItem item_copyNegativeSegments = new MenuItem("Paste negative segments from selected segmentation into this segmentation");
+        item_copyNegativeSegments.setOnAction(event -> copyNegativeSegmentsIntoSegmentation());
+        item_copyNegativeSegments.disableProperty().bind(selectedSegmentationIsNullProperty());
+        MenuItem item_createAnnotationsOutOfDots = new MenuItem("Create segments out of selected dots");
         item_createAnnotationsOutOfDots.setOnAction(event -> createAnnotationFromDotsDialogue());
-        MenuItem item_editTimeLine = new MenuItem("Edit timeline tag");
+        MenuItem item_editTimeLine = new MenuItem("Edit super set");
         item_editTimeLine.setOnAction(event -> customTimeLineController.editTimeLine());
-        MenuItem item_removeTimeLine = new MenuItem("Remove this timeline");
+        MenuItem item_removeTimeLine = new MenuItem("Remove super set");
         item_removeTimeLine.setOnAction(event -> customTimeLineController.removeTimeLine(this));
-        return new ContextMenu(item_filterSelect, item_createNegativeTimeLine, item_editTimeLine, item_copyAnnotations, item_createAnnotationsOutOfDots, item_removeTimeLine);
+        return new ContextMenu(item_filterSelect, item_createNegativeTimeLine, item_editTimeLine, item_copyAnnotations, item_createAnnotationsOutOfDots, item_copyNegativeSegments, item_removeTimeLine);
     }
 
     private void handleFilterSelectClick(){
@@ -188,14 +187,6 @@ public class CustomTimeLinePane extends SelectableTimeLinePane {
         customTimeLineController.createNegativeTimeLine();
     }
 
-    private void handleContextCreateNewTimeLineClick(){
-        try{
-            customTimeLineController.createNewTimeLine();
-        }
-        catch(NoTimeLineSelectedException ex){
-            DialogGenerator.simpleErrorDialog("Creation Error","Error while creating timeline", ex.toString());
-        }
-    }
 
     private void handleContextCopyAnnotationsClick(){
         createCopyAnnotationDialogue();
@@ -301,9 +292,20 @@ public class CustomTimeLinePane extends SelectableTimeLinePane {
             selectMode = false;
     }
 
-
+    public void copyNegativeSegmentsIntoSegmentation(){
+        Set<Segment> negativeSegments = customTimeLineController.getNegativeSegmentsFromSelectedSegmentation();
+        if(customTimeLineController.setCollidesWithOtherAnnotations(negativeSegments)){
+            if(DialogGenerator.confirmationDialogue(TXT_COLLIDEHANDLER_TITLE, TXT_COLLIDEHANDLER_HEADER, TXT_COLLIDEHANDLER_MSG)){
+                customTimeLineController.createNewTimeLineOutOfSet(negativeSegments);
+            }
+        }
+        else{
+            addAnnotations(negativeSegments);
+        }
+    }
 
     public void createCopyAnnotationDialogue()  {
+
         SegmentDialog dialog = new SegmentDialog(TXT_DOTANNOTATION_TITLE, TXT_DOTANNOTATION_HEADER, TXT_DOTANNOTATION_TEXT, observableTopicSet.getTopicsObservableList(), Optional.empty(), true);
 
         dialog.setResultConverter(b -> {

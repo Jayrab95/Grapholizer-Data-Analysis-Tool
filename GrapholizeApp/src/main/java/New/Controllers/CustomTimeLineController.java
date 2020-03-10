@@ -41,12 +41,12 @@ public class CustomTimeLineController {
     }
 
 
-    public double[] getCombinedAnnotationBoundaries(){
-        List<SegmentRectangle> selectedAnnotations = observableSegmentation.getSelectedAnnotations();
-        Comparator<SegmentRectangle> comp = Comparator.comparing(SegmentRectangle::getTimeStart);
-        Collections.sort(selectedAnnotations, comp);
-        double timeStart = selectedAnnotations.get(0).getTimeStart();
-        double timeStop = selectedAnnotations.get(selectedAnnotations.size() - 1).getTimeStop();
+    public double[] getCombinedAnnotationBoundaries() {
+        //Todo: ugly solution...(However the set of observable segments on the segmentationpanes is always a treeset)
+        // Unsafe though, in case the collection type is changed..
+        TreeSet<ObservableSegment> selectedAnnotations = (TreeSet)observableSegmentation.getSelectedSegments();
+        double timeStart = selectedAnnotations.first().getTimeStart();
+        double timeStop = selectedAnnotations.last().getTimeStop();
         return new double[]{timeStart, timeStop};
     }
 
@@ -58,11 +58,11 @@ public class CustomTimeLineController {
         return new double[]{l.get(0).getTimeStamp(), l.get(l.size() - 1).getTimeStamp()};
     }
 
-    public List<SegmentRectangle> getSelectedAnnotations(){
-        return observableSegmentation.getSelectedAnnotations();
+    public Set<SegmentRectangle> getSelectedAnnotations() throws NoTimeLineSelectedException {
+        return observableSegmentation.getSelectedSegmentRectangles();
     }
 
-    public boolean copiedAnnotationsCollideWithOtherAnnotations(Optional<double[]> combined){
+    public boolean copiedAnnotationsCollideWithOtherAnnotations(Optional<double[]> combined) {
         //Reason for passing an optional: Boundaries only need to be calculated once. The caller (CustomTimeLinePane)
         //needs the boundaries to create the annotation.
         if(combined.isPresent()){
@@ -80,10 +80,16 @@ public class CustomTimeLineController {
         return selectedDotsCollideWithOtherAnnotations();
     }
 
+    public boolean negativeSegmentsCollideWithOtherAnnotations(){
+        return setCollidesWithOtherAnnotations(getNegativeSegmentsFromSelectedSegmentation());
+    }
 
+    public boolean setCollidesWithOtherAnnotations(Set<Segment> segments){
+        return segments.stream().anyMatch(segment -> page.collidesWithOtherElements(observableTopicSet.getTopicSetID(), segment.getTimeStart(), segment.getTimeStop()));
+    }
 
-    public boolean selectedAnnotationsCollideWithOtherAnnotations(){
-        return page.listCollidesWithOtherAnnotations(observableTopicSet.getTopicSetID(), observableSegmentation.getSelectedAnnotations());
+    public boolean selectedAnnotationsCollideWithOtherAnnotations() {
+        return page.collectionCollidesWithOtherElements(observableTopicSet.getTopicSetID(), observableSegmentation.getSelectedSegmentRectangles());
     }
 
 
@@ -153,9 +159,14 @@ public class CustomTimeLineController {
     public void createNewTimeLine() throws NoTimeLineSelectedException {
         parent.createNewTimeLineOutOfSelectedElements();
     }
+
+    public void createNewTimeLineOutOfSet(Set<Segment> set){
+        parent.createNewTimeLineOutOfSet(set);
+    }
+
     public void createNewTimeLine(Optional<Segment> combined, boolean selected) throws NoTimeLineSelectedException {
         if(combined.isPresent()){
-            parent.createNewTimeLineOutOfCombinedElement(combined.get());
+            parent.createNewTimeLineOutOfSet(Set.of(combined.get()));
         }
         else{
             if (selected) {
@@ -168,6 +179,14 @@ public class CustomTimeLineController {
 
     public void createNegativeTimeLine(){
         parent.createNegativeTimeLine(observableTopicSet.getTopicSetID());
+    }
+
+    public Set<Segment> getNegativeSegmentsFromSelectedSegmentation() {
+        Optional<ObservableTopicSet> optional = observableSegmentation.getSelectedSegmentationTopicSet();
+        if(optional.isPresent()){
+            return page.getNegativeSegmentation(optional.get().getTopicSetID());
+        }
+        return Set.of();
     }
 
     public void removeAnnotation(ObservableSegment a){
@@ -190,7 +209,7 @@ public class CustomTimeLineController {
     }
 
     public void deleteSelectedRectangles(){
-        for(SegmentRectangle sr : observableSegmentation.getSelectedAnnotations()){
+        for(SegmentRectangle sr : observableSegmentation.getSelectedSegmentRectangles()){
             ((MutableSegmentRectangle)sr).deleteSegment();
         }
     }
