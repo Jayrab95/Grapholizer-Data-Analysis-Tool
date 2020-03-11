@@ -42,7 +42,7 @@ public class CharacteristicAverageDurationVelocityInversions extends Characteris
 
                 double acceleration = VelocityMathUtil.acceleration(
                         lastVelocity
-                        ,value
+                        , value
                         , timeDifference
                 );
                 double sign = Math.signum(acceleration);

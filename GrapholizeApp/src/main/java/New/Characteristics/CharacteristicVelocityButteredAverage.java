@@ -14,6 +14,11 @@ public class CharacteristicVelocityButteredAverage extends Characteristic<Double
         super(name, unitName);
     }
 
+    /**
+     *
+     * @param dots dot liste eines strokes
+     * @return Liste der velocities zwischen den dots, zusätzlich mit einem Lowpass filters
+     */
     public static List<Double> getVelocitySteps(List<Dot> dots){
         double value = 0;
         double smoothing = 3d;
@@ -30,6 +35,7 @@ public class CharacteristicVelocityButteredAverage extends Characteristic<Double
                         , timeDifference
                 );
                 value += (velocity - value) / (smoothing); //Smoothe the output
+                //TODO use threshold extract to utility function
                 result.add(value);
             }
         }
