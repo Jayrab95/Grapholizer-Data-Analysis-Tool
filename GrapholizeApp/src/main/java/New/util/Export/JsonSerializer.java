@@ -1,10 +1,7 @@
 package New.util.Export;
 
 import New.Interfaces.Serializer;
-import New.Model.Entities.Timeline;
 import com.google.gson.Gson;
-
-import java.util.List;
 
 public class JsonSerializer implements Serializer {
     @Override

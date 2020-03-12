@@ -1,7 +1,7 @@
 package New.Controllers;
 
 import New.CustomControls.Annotation.MutableSegmentRectangle;
-import New.CustomControls.TimeLine.CustomTimeLinePane;
+import New.CustomControls.TimeLine.CustomSegmentationPane;
 import New.Model.Entities.Segment;
 import New.Observables.ObservableSegment;
 import javafx.scene.shape.Rectangle;
@@ -11,10 +11,10 @@ import java.util.Map;
 public class MutableSegmentController {
 
     private final ObservableSegment oAnnotation;
-    private CustomTimeLinePane parent;
+    private CustomSegmentationPane parent;
 
 
-    public MutableSegmentController(ObservableSegment oAnnotation, CustomTimeLinePane parent){
+    public MutableSegmentController(ObservableSegment oAnnotation, CustomSegmentationPane parent){
         this.oAnnotation = oAnnotation;
         this.parent = parent;
     }

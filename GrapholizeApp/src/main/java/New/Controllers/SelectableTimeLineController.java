@@ -1,9 +1,8 @@
 package New.Controllers;
 
-import New.CustomControls.TimeLine.SelectableTimeLinePane;
+import New.CustomControls.TimeLine.SelectableSegmentationPane;
 import New.Observables.ObservableSegmentation;
 import javafx.beans.binding.BooleanBinding;
-import javafx.beans.property.BooleanProperty;
 
 public class SelectableTimeLineController {
 
@@ -11,7 +10,7 @@ public class SelectableTimeLineController {
 
     public SelectableTimeLineController(ObservableSegmentation timeLine){ this.timeLine = timeLine; }
 
-    public void selectTimeLine(SelectableTimeLinePane timeLinePane){
+    public void selectTimeLine(SelectableSegmentationPane timeLinePane){
         timeLine.setSelectedTimeLine(timeLinePane);
     }
 

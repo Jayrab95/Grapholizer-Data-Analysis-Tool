@@ -1,10 +1,10 @@
 package New.Controllers;
 
 import New.CustomControls.Annotation.MutableSegmentRectangle;
-import New.CustomControls.TimeLine.CustomTimeLinePane;
+import New.CustomControls.TimeLine.CustomSegmentationPane;
 import New.CustomControls.Containers.TimeLineContainer;
 import New.CustomControls.Annotation.SegmentRectangle;
-import New.CustomControls.TimeLine.SelectableTimeLinePane;
+import New.CustomControls.TimeLine.SelectableSegmentationPane;
 import New.Execptions.NoTimeLineSelectedException;
 import New.Model.Entities.Segment;
 import New.Model.Entities.Topic;
@@ -34,7 +34,7 @@ public class CustomTimeLineController {
         parent.editTimeLine(observableTopicSet);
     }
 
-    public void removeTimeLine(CustomTimeLinePane timeLine){
+    public void removeTimeLine(CustomSegmentationPane timeLine){
         if(parent.removeTimeLine(timeLine)){
             //observableSegmentation.removeObserver(timeLine);
         }
@@ -193,7 +193,7 @@ public class CustomTimeLineController {
         page.removeAnnotation(observableTopicSet.getTopicSetID(), a.getSegment());
     }
 
-    public void filterSelect(SelectableTimeLinePane caller, Map<String, String> topicFilters, List<MutableSegmentRectangle> segments){
+    public void filterSelect(SelectableSegmentationPane caller, Map<String, String> topicFilters, List<MutableSegmentRectangle> segments){
         observableSegmentation.setSelectedTimeLine(caller);
         segments.stream()
                 .filter(s -> s.fitsCriteria(topicFilters))

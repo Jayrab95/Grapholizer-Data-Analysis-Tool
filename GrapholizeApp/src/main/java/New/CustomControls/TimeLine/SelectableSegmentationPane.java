@@ -16,12 +16,12 @@ import javafx.scene.shape.Rectangle;
 import java.util.*;
 import java.util.stream.Collectors;
 
-public abstract class SelectableTimeLinePane extends TimeLinePane {
+public abstract class SelectableSegmentationPane extends SegmentationPane {
 
     private SelectableTimeLineController selectableTimeLineController;
     private BooleanProperty timeLineSelectedProperty;
     protected Set<ObservableSegment> observableSegments;
-    private ObjectProperty<SelectableTimeLinePane> selectedTimeLine;
+    private ObjectProperty<SelectableSegmentationPane> selectedTimeLine;
 
     protected Light.Point anchor;
     protected Rectangle selection;
@@ -29,7 +29,7 @@ public abstract class SelectableTimeLinePane extends TimeLinePane {
 
     protected String selectedStyle = "-fx-padding: 10; -fx-border-style: solid inside; -fx-border-width: 2; -fx-border-insets: 5; -fx-border-radius: 5; -fx-background-color: palegreen";
 
-    protected SelectableTimeLinePane(double width, double height, DoubleProperty scaleProp, StringProperty name, TimeLineContainer parent, String id) {
+    protected SelectableSegmentationPane(double width, double height, DoubleProperty scaleProp, StringProperty name, TimeLineContainer parent, String id) {
         super(width, height, scaleProp, name, id);
         selectableTimeLineController = new SelectableTimeLineController(parent.getSelectedTimeLine());
         this.timeLineSelectedProperty = new SimpleBooleanProperty(false);

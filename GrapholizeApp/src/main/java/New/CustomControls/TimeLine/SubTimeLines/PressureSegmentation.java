@@ -1,18 +1,17 @@
 package New.CustomControls.TimeLine.SubTimeLines;
 
-import New.CustomControls.TimeLine.SelectableTimeLinePane;
+import New.CustomControls.TimeLine.SelectableSegmentationPane;
 import New.Model.Entities.Dot;
 import New.Observables.ObservablePage;
 
 import javafx.beans.property.DoubleProperty;
 import javafx.beans.property.StringProperty;
-import javafx.scene.shape.Line;
 
 import java.util.List;
 
-public class PressureTimeLine extends DetailTimeLine {
+public class PressureSegmentation extends DetailSegmentation {
 
-    public PressureTimeLine(double totalLength, double height, DoubleProperty scaleProp, StringProperty name, ObservablePage p, SelectableTimeLinePane parent, String topic) {
+    public PressureSegmentation(double totalLength, double height, DoubleProperty scaleProp, StringProperty name, ObservablePage p, SelectableSegmentationPane parent, String topic) {
         super(totalLength, height, scaleProp, name, p, topic);
         setUp();
     }

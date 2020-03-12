@@ -1,20 +1,16 @@
 package New.CustomControls.TimeLine.SubTimeLines;
 
 import New.Characteristics.CharacteristicVelocityAverage;
-import New.Characteristics.CharacteristicVelocityButteredAverage;
 import New.Model.Entities.Dot;
 import New.Observables.ObservablePage;
 import javafx.beans.property.DoubleProperty;
 import javafx.beans.property.StringProperty;
 
-import java.util.ArrayList;
-import java.util.Comparator;
-import java.util.List;
-import java.util.Optional;
+import java.util.*;
 
-public class VelocityButteredTimeLine extends DetailTimeLine {
+public class VelocitySegmentation extends DetailSegmentation {
 
-    public VelocityButteredTimeLine(double totalLength, double height, DoubleProperty scaleProp, StringProperty name, ObservablePage p, String topic) {
+    public VelocitySegmentation(double totalLength, double height, DoubleProperty scaleProp, StringProperty name, ObservablePage p, String topic) {
         super(totalLength, height, scaleProp, name, p, topic);
         setUp();
     }
@@ -25,7 +21,7 @@ public class VelocityButteredTimeLine extends DetailTimeLine {
 
         List<List<Double>> velocitySteps = new ArrayList<>();
         for(List<Dot> dotSection : dotSections){
-            velocitySteps.add(CharacteristicVelocityButteredAverage.getVelocitySteps(dotSection));
+            velocitySteps.add(CharacteristicVelocityAverage.getVelocitySteps(dotSection));
         }
 
         Optional<Double> maxVelocity = velocitySteps.stream()

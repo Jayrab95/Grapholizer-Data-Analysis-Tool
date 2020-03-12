@@ -1,14 +1,9 @@
 package New.Filters;
 
-import New.Model.Entities.Dot;
-import New.Observables.Observable;
 import New.Observables.ObservableDot;
 import New.Observables.ObservablePage;
 import New.Observables.ObservableStroke;
 import javafx.scene.paint.Color;
-
-import java.util.List;
-import java.util.stream.Collectors;
 
 public class StrokeColorFilter extends Filter {
     private Color[] colors;

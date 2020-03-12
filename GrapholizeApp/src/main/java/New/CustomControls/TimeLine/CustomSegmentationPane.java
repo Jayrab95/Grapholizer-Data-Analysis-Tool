@@ -27,7 +27,7 @@ import java.util.Optional;
 import java.util.Set;
 import java.util.stream.Collectors;
 
-public class CustomTimeLinePane extends SelectableTimeLinePane {
+public class CustomSegmentationPane extends SelectableSegmentationPane {
 
     public static final String TXT_COPYANNOTATION_TITLE = "Copy selected annotations";
     public static final String TXT_COPYANNOTATION_HEADER = "Copy selected annotations into this segmentation";
@@ -57,7 +57,7 @@ public class CustomTimeLinePane extends SelectableTimeLinePane {
     private CustomTimeLineController customTimeLineController;
     private ContextMenu contextMenu;
 
-    public CustomTimeLinePane(double width, double height, DoubleProperty scaleProp, ObservableTopicSet tag, ObservablePage observablePage, TimeLineContainer parent) {
+    public CustomSegmentationPane(double width, double height, DoubleProperty scaleProp, ObservableTopicSet tag, ObservablePage observablePage, TimeLineContainer parent) {
         super(width, height, scaleProp, tag.getNameProperty(), parent, tag.getTopicSetID());
         this.observableTopicSet = tag;
         customTimeLineController = new CustomTimeLineController(tag, observablePage, parent);
@@ -72,12 +72,12 @@ public class CustomTimeLinePane extends SelectableTimeLinePane {
 
     }
 
-    public CustomTimeLinePane(double width, double height, DoubleProperty scaleProp, ObservableTopicSet tag, ObservablePage observablePage, TimeLineContainer parent, Set<Segment> segments) {
+    public CustomSegmentationPane(double width, double height, DoubleProperty scaleProp, ObservableTopicSet tag, ObservablePage observablePage, TimeLineContainer parent, Set<Segment> segments) {
         this(width, height, scaleProp, tag, observablePage, parent);
         addAnnotations(segments);
     }
 
-    public CustomTimeLinePane(double width, double height, DoubleProperty scaleProp, ObservableTopicSet tag, ObservablePage observablePage, TimeLineContainer parent, Segment a) {
+    public CustomSegmentationPane(double width, double height, DoubleProperty scaleProp, ObservableTopicSet tag, ObservablePage observablePage, TimeLineContainer parent, Segment a) {
         this(width, height, scaleProp, tag, observablePage, parent);
         addAnnotation(a);
     }

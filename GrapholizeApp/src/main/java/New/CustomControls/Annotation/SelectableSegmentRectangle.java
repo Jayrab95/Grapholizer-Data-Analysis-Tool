@@ -1,7 +1,7 @@
 package New.CustomControls.Annotation;
 
 import New.Controllers.AnnotationSelectionController;
-import New.CustomControls.TimeLine.SelectableTimeLinePane;
+import New.CustomControls.TimeLine.SelectableSegmentationPane;
 import New.Interfaces.Selector;
 import New.Observables.ObservableSegment;
 import javafx.beans.property.*;
@@ -16,7 +16,7 @@ public class SelectableSegmentRectangle extends SegmentRectangle {
     private double temporaryPreviousStop;
 
 
-    public SelectableSegmentRectangle(ObjectProperty<Color> c, StringProperty toolTipTextProperty, StringProperty segmentLabelTextProperty, DoubleProperty scale, double width, double start, SelectableTimeLinePane parent, Selector s, ObservableSegment oSegment) {
+    public SelectableSegmentRectangle(ObjectProperty<Color> c, StringProperty toolTipTextProperty, StringProperty segmentLabelTextProperty, DoubleProperty scale, double width, double start, SelectableSegmentationPane parent, Selector s, ObservableSegment oSegment) {
         super(c, toolTipTextProperty, segmentLabelTextProperty, scale, width, parent.getHeight(), start);
 
         this.selected = new SimpleBooleanProperty(false);

@@ -3,10 +3,9 @@ package New.Observables;
 import New.CustomControls.Annotation.SegmentRectangle;
 import New.CustomControls.Annotation.MutableSegmentRectangle;
 import New.CustomControls.Annotation.SelectableSegmentRectangle;
-import New.CustomControls.TimeLine.CustomTimeLinePane;
-import New.CustomControls.TimeLine.SelectableTimeLinePane;
-import New.CustomControls.TimeLine.UnmodifiableSelectableTimeLinePane;
-import New.Execptions.NoTimeLineSelectedException;
+import New.CustomControls.TimeLine.CustomSegmentationPane;
+import New.CustomControls.TimeLine.SelectableSegmentationPane;
+import New.CustomControls.TimeLine.UnmodifiableSelectableSegmentationPane;
 import New.Model.Entities.Segment;
 import New.Model.Entities.Topic;
 import javafx.beans.property.ObjectProperty;
@@ -17,21 +16,21 @@ import java.util.stream.Collectors;
 
 public class ObservableSegmentation {
 
-    private ObjectProperty<SelectableTimeLinePane> selectedTimeLine;
+    private ObjectProperty<SelectableSegmentationPane> selectedTimeLine;
 
     public ObservableSegmentation(){
         this.selectedTimeLine = new SimpleObjectProperty<>();
     }
 
-    public ObservableSegmentation(SelectableTimeLinePane timeLine){
+    public ObservableSegmentation(SelectableSegmentationPane timeLine){
         this.selectedTimeLine = new SimpleObjectProperty<>(timeLine);
     }
 
-    public ObjectProperty<SelectableTimeLinePane> getSelectedTimeLineProperty(){
+    public ObjectProperty<SelectableSegmentationPane> getSelectedTimeLineProperty(){
         return this.selectedTimeLine;
     }
 
-    public SelectableTimeLinePane getSelectedTimeLine() {
+    public SelectableSegmentationPane getSelectedTimeLine() {
         return selectedTimeLine.get();
     }
 
@@ -66,7 +65,7 @@ public class ObservableSegmentation {
         return Set.of();
     }
 
-    public void setSelectedTimeLine(SelectableTimeLinePane timeLine){
+    public void setSelectedTimeLine(SelectableSegmentationPane timeLine){
         if(this.selectedTimeLine.get() != timeLine){
             this.selectedTimeLine.set(timeLine);
         }
@@ -79,16 +78,16 @@ public class ObservableSegmentation {
     public Optional<ObservableTopicSet> getSelectedSegmentationTopicSet(){
         //TODO: Unclean solution. Perhaps there needs to be some other class or interface that defines that the segmentationPane has a topic set
         // (Which is currently not a given if it is a selecteableSegmentationPane)
-        if(selectedTimeLine.get() instanceof CustomTimeLinePane){
-            return Optional.of(((CustomTimeLinePane)selectedTimeLine.get()).getObservableTopicSet());
+        if(selectedTimeLine.get() instanceof CustomSegmentationPane){
+            return Optional.of(((CustomSegmentationPane)selectedTimeLine.get()).getObservableTopicSet());
         }
-        else if(selectedTimeLine.get() instanceof UnmodifiableSelectableTimeLinePane){
-            return Optional.of(((UnmodifiableSelectableTimeLinePane)selectedTimeLine.get()).getObservableTopicSet());
+        else if(selectedTimeLine.get() instanceof UnmodifiableSelectableSegmentationPane){
+            return Optional.of(((UnmodifiableSelectableSegmentationPane)selectedTimeLine.get()).getObservableTopicSet());
         }
         return Optional.empty();
     }
 
-    public boolean equals(SelectableTimeLinePane timeLinePane){
+    public boolean equals(SelectableSegmentationPane timeLinePane){
         return selectedTimeLine.get() == timeLinePane;
     }
 
@@ -127,14 +126,14 @@ public class ObservableSegmentation {
     }
 
     public boolean selectedSegmentationIsCustom(){
-        return selectedTimeLine.get() instanceof CustomTimeLinePane;
+        return selectedTimeLine.get() instanceof CustomSegmentationPane;
     }
 
     public void deleteSelectedSegments(){
         if(selectedSegmentationIsCustom()){
             for(SegmentRectangle sr : getSelectedSegmentRectangles()){
                 MutableSegmentRectangle msr = (MutableSegmentRectangle)sr;
-                ((CustomTimeLinePane)selectedTimeLine.get()).deleteSegment(msr, msr.getObservableSegment());
+                ((CustomSegmentationPane)selectedTimeLine.get()).deleteSegment(msr, msr.getObservableSegment());
             }
 
         }

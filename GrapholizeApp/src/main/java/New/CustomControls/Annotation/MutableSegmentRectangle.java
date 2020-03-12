@@ -2,7 +2,7 @@ package New.CustomControls.Annotation;
 
 
 import New.Controllers.MutableSegmentController;
-import New.CustomControls.TimeLine.CustomTimeLinePane;
+import New.CustomControls.TimeLine.CustomSegmentationPane;
 import New.Dialogues.DialogControls.TopicTextControl;
 import New.Dialogues.SegmentDialog;
 import New.Interfaces.Selector;
@@ -33,7 +33,7 @@ public class MutableSegmentRectangle extends SelectableSegmentRectangle {
     private DragRectangle right;
 
 
-    public MutableSegmentRectangle(ObjectProperty<Color> c, DoubleProperty scale, ObservableSegment observableSegment, CustomTimeLinePane parent, Selector oPage, ObservableTopicSet set) {
+    public MutableSegmentRectangle(ObjectProperty<Color> c, DoubleProperty scale, ObservableSegment observableSegment, CustomSegmentationPane parent, Selector oPage, ObservableTopicSet set) {
         super(c, observableSegment.getToolTipTextProperty(), observableSegment.getMainTopicAnnotationProperty() , scale, observableSegment.getDuration(), observableSegment.getTimeStart(), parent, oPage, observableSegment);
 
         this.mutableSegmentController = new MutableSegmentController(observableSegment,parent);

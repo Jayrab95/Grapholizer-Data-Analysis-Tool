@@ -22,12 +22,14 @@ import java.util.List;
  * ObservableStroke is a wrapper fo the Stroke class that implements the Observable interface and can be assigned observers.
  * Additionally, the ObservableStroke is used for drawing and therefore manages the stroke color.
  * The Observers become notified if the selected property is changed or a filter is applied.
+ *
+ * Note: Currently, the class has become somewhat obsolete, as the original intention (being able to decorate and select
+ * strokes) has been nullified. Selection now only happens on dot level.
+ * The main purpose of the obserbale stroke now is to hold the observable dots
  */
 public class ObservableStroke{
 
     //region Private fields
-    //Idea: the strokes/Dots implement a method called draw. This way, they can be wrapped with different filters. => DEcorator DesignPattern
-    private List<StrokeObserver> observers;
     private List<ObservableDot> observableDots;
     private final Stroke stroke;
     private BooleanProperty selected;
@@ -43,24 +45,8 @@ public class ObservableStroke{
     private ObservableStroke(Stroke s){
         this.stroke = s;
         this.color = new SimpleObjectProperty<>(Color.BLACK);
-        this.observers = new ArrayList<>();
         this.selected = new SimpleBooleanProperty(false);
-        this.selected.addListener((observable, oldValue, newValue) -> {
-            if(oldValue != newValue){
-                notifyObservers();
-            }
-        });
         this.observableDots = generateObservableDots();
-    }
-
-    /**
-     * Constructor which wraps the given stroke and adds an initial observer to the observerList.
-     * @param s Stroke to be wrapped in this object
-     * @param o Initial Observer which should be added.
-     */
-    public ObservableStroke(Stroke s, StrokeObserver o){
-        this(s);
-        addObserver(o);
     }
 
     //Not sure if these are necessary yet, but they're nice to have.
@@ -69,10 +55,6 @@ public class ObservableStroke{
         this.color = new SimpleObjectProperty<>(c);
     }
 
-    public ObservableStroke(Stroke s, StrokeObserver o, Color c){
-        this(s, o);
-        this.color = new SimpleObjectProperty<>(c);
-    }
     //endregion
 
     //region Stroke Attribute getters
@@ -128,31 +110,12 @@ public class ObservableStroke{
     public void setSelected(boolean select){
         if(select != selected.get()){
             this.selected.set(select);
-            notifyObservers();
         }
     }
 
     public void toggleSelected(){
         this.selected.set(!selected.get());
-        notifyObservers();
     }
     //endregion
 
-    //region Observable logic
-
-    public void addObserver(StrokeObserver obs) {
-        observers.add(obs);
-    }
-
-    public void removeObserver(StrokeObserver obs) {
-        observers.remove(obs);
-    }
-
-
-    public void notifyObservers() {
-        for(StrokeObserver o : observers){
-            o.update(this);
-        }
-    }
-    //endregion
 }

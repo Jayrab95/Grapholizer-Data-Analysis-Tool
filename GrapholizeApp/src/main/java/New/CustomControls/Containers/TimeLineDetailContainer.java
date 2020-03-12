@@ -22,7 +22,7 @@ import java.util.List;
 
 public class TimeLineDetailContainer extends ScrollPane {
 
-    private SelectableTimeLinePane inspectedTimeLine;
+    private SelectableSegmentationPane inspectedTimeLine;
     private ScrollPane containerScroll;
     private ScrollPane timelineScrollPane;
     private VBox subTimelines;
@@ -33,8 +33,8 @@ public class TimeLineDetailContainer extends ScrollPane {
     ObservablePage activePage;
     DoubleProperty detailScale;
 
-    public TimeLineDetailContainer(TimeLinePane inspectedTimeLine, ObservablePage activePage){
-        this.inspectedTimeLine = (SelectableTimeLinePane)inspectedTimeLine;
+    public TimeLineDetailContainer(SegmentationPane inspectedTimeLine, ObservablePage activePage){
+        this.inspectedTimeLine = (SelectableSegmentationPane)inspectedTimeLine;
         this.activePage = activePage;
         this.setHbarPolicy(ScrollBarPolicy.NEVER);
         //Initialize Scaler;
@@ -89,14 +89,14 @@ public class TimeLineDetailContainer extends ScrollPane {
         subTimelineTags.add(new Label("Segments"),0, rowIndex);
         subTimelineTags.add(new Label("Maintopic"),1, rowIndex);
         subTimelineTags.getRowConstraints().add(new RowConstraints(inspectedTimeLine.getHeight()));
-        subTimelines.getChildren().add(new DetailSegmentTimeLine(
+        subTimelines.getChildren().add(new DetailSegmentSegmentation(
                 getLength(),
                 inspectedTimeLine.getHeight()
                 , detailScale,
                 new SimpleStringProperty("Segments"),
                 activePage,
                 inspectedTimeLine.getTopicSetID(),
-                inspectedTimeLine instanceof CustomTimeLinePane ? ((CustomTimeLinePane)inspectedTimeLine).getObservableTopicSet().getMainTopicID() : ""
+                inspectedTimeLine instanceof CustomSegmentationPane ? ((CustomSegmentationPane)inspectedTimeLine).getObservableTopicSet().getMainTopicID() : ""
         ));
     }
 
@@ -104,7 +104,7 @@ public class TimeLineDetailContainer extends ScrollPane {
         subTimelineTags.add(new Label("Strokes"),0, rowIndex);
         subTimelineTags.add(new Label("Milliseconds"),1, rowIndex);
         subTimelineTags.getRowConstraints().add(new RowConstraints(inspectedTimeLine.getHeight()));
-        subTimelines.getChildren().add(new DetailStrokesTimeLine(
+        subTimelines.getChildren().add(new DetailStrokesSegmentation(
                 getLength(),
                 inspectedTimeLine.getHeight()
                 , detailScale,
@@ -119,7 +119,7 @@ public class TimeLineDetailContainer extends ScrollPane {
         subTimelineTags.add(new Label("Pressure"),0, rowIndex);
         subTimelineTags.add(new Label("some Unit"),1, rowIndex);
         subTimelineTags.getRowConstraints().add(new RowConstraints(inspectedTimeLine.getHeight()));
-        subTimelines.getChildren().add(new PressureTimeLine(
+        subTimelines.getChildren().add(new PressureSegmentation(
                 getLength(),
                 inspectedTimeLine.getHeight(),
                 detailScale,
@@ -134,7 +134,7 @@ public class TimeLineDetailContainer extends ScrollPane {
          subTimelineTags.add(new Label("Velocity"),0, rowIndex);
          subTimelineTags.add(new Label("mm/ms"),1, rowIndex);
          subTimelineTags.getRowConstraints().add(new RowConstraints(inspectedTimeLine.getHeight()));
-         subTimelines.getChildren().add(new VelocityTimeLine(
+         subTimelines.getChildren().add(new VelocitySegmentation(
                 getLength(),
                 inspectedTimeLine.getHeight(),
                 detailScale,
@@ -146,7 +146,7 @@ public class TimeLineDetailContainer extends ScrollPane {
         subTimelineTags.add(new Label("Velocity Buttered"),0, rowIndex);
         subTimelineTags.add(new Label("mm/ms"),1, rowIndex);
         subTimelineTags.getRowConstraints().add(new RowConstraints(inspectedTimeLine.getHeight()));
-        subTimelines.getChildren().add(new VelocityButteredTimeLine(
+        subTimelines.getChildren().add(new VelocityButteredSegmentation(
                 getLength(),
                 inspectedTimeLine.getHeight(),
                 detailScale,
@@ -163,7 +163,7 @@ public class TimeLineDetailContainer extends ScrollPane {
             subTimelineTags.add(new Label(characteristic.getName()),0, rowPosition);
             subTimelineTags.add(new Label(characteristic.getUnitName()),1, rowPosition);
             subTimelineTags.getRowConstraints().add(new RowConstraints(inspectedTimeLine.getHeight()));
-            subTimelines.getChildren().add(new DetailCharacteristicTimeLine(
+            subTimelines.getChildren().add(new DetailCharacteristicSegmentation(
                     getLength(),
                     inspectedTimeLine.getHeight(),
                     detailScale,

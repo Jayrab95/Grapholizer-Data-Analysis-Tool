@@ -1,6 +1,6 @@
 package New.CustomControls.Containers;
 
-import New.CustomControls.TimeLine.TimeLinePane;
+import New.CustomControls.TimeLine.SegmentationPane;
 import New.Interfaces.Observer.Observer;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
@@ -10,7 +10,7 @@ import javafx.scene.layout.VBox;
 import java.util.List;
 
 public class TimeLineInformation extends VBox {
-    private TimeLinePane tl;
+    private SegmentationPane tl;
     private HBox hBox_ButtonsContainer;
     private VBox vBox_UpDownButtonContainer;
     private VBox vBox_EditButtons;
@@ -25,7 +25,7 @@ public class TimeLineInformation extends VBox {
     private List<Observer> observers;
 
 
-    public TimeLineInformation(TimeLinePane tl){
+    public TimeLineInformation(SegmentationPane tl){
         this.tl = tl;
 
         InitializeButtons();

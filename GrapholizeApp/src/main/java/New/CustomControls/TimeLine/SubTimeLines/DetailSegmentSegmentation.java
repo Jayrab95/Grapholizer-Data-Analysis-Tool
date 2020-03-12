@@ -6,11 +6,11 @@ import New.Observables.ObservablePage;
 import javafx.beans.property.*;
 import javafx.scene.paint.Color;
 
-public class DetailSegmentTimeLine extends DetailTimeLine {
+public class DetailSegmentSegmentation extends DetailSegmentation {
 
     private String mainTopicID;
 
-    public DetailSegmentTimeLine(double totalLength, double height, DoubleProperty scaleProp, StringProperty name, ObservablePage p, String topicSetID, String mainTopicID) {
+    public DetailSegmentSegmentation(double totalLength, double height, DoubleProperty scaleProp, StringProperty name, ObservablePage p, String topicSetID, String mainTopicID) {
         super(totalLength, height, scaleProp, name, p, topicSetID);
         this.mainTopicID = mainTopicID;
         setUp();

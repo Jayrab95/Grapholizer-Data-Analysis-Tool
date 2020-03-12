@@ -1,15 +1,15 @@
 package New.Controllers;
 
 import New.CustomControls.Annotation.SelectableSegmentRectangle;
-import New.CustomControls.TimeLine.SelectableTimeLinePane;
+import New.CustomControls.TimeLine.SelectableSegmentationPane;
 import New.Interfaces.Selector;
 
 public class AnnotationSelectionController {
 
-    private SelectableTimeLinePane parent;
+    private SelectableSegmentationPane parent;
     private Selector selector;
 
-    public AnnotationSelectionController(SelectableTimeLinePane parent, Selector s){
+    public AnnotationSelectionController(SelectableSegmentationPane parent, Selector s){
         this.parent = parent;
         this.selector = s;
     }

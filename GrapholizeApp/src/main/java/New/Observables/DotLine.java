@@ -69,7 +69,6 @@ public class DotLine  extends Line {
                     new Stop(0.799,lineColor.get()),
                     new Stop(0.8,Color.GREEN)));
         }
-
     }
 
     private void setCoordinates(double scale){

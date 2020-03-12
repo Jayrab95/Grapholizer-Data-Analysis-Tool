@@ -34,8 +34,8 @@ public class ObservableSegment implements Comparable<ObservableSegment> {
 
         this.mainTopicAnnotationProperty = new SimpleStringProperty(segment.getAnnotation(observableTopicSet.getMainTopicID()));
 
-        this.mainTopicIDProperty.addListener((observable, oldValue, newValue) ->
-                mainTopicAnnotationProperty.set(segment.getAnnotation(newValue))
+        this.mainTopicIDProperty.addListener( observable->
+                mainTopicAnnotationProperty.set(segment.getAnnotation(mainTopicIDProperty.get()))
         );
 
         this.observableList = FXCollections.unmodifiableObservableList(observableTopicSet.getTopicsObservableList());
@@ -135,9 +135,8 @@ public class ObservableSegment implements Comparable<ObservableSegment> {
         //segment.putAnnotation(topicID, annotation);
     }
 
-    private void removeAnnotation(String topicID){
+    public void removeAnnotation(String topicID){
         observableAnnotationMap.remove(topicID);
-        //segment.removeAnnotation(topicID);
     }
 
     public String getAnnotation(String topicID){
@@ -155,18 +154,8 @@ public class ObservableSegment implements Comparable<ObservableSegment> {
 
     //endregion
 
-    //region annotation accessors
     public double getDuration(){
         return segment.getDuration();
-    }
-    public boolean collidesWith(double otherTimeStart, double otherTimeStop){
-        return segment.collidesWith(otherTimeStart, otherTimeStop);
-    }
-    public boolean timeStampWithinTimeRange(double timeStamp){
-        return segment.timeStampWithinTimeRange(timeStamp);
-    }
-    public void move(double delta){
-        segment.move(delta);
     }
 
     public boolean fitsFilterCriteria(Map<String, String> topicFilters){
@@ -182,5 +171,4 @@ public class ObservableSegment implements Comparable<ObservableSegment> {
     public int compareTo(ObservableSegment o) {
         return Double.compare(getTimeStart(), o.getTimeStart());
     }
-    //endregion
 }

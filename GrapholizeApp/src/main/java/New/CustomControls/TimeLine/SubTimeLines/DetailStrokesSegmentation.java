@@ -2,10 +2,7 @@ package New.CustomControls.TimeLine.SubTimeLines;
 
 import New.CustomControls.Annotation.SegmentRectangle;
 import New.Model.Entities.Dot;
-import New.Model.Entities.Segment;
-import New.Model.Entities.Stroke;
 import New.Observables.ObservablePage;
-import New.util.PageUtil;
 import javafx.beans.property.DoubleProperty;
 import javafx.beans.property.SimpleObjectProperty;
 import javafx.beans.property.SimpleStringProperty;
@@ -14,8 +11,8 @@ import javafx.scene.paint.Color;
 
 import java.util.List;
 
-public class DetailStrokesTimeLine extends DetailTimeLine {
-    public DetailStrokesTimeLine(double totalLength, double height, DoubleProperty scaleProp, StringProperty name, ObservablePage p, String topicSetID) {
+public class DetailStrokesSegmentation extends DetailSegmentation {
+    public DetailStrokesSegmentation(double totalLength, double height, DoubleProperty scaleProp, StringProperty name, ObservablePage p, String topicSetID) {
         super(totalLength, height, scaleProp, name, p, topicSetID);
         setUp();
     }

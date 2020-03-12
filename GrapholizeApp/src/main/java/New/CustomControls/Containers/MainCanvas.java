@@ -1,6 +1,5 @@
 package New.CustomControls.Containers;
 
-import New.CustomControls.TimeLine.SelectableTimeLinePane;
 import New.Filters.*;
 import New.Interfaces.Observer.FilterObserver;
 import New.Interfaces.Observer.PageObserver;
@@ -10,7 +9,6 @@ import New.Observables.*;
 import javafx.beans.property.DoubleProperty;
 import javafx.beans.property.SimpleDoubleProperty;
 
-import javafx.beans.value.ChangeListener;
 import javafx.scene.Node;
 import javafx.scene.control.ScrollPane;
 import javafx.scene.control.Slider;
@@ -162,7 +160,8 @@ public class MainCanvas extends VBox implements PageObserver, StrokeObserver, Fi
 
     //Source: https://coderanch.com/t/689100/java/rectangle-dragging-image
     private void startSelection(MouseEvent event){
-        selector.deselectAll();
+        //selector.deselectAll();
+        //This forces all segmentRectangles to become unselected
         selectedTimeLine.setSelectedTimeLine(null);
         anchor.setX(event.getX());
         anchor.setY(event.getY());
