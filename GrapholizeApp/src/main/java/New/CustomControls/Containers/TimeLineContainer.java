@@ -21,7 +21,6 @@ import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.AnchorPane;
-import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
@@ -56,6 +55,8 @@ public class TimeLineContainer extends ScrollPane {
     private final static String TXT_TL_CREATION_ERROR_TITLE = "Timeline creation error";
     private final static String TXT_TL_CREATION_ERROR_HEADER = "Error while creating timeline";
     //endregion
+
+    //buisiness logic attributes
     private DoubleProperty totalWidth;
     private double timeLinesHeight = 50;
     private DoubleProperty scale;
@@ -64,7 +65,14 @@ public class TimeLineContainer extends ScrollPane {
     private ObservablePage p;
 
     private TimeLineContainerController timeLineContainerController;
+    //endregion buisiness logic
+    /**
+     * the hash-map ensures that segmentations and their widgets stay connected to each other
+     * for removal procedure
+     */
+    private HashMap<SegmentationPane,TimeLineInformation> segmentationWidgetLink = new HashMap<>();
 
+    //graphical attributes
     private ScrollPane timelineScrollPane = new ScrollPane();
     private VBox timeLineVBox = new VBox();
     private VBox timelineInfoVBox = new VBox();
@@ -78,6 +86,7 @@ public class TimeLineContainer extends ScrollPane {
     private Slider scaleSlider;
 
     private VBox mainContainer = new VBox();
+    //endregion graphical attributes
 
     public TimeLineContainer(ObservableProject project, ObservablePage page, double initialScale){
         this.p = page;
@@ -121,27 +130,6 @@ public class TimeLineContainer extends ScrollPane {
 
     }
 
-    private void InitializeTimelineScrollPane() {
-        timeLineVBox.setPadding(new Insets(0, 0, 0, 0));
-        timeLineVBox.setSpacing(10d);
-        timelineScrollPane.setHbarPolicy(ScrollPane.ScrollBarPolicy.ALWAYS);
-        timelineScrollPane.setVbarPolicy(ScrollPane.ScrollBarPolicy.NEVER);
-        timelineScrollPane.setContent(timeLineVBox);
-
-        timelineInfoVBox.setSpacing(10d);
-        timelineInfoVBox.setPadding(new Insets(50,0,0,10));
-        timelineInfoVBox.setMinSize(100,timeLinesHeight);
-    }
-
-
-    private void InitializeButtonHBox(){
-        createNewTimeLineButton = new Button("Create new timeline");
-        createNewTimeLineButton.setOnAction(event -> createNewTimeLine());
-        createNewTimeLineOutOfSelectedButton = new Button("Create new Timeline out of selected annotations");
-        createNewTimeLineOutOfSelectedButton.setOnAction(event -> handleCreateTLOutOfSelectedClick());
-        buttonHBox = new HBox(createNewTimeLineButton, createNewTimeLineOutOfSelectedButton);
-    }
-
     //TODO: Potential memory leak
     // Children are cleared but might still be listening to certain properties.
     private void InitializeContainer(ObservableProject project, ObservablePage page){
@@ -177,6 +165,27 @@ public class TimeLineContainer extends ScrollPane {
         System.gc();
     }
 
+    private void InitializeTimelineScrollPane() {
+        timeLineVBox.setPadding(new Insets(0, 0, 0, 0));
+        timeLineVBox.setSpacing(10d);
+        timelineScrollPane.setHbarPolicy(ScrollPane.ScrollBarPolicy.ALWAYS);
+        timelineScrollPane.setVbarPolicy(ScrollPane.ScrollBarPolicy.NEVER);
+        timelineScrollPane.setContent(timeLineVBox);
+
+        timelineInfoVBox.setSpacing(10d);
+        timelineInfoVBox.setPadding(new Insets(50,0,0,10));
+        timelineInfoVBox.setMinSize(100,timeLinesHeight);
+    }
+
+
+    private void InitializeButtonHBox(){
+        createNewTimeLineButton = new Button("Create new timeline");
+        createNewTimeLineButton.setOnAction(event -> createNewTimeLine());
+        createNewTimeLineOutOfSelectedButton = new Button("Create new Timeline out of selected annotations");
+        createNewTimeLineOutOfSelectedButton.setOnAction(event -> handleCreateTLOutOfSelectedClick());
+        buttonHBox = new HBox(createNewTimeLineButton, createNewTimeLineOutOfSelectedButton);
+    }
+
     private Slider initializeSlider(double initScale){
         Slider slider = new Slider(0.0d, 1, initScale);
         slider.setMajorTickUnit(0.05);
@@ -195,9 +204,11 @@ public class TimeLineContainer extends ScrollPane {
 
     private void addTimeLinePane(SegmentationPane segmentationPane){
         //Create new Toolbar for the Segmentation
-        timelineInfoVBox.getChildren().add(new TimeLineInformation(segmentationPane));
+        TimeLineInformation info = new TimeLineInformation(segmentationPane);
+        timelineInfoVBox.getChildren().add(info);
         //Add the actual timeline
         timeLineVBox.getChildren().add(segmentationPane);
+        segmentationWidgetLink.put(segmentationPane,info);
     }
 
     private void loadTimeLine(ObservableTopicSet t, ObservablePage p, Optional<Set<Segment>> annotations){
@@ -364,7 +375,8 @@ public class TimeLineContainer extends ScrollPane {
                 String.format(TXT_TL_DELETE_TEXT, timeLine.getTimeLineName())
         )){
             timeLineContainerController.removeTimeLine(timeLine.getTopicSetID());
-            mainContainer.getChildren().remove(timeLine);
+            timeLineVBox.getChildren().remove(timeLine);
+            timelineInfoVBox.getChildren().remove(segmentationWidgetLink.get(timeLine));
             return true;
         }
         return false;
@@ -457,11 +469,11 @@ public class TimeLineContainer extends ScrollPane {
         return dialog.showAndWait();
     }
 
-
     //region private classes
 
     private class TimeLineInformation extends VBox {
         private SegmentationPane tl;
+
         private HBox hBox_ButtonsContainer;
         private VBox vBox_UpDownButtonContainer;
         private VBox vBox_EditButtons;
@@ -509,7 +521,6 @@ public class TimeLineContainer extends ScrollPane {
             Button b = new Button("Detail view");
             b.setOnAction(event -> showDetailView());
 
-
             getChildren().addAll(lbl_timeLineName, b);
         }
 
@@ -521,7 +532,7 @@ public class TimeLineContainer extends ScrollPane {
         }
     }
 
-    private class TimeLineWrapper extends HBox{
+    /*private class TimeLineWrapper extends HBox{
         private final SegmentationPane tl;
         private final TimeLineInformation tli;
         TimeLineWrapper(SegmentationPane tl){
@@ -532,13 +543,13 @@ public class TimeLineContainer extends ScrollPane {
         }
         SegmentationPane getTimeLinePane(){return tl;}
         TimeLineInformation getTimelineInformation(){return tli;}
-    }
+    }*/
 
-    private class TopicCreationDialogResult {
+    /*private class TopicCreationDialogResult {
         String topicName;
         Color topicColor;
         public TopicCreationDialogResult(String name, Color color){this.topicName = name; this.topicColor = color;}
-    }
+    }*/
 
     private class AnnotationFilterDialogResult{
         String topic;
