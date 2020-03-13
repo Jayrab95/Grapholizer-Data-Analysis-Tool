@@ -70,7 +70,7 @@ public class TimeLineContainer extends ScrollPane {
      * the hash-map ensures that segmentations and their widgets stay connected to each other
      * for removal procedure
      */
-    private HashMap<SegmentationPane,TimeLineInformation> segmentationWidgetLink = new HashMap<>();
+    private HashMap<SegmentationPane, SegmentationInformation> segmentationWidgetLink = new HashMap<>();
 
     //graphical attributes
     private ScrollPane timelineScrollPane = new ScrollPane();
@@ -119,6 +119,7 @@ public class TimeLineContainer extends ScrollPane {
 
         //add everything to parent
         mainContainer = new VBox();
+
         mainContainer.setMaxWidth(800);
         mainContainer.getChildren().addAll(scaleSlider,buttonHBox,containerTimelinesHBox);
         this.setHbarPolicy(ScrollBarPolicy.NEVER);
@@ -159,7 +160,7 @@ public class TimeLineContainer extends ScrollPane {
         for(String topicSetID : project.getTopicSetIDs()){
             if(!topicSetID.equals(project.getStrokeSetID())){
                 ObservableTopicSet tag = project.getObservableTopicSet(topicSetID);
-                loadTimeLine(tag, page, page.getAnnotationSet(topicSetID));
+                loadSegmentation(tag, page, page.getAnnotationSet(topicSetID));
             }
         }
         System.gc();
@@ -180,7 +181,7 @@ public class TimeLineContainer extends ScrollPane {
 
     private void InitializeButtonHBox(){
         createNewTimeLineButton = new Button("Create new timeline");
-        createNewTimeLineButton.setOnAction(event -> createNewTimeLine());
+        createNewTimeLineButton.setOnAction(event -> createNewSegmentation());
         createNewTimeLineOutOfSelectedButton = new Button("Create new Timeline out of selected annotations");
         createNewTimeLineOutOfSelectedButton.setOnAction(event -> handleCreateTLOutOfSelectedClick());
         buttonHBox = new HBox(createNewTimeLineButton, createNewTimeLineOutOfSelectedButton);
@@ -204,26 +205,26 @@ public class TimeLineContainer extends ScrollPane {
 
     private void addTimeLinePane(SegmentationPane segmentationPane){
         //Create new Toolbar for the Segmentation
-        TimeLineInformation info = new TimeLineInformation(segmentationPane);
+        SegmentationInformation info = new SegmentationInformation(segmentationPane);
         timelineInfoVBox.getChildren().add(info);
         //Add the actual timeline
         timeLineVBox.getChildren().add(segmentationPane);
         segmentationWidgetLink.put(segmentationPane,info);
     }
 
-    private void loadTimeLine(ObservableTopicSet t, ObservablePage p, Optional<Set<Segment>> annotations){
+    private void loadSegmentation(ObservableTopicSet t, ObservablePage p, Optional<Set<Segment>> annotations){
         if(annotations.isPresent()){
             CustomSegmentationPane pane;
             pane = new CustomSegmentationPane(totalWidth.get(), timeLinesHeight, scale, t, p, this);
             addTimeLinePane(pane);
         }
         else{
-            addTimeLinePane(createNewTimeLinePane(t, p, false));
+            addTimeLinePane(createNewSegmentationPane(t, p, false));
         }
     }
 
 
-    public void createNewTimeLine(){
+    public void createNewSegmentation(){
         Optional<TopicSet> tag = createTopicSetDialog();
         Optional<FilterForSegmentsDialog.FilterDialogResult> filtered = Optional.empty();
         //TODO: Until filter has been reworked, this functionality is offline
@@ -249,25 +250,29 @@ public class TimeLineContainer extends ScrollPane {
             }
             else{
                 ObservableTopicSet newTag = timeLineContainerController.createNewTimeLineTag(tag.get());
-                SegmentationPane segmentationPane = createNewTimeLinePane(newTag, timeLineContainerController.getPage(),false);
+                SegmentationPane segmentationPane = createNewSegmentationPane(newTag, timeLineContainerController.getPage(),false);
                 addTimeLinePane(segmentationPane);
             }
         }
     }
 
-    public void createNewTimeLineOutOfSelectedElements() throws NoTimeLineSelectedException {
+    public void createNewSegmentationOutOfSelectedElements() throws NoTimeLineSelectedException {
         if(!selectedTimeLine.timeLineSelected()){
             throw new NoTimeLineSelectedException();
         }
         Optional<TopicSet> tag =createTopicSetDialog();
         if(tag.isPresent()){
             ObservableTopicSet newTag = timeLineContainerController.createNewTimeLineTag(tag.get());
-            SegmentationPane segmentationPane = createNewTimeLineTagOutOfSelected(newTag, timeLineContainerController.getPage());
+            SegmentationPane segmentationPane = createNewSegmentationTagOutOfSelected(newTag, timeLineContainerController.getPage());
             addTimeLinePane(segmentationPane);
         }
     }
 
-    public void createNegativeTimeLine(String originSetID){
+    /**
+     * Creates a segmentation, that is the negative image of the given topicset on all pages of the participant
+     * @param originSetID
+     */
+    public void createNegativeSegmentation(String originSetID){
         Optional<TopicSet> tag = createTopicSetDialog();
         if(tag.isPresent()){
             ObservableTopicSet newTag = timeLineContainerController.createNewTimeLineTag(tag.get());
@@ -276,26 +281,26 @@ public class TimeLineContainer extends ScrollPane {
         }
     }
 
-    public void createNewTimeLineOutOfSelectedDots() throws NoTimeLineSelectedException {
+    public void createNewSegmentationOutOfSelectedDots() throws NoTimeLineSelectedException {
         Optional<TopicSet> tag = createTopicSetDialog();
         if(tag.isPresent()){
             ObservableTopicSet newTag = timeLineContainerController.createNewTimeLineTag(tag.get());
-            SegmentationPane segmentationPane = createNewTimeLinePaneOutOfSelectedDots(newTag, timeLineContainerController.getPage());
+            SegmentationPane segmentationPane = createNewSegmentationPaneOutOfSelectedDots(newTag, timeLineContainerController.getPage());
             addTimeLinePane(segmentationPane);
         }
     }
 
-    public void createNewTimeLineOutOfFilteredAnnotations(){
+    /*public void createNewTimeLineOutOfFilteredAnnotations(){
         Optional<AnnotationFilterDialogResult> filter;
         Optional<TopicSet> tag = createTopicSetDialog();
         if(tag.isPresent()){
             ObservableTopicSet newTag = timeLineContainerController.createNewTimeLineTag(tag.get());
-            SegmentationPane segmentationPane = createNewTimeLinePaneOutOfSelectedDots(newTag, timeLineContainerController.getPage());
+            SegmentationPane segmentationPane = createNewSegmentationPaneOutOfSelectedDots(newTag, timeLineContainerController.getPage());
             addTimeLinePane(segmentationPane);
         }
-    }
+    }*/
 
-    public void createNewTimeLineOutOfSet(Set<Segment> a){
+    public void createNewSegmentationOutOfSet(Set<Segment> a){
         Optional<TopicSet> tag = createTopicSetDialog();
         if(tag.isPresent()){
             ObservableTopicSet newTag = timeLineContainerController.createNewTimeLineTag(tag.get());
@@ -306,7 +311,7 @@ public class TimeLineContainer extends ScrollPane {
 
 
 
-    private SegmentationPane createNewTimeLinePane(ObservableTopicSet tag, ObservablePage page, boolean copyFromSelected){
+    private SegmentationPane createNewSegmentationPane(ObservableTopicSet tag, ObservablePage page, boolean copyFromSelected){
         CustomSegmentationPane result;
         if(copyFromSelected){
             selectedTimeLine.getMissingTopics(tag).forEach(topic -> tag.addTopic(topic));
@@ -318,11 +323,11 @@ public class TimeLineContainer extends ScrollPane {
         return result;
     }
 
-    private SegmentationPane createNewTimeLineTagOutOfSelected(ObservableTopicSet newTimeLineTag, ObservablePage page){
-        return createNewTimeLinePane(newTimeLineTag, page, true);
+    private SegmentationPane createNewSegmentationTagOutOfSelected(ObservableTopicSet newTimeLineTag, ObservablePage page){
+        return createNewSegmentationPane(newTimeLineTag, page, true);
     }
 
-    private SegmentationPane createNewTimeLinePaneOutOfSelectedDots(ObservableTopicSet newTimeLineTag, ObservablePage page){
+    private SegmentationPane createNewSegmentationPaneOutOfSelectedDots(ObservableTopicSet newTimeLineTag, ObservablePage page){
         Set<Segment> segments = new TreeSet<>();
         for(List<ObservableDot> segment : page.getSelectedDotSections()){
             segments.add(new Segment(
@@ -341,7 +346,7 @@ public class TimeLineContainer extends ScrollPane {
         return new CustomSegmentationPane(timeLineContainerController.getPage().getDuration(), timeLinesHeight, scale, tag, page, this, segments);
     }
 
-    public void editTimeLine(ObservableTopicSet oldTag){
+    public void editSegmentation(ObservableTopicSet oldTag){
         Optional<TopicSet> tag = editDialog(oldTag);
         if (tag.isPresent()){
             timeLineContainerController.editTimeLineTag(oldTag, tag.get());
@@ -368,7 +373,7 @@ public class TimeLineContainer extends ScrollPane {
                 true);
     }
 
-    public boolean removeTimeLine(CustomSegmentationPane timeLine){
+    public boolean removeSegmentation(CustomSegmentationPane timeLine){
         if(DialogGenerator.confirmationDialogue(
                 TXT_TL_DELETE_TITLE,
                 TXT_TL_DELETE_HEADER,
@@ -384,7 +389,7 @@ public class TimeLineContainer extends ScrollPane {
 
     private void handleCreateTLOutOfSelectedClick(){
         try{
-            createNewTimeLineOutOfSelectedElements();
+            createNewSegmentationOutOfSelectedElements();
         }
         catch(NoTimeLineSelectedException ex){
             DialogGenerator.simpleErrorDialog(TXT_TL_CREATION_ERROR_TITLE, TXT_TL_CREATION_ERROR_HEADER, ex.toString());
@@ -471,7 +476,7 @@ public class TimeLineContainer extends ScrollPane {
 
     //region private classes
 
-    private class TimeLineInformation extends VBox {
+    private class SegmentationInformation extends VBox {
         private SegmentationPane tl;
 
         private HBox hBox_ButtonsContainer;
@@ -488,7 +493,7 @@ public class TimeLineContainer extends ScrollPane {
         private List<Observer> observers;
 
 
-        public TimeLineInformation(SegmentationPane tl){
+        public SegmentationInformation(SegmentationPane tl){
             this.tl = tl;
 
             InitializeButtons();

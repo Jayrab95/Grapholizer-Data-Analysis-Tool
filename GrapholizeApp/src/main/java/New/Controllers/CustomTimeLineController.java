@@ -31,11 +31,11 @@ public class CustomTimeLineController {
     }
 
     public void editTimeLine(){
-        parent.editTimeLine(observableTopicSet);
+        parent.editSegmentation(observableTopicSet);
     }
 
     public void removeTimeLine(CustomSegmentationPane timeLine){
-        if(parent.removeTimeLine(timeLine)){
+        if(parent.removeSegmentation(timeLine)){
             //observableSegmentation.removeObserver(timeLine);
         }
     }
@@ -157,28 +157,28 @@ public class CustomTimeLineController {
     }
 
     public void createNewTimeLine() throws NoTimeLineSelectedException {
-        parent.createNewTimeLineOutOfSelectedElements();
+        parent.createNewSegmentationOutOfSelectedElements();
     }
 
     public void createNewTimeLineOutOfSet(Set<Segment> set){
-        parent.createNewTimeLineOutOfSet(set);
+        parent.createNewSegmentationOutOfSet(set);
     }
 
     public void createNewTimeLine(Optional<Segment> combined, boolean selected) throws NoTimeLineSelectedException {
         if(combined.isPresent()){
-            parent.createNewTimeLineOutOfSet(Set.of(combined.get()));
+            parent.createNewSegmentationOutOfSet(Set.of(combined.get()));
         }
         else{
             if (selected) {
-                parent.createNewTimeLineOutOfSelectedElements();
+                parent.createNewSegmentationOutOfSelectedElements();
             } else {
-                parent.createNewTimeLineOutOfSelectedDots();
+                parent.createNewSegmentationOutOfSelectedDots();
             }
         }
     }
 
     public void createNegativeTimeLine(){
-        parent.createNegativeTimeLine(observableTopicSet.getTopicSetID());
+        parent.createNegativeSegmentation(observableTopicSet.getTopicSetID());
     }
 
     public Set<Segment> getNegativeSegmentsFromSelectedSegmentation() {
