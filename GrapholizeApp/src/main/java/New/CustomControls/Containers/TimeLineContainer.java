@@ -21,6 +21,7 @@ import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.AnchorPane;
+import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
@@ -65,15 +66,15 @@ public class TimeLineContainer extends VBox {
 
     private TimeLineContainerController timeLineContainerController;
 
-    private ScrollPane scrollPane_outer = new ScrollPane();
-    private VBox vBox_OuterScrollPane = new VBox();
-    private ScrollPane scrollPane_inner = new ScrollPane();
-    private VBox vBox_TimeLineBox = new VBox();
+    private ScrollPane timelineScrollPane = new ScrollPane();
+    private VBox timeLineVBox = new VBox();
+    private VBox timelineInfoVBox = new VBox();
+    private HBox containerTimelinesHBox = new HBox();
     private TimeUnitPane unitPane;
 
-    private Button btn_CreateNewTimeLine;
-    private Button btn_CreateNewTimeLineOutOfSelected;
-    private HBox hbox_buttonHBox;
+    private Button createNewTimeLineButton;
+    private Button createNewTimeLineOutOfSelectedButton;
+    private HBox buttonHBox;
 
     private Slider scaleSlider;
 
@@ -97,26 +98,27 @@ public class TimeLineContainer extends VBox {
         scaleSlider = initializeSlider(initialScale);
         scale.bind(scaleSlider.valueProperty());
 
-        vBox_TimeLineBox.setPadding(new Insets(5, 0, 10, 0));
-
-        scrollPane_inner.setHbarPolicy(ScrollPane.ScrollBarPolicy.NEVER);
-        scrollPane_inner.setVbarPolicy(ScrollPane.ScrollBarPolicy.ALWAYS);
-        scrollPane_inner.setContent(vBox_TimeLineBox);
+        timeLineVBox.setPadding(new Insets(5, 0, 10, 0));
+        timelineScrollPane.setHbarPolicy(ScrollPane.ScrollBarPolicy.ALWAYS);
+        timelineScrollPane.setVbarPolicy(ScrollPane.ScrollBarPolicy.NEVER);
+        timelineScrollPane.setContent(timeLineVBox);
 
         unitPane = new TimeUnitPane(scale,20,totalWidth);
-        unitPane.setPadding(new Insets(0,0,0,120));
-        vBox_OuterScrollPane.getChildren().add(unitPane);
-        vBox_OuterScrollPane.getChildren().add(scrollPane_inner);
+        timeLineVBox.getChildren().add(unitPane);
 
-        scrollPane_outer.setVbarPolicy(ScrollPane.ScrollBarPolicy.NEVER);
-        scrollPane_outer.setHbarPolicy(ScrollPane.ScrollBarPolicy.ALWAYS);
-        scrollPane_outer.setContent(vBox_OuterScrollPane);
+        containerTimelinesHBox.getChildren().addAll(timelineInfoVBox,timelineScrollPane);
 
         InitializeButtonHBox();
+        /*
+        //unitPane.setPadding(new Insets(0,0,0,120));
+        //vBox_OuterScrollPane.getChildren().add(unitPane);
+        //vBox_OuterScrollPane.getChildren().add(timelineScrollPane);
+        */
+
 
         getChildren().add(scaleSlider);
-        getChildren().add(hbox_buttonHBox);
-        getChildren().add(scrollPane_outer);
+        getChildren().add(buttonHBox);
+        getChildren().add(containerTimelinesHBox);
         InitializeContainer(project, page);
 
         this.setOnKeyPressed(event -> handleKeyStrokeEvent(event));
@@ -126,11 +128,11 @@ public class TimeLineContainer extends VBox {
 
 
     private void InitializeButtonHBox(){
-        btn_CreateNewTimeLine = new Button("Create new timeline");
-        btn_CreateNewTimeLine.setOnAction(event -> createNewTimeLine());
-        btn_CreateNewTimeLineOutOfSelected = new Button("Create new Timeline out of selected annotations");
-        btn_CreateNewTimeLineOutOfSelected.setOnAction(event -> handleCreateTLOutOfSelectedClick());
-        hbox_buttonHBox = new HBox(btn_CreateNewTimeLine, btn_CreateNewTimeLineOutOfSelected);
+        createNewTimeLineButton = new Button("Create new timeline");
+        createNewTimeLineButton.setOnAction(event -> createNewTimeLine());
+        createNewTimeLineOutOfSelectedButton = new Button("Create new Timeline out of selected annotations");
+        createNewTimeLineOutOfSelectedButton.setOnAction(event -> handleCreateTLOutOfSelectedClick());
+        buttonHBox = new HBox(createNewTimeLineButton, createNewTimeLineOutOfSelectedButton);
     }
 
     //TODO: Potential memory leak
@@ -144,7 +146,7 @@ public class TimeLineContainer extends VBox {
 
         totalWidth.set(page.getDuration());
         //unitPane = new TimeUnitPane(scale,20,totalWidth);
-        vBox_TimeLineBox.getChildren().clear();
+        timeLineVBox.getChildren().clear();
 
         //TODO: POtential memory leak: Do generated segments still listen to external proprty?
         UnmodifiableSelectableSegmentationPane strokePane = new UnmodifiableSelectableSegmentationPane(
@@ -164,9 +166,7 @@ public class TimeLineContainer extends VBox {
                 loadTimeLine(tag, page, page.getAnnotationSet(topicSetID));
             }
         }
-
         System.gc();
-        System.out.println("after  gc");
     }
 
     private Slider initializeSlider(double initScale){
@@ -186,7 +186,10 @@ public class TimeLineContainer extends VBox {
     }
 
     private void addTimeLinePane(SegmentationPane segmentationPane){
-        vBox_TimeLineBox.getChildren().add(new TimeLineWrapper(segmentationPane));
+        //Create new Toolbar for the Segmentation
+        timelineInfoVBox.getChildren().add(new TimeLineInformation(segmentationPane));
+        //Add the actual timeline
+        timeLineVBox.getChildren().add(segmentationPane);
     }
 
     private void loadTimeLine(ObservableTopicSet t, ObservablePage p, Optional<Set<Segment>> annotations){
@@ -319,16 +322,9 @@ public class TimeLineContainer extends VBox {
         return new CustomSegmentationPane(timeLineContainerController.getPage().getDuration(), timeLinesHeight, scale, tag, page, this, segments);
     }
 
-    private void addTimeLineToChildren(SegmentationPane timeline){
-        getChildren().remove(hbox_buttonHBox);
-        getChildren().add(timeline);
-        getChildren().add(hbox_buttonHBox);
-    }
-
     public void editTimeLine(ObservableTopicSet oldTag){
         Optional<TopicSet> tag = editDialog(oldTag);
         if (tag.isPresent()){
-
             timeLineContainerController.editTimeLineTag(oldTag, tag.get());
         }
     }
