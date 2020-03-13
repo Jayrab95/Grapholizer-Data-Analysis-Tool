@@ -29,7 +29,7 @@ import javafx.stage.Stage;
 
 import java.util.*;
 
-public class TimeLineContainer extends VBox {
+public class TimeLineContainer extends ScrollPane {
     //region static strings
     private final static String TXT_TL_CREATION_TITLE = "Create a new timeline";
     private final static String TXT_TL_CREATION_HEADER = "Creation of a new timeline";
@@ -56,7 +56,6 @@ public class TimeLineContainer extends VBox {
     private final static String TXT_TL_CREATION_ERROR_TITLE = "Timeline creation error";
     private final static String TXT_TL_CREATION_ERROR_HEADER = "Error while creating timeline";
     //endregion
-
     private DoubleProperty totalWidth;
     private double timeLinesHeight = 50;
     private DoubleProperty scale;
@@ -78,6 +77,8 @@ public class TimeLineContainer extends VBox {
 
     private Slider scaleSlider;
 
+    private VBox mainContainer = new VBox();
+
     public TimeLineContainer(ObservableProject project, ObservablePage page, double initialScale){
         this.p = page;
 
@@ -95,36 +96,41 @@ public class TimeLineContainer extends VBox {
         totalWidth = new SimpleDoubleProperty(page.getDuration());
         scale = new SimpleDoubleProperty(initialScale);
 
+        //Initialize Scale Slider
         scaleSlider = initializeSlider(initialScale);
         scale.bind(scaleSlider.valueProperty());
-
-        timeLineVBox.setPadding(new Insets(5, 0, 10, 0));
-        timelineScrollPane.setHbarPolicy(ScrollPane.ScrollBarPolicy.ALWAYS);
-        timelineScrollPane.setVbarPolicy(ScrollPane.ScrollBarPolicy.NEVER);
-        timelineScrollPane.setContent(timeLineVBox);
-
+        //Units for timeline
         unitPane = new TimeUnitPane(scale,20,totalWidth);
-        timeLineVBox.getChildren().add(unitPane);
+
+        InitializeTimelineScrollPane();
+
+        InitializeButtonHBox();
 
         containerTimelinesHBox.getChildren().addAll(timelineInfoVBox,timelineScrollPane);
 
-        InitializeButtonHBox();
-        /*
-        //unitPane.setPadding(new Insets(0,0,0,120));
-        //vBox_OuterScrollPane.getChildren().add(unitPane);
-        //vBox_OuterScrollPane.getChildren().add(timelineScrollPane);
-        */
+        //add everything to parent
+        mainContainer = new VBox();
+        mainContainer.setMaxWidth(800);
+        mainContainer.getChildren().addAll(scaleSlider,buttonHBox,containerTimelinesHBox);
+        this.setHbarPolicy(ScrollBarPolicy.NEVER);
+        this.setContent(mainContainer);
 
-
-        getChildren().add(scaleSlider);
-        getChildren().add(buttonHBox);
-        getChildren().add(containerTimelinesHBox);
         InitializeContainer(project, page);
 
         this.setOnKeyPressed(event -> handleKeyStrokeEvent(event));
 
     }
 
+    private void InitializeTimelineScrollPane() {
+        timeLineVBox.setMargin(new Insets(20, 0, 0, 0));
+        timeLineVBox.setSpacing(10d);
+        timelineScrollPane.setHbarPolicy(ScrollPane.ScrollBarPolicy.ALWAYS);
+        timelineScrollPane.setVbarPolicy(ScrollPane.ScrollBarPolicy.NEVER);
+        timelineScrollPane.setContent(timeLineVBox);
+
+        timelineInfoVBox.setSpacing(10d);
+        timelineInfoVBox.setMinSize(100,timeLinesHeight);
+    }
 
 
     private void InitializeButtonHBox(){
@@ -147,7 +153,8 @@ public class TimeLineContainer extends VBox {
         totalWidth.set(page.getDuration());
         //unitPane = new TimeUnitPane(scale,20,totalWidth);
         timeLineVBox.getChildren().clear();
-
+        timelineInfoVBox.getChildren().clear();
+        timeLineVBox.getChildren().add(unitPane);
         //TODO: POtential memory leak: Do generated segments still listen to external proprty?
         UnmodifiableSelectableSegmentationPane strokePane = new UnmodifiableSelectableSegmentationPane(
                 totalWidth.get(),
@@ -157,8 +164,8 @@ public class TimeLineContainer extends VBox {
                 page,
                 this
         );
-        addTimeLinePane(strokePane);
 
+        addTimeLinePane(strokePane);
 
         for(String topicSetID : project.getTopicSetIDs()){
             if(!topicSetID.equals(project.getStrokeSetID())){
@@ -356,7 +363,7 @@ public class TimeLineContainer extends VBox {
                 String.format(TXT_TL_DELETE_TEXT, timeLine.getTimeLineName())
         )){
             timeLineContainerController.removeTimeLine(timeLine.getTopicSetID());
-            getChildren().remove(timeLine);
+            mainContainer.getChildren().remove(timeLine);
             return true;
         }
         return false;
