@@ -122,13 +122,14 @@ public class TimeLineContainer extends ScrollPane {
     }
 
     private void InitializeTimelineScrollPane() {
-        timeLineVBox.setMargin(new Insets(20, 0, 0, 0));
+        timeLineVBox.setPadding(new Insets(0, 0, 0, 0));
         timeLineVBox.setSpacing(10d);
         timelineScrollPane.setHbarPolicy(ScrollPane.ScrollBarPolicy.ALWAYS);
         timelineScrollPane.setVbarPolicy(ScrollPane.ScrollBarPolicy.NEVER);
         timelineScrollPane.setContent(timeLineVBox);
 
         timelineInfoVBox.setSpacing(10d);
+        timelineInfoVBox.setPadding(new Insets(50,0,0,10));
         timelineInfoVBox.setMinSize(100,timeLinesHeight);
     }
 
@@ -482,7 +483,7 @@ public class TimeLineContainer extends ScrollPane {
             setUpLabel();
             setupTimeLineInformation();
 
-            setPrefWidth(120);
+            setMinHeight(timeLinesHeight);
             setMaxWidth(120);
         }
 
