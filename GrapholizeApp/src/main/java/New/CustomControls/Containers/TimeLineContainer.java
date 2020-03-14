@@ -185,6 +185,7 @@ public class TimeLineContainer extends ScrollPane {
         createNewTimeLineOutOfSelectedButton = new Button("Create new Timeline out of selected annotations");
         createNewTimeLineOutOfSelectedButton.setOnAction(event -> handleCreateTLOutOfSelectedClick());
         buttonHBox = new HBox(createNewTimeLineButton, createNewTimeLineOutOfSelectedButton);
+        buttonHBox.setSpacing(10d);
     }
 
     private Slider initializeSlider(double initScale){
@@ -281,6 +282,10 @@ public class TimeLineContainer extends ScrollPane {
         }
     }
 
+    /**
+     * Creates a a segmentation from the selected canvas dots (Observable dots with Property selected = true)
+     * @throws NoTimeLineSelectedException
+     */
     public void createNewSegmentationOutOfSelectedDots() throws NoTimeLineSelectedException {
         Optional<TopicSet> tag = createTopicSetDialog();
         if(tag.isPresent()){
