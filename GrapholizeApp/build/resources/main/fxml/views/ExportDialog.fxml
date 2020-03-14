@@ -1,0 +1,158 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.ListView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.ColumnConstraints?>
+<?import javafx.scene.layout.GridPane?>
+<?import javafx.scene.layout.RowConstraints?>
+
+<AnchorPane prefHeight="450.0" prefWidth="900.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="New.Dialogues.CSVExportDialog">
+   <padding>
+      <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+   </padding>
+   <children>
+      <GridPane layoutX="10.0" layoutY="15.0" prefHeight="336.0" prefWidth="862.0">
+        <columnConstraints>
+            <ColumnConstraints hgrow="SOMETIMES" maxWidth="115.2" minWidth="10.0" prefWidth="113.59999389648438" />
+          <ColumnConstraints hgrow="SOMETIMES" maxWidth="128.800048828125" minWidth="10.0" prefWidth="119.20000610351563" />
+          <ColumnConstraints hgrow="SOMETIMES" maxWidth="140.0" minWidth="10.0" prefWidth="119.199951171875" />
+            <ColumnConstraints hgrow="SOMETIMES" maxWidth="167.99998779296874" minWidth="10.0" prefWidth="131.19998168945312" />
+            <ColumnConstraints hgrow="SOMETIMES" maxWidth="203.20001220703125" minWidth="10.0" prefWidth="189.60001831054694" />
+            <ColumnConstraints hgrow="SOMETIMES" maxWidth="179.1999389648438" minWidth="10.0" prefWidth="179.1999389648438" />
+        </columnConstraints>
+        <rowConstraints>
+          <RowConstraints maxHeight="87.99999389648437" minHeight="2.400002861022955" prefHeight="26.400014495849604" vgrow="SOMETIMES" />
+          <RowConstraints maxHeight="279.99999771118166" minHeight="10.0" prefHeight="234.4000244140625" vgrow="SOMETIMES" />
+          <RowConstraints maxHeight="73.40001220703124" minHeight="7.199951171875" prefHeight="67.79997558593749" vgrow="SOMETIMES" />
+        </rowConstraints>
+         <children>
+            <ListView fx:id="view_participantsID" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" prefHeight="200.0" prefWidth="100.0" GridPane.rowIndex="1">
+               <padding>
+                  <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+               </padding>
+            </ListView>
+            <ListView fx:id="selection_participantsID" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" prefHeight="200.0" prefWidth="100.0" GridPane.columnIndex="1" GridPane.rowIndex="1">
+               <GridPane.margin>
+                  <Insets />
+               </GridPane.margin></ListView>
+            <ListView fx:id="view_timelineTopics" prefHeight="238.0" prefWidth="142.0" GridPane.columnIndex="2" GridPane.rowIndex="1" />
+            <ListView fx:id="selection_timelineTopics" prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="3" GridPane.rowIndex="1">
+               <GridPane.margin>
+                  <Insets />
+               </GridPane.margin></ListView>
+            <ListView fx:id="view_characteristics" prefHeight="245.0" prefWidth="300.0" GridPane.columnIndex="4" GridPane.rowIndex="1" />
+            <ListView fx:id="selection_characteristics" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" prefHeight="238.0" prefWidth="174.0" GridPane.columnIndex="5" GridPane.rowIndex="1" />
+            <Label GridPane.columnIndex="1" />
+            <Label text="Segm Superset" GridPane.columnIndex="2" />
+            <Label GridPane.columnIndex="4" />
+            <Label prefHeight="18.0" prefWidth="109.0" text="Participant" />
+            <Label text="Characteristic " GridPane.columnIndex="4" />
+            <GridPane GridPane.rowIndex="2">
+              <columnConstraints>
+                <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="150.0" />
+                <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+              </columnConstraints>
+              <rowConstraints>
+                <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                  <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+              </rowConstraints>
+               <children>
+                  <Button mnemonicParsing="false" onAction="#selectParticipant" text="Select" />
+                  <Button mnemonicParsing="false" onAction="#selectAllParticipants" text="Select All" GridPane.rowIndex="1" />
+               </children>
+            </GridPane>
+            <GridPane GridPane.columnIndex="1" GridPane.rowIndex="2">
+              <columnConstraints>
+                <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="160.0" />
+                <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+              </columnConstraints>
+              <rowConstraints>
+                  <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+              </rowConstraints>
+               <children>
+                  <Button mnemonicParsing="false" onAction="#deselectParticipant" text="Deselect" />
+                  <Button mnemonicParsing="false" onAction="#deselectAllParticipants" text="Deselect All" GridPane.rowIndex="1" />
+               </children>
+            </GridPane>
+            <GridPane prefHeight="90.0" prefWidth="98.0" GridPane.columnIndex="2" GridPane.rowIndex="2">
+              <columnConstraints>
+                <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="150.0" />
+                <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+              </columnConstraints>
+              <rowConstraints>
+                <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                  <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+              </rowConstraints>
+               <children>
+                  <Button mnemonicParsing="false" onAction="#selectTopic" text="Select" />
+                  <Button mnemonicParsing="false" onAction="#selectAllTopics" text="Select All" GridPane.rowIndex="1" />
+               </children>
+            </GridPane>
+            <GridPane GridPane.columnIndex="3" GridPane.rowIndex="2">
+              <columnConstraints>
+                <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="160.0" />
+                <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+              </columnConstraints>
+              <rowConstraints>
+                <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                  <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+              </rowConstraints>
+               <children>
+                  <Button mnemonicParsing="false" onAction="#deselectTopic" text="Deselect" />
+                  <Button mnemonicParsing="false" onAction="#deselectAllTopics" text="Deselect All" GridPane.rowIndex="1" />
+               </children>
+            </GridPane>
+            <GridPane GridPane.columnIndex="4" GridPane.rowIndex="2">
+              <columnConstraints>
+                <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="150.0" />
+                <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+              </columnConstraints>
+              <rowConstraints>
+                <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                  <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+              </rowConstraints>
+               <children>
+                  <Button mnemonicParsing="false" onAction="#selectCharacteristic" text="Select" />
+                  <Button mnemonicParsing="false" onAction="#selectAllCharacteristic" text="Select All" GridPane.rowIndex="1" />
+               </children>
+            </GridPane>
+            <GridPane GridPane.columnIndex="5" GridPane.rowIndex="2">
+              <columnConstraints>
+                <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="160.0" />
+                <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+              </columnConstraints>
+              <rowConstraints>
+                  <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+              </rowConstraints>
+               <children>
+                  <Button mnemonicParsing="false" onAction="#deselectCharacteristic" text="Deselect" />
+                  <Button mnemonicParsing="false" onAction="#deselectAllCharacteristic" text="Deselect All" GridPane.rowIndex="1" />
+               </children>
+            </GridPane>
+            <Label text="Selection" GridPane.columnIndex="3" />
+            <Label text="Selection" GridPane.columnIndex="1" />
+            <Label text="Selection" GridPane.columnIndex="5" />
+         </children>
+      </GridPane>
+      <GridPane layoutX="13.0" layoutY="380.0" prefHeight="60.0" prefWidth="835.0">
+        <columnConstraints>
+          <ColumnConstraints hgrow="SOMETIMES" maxWidth="673.1999816894531" minWidth="10.0" prefWidth="673.1999816894531" />
+          <ColumnConstraints hgrow="SOMETIMES" maxWidth="410.800048828125" minWidth="10.0" prefWidth="162.80001831054688" />
+        </columnConstraints>
+        <rowConstraints>
+            <RowConstraints maxHeight="28.7999755859375" minHeight="3.8000244140624986" prefHeight="21.59996337890625" vgrow="SOMETIMES" />
+            <RowConstraints maxHeight="30.9999755859375" minHeight="0.0" prefHeight="13.600036621093754" vgrow="SOMETIMES" />
+        </rowConstraints>
+         <children>
+            <Button mnemonicParsing="false" onAction="#exportAction" text="Export" GridPane.columnIndex="1" GridPane.halignment="RIGHT" GridPane.rowIndex="1" />
+            <Button mnemonicParsing="false" onAction="#cancelAction" text="Cancel" GridPane.rowIndex="1" />
+            <Label prefHeight="18.0" prefWidth="492.0" text="Select and deselect the Participants, Supersets and Characteristic that should be exported" />
+         </children>
+      </GridPane>
+   </children>
+</AnchorPane>
