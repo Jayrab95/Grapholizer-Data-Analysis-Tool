@@ -2,11 +2,8 @@ package New.Scenes;
 
 import New.Controllers.MainSceneController;
 import New.util.DialogGenerator;
-import New.util.datagenerator.CircleGenerator;
-import New.util.datagenerator.DataGenerator;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
-import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
 
