@@ -28,7 +28,7 @@ import javafx.stage.Stage;
 
 import java.util.*;
 
-public class TimeLineContainer extends ScrollPane {
+public class TimeLineContainer extends VBox {
     //region static strings
     private final static String TXT_TL_CREATION_TITLE = "Create a new timeline";
     private final static String TXT_TL_CREATION_HEADER = "Creation of a new timeline";
@@ -73,7 +73,8 @@ public class TimeLineContainer extends ScrollPane {
     private HashMap<SegmentationPane, SegmentationInformation> segmentationWidgetLink = new HashMap<>();
 
     //graphical attributes
-    private ScrollPane timelineScrollPane = new ScrollPane();
+    private ScrollPane verticalScrollPane = new ScrollPane();
+    private ScrollPane horizontalScrollPane = new ScrollPane();
     private VBox timeLineVBox = new VBox();
     private VBox timelineInfoVBox = new VBox();
     private HBox containerTimelinesHBox = new HBox();
@@ -115,16 +116,16 @@ public class TimeLineContainer extends ScrollPane {
 
         InitializeButtonHBox();
 
-        containerTimelinesHBox.getChildren().addAll(timelineInfoVBox,timelineScrollPane);
+        containerTimelinesHBox.getChildren().addAll(timelineInfoVBox, verticalScrollPane);
 
         //add everything to parent
-        mainContainer = new VBox();
-
         mainContainer.setMaxWidth(800);
-        mainContainer.getChildren().addAll(scaleSlider,buttonHBox,containerTimelinesHBox);
-        this.setHbarPolicy(ScrollBarPolicy.NEVER);
-        this.setContent(mainContainer);
-
+        mainContainer.setSpacing(10d);
+        //mainContainer.getChildren().addAll(scaleSlider,buttonHBox,containerTimelinesHBox);
+        horizontalScrollPane.setHbarPolicy(ScrollPane.ScrollBarPolicy.NEVER);
+        horizontalScrollPane.setContent(containerTimelinesHBox);
+        mainContainer.getChildren().addAll(scaleSlider,buttonHBox,horizontalScrollPane);
+        this.getChildren().add(mainContainer);
         InitializeContainer(project, page);
 
         this.setOnKeyPressed(event -> handleKeyStrokeEvent(event));
@@ -169,9 +170,10 @@ public class TimeLineContainer extends ScrollPane {
     private void InitializeTimelineScrollPane() {
         timeLineVBox.setPadding(new Insets(0, 0, 0, 0));
         timeLineVBox.setSpacing(10d);
-        timelineScrollPane.setHbarPolicy(ScrollPane.ScrollBarPolicy.ALWAYS);
-        timelineScrollPane.setVbarPolicy(ScrollPane.ScrollBarPolicy.NEVER);
-        timelineScrollPane.setContent(timeLineVBox);
+        verticalScrollPane.setHbarPolicy(ScrollPane.ScrollBarPolicy.ALWAYS);
+        verticalScrollPane.setVbarPolicy(ScrollPane.ScrollBarPolicy.NEVER);
+        verticalScrollPane.setMaxWidth(800);
+        verticalScrollPane.setContent(timeLineVBox);
 
         timelineInfoVBox.setSpacing(10d);
         timelineInfoVBox.setPadding(new Insets(50,0,0,10));
