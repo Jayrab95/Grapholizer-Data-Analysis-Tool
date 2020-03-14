@@ -58,10 +58,10 @@ public class TimeLineContainer extends VBox {
 
     //buisiness logic attributes
     private DoubleProperty totalWidth;
-    private double TIMELINES_HEIGHT = 50;
-    private double SEGMENTATION_BOX_WIDTH = 900;
-    private double TIMEUNITPANE_HEIGHT = 20;
-    private double DEFAULT_ELEMENT_SPACING = 10;
+    private final static double TIMELINES_HEIGHT = 50;
+    private final static double SEGMENTATION_BOX_WIDTH = 900;
+    private final static double TIMEUNITPANE_HEIGHT = 20;
+    private final static double DEFAULT_ELEMENT_SPACING = 10;
 
 
     private DoubleProperty scale;
