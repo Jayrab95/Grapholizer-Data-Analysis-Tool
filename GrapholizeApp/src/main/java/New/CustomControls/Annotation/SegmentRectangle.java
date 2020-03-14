@@ -22,6 +22,10 @@ public class SegmentRectangle extends Rectangle implements Comparable<SegmentRec
     protected Label displayedText;
     protected Tooltip tooltip;
 
+    //protected String defaultStyle = "-fx-border-style: solid inside; -fx-border-width: 2; -fx-background-color: rgb(%f, %f, %f)";
+    //protected String defaultStyle = "-fx-padding: 10; -fx-border-style: solid inside; -fx-border-width: 2; -fx-border-insets: 5; -fx-border-radius: 5; -fx-background-color: palegreen";
+    //protected String selectedStyle = "-fx-border-style: solid inside; -fx-border-width: 2; -fx-border-color: green -fx-background-color: rgb(%f, %f, %f)";
+
     public SegmentRectangle(ObjectProperty<Color> c, StringProperty toolTipTextProperty, StringProperty labelTextProperty, DoubleProperty scaleProperty, double width, double height, double start){
         this.segmentColorProperty = new SimpleObjectProperty<>(c.get());
         this.segmentColorProperty.bind(c);
@@ -60,6 +64,7 @@ public class SegmentRectangle extends Rectangle implements Comparable<SegmentRec
 
         if(this.getWidth() > 0) {
             setFill(c.get());
+            setStroke(Color.BLACK);
         }
     }
 

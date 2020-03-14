@@ -71,12 +71,16 @@ public class SelectableSegmentRectangle extends SegmentRectangle {
 
     private void onSelectionChange(){
         if (selected.get()) {
+            System.out.println("SelChange");
+            System.out.println(getStrokeWidth());
             setStroke(Color.GREEN);
             setStrokeWidth(5);
             selectableSegmentController.selectDots(getTimeStart(), getTimeStop());
         }
         else {
-            setStroke(null);
+            setStroke(Color.BLACK);
+            setStrokeWidth(1);
+
             selectableSegmentController.deselectDots(getTimeStart(), getTimeStop());
         }
     }
