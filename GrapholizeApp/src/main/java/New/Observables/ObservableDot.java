@@ -45,15 +45,6 @@ public class ObservableDot extends Dot implements Comparable<Dot>{
 
     @Override
     public int compareTo(Dot o) {
-        long res = this.getTimeStamp() - o.getTimeStamp();
-        if(res > Integer.MAX_VALUE){
-            return Integer.MAX_VALUE;
-        }
-        else if(res < Integer.MIN_VALUE){
-            return Integer.MIN_VALUE;
-        }
-        else{
-            return (int)res;
-        }
+        return Long.compare(this.getTimeStamp(), o.getTimeStamp());
     }
 }
