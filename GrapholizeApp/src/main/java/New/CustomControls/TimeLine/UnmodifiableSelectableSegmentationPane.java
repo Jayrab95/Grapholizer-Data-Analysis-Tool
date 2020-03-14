@@ -1,7 +1,7 @@
 package New.CustomControls.TimeLine;
 
 import New.CustomControls.Annotation.SelectableSegmentRectangle;
-import New.CustomControls.Containers.TimeLineContainer;
+import New.CustomControls.Containers.SegmentationContainer;
 import New.Model.Entities.Segment;
 import New.Observables.ObservablePage;
 import New.Observables.ObservableSegment;
@@ -14,7 +14,7 @@ import java.util.Set;
 public class UnmodifiableSelectableSegmentationPane extends SelectableSegmentationPane {
 
     private ObservableSuperSet observableSuperSet;
-    public UnmodifiableSelectableSegmentationPane(double width, double height, DoubleProperty scaleProp, ObservableSuperSet observableSuperSet, ObservablePage oPage, TimeLineContainer parent) {
+    public UnmodifiableSelectableSegmentationPane(double width, double height, DoubleProperty scaleProp, ObservableSuperSet observableSuperSet, ObservablePage oPage, SegmentationContainer parent) {
         super(width, height, scaleProp, observableSuperSet.getNameProperty(), parent, observableSuperSet.getTopicSetID());
         this.observableSuperSet = observableSuperSet;
         setUp(oPage.getAnnotationSet(observableSuperSet.getTopicSetID()), oPage);

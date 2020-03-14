@@ -4,11 +4,11 @@ import New.CustomControls.TimeLine.SelectableSegmentationPane;
 import New.Observables.ObservableSegmentation;
 import javafx.beans.binding.BooleanBinding;
 
-public class SelectableTimeLineController {
+public class SelectableSegmentationController {
 
     ObservableSegmentation timeLine;
 
-    public SelectableTimeLineController(ObservableSegmentation timeLine){ this.timeLine = timeLine; }
+    public SelectableSegmentationController(ObservableSegmentation timeLine){ this.timeLine = timeLine; }
 
     public void selectTimeLine(SelectableSegmentationPane timeLinePane){
         timeLine.setSelectedTimeLine(timeLinePane);

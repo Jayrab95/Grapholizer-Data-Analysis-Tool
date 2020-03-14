@@ -5,9 +5,9 @@ import javafx.geometry.Insets;
 import javafx.scene.control.Label;
 import javafx.scene.layout.HBox;
 
-public class SimpleTimeLineWrapper extends HBox {
+public class SimpleSegmentationWrapper extends HBox {
     private final SegmentationPane tl;
-    public SimpleTimeLineWrapper(SegmentationPane tl){
+    public SimpleSegmentationWrapper(SegmentationPane tl){
         this.tl = tl;
         Label  l =new Label(tl.getTimeLineName());
         l.setMinWidth(150);

@@ -14,12 +14,12 @@ import java.util.List;
 import java.util.Set;
 import java.util.stream.Collectors;
 
-public class TimeLineContainerController {
+public class SegmentationContainerController {
 
     private ObservableProject project;
     private ObservablePage page;
 
-    public TimeLineContainerController(ObservableProject project, ObservablePage page){
+    public SegmentationContainerController(ObservableProject project, ObservablePage page){
         this.project = project;
         this.page = page;
     }

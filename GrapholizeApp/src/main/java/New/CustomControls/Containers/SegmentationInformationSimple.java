@@ -2,5 +2,5 @@ package New.CustomControls.Containers;
 
 import javafx.scene.layout.VBox;
 
-public class TimeLineInformationSimple extends VBox {
+public class SegmentationInformationSimple extends VBox {
 }

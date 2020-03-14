@@ -1,9 +1,9 @@
 package New.CustomControls.TimeLine;
 
-import New.Controllers.SelectableTimeLineController;
+import New.Controllers.SelectableSegmentationController;
 import New.CustomControls.Annotation.SegmentRectangle;
 import New.CustomControls.Annotation.SelectableSegmentRectangle;
-import New.CustomControls.Containers.TimeLineContainer;
+import New.CustomControls.Containers.SegmentationContainer;
 import New.Observables.ObservableSegment;
 import javafx.beans.binding.BooleanBinding;
 import javafx.beans.property.*;
@@ -18,7 +18,7 @@ import java.util.stream.Collectors;
 
 public abstract class SelectableSegmentationPane extends SegmentationPane {
 
-    private SelectableTimeLineController selectableTimeLineController;
+    private SelectableSegmentationController selectableTimeLineController;
     private BooleanProperty timeLineSelectedProperty;
     protected Set<ObservableSegment> observableSegments;
     private ObjectProperty<SelectableSegmentationPane> selectedTimeLine;
@@ -30,9 +30,9 @@ public abstract class SelectableSegmentationPane extends SegmentationPane {
     //protected String selectedStyle = "-fx-padding: 10; -fx-border-style: solid inside; -fx-border-width: 2; -fx-border-insets: 5; -fx-border-radius: 5; -fx-background-color: palegreen";
     protected String selectedStyle = "-fx-background-color: DARKSEAGREEN";
 
-    protected SelectableSegmentationPane(double width, double height, DoubleProperty scaleProp, StringProperty name, TimeLineContainer parent, String id) {
+    protected SelectableSegmentationPane(double width, double height, DoubleProperty scaleProp, StringProperty name, SegmentationContainer parent, String id) {
         super(width, height, scaleProp, name, id);
-        selectableTimeLineController = new SelectableTimeLineController(parent.getSelectedTimeLine());
+        selectableTimeLineController = new SelectableSegmentationController(parent.getSelectedSegmentation());
         this.timeLineSelectedProperty = new SimpleBooleanProperty(false);
         this.timeLineSelectedProperty.addListener((observable, oldValue, newValue) -> {
             if(newValue){
@@ -50,8 +50,8 @@ public abstract class SelectableSegmentationPane extends SegmentationPane {
             }
         });
         */
-        this.selectedTimeLine = new SimpleObjectProperty<>(parent.getSelectedTimeLine().getSelectedTimeLineProperty().get());
-        this.selectedTimeLine.bind(parent.getSelectedTimeLine().getSelectedTimeLineProperty());
+        this.selectedTimeLine = new SimpleObjectProperty<>(parent.getSelectedSegmentation().getSelectedTimeLineProperty().get());
+        this.selectedTimeLine.bind(parent.getSelectedSegmentation().getSelectedTimeLineProperty());
         this.selectedTimeLine.addListener((observable, oldValue, newValue) ->{
             if(newValue != this){
                 deselectSegmentation();

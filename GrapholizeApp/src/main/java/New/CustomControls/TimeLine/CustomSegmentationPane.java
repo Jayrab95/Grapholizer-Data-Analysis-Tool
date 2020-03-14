@@ -1,7 +1,7 @@
 package New.CustomControls.TimeLine;
 
 import New.Controllers.CustomTimeLineController;
-import New.CustomControls.Containers.TimeLineContainer;
+import New.CustomControls.Containers.SegmentationContainer;
 import New.CustomControls.Annotation.SegmentRectangle;
 import New.CustomControls.Annotation.MutableSegmentRectangle;
 import New.Dialogues.DialogControls.TopicTextControl;
@@ -57,7 +57,7 @@ public class CustomSegmentationPane extends SelectableSegmentationPane {
     private CustomTimeLineController customTimeLineController;
     private ContextMenu contextMenu;
 
-    public CustomSegmentationPane(double width, double height, DoubleProperty scaleProp, ObservableSuperSet tag, ObservablePage observablePage, TimeLineContainer parent) {
+    public CustomSegmentationPane(double width, double height, DoubleProperty scaleProp, ObservableSuperSet tag, ObservablePage observablePage, SegmentationContainer parent) {
         super(width, height, scaleProp, tag.getNameProperty(), parent, tag.getTopicSetID());
         this.observableSuperSet = tag;
         customTimeLineController = new CustomTimeLineController(tag, observablePage, parent);
@@ -72,12 +72,12 @@ public class CustomSegmentationPane extends SelectableSegmentationPane {
 
     }
 
-    public CustomSegmentationPane(double width, double height, DoubleProperty scaleProp, ObservableSuperSet tag, ObservablePage observablePage, TimeLineContainer parent, Set<Segment> segments) {
+    public CustomSegmentationPane(double width, double height, DoubleProperty scaleProp, ObservableSuperSet tag, ObservablePage observablePage, SegmentationContainer parent, Set<Segment> segments) {
         this(width, height, scaleProp, tag, observablePage, parent);
         addAnnotations(segments);
     }
 
-    public CustomSegmentationPane(double width, double height, DoubleProperty scaleProp, ObservableSuperSet tag, ObservablePage observablePage, TimeLineContainer parent, Segment a) {
+    public CustomSegmentationPane(double width, double height, DoubleProperty scaleProp, ObservableSuperSet tag, ObservablePage observablePage, SegmentationContainer parent, Segment a) {
         this(width, height, scaleProp, tag, observablePage, parent);
         addAnnotation(a);
     }

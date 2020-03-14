@@ -9,7 +9,7 @@ import javafx.scene.layout.VBox;
 
 import java.util.List;
 
-public class TimeLineInformation extends VBox {
+public class SegmentationInformation extends VBox {
     private SegmentationPane tl;
     private HBox hBox_ButtonsContainer;
     private VBox vBox_UpDownButtonContainer;
@@ -25,7 +25,7 @@ public class TimeLineInformation extends VBox {
     private List<Observer> observers;
 
 
-    public TimeLineInformation(SegmentationPane tl){
+    public SegmentationInformation(SegmentationPane tl){
         this.tl = tl;
 
         InitializeButtons();

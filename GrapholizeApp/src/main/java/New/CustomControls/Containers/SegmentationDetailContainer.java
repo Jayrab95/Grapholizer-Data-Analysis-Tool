@@ -20,7 +20,7 @@ import javafx.scene.layout.*;
 
 import java.util.List;
 
-public class TimeLineDetailContainer extends ScrollPane {
+public class SegmentationDetailContainer extends ScrollPane {
 
     private SelectableSegmentationPane inspectedTimeLine;
     private ScrollPane timelineScrollPane;
@@ -32,7 +32,7 @@ public class TimeLineDetailContainer extends ScrollPane {
     ObservablePage activePage;
     DoubleProperty detailScale;
 
-    public TimeLineDetailContainer(SegmentationPane inspectedTimeLine, ObservablePage activePage){
+    public SegmentationDetailContainer(SegmentationPane inspectedTimeLine, ObservablePage activePage){
         this.inspectedTimeLine = (SelectableSegmentationPane)inspectedTimeLine;
         this.activePage = activePage;
         this.setHbarPolicy(ScrollBarPolicy.NEVER);

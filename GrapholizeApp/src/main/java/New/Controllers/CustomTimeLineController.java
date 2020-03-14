@@ -2,7 +2,7 @@ package New.Controllers;
 
 import New.CustomControls.Annotation.MutableSegmentRectangle;
 import New.CustomControls.TimeLine.CustomSegmentationPane;
-import New.CustomControls.Containers.TimeLineContainer;
+import New.CustomControls.Containers.SegmentationContainer;
 import New.CustomControls.Annotation.SegmentRectangle;
 import New.CustomControls.TimeLine.SelectableSegmentationPane;
 import New.Execptions.NoTimeLineSelectedException;
@@ -17,13 +17,13 @@ public class CustomTimeLineController {
     private ObservableSuperSet observableSuperSet;
     private ObservablePage page;
     private ObservableSegmentation observableSegmentation;
-    private TimeLineContainer parent;
+    private SegmentationContainer parent;
 
-    public CustomTimeLineController(ObservableSuperSet observableSuperSet, ObservablePage page, TimeLineContainer parent) {
+    public CustomTimeLineController(ObservableSuperSet observableSuperSet, ObservablePage page, SegmentationContainer parent) {
         this.observableSuperSet = observableSuperSet;
         this.page = page;
         this.parent = parent;
-        this.observableSegmentation = parent.getSelectedTimeLine();
+        this.observableSegmentation = parent.getSelectedSegmentation();
     }
 
     public void addAnnotation(Segment a){

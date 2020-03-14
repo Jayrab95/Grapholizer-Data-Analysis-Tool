@@ -2,7 +2,7 @@ package New.Controllers;
 import New.Characteristics.*;
 import New.CustomControls.Containers.ContentSwitcher;
 import New.CustomControls.Containers.MainCanvas;
-import New.CustomControls.Containers.TimeLineContainer;
+import New.CustomControls.Containers.SegmentationContainer;
 import New.Dialogues.CSVExportDialog;
 import New.Interfaces.*;
 import New.Model.Entities.*;
@@ -23,19 +23,11 @@ import javafx.scene.layout.VBox;
 
 import java.io.File;
 import java.io.IOException;
-import java.net.URL;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.util.*;
 
 public class MainSceneController {
-
-    @FXML
-    private URL location;
-
-    @FXML
-    private ResourceBundle resources;
-
     @FXML
     private AnchorPane scrollPane_TimeLines;
 
@@ -44,7 +36,7 @@ public class MainSceneController {
 
     private Optional<MainCanvas> optionalCanvas;
     private Optional<ContentSwitcher> optionalContentSwitcher;
-    private Optional<TimeLineContainer> optionalTimeLineContainer;
+    private Optional<SegmentationContainer> optionalSegmentationContainer;
 
     /** Internal State Of Application */
     public Session _session;
@@ -56,7 +48,7 @@ public class MainSceneController {
     public MainSceneController(){
         optionalCanvas = Optional.empty();
         optionalContentSwitcher = Optional.empty();
-        optionalTimeLineContainer = Optional.empty();
+        optionalSegmentationContainer = Optional.empty();
         characteristicList = new HashSet<>();
         characteristicList.addAll(CharacteristicList.characteristicsExport());
     }
@@ -219,16 +211,16 @@ public class MainSceneController {
         }
 
 
-        if(optionalTimeLineContainer.isEmpty()){
+        if(optionalSegmentationContainer.isEmpty()){
             System.out.println("new container");
-            optionalTimeLineContainer = Optional.of(new TimeLineContainer(_session.getActiveProject(false), _session.getActivePage(), 0.2));
-            scrollPane_TimeLines.getChildren().add(optionalTimeLineContainer.get());
+            optionalSegmentationContainer = Optional.of(new SegmentationContainer(_session.getActiveProject(false), _session.getActivePage(), 0.2));
+            scrollPane_TimeLines.getChildren().add(optionalSegmentationContainer.get());
         }
 
 
         if(optionalCanvas.isEmpty()){
             System.out.println("new canvas");
-            optionalCanvas = Optional.of(new MainCanvas(pmd.getPageWidth(), pmd.getPageHeight(), 5, _session.getActivePage(), optionalTimeLineContainer.get().getSelectedTimeLine()));
+            optionalCanvas = Optional.of(new MainCanvas(pmd.getPageWidth(), pmd.getPageHeight(), 5, _session.getActivePage(), optionalSegmentationContainer.get().getSelectedSegmentation()));
             anchorPane_canvasContainer.getChildren().add(optionalCanvas.get());
         }
     }

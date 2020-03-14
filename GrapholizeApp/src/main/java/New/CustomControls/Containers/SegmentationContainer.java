@@ -1,6 +1,6 @@
 package New.CustomControls.Containers;
 
-import New.Controllers.TimeLineContainerController;
+import New.Controllers.SegmentationContainerController;
 import New.CustomControls.TimeLine.*;
 
 import New.Dialogues.FilterForSegmentsDialog;
@@ -28,7 +28,7 @@ import javafx.stage.Stage;
 
 import java.util.*;
 
-public class TimeLineContainer extends VBox {
+public class SegmentationContainer extends VBox {
     //region static strings
     private final static String TXT_TL_CREATION_TITLE = "Create a new timeline";
     private final static String TXT_TL_CREATION_HEADER = "Creation of a new timeline";
@@ -59,17 +59,17 @@ public class TimeLineContainer extends VBox {
     //buisiness logic attributes
     private DoubleProperty totalWidth;
     private final static double TIMELINES_HEIGHT = 50;
-    private final static double SEGMENTATION_BOX_WIDTH = 900;
+    private final static double SEGMENTATION_BOX_WIDTH = 800;
     private final static double TIMEUNITPANE_HEIGHT = 20;
     private final static double DEFAULT_ELEMENT_SPACING = 10;
 
 
     private DoubleProperty scale;
 
-    private ObservableSegmentation selectedTimeLine;
+    private ObservableSegmentation selectedSegmentation;
     private ObservablePage p;
 
-    private TimeLineContainerController timeLineContainerController;
+    private SegmentationContainerController segmentationContainerController;
     //endregion buisiness logic
     /**
      * the hash-map ensures that segmentations and their widgets stay connected to each other
@@ -80,13 +80,13 @@ public class TimeLineContainer extends VBox {
     //graphical attributes
     private ScrollPane verticalScrollPane = new ScrollPane();
     private ScrollPane horizontalScrollPane = new ScrollPane();
-    private VBox timeLineVBox = new VBox();
-    private VBox timelineInfoVBox = new VBox();
+    private VBox segmentationVBox = new VBox();
+    private VBox segmentationInfoVBox = new VBox();
     private HBox containerTimelinesHBox = new HBox();
     private TimeUnitPane unitPane;
 
-    private Button createNewTimeLineButton;
-    private Button createNewTimeLineOutOfSelectedButton;
+    private Button createSegmentationButton;
+    private Button createNewSegmentationOutOfSelectedButton;
     private HBox buttonHBox;
 
     private Slider scaleSlider;
@@ -94,7 +94,7 @@ public class TimeLineContainer extends VBox {
     private VBox mainContainer = new VBox();
     //endregion graphical attributes
 
-    public TimeLineContainer(ObservableProject project, ObservablePage page, double initialScale){
+    public SegmentationContainer(ObservableProject project, ObservablePage page, double initialScale){
         this.p = page;
 
         page.getPageProperty().addListener((observable, oldValue, newValue) -> {
@@ -107,7 +107,7 @@ public class TimeLineContainer extends VBox {
         AnchorPane.setRightAnchor(this, 0.0);
         AnchorPane.setTopAnchor(this, 0.0);
 
-        timeLineContainerController = new TimeLineContainerController(project, page);
+        segmentationContainerController = new SegmentationContainerController(project, page);
         totalWidth = new SimpleDoubleProperty(page.getDuration());
         scale = new SimpleDoubleProperty(initialScale);
 
@@ -117,14 +117,14 @@ public class TimeLineContainer extends VBox {
         //Units for timeline
         unitPane = new TimeUnitPane(scale,TIMEUNITPANE_HEIGHT,totalWidth);
 
-        InitializeTimelineScrollPane();
+        InitializeSegmentationScrollPane();
 
         InitializeButtonHBox();
 
-        containerTimelinesHBox.getChildren().addAll(timelineInfoVBox, verticalScrollPane);
+        containerTimelinesHBox.getChildren().addAll(segmentationInfoVBox, verticalScrollPane);
 
         //add everything to parent
-        mainContainer.setMaxWidth(SEGMENTATION_BOX_WIDTH);
+        mainContainer.setMaxWidth(SEGMENTATION_BOX_WIDTH + 150);
         mainContainer.setSpacing(10d);
         //mainContainer.getChildren().addAll(scaleSlider,buttonHBox,containerTimelinesHBox);
         horizontalScrollPane.setHbarPolicy(ScrollPane.ScrollBarPolicy.NEVER);
@@ -141,16 +141,16 @@ public class TimeLineContainer extends VBox {
     // Children are cleared but might still be listening to certain properties.
     private void InitializeContainer(ObservableProject project, ObservablePage page){
         System.out.println("initialize timeline_container called");
-        getSelectedTimeLine().setSelectedTimeLine(null);
+        getSelectedSegmentation().setSelectedTimeLine(null);
         //Step 1: Create the stroke timeline
         //Step 2: For each tag, create a new timeline and pass over the observble Tag and the page. Then create the annotations.
         //getChildren().clear();
 
         totalWidth.set(page.getDuration());
         //unitPane = new TimeUnitPane(scale,20,totalWidth);
-        timeLineVBox.getChildren().clear();
-        timelineInfoVBox.getChildren().clear();
-        timeLineVBox.getChildren().add(unitPane);
+        segmentationVBox.getChildren().clear();
+        segmentationInfoVBox.getChildren().clear();
+        segmentationVBox.getChildren().add(unitPane);
         //TODO: POtential memory leak: Do generated segments still listen to external proprty?
         UnmodifiableSelectableSegmentationPane strokePane = new UnmodifiableSelectableSegmentationPane(
                 totalWidth.get(),
@@ -161,7 +161,7 @@ public class TimeLineContainer extends VBox {
                 this
         );
 
-        addTimeLinePane(strokePane);
+        addSegmentationPane(strokePane);
 
         for(String topicSetID : project.getTopicSetIDs()){
             if(!topicSetID.equals(project.getStrokeSetID())){
@@ -174,31 +174,31 @@ public class TimeLineContainer extends VBox {
         System.gc();
     }
 
-    private void InitializeTimelineScrollPane() {
+    private void InitializeSegmentationScrollPane() {
         scale.addListener((observable, oldValue, newValue) -> {
             double hVal = horizontalScrollPane.getHvalue() / oldValue.doubleValue();
             horizontalScrollPane.setHvalue(hVal * newValue.doubleValue());
         });
 
-        timeLineVBox.setSpacing(DEFAULT_ELEMENT_SPACING);
+        segmentationVBox.setSpacing(DEFAULT_ELEMENT_SPACING);
 
         verticalScrollPane.setHbarPolicy(ScrollPane.ScrollBarPolicy.ALWAYS);
         verticalScrollPane.setVbarPolicy(ScrollPane.ScrollBarPolicy.NEVER);
         verticalScrollPane.setMaxWidth(SEGMENTATION_BOX_WIDTH);
-        verticalScrollPane.setContent(timeLineVBox);
+        verticalScrollPane.setContent(segmentationVBox);
 
-        timelineInfoVBox.setSpacing(DEFAULT_ELEMENT_SPACING);
-        timelineInfoVBox.setPadding(new Insets(50,0,0,10));
-        timelineInfoVBox.setMinSize(100, TIMELINES_HEIGHT);
+        segmentationInfoVBox.setSpacing(DEFAULT_ELEMENT_SPACING);
+        segmentationInfoVBox.setPadding(new Insets(50,0,0,10));
+        segmentationInfoVBox.setMinSize(100, TIMELINES_HEIGHT);
     }
 
 
     private void InitializeButtonHBox(){
-        createNewTimeLineButton = new Button("Create new timeline");
-        createNewTimeLineButton.setOnAction(event -> createNewSegmentation());
-        createNewTimeLineOutOfSelectedButton = new Button("Create new Timeline out of selected annotations");
-        createNewTimeLineOutOfSelectedButton.setOnAction(event -> handleCreateTLOutOfSelectedClick());
-        buttonHBox = new HBox(createNewTimeLineButton, createNewTimeLineOutOfSelectedButton);
+        createSegmentationButton = new Button("Create new segmentation");
+        createSegmentationButton.setOnAction(event -> createNewSegmentation());
+        createNewSegmentationOutOfSelectedButton = new Button("Create new segmentation out of selected annotations");
+        createNewSegmentationOutOfSelectedButton.setOnAction(event -> handleCreateSegmentationOutOfSelectedClick());
+        buttonHBox = new HBox(createSegmentationButton, createNewSegmentationOutOfSelectedButton);
         buttonHBox.setSpacing(DEFAULT_ELEMENT_SPACING);
     }
 
@@ -211,19 +211,19 @@ public class TimeLineContainer extends VBox {
         return slider;
     }
 
-    public ObservableSegmentation getSelectedTimeLine() {
-        if(selectedTimeLine == null){
-            selectedTimeLine = new ObservableSegmentation();
+    public ObservableSegmentation getSelectedSegmentation() {
+        if(selectedSegmentation == null){
+            selectedSegmentation = new ObservableSegmentation();
         }
-        return selectedTimeLine;
+        return selectedSegmentation;
     }
 
-    private void addTimeLinePane(SegmentationPane segmentationPane){
+    private void addSegmentationPane(SegmentationPane segmentationPane){
         //Create new Toolbar for the Segmentation
         SegmentationInformation info = new SegmentationInformation(segmentationPane);
-        timelineInfoVBox.getChildren().add(info);
+        segmentationInfoVBox.getChildren().add(info);
         //Add the actual timeline
-        timeLineVBox.getChildren().add(segmentationPane);
+        segmentationVBox.getChildren().add(segmentationPane);
         segmentationWidgetLink.put(segmentationPane,info);
     }
 
@@ -232,17 +232,12 @@ public class TimeLineContainer extends VBox {
         if(annotations.isPresent()){
             CustomSegmentationPane pane;
             pane = new CustomSegmentationPane(totalWidth.get(), TIMELINES_HEIGHT, scale, t, p, this);
-            addTimeLinePane(pane);
+            addSegmentationPane(pane);
         }
         else{
-            addTimeLinePane(createNewSegmentationPane(t, p, false));
+            addSegmentationPane(createNewSegmentationPane(t, p, false));
         }
     }
-
-
-
-
-
 
     public void createNewSegmentation(){
         Optional<SuperSet> tag = createTopicSetDialog();
@@ -270,26 +265,26 @@ public class TimeLineContainer extends VBox {
             }
             else{
 
-                ObservableSuperSet newTag = timeLineContainerController.createNewTimeLineTag(tag.get());
+                ObservableSuperSet newTag = segmentationContainerController.createNewTimeLineTag(tag.get());
 
-                SegmentationPane segmentationPane = createNewSegmentationPane(newTag, timeLineContainerController.getPage(),false);
+                SegmentationPane segmentationPane = createNewSegmentationPane(newTag, segmentationContainerController.getPage(),false);
 
-                addTimeLinePane(segmentationPane);
+                addSegmentationPane(segmentationPane);
             }
         }
     }
 
     public void createNewSegmentationOutOfSelectedElements() throws NoTimeLineSelectedException {
-        if(!selectedTimeLine.timeLineSelected()){
+        if(!selectedSegmentation.timeLineSelected()){
             throw new NoTimeLineSelectedException();
         }
         Optional<SuperSet> tag =createTopicSetDialog();
         if(tag.isPresent()){
 
-            ObservableSuperSet newTag = timeLineContainerController.createNewTimeLineTag(tag.get());
+            ObservableSuperSet newTag = segmentationContainerController.createNewTimeLineTag(tag.get());
 
-            SegmentationPane segmentationPane = createNewSegmentationTagOutOfSelected(newTag, timeLineContainerController.getPage());
-            addTimeLinePane(segmentationPane);
+            SegmentationPane segmentationPane = createNewSegmentationTagOutOfSelected(newTag, segmentationContainerController.getPage());
+            addSegmentationPane(segmentationPane);
         }
     }
 
@@ -301,9 +296,9 @@ public class TimeLineContainer extends VBox {
     public void createNegativeSegmentation(String originSetID){
         Optional<SuperSet> tag = createTopicSetDialog();
         if(tag.isPresent()){
-            ObservableSuperSet newTag = timeLineContainerController.createNewTimeLineTag(tag.get());
-            SegmentationPane segmentationPane = createNewTimeLinePaneOutOfAnnotations(newTag, p, p.getNegativeSegmentation(originSetID));
-            addTimeLinePane(segmentationPane);
+            ObservableSuperSet newTag = segmentationContainerController.createNewTimeLineTag(tag.get());
+            SegmentationPane segmentationPane = createNewSegmentationPaneOutOfAnnotations(newTag, p, p.getNegativeSegmentation(originSetID));
+            addSegmentationPane(segmentationPane);
         }
     }
 
@@ -315,9 +310,9 @@ public class TimeLineContainer extends VBox {
     public void createNewSegmentationOutOfSelectedDots() throws NoTimeLineSelectedException {
         Optional<SuperSet> tag = createTopicSetDialog();
                 if(tag.isPresent()){
-                    ObservableSuperSet newTag = timeLineContainerController.createNewTimeLineTag(tag.get());
-            SegmentationPane segmentationPane = createNewSegmentationPaneOutOfSelectedDots(newTag, timeLineContainerController.getPage());
-            addTimeLinePane(segmentationPane);
+                    ObservableSuperSet newTag = segmentationContainerController.createNewTimeLineTag(tag.get());
+            SegmentationPane segmentationPane = createNewSegmentationPaneOutOfSelectedDots(newTag, segmentationContainerController.getPage());
+            addSegmentationPane(segmentationPane);
         }
     }
 
@@ -336,9 +331,9 @@ public class TimeLineContainer extends VBox {
             Optional<SuperSet> tag = createTopicSetDialog();
 
         if(tag.isPresent()){
-            ObservableSuperSet newTag = timeLineContainerController.createNewTimeLineTag(tag.get());
-            SegmentationPane segmentationPane = createNewTimeLinePaneOutOfCombined(newTag, timeLineContainerController.getPage(), a);
-            addTimeLinePane(segmentationPane);
+            ObservableSuperSet newTag = segmentationContainerController.createNewTimeLineTag(tag.get());
+            SegmentationPane segmentationPane = createNewSegmentationPaneOutOfCombined(newTag, segmentationContainerController.getPage(), a);
+            addSegmentationPane(segmentationPane);
         }
     }
 
@@ -348,11 +343,11 @@ public class TimeLineContainer extends VBox {
     private SegmentationPane createNewSegmentationPane(ObservableSuperSet tag, ObservablePage page, boolean copyFromSelected){
         CustomSegmentationPane result;
         if(copyFromSelected){
-            selectedTimeLine.getMissingTopics(tag).forEach(topic -> tag.addTopic(topic));
-            result = new CustomSegmentationPane(timeLineContainerController.getPage().getDuration(), TIMELINES_HEIGHT, scale, tag, page, this, selectedTimeLine.generateMissingSegments(tag.getTopicsObservableList()));
+            selectedSegmentation.getMissingTopics(tag).forEach(topic -> tag.addTopic(topic));
+            result = new CustomSegmentationPane(segmentationContainerController.getPage().getDuration(), TIMELINES_HEIGHT, scale, tag, page, this, selectedSegmentation.generateMissingSegments(tag.getTopicsObservableList()));
         }
         else{
-            result = new CustomSegmentationPane(timeLineContainerController.getPage().getDuration(), TIMELINES_HEIGHT, scale, tag, page, this);
+            result = new CustomSegmentationPane(segmentationContainerController.getPage().getDuration(), TIMELINES_HEIGHT, scale, tag, page, this);
         }
         return result;
     }
@@ -369,28 +364,28 @@ public class TimeLineContainer extends VBox {
                     segment.get(0).getTimeStamp(),
                     segment.get(segment.size()-1).getTimeStamp()));
         }
-        return new CustomSegmentationPane(timeLineContainerController.getPage().getDuration(), TIMELINES_HEIGHT, scale, newTimeLineTag, page, this, segments);
+        return new CustomSegmentationPane(segmentationContainerController.getPage().getDuration(), TIMELINES_HEIGHT, scale, newTimeLineTag, page, this, segments);
     }
 
-    private SegmentationPane createNewTimeLinePaneOutOfCombined(ObservableSuperSet tag, ObservablePage page, Set<Segment> segments){
-        CustomSegmentationPane newTimeLine = new CustomSegmentationPane(timeLineContainerController.getPage().getDuration(), TIMELINES_HEIGHT, scale, tag, page, this, segments);
+    private SegmentationPane createNewSegmentationPaneOutOfCombined(ObservableSuperSet tag, ObservablePage page, Set<Segment> segments){
+        CustomSegmentationPane newTimeLine = new CustomSegmentationPane(segmentationContainerController.getPage().getDuration(), TIMELINES_HEIGHT, scale, tag, page, this, segments);
         return newTimeLine;
     }
 
-    private SegmentationPane createNewTimeLinePaneOutOfAnnotations(ObservableSuperSet tag, ObservablePage page, Set<Segment> segments){
-        return new CustomSegmentationPane(timeLineContainerController.getPage().getDuration(), TIMELINES_HEIGHT, scale, tag, page, this, segments);
+    private SegmentationPane createNewSegmentationPaneOutOfAnnotations(ObservableSuperSet tag, ObservablePage page, Set<Segment> segments){
+        return new CustomSegmentationPane(segmentationContainerController.getPage().getDuration(), TIMELINES_HEIGHT, scale, tag, page, this, segments);
     }
 
 
     public void editSegmentation(ObservableSuperSet oldTag){
         Optional<SuperSet> tag = editDialog(oldTag);
         if (tag.isPresent()){
-            timeLineContainerController.editTimeLineTag(oldTag, tag.get());
+            segmentationContainerController.editTimeLineTag(oldTag, tag.get());
         }
     }
 
     private Optional<SuperSet> createTopicSetDialog(){
-        return openTimeLineCreationDialog(
+        return openSegmentationCreationDialog(
                 TXT_TL_CREATION_TITLE,
                 TXT_TL_CREATION_HEADER,
                 TXT_TL_CREATION_TEXT,
@@ -400,7 +395,7 @@ public class TimeLineContainer extends VBox {
     }
 
     private Optional<SuperSet> editDialog(ObservableSuperSet oldTag){
-        return openTimeLineCreationDialog(
+        return openSegmentationCreationDialog(
                 TXT_TL_EDIT_TITLE,
                 TXT_TL_EDIT_HEADER,
                 TXT_TL_EDIT_TEXT,
@@ -415,15 +410,15 @@ public class TimeLineContainer extends VBox {
                 TXT_TL_DELETE_HEADER,
                 String.format(TXT_TL_DELETE_TEXT, timeLine.getTimeLineName())
         )){
-            timeLineContainerController.removeTimeLine(timeLine.getTopicSetID());
-            timeLineVBox.getChildren().remove(timeLine);
-            timelineInfoVBox.getChildren().remove(segmentationWidgetLink.get(timeLine));
+            segmentationContainerController.removeTimeLine(timeLine.getTopicSetID());
+            segmentationVBox.getChildren().remove(timeLine);
+            segmentationInfoVBox.getChildren().remove(segmentationWidgetLink.get(timeLine));
             return true;
         }
         return false;
     }
 
-    private void handleCreateTLOutOfSelectedClick(){
+    private void handleCreateSegmentationOutOfSelectedClick(){
         try{
             createNewSegmentationOutOfSelectedElements();
         }
@@ -443,19 +438,19 @@ public class TimeLineContainer extends VBox {
     }
 
     private void handleDelete(){
-        if(selectedTimeLine.selectedSegmentationIsCustom()
-                && selectedTimeLine.getSelectedSegmentRectangles().size() > 0
+        if(selectedSegmentation.selectedSegmentationIsCustom()
+                && selectedSegmentation.getSelectedSegmentRectangles().size() > 0
                 && DialogGenerator.confirmationDialogue(
                         "Delete selected segments",
-                "Delete selected segments from " + selectedTimeLine.getSegmentationName(),
-                "Are you sure you want to delete all selected segments from the segmentation " + selectedTimeLine.getSegmentationName() + "?")){
-            selectedTimeLine.deleteSelectedSegments();
+                "Delete selected segments from " + selectedSegmentation.getSegmentationName(),
+                "Are you sure you want to delete all selected segments from the segmentation " + selectedSegmentation.getSegmentationName() + "?")){
+            selectedSegmentation.deleteSelectedSegments();
         }
     }
 
 
     private Optional<FilterForSegmentsDialog.FilterDialogResult> filterForAnnotationsDialog(String title, String header, String text){
-        FilterForSegmentsDialog dialog = new FilterForSegmentsDialog(timeLineContainerController.getTopicSets());
+        FilterForSegmentsDialog dialog = new FilterForSegmentsDialog(segmentationContainerController.getTopicSets());
 
         dialog.setResultConverter(b -> {
             if (b == dialog.getButtonType_ok()) {
@@ -469,7 +464,7 @@ public class TimeLineContainer extends VBox {
 
     //region CreateNewTimeLineDialogue
 
-    private Optional<SuperSet> openTimeLineCreationDialog(String dialogTitle, String dialogHeader, String dialogText, String labelText, Optional<SuperSet> optional, boolean editCall){
+    private Optional<SuperSet> openSegmentationCreationDialog(String dialogTitle, String dialogHeader, String dialogText, String labelText, Optional<SuperSet> optional, boolean editCall){
         /*
         This dialog is specific to the creation of timelines and contains some more complex logic
         specific to timelines and the TimelineContainer. Therefore it cannot be moved to DialogGenerator
@@ -486,7 +481,7 @@ public class TimeLineContainer extends VBox {
             //If neither is true, it's an edit call where only the color of the timeline is edited and no name check is required.
             if(!editCall || !defaultValue.equals(newTimeLineName)) {
                 try {
-                    timeLineContainerController.checkIfTagIsValid(newTimeLineName);
+                    segmentationContainerController.checkIfTagIsValid(newTimeLineName);
                     dialog.topicsDefined();
                 } catch (TimeLineTagException ex) {
                     DialogGenerator.simpleErrorDialog(
@@ -534,7 +529,7 @@ public class TimeLineContainer extends VBox {
 
             InitializeButtons();
             setUpLabel();
-            setupTimeLineInformation();
+            setupSegmentationInformation();
 
             setMinHeight(TIMELINES_HEIGHT);
             setMaxWidth(120);
@@ -553,7 +548,7 @@ public class TimeLineContainer extends VBox {
             lbl_timeLineName.textProperty().bind(tl.getTimeLineNameProperty());
         }
 
-        private void setupTimeLineInformation(){
+        private void setupSegmentationInformation(){
             vBox_UpDownButtonContainer = new VBox(btn_moveTimelineUp, btn_moveTimelineDown);
             hBox_EditAndDeleteContainer = new HBox(btn_editTimeLine, btn_deleteTimeLine);
             vBox_EditButtons = new VBox(hBox_EditAndDeleteContainer, btn_addNewTimeline);
@@ -568,40 +563,8 @@ public class TimeLineContainer extends VBox {
         void showDetailView(){
             Stage stage = new Stage();
             stage.setTitle("My New Stage Title");
-            stage.setScene(new Scene(new TimeLineDetailContainer(tl, timeLineContainerController.getPage()), 450, 450));
+            stage.setScene(new Scene(new SegmentationDetailContainer(tl, segmentationContainerController.getPage()), 450, 450));
             stage.show();
         }
     }
-
-    /*private class TimeLineWrapper extends HBox{
-        private final SegmentationPane tl;
-        private final TimeLineInformation tli;
-        TimeLineWrapper(SegmentationPane tl){
-            this.tl = tl;
-            this.tli = new TimeLineInformation(tl);
-            getChildren().addAll(tli, tl);
-            setPadding(new Insets(5,0,5,0));
-        }
-        SegmentationPane getTimeLinePane(){return tl;}
-        TimeLineInformation getTimelineInformation(){return tli;}
-    }*/
-
-    /*private class TopicCreationDialogResult {
-        String topicName;
-        Color topicColor;
-        public TopicCreationDialogResult(String name, Color color){this.topicName = name; this.topicColor = color;}
-    }*/
-
-    private class AnnotationFilterDialogResult{
-        String topic;
-        String filterText;
-        public AnnotationFilterDialogResult(String topic, String filterText){
-            this.topic = topic;
-            this.filterText = filterText;
-        }
-        Segment[] getFilteredAnnotations(){
-            return timeLineContainerController.getFilteredAnnotations(topic, filterText);
-        }
-    }
-    //endregion
 }
