@@ -27,7 +27,8 @@ public abstract class SelectableSegmentationPane extends SegmentationPane {
     protected Rectangle selection;
     protected boolean selectMode;
 
-    protected String selectedStyle = "-fx-padding: 10; -fx-border-style: solid inside; -fx-border-width: 2; -fx-border-insets: 5; -fx-border-radius: 5; -fx-background-color: palegreen";
+    //protected String selectedStyle = "-fx-padding: 10; -fx-border-style: solid inside; -fx-border-width: 2; -fx-border-insets: 5; -fx-border-radius: 5; -fx-background-color: palegreen";
+    protected String selectedStyle = "-fx-background-color: DARKSEAGREEN";
 
     protected SelectableSegmentationPane(double width, double height, DoubleProperty scaleProp, StringProperty name, TimeLineContainer parent, String id) {
         super(width, height, scaleProp, name, id);

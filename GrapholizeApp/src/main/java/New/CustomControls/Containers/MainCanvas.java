@@ -21,7 +21,7 @@ import javafx.scene.shape.Rectangle;
 
 import java.util.List;
 
-public class MainCanvas extends VBox implements PageObserver, StrokeObserver, FilterObserver {
+public class MainCanvas extends VBox{
     private Slider scaleSlider;
     private ScrollPane canvasContainer;
     private FilterContainer filterContainer;
@@ -50,12 +50,14 @@ public class MainCanvas extends VBox implements PageObserver, StrokeObserver, Fi
                 new StrokeColorFilter(obsPage,Color.BLUE, Color.RED),
                 new PressureFilter(obsPage),
                 new VelocityFilter(obsPage));
-        this.ofc.addObserver(this);
 
         this.scaleSlider = initializeSlider(initScale);
 
         this.canvasScale.bind(this.scaleSlider.valueProperty());
-        this.canvasScale.addListener((observable, oldValue, newValue) -> resizeCanvas());
+        this.canvasScale.addListener((observable, oldValue, newValue) -> {
+            resizeCanvas();
+            setScroll(oldValue.doubleValue(), newValue.doubleValue());
+        });
 
         this.canvas = new Pane();
         this.canvas.setPrefWidth(initWidth * canvasScale.get());
@@ -89,6 +91,13 @@ public class MainCanvas extends VBox implements PageObserver, StrokeObserver, Fi
     private void resizeCanvas(){
         canvas.setPrefWidth(canvasWidth * canvasScale.get());
         canvas.setPrefHeight(canvasHeight * canvasScale.get());
+
+    }
+    private void setScroll(double oldScale, double newScale){
+        double hPos = canvasContainer.getHvalue() / oldScale;
+        double vPos = canvasContainer.getVvalue() / oldScale;
+        canvasContainer.setHvalue(hPos * newScale);
+        canvasContainer.setVvalue(vPos * newScale);
     }
 
     private void addStrokes(ObservablePage p){
@@ -195,38 +204,5 @@ public class MainCanvas extends VBox implements PageObserver, StrokeObserver, Fi
         canvas.getChildren().remove(selection);
     }
 
-    @Override
-    public void update(ObservablePage sender) {
-        addStrokes(sender);
-        resetCanvas();
-    }
 
-    @Override
-    public void update(ObservableStroke sender) {
-        //resetCanvas();
-    }
-
-    @Override
-    public void update(ObservableFilterCollection sender) {
-        //resetCanvas();
-        //TODO: QUick hack, this obviously needs to be reworked.
-        // work with the FX Bindings to automatically update the stroke/dot colors.
-        /*
-        for(Filter f : sender.getFilters()){
-            if(f instanceof StrokeFilter){
-                for(ObservableStroke s : p.getObservableStrokes()){
-                    if(f.isActive()){
-                        ((StrokeFilter) f).applyFilter(s);
-                    }
-                    else{
-                        for(ObservableDot d : s.getObservableDots()){
-                            d.setColor(Color.BLACK);
-                        }
-                    }
-                }
-            }
-        }
-
-         */
-    }
 }
