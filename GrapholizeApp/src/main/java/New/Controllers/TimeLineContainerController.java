@@ -4,10 +4,10 @@ package New.Controllers;
 import New.Execptions.TimeLineTagException;
 import New.Model.Entities.Segment;
 import New.Model.Entities.Topic;
-import New.Model.Entities.TopicSet;
+import New.Model.Entities.SuperSet;
 import New.Observables.ObservablePage;
 import New.Observables.ObservableProject;
-import New.Observables.ObservableTopicSet;
+import New.Observables.ObservableSuperSet;
 import New.util.ColorConverter;
 
 import java.util.List;
@@ -29,7 +29,7 @@ public class TimeLineContainerController {
         return project.getTopicSetIDs();
     }
 
-    public List<TopicSet> getTopicSets(){
+    public List<SuperSet> getTopicSets(){
         return project.getTopicSets();
     }
 
@@ -51,14 +51,14 @@ public class TimeLineContainerController {
     //In the code, create and edit are only called as a result of a dialog, which calls the checkFunction.
     //This convention needs to be upheld.
     //Reason for this: It allows the reusage of the dialog window for both create and edit.
-    public ObservableTopicSet createNewTimeLineTag(TopicSet t){
+    public ObservableSuperSet createNewTimeLineTag(SuperSet t){
         //TopicSet newTag = new TopicSet(tag, ColorConverter.convertJavaFXColorToModelColor(c));
-        ObservableTopicSet oTag = new ObservableTopicSet(t);
+        ObservableSuperSet oTag = new ObservableSuperSet(t);
         project.putTopicSet(t);
         return oTag;
     }
 
-    public void editTimeLineTag(ObservableTopicSet oldSet, TopicSet newSet){
+    public void editTimeLineTag(ObservableSuperSet oldSet, SuperSet newSet){
         oldSet.setTag(newSet.getTag());
         oldSet.setMainTopicID(newSet.getMainTopicID());
         oldSet.setColor(ColorConverter.convertModelColorToJavaFXColor(newSet.getSimpleColor()));

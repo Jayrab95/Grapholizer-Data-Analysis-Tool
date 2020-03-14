@@ -8,12 +8,12 @@ import java.util.stream.Collectors;
 
 public class Project {
     private Map<String, Participant> participants;
-    private Map<String, TopicSet> projectTags;
+    private Map<String, SuperSet> projectTags;
 
-    public Project(List<Participant> participants, List<TopicSet> topicSets){
+    public Project(List<Participant> participants, List<SuperSet> superSets){
         this.participants = participants.stream()
                 .collect(Collectors.toMap(p -> p.getID(), p -> p));
-        this.projectTags = topicSets.stream()
+        this.projectTags = superSets.stream()
                 .collect(Collectors.toMap(t -> t.getTagID(), t -> t));
     }
 
@@ -21,7 +21,7 @@ public class Project {
         return participants;
     }
 
-    public Map<String, TopicSet> getProjectTagsMap(){
+    public Map<String, SuperSet> getProjectTagsMap(){
         return projectTags;
     }
 
@@ -33,7 +33,7 @@ public class Project {
         return participants.keySet();
     }
 
-    public TopicSet getTopicSet(String topicSetID){
+    public SuperSet getTopicSet(String topicSetID){
         return projectTags.get(topicSetID);
     }
 
@@ -43,19 +43,19 @@ public class Project {
         return participants.values();
     }
 
-    public Collection<TopicSet> getAllTopicSets(){
+    public Collection<SuperSet> getAllTopicSets(){
         return projectTags.values();
     }
 
-    public void putTopicSet(TopicSet ts){
+    public void putTopicSet(SuperSet ts){
         projectTags.put(ts.getTagID(),ts);
     }
 
-    public void putAllTopicSets(Map<String, TopicSet> map){
+    public void putAllTopicSets(Map<String, SuperSet> map){
         projectTags.putAll(map);
     }
 
-    public TopicSet removeTopicSet(String id){
+    public SuperSet removeTopicSet(String id){
         return projectTags.remove(id);
     }
 

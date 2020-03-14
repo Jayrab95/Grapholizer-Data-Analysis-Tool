@@ -96,7 +96,7 @@ public class TimeLineDetailContainer extends ScrollPane {
                 new SimpleStringProperty("Segments"),
                 activePage,
                 inspectedTimeLine.getTopicSetID(),
-                inspectedTimeLine instanceof CustomSegmentationPane ? ((CustomSegmentationPane)inspectedTimeLine).getObservableTopicSet().getMainTopicID() : ""
+                inspectedTimeLine instanceof CustomSegmentationPane ? ((CustomSegmentationPane)inspectedTimeLine).getObservableSuperSet().getMainTopicID() : ""
         ));
     }
 

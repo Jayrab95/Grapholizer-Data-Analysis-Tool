@@ -3,14 +3,14 @@ package New.Model.Entities;
 import java.util.*;
 import java.util.stream.Collectors;
 
-public class TopicSet {
+public class SuperSet {
     private final String tagID;
     private String tag;
     private SimpleColor simpleColor;
     private String mainTopicID;
     private final Map<String, Topic> topicsMap;
 
-    public TopicSet(String tag, SimpleColor simpleColor, List<Topic> topicsMap, String maintopicID, String tagID){
+    public SuperSet(String tag, SimpleColor simpleColor, List<Topic> topicsMap, String maintopicID, String tagID){
         this.tag = tag;
         this.simpleColor = simpleColor;
         this.topicsMap = new HashMap<>();

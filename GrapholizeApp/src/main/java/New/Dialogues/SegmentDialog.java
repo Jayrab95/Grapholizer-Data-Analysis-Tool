@@ -42,7 +42,7 @@ public class SegmentDialog extends Dialog<Segment> {
         for (int i = 0; i < topics.size(); i++) {
             TopicTextControl ttc = new TopicTextControl(s, topics.get(i));
             if(copy){
-                ttc.disableProperty().bind(cbox_Combined.selectedProperty().not());
+                ttc.textFieldDisableProperty().bind(cbox_Combined.selectedProperty().not());
             }
 
             grid.add(ttc.getLabel_topic(), 0, i+1);

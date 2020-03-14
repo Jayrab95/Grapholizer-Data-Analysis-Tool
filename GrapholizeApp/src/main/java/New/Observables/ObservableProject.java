@@ -13,7 +13,7 @@ public class ObservableProject {
     private static final String strokeSetID = "Stroke duration";
     private static final String durationTopicID = "Duration";
     private ObjectProperty<Project> innerProjectProperty;
-    private List<ObservableTopicSet> observableTopicSets;
+    private List<ObservableSuperSet> observableSuperSets;
 
     public ObservableProject(Project inner){
         innerProjectProperty = new SimpleObjectProperty<>(inner);
@@ -26,15 +26,15 @@ public class ObservableProject {
     //TODO: Potential memory leak?
     // Are certain topic set properties still referenced?
     private void generateObservableTopicSets(Project p){
-        observableTopicSets = new LinkedList<>();
+        observableSuperSets = new LinkedList<>();
         for(String s : p.getTopicSetIDs()){
-            ObservableTopicSet tag = new ObservableTopicSet(p.getTopicSet(s));
-            observableTopicSets.add(tag);
+            ObservableSuperSet tag = new ObservableSuperSet(p.getTopicSet(s));
+            observableSuperSets.add(tag);
         }
     }
 
     private void generateStrokeTopicSetAndSegmentations(Project p){
-        TopicSet strokeSet = new TopicSet(
+        SuperSet strokeSet = new SuperSet(
                 strokeSetID,
                 new SimpleColor(0,0,0,1),
                 List.of(),
@@ -42,7 +42,7 @@ public class ObservableProject {
                 strokeSetID
         );
         p.putTopicSet(strokeSet);
-        observableTopicSets.add(new ObservableTopicSet(strokeSet));
+        observableSuperSets.add(new ObservableSuperSet(strokeSet));
         for(Participant participant : p.getAllParticipants()){
             for(Page page : participant.getPages()){
                 for(Stroke s : page.getStrokes()){
@@ -53,7 +53,7 @@ public class ObservableProject {
         }
     }
 
-    public List<TopicSet> getTopicSets(){
+    public List<SuperSet> getTopicSets(){
         return new LinkedList<>(innerProjectProperty.get().getAllTopicSets());
     }
 
@@ -85,8 +85,8 @@ public class ObservableProject {
         return innerProjectProperty;
     }
 
-    public ObservableTopicSet getObservableTopicSet(String tag){
-        return new ObservableTopicSet(innerProjectProperty.get().getTopicSet(tag));
+    public ObservableSuperSet getObservableTopicSet(String tag){
+        return new ObservableSuperSet(innerProjectProperty.get().getTopicSet(tag));
     }
 
     public void setInnerProject(Project p){
@@ -99,7 +99,7 @@ public class ObservableProject {
 
     }
 
-    public void putTopicSet(TopicSet t) {
+    public void putTopicSet(SuperSet t) {
         innerProjectProperty.get().putTopicSet(t);
     }
 
@@ -120,7 +120,7 @@ public class ObservableProject {
         }
     }
 
-    public TopicSet removeTimeLineTag(String key){
+    public SuperSet removeTimeLineTag(String key){
         return innerProjectProperty.get().removeTopicSet(key);
     }
 

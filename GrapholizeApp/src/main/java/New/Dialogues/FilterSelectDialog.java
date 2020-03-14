@@ -1,7 +1,7 @@
 package New.Dialogues;
 
 import New.Model.Entities.Topic;
-import New.Model.Entities.TopicSet;
+import New.Model.Entities.SuperSet;
 import javafx.beans.property.BooleanProperty;
 import javafx.beans.property.SimpleBooleanProperty;
 import javafx.beans.property.SimpleStringProperty;
@@ -28,7 +28,7 @@ public class FilterSelectDialog extends Dialog<Map<String, String>> {
     private ButtonType buttonTypeOK;
     private ButtonType buttonTypeCancel;
 
-    public FilterSelectDialog(TopicSet set) {
+    public FilterSelectDialog(SuperSet set) {
         this.topicFilters = new LinkedList<>();
 
         setTitle(TITLE);

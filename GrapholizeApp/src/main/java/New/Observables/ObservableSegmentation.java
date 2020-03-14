@@ -16,26 +16,26 @@ import java.util.stream.Collectors;
 
 public class ObservableSegmentation {
 
-    private ObjectProperty<SelectableSegmentationPane> selectedTimeLine;
+    private ObjectProperty<SelectableSegmentationPane> innerSegmentation;
 
     public ObservableSegmentation(){
-        this.selectedTimeLine = new SimpleObjectProperty<>();
+        this.innerSegmentation = new SimpleObjectProperty<>();
     }
 
     public ObservableSegmentation(SelectableSegmentationPane timeLine){
-        this.selectedTimeLine = new SimpleObjectProperty<>(timeLine);
+        this.innerSegmentation = new SimpleObjectProperty<>(timeLine);
     }
 
     public ObjectProperty<SelectableSegmentationPane> getSelectedTimeLineProperty(){
-        return this.selectedTimeLine;
+        return this.innerSegmentation;
     }
 
     public SelectableSegmentationPane getSelectedTimeLine() {
-        return selectedTimeLine.get();
+        return innerSegmentation.get();
     }
 
     public boolean timeLineSelected(){
-        return selectedTimeLine.isNotNull().get();
+        return innerSegmentation.isNotNull().get();
     }
 
     //TODO: Perhaps this mechanism needs to be reworked a bit
@@ -47,7 +47,7 @@ public class ObservableSegmentation {
         //Then the nodes acquire the correct cast
         //finally, they're filtered for selection
         if(timeLineSelected()){
-            return selectedTimeLine.get().getChildren().stream()
+            return innerSegmentation.get().getChildren().stream()
                     .filter(node -> node instanceof SelectableSegmentRectangle)
                     .map(node -> (SelectableSegmentRectangle)node)
                     .filter(SelectableSegmentRectangle::isSelected)
@@ -56,43 +56,45 @@ public class ObservableSegmentation {
         return Set.of();
     }
 
-    public Set<ObservableSegment> getSelectedSegments() {
+    public TreeSet<ObservableSegment> getSelectedSegments() {
+        //TODO: This is somewhat of an expensive solution
+        // when filtering through a set via streams and returning a new Set,
         if(timeLineSelected()){
-            return selectedTimeLine.get().getObservableSegments().stream()
+            return new TreeSet(innerSegmentation.get().getObservableSegments().stream()
                     .filter(observableSegment -> observableSegment.isSelected())
-                    .collect(Collectors.toSet());
+                    .collect(Collectors.toSet()));
         }
-        return Set.of();
+        return new TreeSet<>();
     }
 
     public void setSelectedTimeLine(SelectableSegmentationPane timeLine){
-        if(this.selectedTimeLine.get() != timeLine){
-            this.selectedTimeLine.set(timeLine);
+        if(this.innerSegmentation.get() != timeLine){
+            this.innerSegmentation.set(timeLine);
         }
     }
 
     public String getSegmentationName(){
-        return selectedTimeLine.get().getTimeLineName();
+        return innerSegmentation.get().getTimeLineName();
     }
 
-    public Optional<ObservableTopicSet> getSelectedSegmentationTopicSet(){
+    public Optional<ObservableSuperSet> getSelectedSegmentationTopicSet(){
         //TODO: Unclean solution. Perhaps there needs to be some other class or interface that defines that the segmentationPane has a topic set
         // (Which is currently not a given if it is a selecteableSegmentationPane)
-        if(selectedTimeLine.get() instanceof CustomSegmentationPane){
-            return Optional.of(((CustomSegmentationPane)selectedTimeLine.get()).getObservableTopicSet());
+        if(innerSegmentation.get() instanceof CustomSegmentationPane){
+            return Optional.of(((CustomSegmentationPane) innerSegmentation.get()).getObservableSuperSet());
         }
-        else if(selectedTimeLine.get() instanceof UnmodifiableSelectableSegmentationPane){
-            return Optional.of(((UnmodifiableSelectableSegmentationPane)selectedTimeLine.get()).getObservableTopicSet());
+        else if(innerSegmentation.get() instanceof UnmodifiableSelectableSegmentationPane){
+            return Optional.of(((UnmodifiableSelectableSegmentationPane) innerSegmentation.get()).getObservableSuperSet());
         }
         return Optional.empty();
     }
 
     public boolean equals(SelectableSegmentationPane timeLinePane){
-        return selectedTimeLine.get() == timeLinePane;
+        return innerSegmentation.get() == timeLinePane;
     }
 
-    public List<Topic> getMissingTopics(ObservableTopicSet targetTopicSet){
-        Optional<ObservableTopicSet> optional = getSelectedSegmentationTopicSet();
+    public List<Topic> getMissingTopics(ObservableSuperSet targetTopicSet){
+        Optional<ObservableSuperSet> optional = getSelectedSegmentationTopicSet();
         if(optional.isPresent()){
             //If the selected segmentation has a topic set (ie. it is not the stroke timeline), then
             //return a list of all topics that are missing from the target set (topics, whose >name< does
@@ -113,7 +115,7 @@ public class ObservableSegmentation {
             SegmentRectangle a = it.next();
             Segment newSegment = new Segment(a.getTimeStart(), a.getTimeStop());
             if(a instanceof MutableSegmentRectangle){
-                for(Topic t : ((MutableSegmentRectangle)a).getObservableTopicSet().getTopicsObservableList()){
+                for(Topic t : ((MutableSegmentRectangle)a).getObservableSuperSet().getTopicsObservableList()){
                     Optional<Topic> optionalTopic = targetTopics.stream().filter(top -> top.getTopicName().equals(t.getTopicName())).findFirst();
                     if(optionalTopic.isPresent()){
                         newSegment.putAnnotation(optionalTopic.get().getTopicID(), ((MutableSegmentRectangle)a).getObservableSegment().getAnnotation(t.getTopicID()));
@@ -126,14 +128,14 @@ public class ObservableSegmentation {
     }
 
     public boolean selectedSegmentationIsCustom(){
-        return selectedTimeLine.get() instanceof CustomSegmentationPane;
+        return innerSegmentation.get() instanceof CustomSegmentationPane;
     }
 
     public void deleteSelectedSegments(){
         if(selectedSegmentationIsCustom()){
             for(SegmentRectangle sr : getSelectedSegmentRectangles()){
                 MutableSegmentRectangle msr = (MutableSegmentRectangle)sr;
-                ((CustomSegmentationPane)selectedTimeLine.get()).deleteSegment(msr, msr.getObservableSegment());
+                ((CustomSegmentationPane) innerSegmentation.get()).deleteSegment(msr, msr.getObservableSegment());
             }
 
         }

@@ -12,7 +12,7 @@ import New.Model.Entities.Segment;
 import New.Observables.ObservableSegment;
 import New.Observables.ObservableDot;
 import New.Observables.ObservablePage;
-import New.Observables.ObservableTopicSet;
+import New.Observables.ObservableSuperSet;
 import New.util.DialogGenerator;
 import javafx.beans.property.DoubleProperty;
 import javafx.scene.Node;
@@ -52,14 +52,14 @@ public class CustomSegmentationPane extends SelectableSegmentationPane {
 
     private double[] dragBounds;
 
-    private ObservableTopicSet observableTopicSet;
+    private ObservableSuperSet observableSuperSet;
     private ObservablePage observablePage;
     private CustomTimeLineController customTimeLineController;
     private ContextMenu contextMenu;
 
-    public CustomSegmentationPane(double width, double height, DoubleProperty scaleProp, ObservableTopicSet tag, ObservablePage observablePage, TimeLineContainer parent) {
+    public CustomSegmentationPane(double width, double height, DoubleProperty scaleProp, ObservableSuperSet tag, ObservablePage observablePage, TimeLineContainer parent) {
         super(width, height, scaleProp, tag.getNameProperty(), parent, tag.getTopicSetID());
-        this.observableTopicSet = tag;
+        this.observableSuperSet = tag;
         customTimeLineController = new CustomTimeLineController(tag, observablePage, parent);
 
         dragBounds = new double[2];
@@ -72,26 +72,26 @@ public class CustomSegmentationPane extends SelectableSegmentationPane {
 
     }
 
-    public CustomSegmentationPane(double width, double height, DoubleProperty scaleProp, ObservableTopicSet tag, ObservablePage observablePage, TimeLineContainer parent, Set<Segment> segments) {
+    public CustomSegmentationPane(double width, double height, DoubleProperty scaleProp, ObservableSuperSet tag, ObservablePage observablePage, TimeLineContainer parent, Set<Segment> segments) {
         this(width, height, scaleProp, tag, observablePage, parent);
         addAnnotations(segments);
     }
 
-    public CustomSegmentationPane(double width, double height, DoubleProperty scaleProp, ObservableTopicSet tag, ObservablePage observablePage, TimeLineContainer parent, Segment a) {
+    public CustomSegmentationPane(double width, double height, DoubleProperty scaleProp, ObservableSuperSet tag, ObservablePage observablePage, TimeLineContainer parent, Segment a) {
         this(width, height, scaleProp, tag, observablePage, parent);
         addAnnotation(a);
     }
 
     private void generateSegmentRectangles(){
-        for(Segment s : this.observablePage.getPageProperty().get().getSegmentation(this.observableTopicSet.getTopicSetID())){
-            ObservableSegment oSegment = new ObservableSegment(s, observableTopicSet);
+        for(Segment s : this.observablePage.getPageProperty().get().getSegmentation(this.observableSuperSet.getTopicSetID())){
+            ObservableSegment oSegment = new ObservableSegment(s, observableSuperSet);
             MutableSegmentRectangle mov = new MutableSegmentRectangle(
-                    observableTopicSet.getColorProperty(),
+                    observableSuperSet.getColorProperty(),
                     scale,
                     oSegment,
                     this,
                     observablePage,
-                    observableTopicSet);
+                    observableSuperSet);
             getChildren().addAll(mov, mov.getDisplayedText());
             this.observableSegments.add(oSegment);
         }
@@ -101,20 +101,20 @@ public class CustomSegmentationPane extends SelectableSegmentationPane {
         return timeLineName.get();
     }
 
-    public ObservableTopicSet getObservableTopicSet() {
-        return observableTopicSet;
+    public ObservableSuperSet getObservableSuperSet() {
+        return observableSuperSet;
     }
 
     private void addAnnotation(Segment a){
         customTimeLineController.addAnnotation(a);
-        ObservableSegment oSegment = new ObservableSegment(a, observableTopicSet);
+        ObservableSegment oSegment = new ObservableSegment(a, observableSuperSet);
         MutableSegmentRectangle mov = new MutableSegmentRectangle(
-                observableTopicSet.getColorProperty(),
+                observableSuperSet.getColorProperty(),
                 scale,
                 oSegment,
                 this,
                 observablePage,
-                observableTopicSet);
+                observableSuperSet);
         getChildren().addAll(mov, mov.getDisplayedText());
         this.observableSegments.add(oSegment);
     }
@@ -173,8 +173,9 @@ public class CustomSegmentationPane extends SelectableSegmentationPane {
     }
 
     private void handleFilterSelectClick(){
-        Optional<Map<String, String>> o =  new FilterSelectDialog(observableTopicSet.getInner()).showAndWait();
+        Optional<Map<String, String>> o =  new FilterSelectDialog(observableSuperSet.getInner()).showAndWait();
         if(o.isPresent()){
+            this.setTimeLineSelected(true);
             List<MutableSegmentRectangle> children = getChildren().stream()
                     .filter(node -> node instanceof MutableSegmentRectangle)
                     .map(node -> (MutableSegmentRectangle) node)
@@ -268,7 +269,7 @@ public class CustomSegmentationPane extends SelectableSegmentationPane {
                                 "New segment",
                                 "Create new segment",
                                 "Enter a text for your annotation. (The annotation text can also be empty).",
-                                observableTopicSet.getTopicsObservableList(),
+                                observableSuperSet.getTopicsObservableList(),
                                 Optional.of(s),
                                 false
                         );
@@ -306,7 +307,7 @@ public class CustomSegmentationPane extends SelectableSegmentationPane {
 
     public void createCopyAnnotationDialogue()  {
 
-        SegmentDialog dialog = new SegmentDialog(TXT_DOTANNOTATION_TITLE, TXT_DOTANNOTATION_HEADER, TXT_DOTANNOTATION_TEXT, observableTopicSet.getTopicsObservableList(), Optional.empty(), true);
+        SegmentDialog dialog = new SegmentDialog(TXT_DOTANNOTATION_TITLE, TXT_DOTANNOTATION_HEADER, TXT_DOTANNOTATION_TEXT, observableSuperSet.getTopicsObservableList(), Optional.empty(), true);
 
         dialog.setResultConverter(b -> {
             if (b == dialog.getButtonTypeOK()) {
@@ -361,7 +362,7 @@ public class CustomSegmentationPane extends SelectableSegmentationPane {
     }
 
     public void createAnnotationFromDotsDialogue()  {
-        SegmentDialog dialog = new SegmentDialog(TXT_DOTANNOTATION_TITLE, TXT_DOTANNOTATION_HEADER, TXT_DOTANNOTATION_TEXT, observableTopicSet.getTopicsObservableList(), Optional.empty(), true);
+        SegmentDialog dialog = new SegmentDialog(TXT_DOTANNOTATION_TITLE, TXT_DOTANNOTATION_HEADER, TXT_DOTANNOTATION_TEXT, observableSuperSet.getTopicsObservableList(), Optional.empty(), true);
         dialog.setResultConverter(b -> {
             if (b == dialog.getButtonTypeOK()) {
                 //If the cbox is selected, a new optional containing the boundaries of the new combined annotation is created.

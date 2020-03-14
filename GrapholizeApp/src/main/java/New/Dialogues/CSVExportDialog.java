@@ -1,7 +1,7 @@
 package New.Dialogues;
 import New.Characteristics.Characteristic;
 import New.Controllers.MainSceneController;
-import New.Model.Entities.TopicSet;
+import New.Model.Entities.SuperSet;
 import New.util.DialogGenerator;
 import New.util.Export.CSVExporter;
 import New.util.Export.ExportConfig;
@@ -19,7 +19,7 @@ public class CSVExportDialog {
     private ListView<String> view_participantsID;
 
     @FXML
-    private ListView<TopicSet> view_timelineTopics;
+    private ListView<SuperSet> view_timelineTopics;
 
     @FXML
     private ListView<Characteristic> view_characteristics;
@@ -28,7 +28,7 @@ public class CSVExportDialog {
     private ListView<String> selection_participantsID;
 
     @FXML
-    private ListView<TopicSet> selection_timelineTopics;
+    private ListView<SuperSet> selection_timelineTopics;
 
     @FXML
     private ListView<Characteristic> selection_characteristics;
@@ -37,16 +37,16 @@ public class CSVExportDialog {
 
     public CSVExportDialog() { }
 
-    public void initialize(List<TopicSet> topicSets
+    public void initialize(List<SuperSet> superSets
             , Set<String> participantIDs
             , Set<Characteristic> characteristics
             , MainSceneController mainScene) {
-        if(participantIDs.isEmpty() || topicSets.isEmpty() || characteristics.isEmpty()){
+        if(participantIDs.isEmpty() || superSets.isEmpty() || characteristics.isEmpty()){
             cancelAction();
             throw new NullPointerException();
         }
         view_participantsID.getItems().addAll(participantIDs);
-        view_timelineTopics.getItems().addAll(topicSets);
+        view_timelineTopics.getItems().addAll(superSets);
         view_characteristics.getItems().addAll(characteristics);
         this.callback_reference = mainScene;
     }

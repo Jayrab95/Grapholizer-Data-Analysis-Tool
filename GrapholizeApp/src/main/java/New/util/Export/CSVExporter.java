@@ -91,10 +91,10 @@ public class CSVExporter implements IExporter {
     }
 
     private void AddAnnotations(Segment seg, CSVTableBuilder builder, int rowIndex, String topicSetId) {
-        TopicSet topicSet = project.getTopicSet(topicSetId);
-        String mainTopicID = topicSet.getMainTopicID();
+        SuperSet superSet = project.getTopicSet(topicSetId);
+        String mainTopicID = superSet.getMainTopicID();
         builder.addDataToRow(rowIndex,seg.getAnnotation(mainTopicID));
-        topicSet.getTopics().forEach(topic -> {
+        superSet.getTopics().forEach(topic -> {
             if(topic.getTopicID() != mainTopicID){
                 builder.addDataToRow(rowIndex, seg.getAnnotation(topic.getTopicID()));
             }
@@ -111,11 +111,11 @@ public class CSVExporter implements IExporter {
     private void initializeHeadersIfNotPresent(CSVTableBuilder builder, String topicSetID) {
         if(!builder.hasInitializedHeaders()) {
             //Get Topics
-            TopicSet topicSet = project.getTopicSet(topicSetID);
+            SuperSet superSet = project.getTopicSet(topicSetID);
             //Add the maintopic always first
-            builder.addColumnHeader(topicSet.getMainTopicID());
-            topicSet.getTopics().forEach(topic -> {
-                if(topicSet.getMainTopicID() != topic.getTopicID()) builder.addColumnHeader(topic.getTopicName());
+            builder.addColumnHeader(superSet.getMainTopicID());
+            superSet.getTopics().forEach(topic -> {
+                if(superSet.getMainTopicID() != topic.getTopicID()) builder.addColumnHeader(topic.getTopicName());
             });
             //add all Characteristics
             config.characteristicList.forEach(characteristic -> builder.addColumnHeader(characteristic.getName()));

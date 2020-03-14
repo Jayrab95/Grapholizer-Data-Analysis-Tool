@@ -2,7 +2,6 @@ package New.Model;
 
 
 import New.Model.Entities.Project;
-import New.Model.Entities.TopicSet;
 import New.Observables.ObservablePage;
 import New.Observables.ObservableParticipant;
 import New.Observables.ObservableProject;

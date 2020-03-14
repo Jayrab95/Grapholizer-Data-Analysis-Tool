@@ -1,7 +1,7 @@
 package New.Observables;
 
 import New.Model.Entities.Topic;
-import New.Model.Entities.TopicSet;
+import New.Model.Entities.SuperSet;
 import New.util.ColorConverter;
 import javafx.beans.property.ObjectProperty;
 import javafx.beans.property.SimpleObjectProperty;
@@ -14,19 +14,18 @@ import javafx.scene.paint.Color;
 
 import java.util.Collection;
 import java.util.List;
-import java.util.Set;
 import java.util.stream.Collectors;
 
-public class ObservableTopicSet {
-    private TopicSet inner;
+public class ObservableSuperSet {
+    private SuperSet innerSuperSet;
 
     private StringProperty tagProperty;
     private ObjectProperty<Color> colorProperty;
     private StringProperty mainTopicIDProperty;
     private ObservableList<Topic> topicsObservableList;
 
-    public ObservableTopicSet(TopicSet inner){
-        this.inner = inner;
+    public ObservableSuperSet(SuperSet inner){
+        this.innerSuperSet = inner;
         this.tagProperty = new SimpleStringProperty(inner.getTag());
         this.tagProperty.addListener((observable, oldValue, newValue) -> inner.setTag(newValue));
         this.colorProperty = new SimpleObjectProperty<>(ColorConverter.convertModelColorToJavaFXColor(inner.getSimpleColor()));
@@ -46,12 +45,12 @@ public class ObservableTopicSet {
         });
     }
 
-    public TopicSet getInner() {
-        return inner;
+    public SuperSet getInner() {
+        return innerSuperSet;
     }
 
     public String getTopicSetID(){
-        return inner.getTagID();
+        return innerSuperSet.getTagID();
     }
 
     public String getTag() {
@@ -105,10 +104,10 @@ public class ObservableTopicSet {
     }
 
     public String generateTopicId(String topicName){
-        return inner.generateTopicID(topicName);
+        return innerSuperSet.generateTopicID(topicName);
     }
 
     public Collection<String> getTopicIDs(){
-        return inner.getTopicIDs();
+        return innerSuperSet.getTopicIDs();
     }
 }

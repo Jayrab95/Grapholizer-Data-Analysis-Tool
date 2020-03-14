@@ -3,7 +3,7 @@ package New.Dialogues;
 import New.Execptions.NoTopicsException;
 import New.Model.Entities.SimpleColor;
 import New.Model.Entities.Topic;
-import New.Model.Entities.TopicSet;
+import New.Model.Entities.SuperSet;
 import New.util.ColorConverter;
 import javafx.beans.property.ObjectProperty;
 import javafx.beans.property.SimpleObjectProperty;
@@ -15,12 +15,11 @@ import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.layout.GridPane;
 import javafx.scene.paint.Color;
-import javafx.util.Callback;
 
 import java.util.Optional;
 import java.util.UUID;
 
-public class TopicSetDialog extends Dialog<TopicSet> {
+public class TopicSetDialog extends Dialog<SuperSet> {
 
     private ButtonType buttonTypeOK;
     private ButtonType buttonTypeCancel;
@@ -30,14 +29,14 @@ public class TopicSetDialog extends Dialog<TopicSet> {
     private ObjectProperty<Topic> mainTopic;
 
 
-    public TopicSetDialog(String title, String header, String text, Optional<TopicSet> optional){
+    public TopicSetDialog(String title, String header, String text, Optional<SuperSet> optional){
         setTitle(title);
         setHeaderText(header);
         setContentText(text);
         initializeDialog(optional);
     }
 
-    private void initializeDialog(Optional<TopicSet> topicSetOptional){
+    private void initializeDialog(Optional<SuperSet> topicSetOptional){
         TextField textField_topicSetName = new TextField();
         ColorPicker colorPicker = new ColorPicker();
         if(topicSetOptional.isPresent()){
@@ -166,11 +165,11 @@ public class TopicSetDialog extends Dialog<TopicSet> {
         throw new NoTopicsException(getTopicSetText());
     }
 
-    public TopicSet getTopicSet(){
+    public SuperSet getTopicSet(){
         String id = String.format("%s_%s", topicSetNameProperty.get(), UUID.randomUUID().toString());
         String name = topicSetNameProperty.get();
         SimpleColor color = ColorConverter.convertJavaFXColorToModelColor(topicSetColor.get());
-        TopicSet res = new TopicSet(name, color, topics, mainTopic.get().getTopicID(), id);
+        SuperSet res = new SuperSet(name, color, topics, mainTopic.get().getTopicID(), id);
         return res;
     }
 

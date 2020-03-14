@@ -1,16 +1,13 @@
 package New.Dialogues;
 
-import New.CustomControls.Containers.TimeLineContainer;
-import New.Model.Entities.Segment;
 import New.Model.Entities.Topic;
-import New.Model.Entities.TopicSet;
+import New.Model.Entities.SuperSet;
 import javafx.beans.property.BooleanProperty;
 import javafx.beans.property.SimpleBooleanProperty;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.property.StringProperty;
 import javafx.scene.control.*;
 import javafx.scene.layout.GridPane;
-import javafx.scene.layout.HBox;
 
 import java.util.Iterator;
 import java.util.LinkedList;
@@ -22,19 +19,19 @@ public class FilterForSegmentsDialog extends Dialog {
     private static String TXT_TITLE = "Filter for annotations";
     private static String TXT_HEADER = "Filter for annotations with specific text.";
     private static String TXT_CONTENT = "Select a topic set and a specific topic and enter a filter text. The new segmentation will contain an individual copy of segments that meet the filter requirements.";
-    private ComboBox<TopicSet> comboBox_TopicSets;
+    private ComboBox<SuperSet> comboBox_TopicSets;
     private GridPane grid;
     private ButtonType buttonType_ok;
     private ButtonType buttonType_Cancel;
     private List<FilterEntry> filterEntries;
 
-    public FilterForSegmentsDialog(List<TopicSet> topicSets){
+    public FilterForSegmentsDialog(List<SuperSet> superSets){
 
         setTitle(TXT_TITLE);
         setHeaderText(TXT_HEADER);
         setContentText(TXT_CONTENT);
         comboBox_TopicSets = new ComboBox<>();
-        comboBox_TopicSets.getItems().addAll(filteredTopicSets(topicSets));
+        comboBox_TopicSets.getItems().addAll(filteredTopicSets(superSets));
         grid = new GridPane();
 
         comboBox_TopicSets.valueProperty().addListener((observable, oldValue, newValue) -> {
@@ -51,7 +48,7 @@ public class FilterForSegmentsDialog extends Dialog {
         getDialogPane().getButtonTypes().addAll(buttonType_ok, buttonType_Cancel);
     }
 
-    private List<TopicSet> filteredTopicSets(List<TopicSet> sets){
+    private List<SuperSet> filteredTopicSets(List<SuperSet> sets){
         return sets.stream().filter(set -> set.getTopics().size() > 0).collect(Collectors.toList());
     }
 
@@ -72,7 +69,7 @@ public class FilterForSegmentsDialog extends Dialog {
     }
 
 
-    private void initGridContent(TopicSet ts){
+    private void initGridContent(SuperSet ts){
         filterEntries = new LinkedList<>();
         Iterator<Topic> it = ts.getTopics().iterator();
         int row = 2;
@@ -135,7 +132,7 @@ public class FilterForSegmentsDialog extends Dialog {
     }
 
     public class FilterDialogResult{
-        TopicSet selectedSet;
+        SuperSet selectedSet;
         List<FilterEntry> entries;
 
         FilterDialogResult(){

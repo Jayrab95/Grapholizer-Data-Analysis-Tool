@@ -2,6 +2,7 @@ package New.Dialogues.DialogControls;
 
 import New.Model.Entities.Segment;
 import New.Model.Entities.Topic;
+import javafx.beans.property.BooleanProperty;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.HBox;
@@ -43,5 +44,9 @@ public class TopicTextControl extends HBox {
 
     public String getTextFieldText(){
         return textField_topicText.getText();
+    }
+
+    public BooleanProperty textFieldDisableProperty(){
+        return this.textField_topicText.disableProperty();
     }
 }

@@ -1,6 +1,6 @@
 package New.CustomControls.Annotation;
 
-import New.Controllers.AnnotationSelectionController;
+import New.Controllers.SelectableSegmentController;
 import New.CustomControls.TimeLine.SelectableSegmentationPane;
 import New.Interfaces.Selector;
 import New.Observables.ObservableSegment;
@@ -10,7 +10,7 @@ import javafx.scene.paint.Color;
 
 public class SelectableSegmentRectangle extends SegmentRectangle {
     protected BooleanProperty selected;
-    protected AnnotationSelectionController annotationSelectionController;
+    protected SelectableSegmentController selectableSegmentController;
 
     private double temporaryPreviousStart;
     private double temporaryPreviousStop;
@@ -23,7 +23,7 @@ public class SelectableSegmentRectangle extends SegmentRectangle {
         this.selected.bindBidirectional(oSegment.getSelectedProperty());
         this.selected.addListener((observable, oldValue, newValue) -> onSelectionChange());
 
-        this.annotationSelectionController = new AnnotationSelectionController(parent, s);
+        this.selectableSegmentController = new SelectableSegmentController(parent, s);
 
         setOnMousePressed(this::handleMousePress);
         setOnMouseMoved(e -> e.consume());
@@ -45,13 +45,13 @@ public class SelectableSegmentRectangle extends SegmentRectangle {
 
     protected void handleMouseClick(MouseEvent e){
         System.out.println("HandleMouseClick in SelectionAnnotationRectangle has been called");
-        annotationSelectionController.selectTimeLine(e.isControlDown(), this);
-        annotationSelectionController.selectOnlyDotsWithinTimeFrame(getTimeStart(), getTimeStop());
+        selectableSegmentController.selectTimeLine(e.isControlDown(), this);
+        selectableSegmentController.selectOnlyDotsWithinTimeFrame(getTimeStart(), getTimeStop());
         toggleSelected();
     }
 
     protected void handleMousePress(MouseEvent e){
-        annotationSelectionController.selectTimeLine((e.isControlDown()), this);
+        selectableSegmentController.selectTimeLine((e.isControlDown()), this);
         temporaryPreviousStart = getTimeStart();
         temporaryPreviousStop = getTimeStop();
     }
@@ -63,7 +63,7 @@ public class SelectableSegmentRectangle extends SegmentRectangle {
             toggleSelected();
         }
         else{
-            annotationSelectionController.selectOnlyDotsWithinTimeFrame(getTimeStart(), getTimeStop());
+            selectableSegmentController.selectOnlyDotsWithinTimeFrame(getTimeStart(), getTimeStop());
         }
     }
 
@@ -73,11 +73,11 @@ public class SelectableSegmentRectangle extends SegmentRectangle {
         if (selected.get()) {
             setStroke(Color.GREEN);
             setStrokeWidth(5);
-            annotationSelectionController.selectDots(getTimeStart(), getTimeStop());
+            selectableSegmentController.selectDots(getTimeStart(), getTimeStop());
         }
         else {
             setStroke(null);
-            annotationSelectionController.deselectDots(getTimeStart(), getTimeStop());
+            selectableSegmentController.deselectDots(getTimeStart(), getTimeStop());
         }
     }
 }

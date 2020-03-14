@@ -7,7 +7,7 @@ import New.Dialogues.DialogControls.TopicTextControl;
 import New.Dialogues.SegmentDialog;
 import New.Interfaces.Selector;
 import New.Observables.ObservableSegment;
-import New.Observables.ObservableTopicSet;
+import New.Observables.ObservableSuperSet;
 import New.util.DialogGenerator;
 import javafx.beans.property.DoubleProperty;
 import javafx.beans.property.ObjectProperty;
@@ -26,19 +26,19 @@ public class MutableSegmentRectangle extends SelectableSegmentRectangle {
     private double[] dragBounds;
     private double mouseDelta;
     private ObservableSegment observableSegment;
-    private ObservableTopicSet observableTopicSet;
+    private ObservableSuperSet observableSuperSet;
     private MutableSegmentController mutableSegmentController;
 
     private DragRectangle left;
     private DragRectangle right;
 
 
-    public MutableSegmentRectangle(ObjectProperty<Color> c, DoubleProperty scale, ObservableSegment observableSegment, CustomSegmentationPane parent, Selector oPage, ObservableTopicSet set) {
+    public MutableSegmentRectangle(ObjectProperty<Color> c, DoubleProperty scale, ObservableSegment observableSegment, CustomSegmentationPane parent, Selector oPage, ObservableSuperSet set) {
         super(c, observableSegment.getToolTipTextProperty(), observableSegment.getMainTopicAnnotationProperty() , scale, observableSegment.getDuration(), observableSegment.getTimeStart(), parent, oPage, observableSegment);
 
         this.mutableSegmentController = new MutableSegmentController(observableSegment,parent);
         this.observableSegment = observableSegment;
-        this.observableTopicSet = set;
+        this.observableSuperSet = set;
 
         observableSegment.getTimeStartProperty().bind(this.xProperty().divide(scale));
         observableSegment.getTimeStopProperty().bind((this.xProperty().add(this.widthProperty())).divide(scale));
@@ -73,8 +73,8 @@ public class MutableSegmentRectangle extends SelectableSegmentRectangle {
         return right;
     }
 
-    public ObservableTopicSet getObservableTopicSet() {
-        return observableTopicSet;
+    public ObservableSuperSet getObservableSuperSet() {
+        return observableSuperSet;
     }
 
     public ObservableSegment getObservableSegment() {
@@ -110,7 +110,7 @@ public class MutableSegmentRectangle extends SelectableSegmentRectangle {
                 "Edit Segment",
                 "Edit the text of your segment.",
                 "Edit the text of your segment, then click on Ok to apply the changes.",
-                observableTopicSet.getTopicsObservableList(),
+                observableSuperSet.getTopicsObservableList(),
                 Optional.of(observableSegment.getInnerSegment()),
                 false
                 );
@@ -301,7 +301,7 @@ public class MutableSegmentRectangle extends SelectableSegmentRectangle {
         @Override
         protected void handleMouseRelease(MouseEvent e) {
             adjustStartAndDurationProperty();
-            annotationSelectionController.selectOnlyDotsWithinTimeFrame(parent.getTimeStart(), parent.getTimeStop());
+            selectableSegmentController.selectOnlyDotsWithinTimeFrame(parent.getTimeStart(), parent.getTimeStop());
             e.consume();
         }
     }
@@ -358,7 +358,7 @@ public class MutableSegmentRectangle extends SelectableSegmentRectangle {
         @Override
         protected void handleMouseRelease(MouseEvent e) {
             adjustStartAndDurationProperty();
-            annotationSelectionController.selectOnlyDotsWithinTimeFrame(parent.getTimeStart(), parent.getTimeStop());
+            selectableSegmentController.selectOnlyDotsWithinTimeFrame(parent.getTimeStart(), parent.getTimeStop());
             e.consume();
             //movableAnnotationController.adjustTimeStart();
         }

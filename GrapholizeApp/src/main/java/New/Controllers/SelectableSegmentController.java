@@ -4,12 +4,12 @@ import New.CustomControls.Annotation.SelectableSegmentRectangle;
 import New.CustomControls.TimeLine.SelectableSegmentationPane;
 import New.Interfaces.Selector;
 
-public class AnnotationSelectionController {
+public class SelectableSegmentController {
 
     private SelectableSegmentationPane parent;
     private Selector selector;
 
-    public AnnotationSelectionController(SelectableSegmentationPane parent, Selector s){
+    public SelectableSegmentController(SelectableSegmentationPane parent, Selector s){
         this.parent = parent;
         this.selector = s;
     }

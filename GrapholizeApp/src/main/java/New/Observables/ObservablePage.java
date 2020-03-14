@@ -21,12 +21,12 @@ import java.util.stream.Collectors;
  */
 public class ObservablePage implements Selector {
 
-    private ObservableList<ObservableStroke> strokes;
+    private List<ObservableStroke> strokes;
 
     private final ObjectProperty<Page> inner;
 
     public ObservablePage(Page inner){
-        strokes = FXCollections.observableList(generateStrokes(inner));
+        strokes = new ArrayList(generateStrokes(inner));
         this.inner = new SimpleObjectProperty();
         this.inner.set(inner);
 
@@ -154,7 +154,7 @@ public class ObservablePage implements Selector {
         return observableStrokes;
     }
 
-    public ObservableList<ObservableStroke> getObservableStrokes(){
+    public List<ObservableStroke> getObservableStrokes(){
         return this.strokes;
     }
 
