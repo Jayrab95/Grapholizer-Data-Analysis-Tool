@@ -58,7 +58,12 @@ public class TimeLineContainer extends VBox {
 
     //buisiness logic attributes
     private DoubleProperty totalWidth;
-    private double timeLinesHeight = 50;
+    private double TIMELINES_HEIGHT = 50;
+    private double SEGMENTATION_BOX_WIDTH = 900;
+    private double TIMEUNITPANE_HEIGHT = 20;
+    private double DEFAULT_ELEMENT_SPACING = 10;
+
+
     private DoubleProperty scale;
 
     private ObservableSegmentation selectedTimeLine;
@@ -110,7 +115,7 @@ public class TimeLineContainer extends VBox {
         scaleSlider = initializeSlider(initialScale);
         scale.bind(scaleSlider.valueProperty());
         //Units for timeline
-        unitPane = new TimeUnitPane(scale,20,totalWidth);
+        unitPane = new TimeUnitPane(scale,TIMEUNITPANE_HEIGHT,totalWidth);
 
         InitializeTimelineScrollPane();
 
@@ -119,7 +124,7 @@ public class TimeLineContainer extends VBox {
         containerTimelinesHBox.getChildren().addAll(timelineInfoVBox, verticalScrollPane);
 
         //add everything to parent
-        mainContainer.setMaxWidth(800);
+        mainContainer.setMaxWidth(SEGMENTATION_BOX_WIDTH);
         mainContainer.setSpacing(10d);
         //mainContainer.getChildren().addAll(scaleSlider,buttonHBox,containerTimelinesHBox);
         horizontalScrollPane.setHbarPolicy(ScrollPane.ScrollBarPolicy.NEVER);
@@ -149,7 +154,7 @@ public class TimeLineContainer extends VBox {
         //TODO: POtential memory leak: Do generated segments still listen to external proprty?
         UnmodifiableSelectableSegmentationPane strokePane = new UnmodifiableSelectableSegmentationPane(
                 totalWidth.get(),
-                timeLinesHeight,
+                TIMELINES_HEIGHT,
                 scale,
                 project.getObservableTopicSet(project.getStrokeSetID()),
                 page,
@@ -168,16 +173,15 @@ public class TimeLineContainer extends VBox {
     }
 
     private void InitializeTimelineScrollPane() {
-        timeLineVBox.setPadding(new Insets(0, 0, 0, 0));
-        timeLineVBox.setSpacing(10d);
+        timeLineVBox.setSpacing(DEFAULT_ELEMENT_SPACING);
         verticalScrollPane.setHbarPolicy(ScrollPane.ScrollBarPolicy.ALWAYS);
         verticalScrollPane.setVbarPolicy(ScrollPane.ScrollBarPolicy.NEVER);
-        verticalScrollPane.setMaxWidth(800);
+        verticalScrollPane.setMaxWidth(SEGMENTATION_BOX_WIDTH);
         verticalScrollPane.setContent(timeLineVBox);
 
-        timelineInfoVBox.setSpacing(10d);
+        timelineInfoVBox.setSpacing(DEFAULT_ELEMENT_SPACING);
         timelineInfoVBox.setPadding(new Insets(50,0,0,10));
-        timelineInfoVBox.setMinSize(100,timeLinesHeight);
+        timelineInfoVBox.setMinSize(100, TIMELINES_HEIGHT);
     }
 
 
@@ -187,7 +191,7 @@ public class TimeLineContainer extends VBox {
         createNewTimeLineOutOfSelectedButton = new Button("Create new Timeline out of selected annotations");
         createNewTimeLineOutOfSelectedButton.setOnAction(event -> handleCreateTLOutOfSelectedClick());
         buttonHBox = new HBox(createNewTimeLineButton, createNewTimeLineOutOfSelectedButton);
-        buttonHBox.setSpacing(10d);
+        buttonHBox.setSpacing(DEFAULT_ELEMENT_SPACING);
     }
 
     private Slider initializeSlider(double initScale){
@@ -218,7 +222,7 @@ public class TimeLineContainer extends VBox {
     private void loadSegmentation(ObservableTopicSet t, ObservablePage p, Optional<Set<Segment>> annotations){
         if(annotations.isPresent()){
             CustomSegmentationPane pane;
-            pane = new CustomSegmentationPane(totalWidth.get(), timeLinesHeight, scale, t, p, this);
+            pane = new CustomSegmentationPane(totalWidth.get(), TIMELINES_HEIGHT, scale, t, p, this);
             addTimeLinePane(pane);
         }
         else{
@@ -322,10 +326,10 @@ public class TimeLineContainer extends VBox {
         CustomSegmentationPane result;
         if(copyFromSelected){
             selectedTimeLine.getMissingTopics(tag).forEach(topic -> tag.addTopic(topic));
-            result = new CustomSegmentationPane(timeLineContainerController.getPage().getDuration(), timeLinesHeight, scale, tag, page, this, selectedTimeLine.generateMissingSegments(tag.getTopicsObservableList()));
+            result = new CustomSegmentationPane(timeLineContainerController.getPage().getDuration(), TIMELINES_HEIGHT, scale, tag, page, this, selectedTimeLine.generateMissingSegments(tag.getTopicsObservableList()));
         }
         else{
-            result = new CustomSegmentationPane(timeLineContainerController.getPage().getDuration(), timeLinesHeight, scale, tag, page, this);
+            result = new CustomSegmentationPane(timeLineContainerController.getPage().getDuration(), TIMELINES_HEIGHT, scale, tag, page, this);
         }
         return result;
     }
@@ -341,16 +345,16 @@ public class TimeLineContainer extends VBox {
                     segment.get(0).getTimeStamp(),
                     segment.get(segment.size()-1).getTimeStamp()));
         }
-        return new CustomSegmentationPane(timeLineContainerController.getPage().getDuration(), timeLinesHeight, scale, newTimeLineTag, page, this, segments);
+        return new CustomSegmentationPane(timeLineContainerController.getPage().getDuration(), TIMELINES_HEIGHT, scale, newTimeLineTag, page, this, segments);
     }
 
     private SegmentationPane createNewTimeLinePaneOutOfCombined(ObservableTopicSet tag, ObservablePage page, Set<Segment> segments){
-        CustomSegmentationPane newTimeLine = new CustomSegmentationPane(timeLineContainerController.getPage().getDuration(), timeLinesHeight, scale, tag, page, this, segments);
+        CustomSegmentationPane newTimeLine = new CustomSegmentationPane(timeLineContainerController.getPage().getDuration(), TIMELINES_HEIGHT, scale, tag, page, this, segments);
         return newTimeLine;
     }
 
     private SegmentationPane createNewTimeLinePaneOutOfAnnotations(ObservableTopicSet tag, ObservablePage page, Set<Segment> segments){
-        return new CustomSegmentationPane(timeLineContainerController.getPage().getDuration(), timeLinesHeight, scale, tag, page, this, segments);
+        return new CustomSegmentationPane(timeLineContainerController.getPage().getDuration(), TIMELINES_HEIGHT, scale, tag, page, this, segments);
     }
 
     public void editSegmentation(ObservableTopicSet oldTag){
@@ -507,7 +511,7 @@ public class TimeLineContainer extends VBox {
             setUpLabel();
             setupTimeLineInformation();
 
-            setMinHeight(timeLinesHeight);
+            setMinHeight(TIMELINES_HEIGHT);
             setMaxWidth(120);
         }
 
