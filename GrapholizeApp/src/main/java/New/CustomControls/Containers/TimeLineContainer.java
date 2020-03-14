@@ -174,6 +174,10 @@ public class TimeLineContainer extends ScrollPane {
         timelineScrollPane.setHbarPolicy(ScrollPane.ScrollBarPolicy.ALWAYS);
         timelineScrollPane.setVbarPolicy(ScrollPane.ScrollBarPolicy.NEVER);
         timelineScrollPane.setContent(timeLineVBox);
+        scale.addListener((observable, oldValue, newValue) -> {
+            double hVal = timelineScrollPane.getHvalue() / oldValue.doubleValue();
+            timelineScrollPane.setHvalue(hVal * newValue.doubleValue());
+        });
 
         timelineInfoVBox.setSpacing(10d);
         timelineInfoVBox.setPadding(new Insets(50,0,0,10));
