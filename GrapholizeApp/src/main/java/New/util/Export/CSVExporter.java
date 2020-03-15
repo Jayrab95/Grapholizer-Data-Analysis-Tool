@@ -112,13 +112,22 @@ public class CSVExporter implements IExporter {
         if(!builder.hasInitializedHeaders()) {
             //Get Topics
             SuperSet superSet = project.getTopicSet(topicSetID);
-            //Add the maintopic always first
-            builder.addColumnHeader(superSet.getMainTopicID());
+            //Add the maintopic always first if there is one defined otherwise leaf it empty
+            if(superSet.getMainTopic() == null){
+                builder.addColumnHeader(" ");
+            }else {
+                builder.addColumnHeader(superSet.getMainTopic().getTopicName());
+            }
             superSet.getTopics().forEach(topic -> {
                 if(superSet.getMainTopicID() != topic.getTopicID()) builder.addColumnHeader(topic.getTopicName());
             });
             //add all Characteristics
-            config.characteristicList.forEach(characteristic -> builder.addColumnHeader(characteristic.getName()));
+            config.characteristicList.forEach(characteristic -> {
+                StringBuilder sBuilder = new StringBuilder(characteristic.getName());
+                sBuilder.append(" ");
+                sBuilder.append(characteristic.getUnitName());
+                builder.addColumnHeader(sBuilder.toString());
+            });
         }
     }
 }
