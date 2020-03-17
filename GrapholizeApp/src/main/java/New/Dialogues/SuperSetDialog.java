@@ -19,7 +19,7 @@ import javafx.scene.paint.Color;
 import java.util.Optional;
 import java.util.UUID;
 
-public class TopicSetDialog extends Dialog<SuperSet> {
+public class SuperSetDialog extends Dialog<SuperSet> {
 
     private ButtonType buttonTypeOK;
     private ButtonType buttonTypeCancel;
@@ -29,7 +29,7 @@ public class TopicSetDialog extends Dialog<SuperSet> {
     private ObjectProperty<Topic> mainTopic;
 
 
-    public TopicSetDialog(String title, String header, String text, Optional<SuperSet> optional){
+    public SuperSetDialog(String title, String header, String text, Optional<SuperSet> optional){
         setTitle(title);
         setHeaderText(header);
         setContentText(text);
@@ -129,7 +129,8 @@ public class TopicSetDialog extends Dialog<SuperSet> {
         grid.add(label_AvailableTopics, 1, 5);
         grid.add(tableView_Topics, 1, 6);
         grid.add(btn_deleteSelectedTopics, 1, 7);
-        grid.add(comboBox_mainTopic, 1, 8);
+        grid.add(new Label("Main topic:"), 1, 8);
+        grid.add(comboBox_mainTopic, 2, 8);
 
         buttonTypeOK = new ButtonType("Okay", ButtonBar.ButtonData.OK_DONE);
         buttonTypeCancel = new ButtonType("Cancel", ButtonBar.ButtonData.CANCEL_CLOSE);
