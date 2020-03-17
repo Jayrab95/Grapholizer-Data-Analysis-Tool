@@ -194,9 +194,9 @@ public class SegmentationContainer extends VBox {
 
 
     private void InitializeButtonHBox(){
-        createSegmentationButton = new Button("Create new segmentation");
+        createSegmentationButton = new Button("Create new super set");
         createSegmentationButton.setOnAction(event -> createNewSegmentation());
-        createNewSegmentationOutOfSelectedButton = new Button("Create new segmentation out of selected annotations");
+        createNewSegmentationOutOfSelectedButton = new Button("Create new super set out of selected annotations");
         createNewSegmentationOutOfSelectedButton.setOnAction(event -> handleCreateSegmentationOutOfSelectedClick());
         buttonHBox = new HBox(createSegmentationButton, createNewSegmentationOutOfSelectedButton);
         buttonHBox.setSpacing(DEFAULT_ELEMENT_SPACING);
