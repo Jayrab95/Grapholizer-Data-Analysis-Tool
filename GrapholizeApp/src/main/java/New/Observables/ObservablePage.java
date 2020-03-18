@@ -9,6 +9,7 @@ import javafx.beans.property.SimpleObjectProperty;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.collections.ObservableMap;
+import javafx.scene.Node;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
 
@@ -188,6 +189,25 @@ public class ObservablePage implements Selector {
             res.add(lastSeg);
         }
         return res;
+    }
+
+    public double[] getBounds(double xPosition, String id){
+        //TODO: Move into controller
+        double lowerBounds = 0;
+        double upperBounds = getDuration();
+        //The children list is not sorted and can also include handles of annotations
+
+        for(Segment s : inner.get().getSegmentation(id)) {
+            double nTimeStart = s.getTimeStart();
+            double nTimeStop = s.getTimeStop();
+            if(nTimeStop < xPosition && nTimeStop > lowerBounds) {
+                lowerBounds = nTimeStop;
+            }
+            if(nTimeStart > xPosition && nTimeStart < upperBounds) {
+                upperBounds = nTimeStart;
+            }
+        }
+        return new double[]{lowerBounds, upperBounds};
     }
 
     @Override
