@@ -16,7 +16,6 @@ public class ProjectSerializer implements Serializer<Project> {
                 .setPrettyPrinting()
                 .create()
                 .toJson(project);
-        System.out.println(s);
         return s;
     }
 

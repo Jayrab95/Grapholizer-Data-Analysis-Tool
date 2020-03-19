@@ -25,7 +25,7 @@ public class CSVExporter implements IExporter {
 
     @Override
     public boolean export(String filePath, Project proj, ExportConfig config) throws IOException, ExportException {
-        proj.getTopicSetIDs().forEach(ID -> csvBuilders.put(ID, new CSVTableBuilder()));
+        config.topicSetIDs.forEach(ID -> csvBuilders.put(ID, new CSVTableBuilder()));
         csvBuilders.forEach((k, csvBuilder) -> {
             csvBuilder.addColumnHeader(proj.getTopicSet(k).getTag());
         });
@@ -64,7 +64,6 @@ public class CSVExporter implements IExporter {
     }
 
     private void processPage(Participant part, Page page) {
-        System.out.println("process Page");
         page.getSegmentationsMap().forEach((topicSetID, segmentations) -> {
             if(config.topicSetIDs.contains(topicSetID))
             processSegmentation(part.getID(), topicSetID, segmentations, csvBuilders.get(topicSetID), page);
@@ -73,7 +72,6 @@ public class CSVExporter implements IExporter {
 
     private void processSegmentation(String partID, String topicSetID
             , Set<Segment> segmentations, CSVTableBuilder tableBuilder, Page page){
-        System.out.println("process Segmentation");
         segmentations.forEach(segment -> {
             int index = tableBuilder.addRow(partID);
             addSegmentToCSV(segment, tableBuilder, index, topicSetID, page);
@@ -82,7 +80,6 @@ public class CSVExporter implements IExporter {
     }
 
     private void addSegmentToCSV(Segment seg, CSVTableBuilder builder, int rowIndex, String topicSetId, Page page) {
-        System.out.println("add Segment To CSV");
         initializeHeadersIfNotPresent(builder, topicSetId);
 
         AddAnnotations(seg, builder, rowIndex, topicSetId);
@@ -118,6 +115,7 @@ public class CSVExporter implements IExporter {
             }else {
                 builder.addColumnHeader(superSet.getMainTopic().getTopicName());
             }
+            //Fill all remaining topics into the columns
             superSet.getTopics().forEach(topic -> {
                 if(superSet.getMainTopicID() != topic.getTopicID()) builder.addColumnHeader(topic.getTopicName());
             });
