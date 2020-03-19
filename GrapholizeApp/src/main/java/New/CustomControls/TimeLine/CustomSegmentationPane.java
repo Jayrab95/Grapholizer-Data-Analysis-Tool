@@ -130,6 +130,9 @@ public class CustomSegmentationPane extends SelectableSegmentationPane {
      * @param xPosition Current xPosition on MousePress.
      */
     public double[] getBounds(double xPosition){
+        double[] unscaledBounds = customTimeLineController.getDragBounds(xPosition / scale.get());
+        return new double[]{unscaledBounds[0] * scale.get(), unscaledBounds[1] * scale.get()};
+        /*
         //TODO: Move into controller
         double lowerBounds = 0;
         double upperBounds = getWidth();
@@ -149,6 +152,8 @@ public class CustomSegmentationPane extends SelectableSegmentationPane {
 
         }
         return new double[]{lowerBounds, upperBounds};
+
+         */
     }
 
     private ContextMenu generateContextMenu(){

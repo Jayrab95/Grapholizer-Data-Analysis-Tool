@@ -4,7 +4,7 @@ import New.Controllers.SegmentationContainerController;
 import New.CustomControls.TimeLine.*;
 
 import New.Dialogues.FilterForSegmentsDialog;
-import New.Dialogues.TopicSetDialog;
+import New.Dialogues.SuperSetDialog;
 import New.Execptions.NoTimeLineSelectedException;
 import New.Execptions.TimeLineTagException;
 import New.Interfaces.Observer.Observer;
@@ -30,30 +30,22 @@ import java.util.*;
 
 public class SegmentationContainer extends VBox {
     //region static strings
-    private final static String TXT_TL_CREATION_TITLE = "Create a new timeline";
-    private final static String TXT_TL_CREATION_HEADER = "Creation of a new timeline";
-    private final static String TXT_TL_CREATION_TEXT = "Create a new timeline by entering a tag. The tag must be unique and cannot be empty.";
-    private final static String TXT_TL_TIMELINETAG_LABEL = "Timeline tag:";
-    private final static String TXT_TL_TAG_DEFAULTVAL = "New Timeline";
-    private final static Color COLOR_TL_TAG_DEFAULTVAL = Color.CADETBLUE;
-
-    private final static String TXT_TL_FILTER_TITLE = "Filter for annotations";
-    private final static String TXT_TL_FILTER_HEADER = "Filter for annotations with a specific text";
-    private final static String TXT_TL_FILTER_TEXT= "You may search other annotation sets on this page for annotations with a specific text."
-            + "\nYou may select a topic and filter the annotation set of this topic for annotations with the given text."
-            + "\nIf you leave the checkbox unselected, an empty annotation set will be created.";
+    private final static String TXT_TL_CREATION_TITLE = "Create a new super set";
+    private final static String TXT_TL_CREATION_HEADER = "Creation of a new super set";
+    private final static String TXT_TL_CREATION_TEXT = "Create a new super set by entering a tag. The tag must be unique and cannot be empty.";
+    private final static String TXT_TL_TIMELINETAG_LABEL = "Super set name:";
 
 
-    private final static String TXT_TL_EDIT_TITLE = "Edit timeline";
-    private final static String TXT_TL_EDIT_HEADER = "Editing a timeline";
-    private final static String TXT_TL_EDIT_TEXT = "Change the name of the timeline";
+    private final static String TXT_TL_EDIT_TITLE = "Edit super set";
+    private final static String TXT_TL_EDIT_HEADER = "Editing a super set";
+    private final static String TXT_TL_EDIT_TEXT = "Change the name of the super set";
 
-    private final static String TXT_TL_DELETE_TITLE = "Delete timeline";
-    private final static String TXT_TL_DELETE_HEADER = "Deletion of a timeline.";
-    private final static String TXT_TL_DELETE_TEXT = "Are you sure you want to delete the timeline %s? \nWARNING: Deleting a timeline will remove it and all annotations associated with it from ALL participants and all their pages.";
+    private final static String TXT_TL_DELETE_TITLE = "Delete super set";
+    private final static String TXT_TL_DELETE_HEADER = "Deletion of a super set.";
+    private final static String TXT_TL_DELETE_TEXT = "Are you sure you want to delete the super set %s? \nWARNING: Deleting a timeline will remove it and all annotations associated with it from ALL participants and all their pages.";
 
-    private final static String TXT_TL_CREATION_ERROR_TITLE = "Timeline creation error";
-    private final static String TXT_TL_CREATION_ERROR_HEADER = "Error while creating timeline";
+    private final static String TXT_TL_CREATION_ERROR_TITLE = "Super set creation error";
+    private final static String TXT_TL_CREATION_ERROR_HEADER = "Error while creating super set";
     //endregion
 
     //buisiness logic attributes
@@ -194,9 +186,9 @@ public class SegmentationContainer extends VBox {
 
 
     private void InitializeButtonHBox(){
-        createSegmentationButton = new Button("Create new segmentation");
+        createSegmentationButton = new Button("Create new super set");
         createSegmentationButton.setOnAction(event -> createNewSegmentation());
-        createNewSegmentationOutOfSelectedButton = new Button("Create new segmentation out of selected annotations");
+        createNewSegmentationOutOfSelectedButton = new Button("Create new super set out of selected annotations");
         createNewSegmentationOutOfSelectedButton.setOnAction(event -> handleCreateSegmentationOutOfSelectedClick());
         buttonHBox = new HBox(createSegmentationButton, createNewSegmentationOutOfSelectedButton);
         buttonHBox.setSpacing(DEFAULT_ELEMENT_SPACING);
@@ -469,7 +461,7 @@ public class SegmentationContainer extends VBox {
         This dialog is specific to the creation of timelines and contains some more complex logic
         specific to timelines and the TimelineContainer. Therefore it cannot be moved to DialogGenerator
          */
-        TopicSetDialog dialog = new TopicSetDialog(dialogTitle, dialogHeader, dialogText, optional);
+        SuperSetDialog dialog = new SuperSetDialog(dialogTitle, dialogHeader, dialogText, optional);
 
         //defaultValue is only evaluated if editCall is true, in which case the optional is also present.
         String defaultValue = optional.isPresent() ? optional.get().getTag() : "";

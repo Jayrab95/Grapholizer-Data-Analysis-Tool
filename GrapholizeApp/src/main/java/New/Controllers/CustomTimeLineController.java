@@ -42,6 +42,9 @@ public class CustomTimeLineController {
         }
     }
 
+    public double[] getDragBounds(double x){
+        return page.getBounds(x, observableSuperSet.getTopicSetID());
+    }
 
     public double[] getCombinedAnnotationBoundaries() {
         TreeSet<ObservableSegment> selectedAnnotations = observableSegmentation.getSelectedSegments();
