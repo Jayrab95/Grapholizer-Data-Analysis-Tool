@@ -1,8 +1,8 @@
 package New.Observables;
 
-import New.Execptions.TimeLineTagEmptyException;
-import New.Execptions.TimeLineTagException;
-import New.Execptions.TimelineTagNotUniqueException;
+import New.Execptions.SegmentationNameEmptyException;
+import New.Execptions.SegmentationNameException;
+import New.Execptions.SegmentationNameNotUniqueException;
 import New.Model.Entities.*;
 import javafx.beans.property.ObjectProperty;
 import javafx.beans.property.SimpleObjectProperty;
@@ -119,22 +119,22 @@ public class ObservableProject {
     /**
      * Checks if the given superset name is valid (Name is not empty and name does not already exist)
      * @param superSetName
-     * @throws TimeLineTagException
+     * @throws SegmentationNameException
      */
-    public void checkIfTagIsValid(String superSetName) throws TimeLineTagException {
+    public void checkIfTagIsValid(String superSetName) throws SegmentationNameException {
         timeLineTagExists(superSetName);
         timeLineTagIsNotEmpty(superSetName);
     }
 
-    private void timeLineTagExists(String tag) throws TimeLineTagException{
+    private void timeLineTagExists(String tag) throws SegmentationNameException {
         if(getTopicSets().stream().anyMatch(topicSet -> topicSet.getSuperSetName().equals(tag))){
-            throw new TimelineTagNotUniqueException(tag);
+            throw new SegmentationNameNotUniqueException(tag);
         }
     }
 
-    private void timeLineTagIsNotEmpty(String tag) throws TimeLineTagException{
+    private void timeLineTagIsNotEmpty(String tag) throws SegmentationNameException {
         if(tag.isBlank()){
-            throw new TimeLineTagEmptyException(tag);
+            throw new SegmentationNameEmptyException(tag);
         }
     }
 

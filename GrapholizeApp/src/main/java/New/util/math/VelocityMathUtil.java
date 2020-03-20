@@ -50,7 +50,6 @@ public class VelocityMathUtil {
         return vectorLength(mmX,mmY);
     }
 
-    //TODO sqrt (0.5 * Sum (jerk(t)**2) * duration**5 / length**2).
     public static double normalizedJerk(List<Double> jerkPoints, long duration, double length) {
         //Summ up all the jerks
         if(length == 0) return 0d;
@@ -80,7 +79,7 @@ public class VelocityMathUtil {
         return Math.sqrt(Math.pow(vecX,2.0d) + Math.pow(vecY,2.0d));
     }
 
-    //Converts Inch to screen coordinates: ScreenXY(InchVal) = InchVal * Screen DPI //TODO does not belong here
+    //Converts Inch to screen coordinates: ScreenXY(InchVal) = InchVal * Screen DPI
     public static double convertToScreenCoordinate(double xOrYCoord, int screenDPI) {
         return xOrYCoord * screenDPI;
     }

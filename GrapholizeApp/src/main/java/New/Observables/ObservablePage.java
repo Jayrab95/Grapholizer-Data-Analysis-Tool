@@ -1,15 +1,12 @@
 package New.Observables;
 
-import New.CustomControls.Annotation.SegmentRectangle;
+import New.CustomControls.SegmentRectangles.SegmentRectangle;
 import New.Interfaces.Selector;
 import New.Model.Entities.*;
 import New.util.PageUtil;
 import javafx.beans.property.ObjectProperty;
 import javafx.beans.property.SimpleObjectProperty;
 import javafx.collections.FXCollections;
-import javafx.collections.ObservableList;
-import javafx.collections.ObservableMap;
-import javafx.scene.Node;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
 

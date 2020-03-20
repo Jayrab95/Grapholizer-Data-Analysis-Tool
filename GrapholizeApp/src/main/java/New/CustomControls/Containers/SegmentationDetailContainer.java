@@ -1,9 +1,9 @@
 package New.CustomControls.Containers;
 
 import New.Characteristics.Characteristic;
-import New.CustomControls.Annotation.SegmentRectangle;
-import New.CustomControls.TimeLine.*;
-import New.CustomControls.TimeLine.SubTimeLines.*;
+import New.CustomControls.SegmentRectangles.SegmentRectangle;
+import New.CustomControls.SegmentationPanes.*;
+import New.CustomControls.SegmentationPanes.DetailSegmentations.*;
 import New.util.CharacteristicList;
 import javafx.beans.property.DoubleProperty;
 import javafx.beans.property.SimpleDoubleProperty;

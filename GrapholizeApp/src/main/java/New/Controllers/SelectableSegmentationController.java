@@ -1,6 +1,6 @@
 package New.Controllers;
 
-import New.CustomControls.TimeLine.SelectableSegmentationPane;
+import New.CustomControls.SegmentationPanes.SelectableSegmentationPane;
 import New.Observables.ObservableSegmentation;
 import javafx.beans.binding.BooleanBinding;
 

@@ -1,6 +1,52 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
-  <component name="RunManager">
+  <component name="ChangeListManager">
+    <list default="true" id="ed2e4f5e-a936-4f75-9a64-ef340ba2c567" name="Default Changelist" comment="" />
+    <option name="SHOW_DIALOG" value="false" />
+    <option name="HIGHLIGHT_CONFLICTS" value="false" />
+    <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
+    <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="ExternalProjectsManager">
+    <system id="GRADLE">
+      <state>
+        <task path="$PROJECT_DIR$">
+          <activation />
+        </task>
+        <projects_view>
+          <tree_state>
+            <expand>
+              <path>
+                <item name="" type="6a2764b6:ExternalProjectsStructure$RootNode" />
+                <item name="GrapholizeAppAID" type="f1a62948:ProjectNode" />
+              </path>
+              <path>
+                <item name="" type="6a2764b6:ExternalProjectsStructure$RootNode" />
+                <item name="GrapholizeAppAID" type="f1a62948:ProjectNode" />
+                <item name="Source Sets" type="e897c970:GradleViewContributor$SourceSetsNode" />
+              </path>
+              <path>
+                <item name="" type="6a2764b6:ExternalProjectsStructure$RootNode" />
+                <item name="GrapholizeAppAID" type="f1a62948:ProjectNode" />
+                <item name="Tasks" type="e4a08cd1:TasksNode" />
+              </path>
+              <path>
+                <item name="" type="6a2764b6:ExternalProjectsStructure$RootNode" />
+                <item name="GrapholizeAppAID" type="f1a62948:ProjectNode" />
+                <item name="Tasks" type="e4a08cd1:TasksNode" />
+                <item name="application" type="c8890929:TasksNode$1" />
+              </path>
+            </expand>
+            <select />
+          </tree_state>
+        </projects_view>
+      </state>
+    </system>
+  </component>
+  <component name="ProjectLevelVcsManager" settingsEditedManually="true">
+    <ConfirmationsSetting value="2" id="Add" />
+  </component>
+  <component name="RunManager" selected="Gradle.GrapholizeApp [run]">
     <configuration name="Grapholizer" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
       <option name="MAIN_CLASS_NAME" value="New.Scenes.Grapholizer" />
       <module name="GrapholizeAppAID.main" />
@@ -14,10 +60,70 @@
         <option name="Make" enabled="true" />
       </method>
     </configuration>
+    <configuration name="GrapholizeApp [run]" type="GradleRunConfiguration" factoryName="Gradle" temporary="true">
+      <ExternalSystemSettings>
+        <option name="executionName" />
+        <option name="externalProjectPath" value="$PROJECT_DIR$" />
+        <option name="externalSystemIdString" value="GRADLE" />
+        <option name="scriptParameters" />
+        <option name="taskDescriptions">
+          <list />
+        </option>
+        <option name="taskNames">
+          <list>
+            <option value="run" />
+          </list>
+        </option>
+        <option name="vmOptions" />
+      </ExternalSystemSettings>
+      <GradleScriptDebugEnabled>true</GradleScriptDebugEnabled>
+      <method v="2" />
+    </configuration>
+    <list>
+      <item itemvalue="Application.Grapholizer" />
+      <item itemvalue="Gradle.GrapholizeApp [run]" />
+    </list>
     <recent_temporary>
       <list>
+        <item itemvalue="Gradle.GrapholizeApp [run]" />
         <item itemvalue="Application.Grapholizer" />
       </list>
     </recent_temporary>
+  </component>
+  <component name="SvnConfiguration">
+    <configuration />
+  </component>
+  <component name="TaskManager">
+    <servers />
+  </component>
+  <component name="WindowStateProjectService">
+    <state x="423" y="44" key="#com.intellij.refactoring.rename.AutomaticRenamingDialog" timestamp="1584743532735">
+      <screen x="0" y="0" width="1368" height="872" />
+    </state>
+    <state x="423" y="44" key="#com.intellij.refactoring.rename.AutomaticRenamingDialog/0.0.1368.872@0.0.1368.872" timestamp="1584743532735" />
+    <state x="415" y="186" key="#com.intellij.refactoring.safeDelete.UnsafeUsagesDialog" timestamp="1584743596799">
+      <screen x="0" y="0" width="1368" height="872" />
+    </state>
+    <state x="415" y="186" key="#com.intellij.refactoring.safeDelete.UnsafeUsagesDialog/0.0.1368.872@0.0.1368.872" timestamp="1584743596799" />
+    <state width="1326" height="374" key="GridCell.Tab.0.bottom" timestamp="1584738033544">
+      <screen x="0" y="0" width="1368" height="872" />
+    </state>
+    <state width="1326" height="374" key="GridCell.Tab.0.bottom/0.0.1368.872@0.0.1368.872" timestamp="1584738033544" />
+    <state width="1326" height="374" key="GridCell.Tab.0.center" timestamp="1584738033544">
+      <screen x="0" y="0" width="1368" height="872" />
+    </state>
+    <state width="1326" height="374" key="GridCell.Tab.0.center/0.0.1368.872@0.0.1368.872" timestamp="1584738033544" />
+    <state width="1326" height="374" key="GridCell.Tab.0.left" timestamp="1584738033544">
+      <screen x="0" y="0" width="1368" height="872" />
+    </state>
+    <state width="1326" height="374" key="GridCell.Tab.0.left/0.0.1368.872@0.0.1368.872" timestamp="1584738033544" />
+    <state width="1326" height="374" key="GridCell.Tab.0.right" timestamp="1584738033544">
+      <screen x="0" y="0" width="1368" height="872" />
+    </state>
+    <state width="1326" height="374" key="GridCell.Tab.0.right/0.0.1368.872@0.0.1368.872" timestamp="1584738033544" />
+    <state x="387" y="191" width="592" height="488" key="find.popup" timestamp="1584743798920">
+      <screen x="0" y="0" width="1368" height="872" />
+    </state>
+    <state x="387" y="191" width="592" height="488" key="find.popup/0.0.1368.872@0.0.1368.872" timestamp="1584743798920" />
   </component>
 </project>

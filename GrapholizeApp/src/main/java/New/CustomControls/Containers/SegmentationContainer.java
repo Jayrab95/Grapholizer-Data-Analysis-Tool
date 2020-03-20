@@ -1,13 +1,12 @@
 package New.CustomControls.Containers;
 
 import New.Controllers.SegmentationContainerController;
-import New.CustomControls.TimeLine.*;
+import New.CustomControls.SegmentationPanes.*;
 
 import New.Dialogues.FilterForSegmentsDialog;
 import New.Dialogues.SuperSetDialog;
 import New.Execptions.NoSegmentationSelectedException;
-import New.Execptions.TimeLineTagException;
-import New.Interfaces.Observer.Observer;
+import New.Execptions.SegmentationNameException;
 import New.Model.Entities.Segment;
 import New.Model.Entities.SuperSet;
 import New.Observables.*;
@@ -463,7 +462,7 @@ public class SegmentationContainer extends VBox {
                 try {
                     segmentationContainerController.checkIfSuperSetNameIsValid(newTimeLineName);
                     dialog.topicsDefined();
-                } catch (TimeLineTagException ex) {
+                } catch (SegmentationNameException ex) {
                     DialogGenerator.simpleErrorDialog(
                             TXT_TL_CREATION_ERROR_TITLE,
                             TXT_TL_CREATION_ERROR_HEADER,

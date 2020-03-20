@@ -1,6 +1,6 @@
 package New.Observables;
 
-import New.Interfaces.Observer.ParticipantObserver;
+
 import New.Model.Entities.Participant;
 import javafx.beans.property.ObjectProperty;
 import javafx.beans.property.SimpleObjectProperty;

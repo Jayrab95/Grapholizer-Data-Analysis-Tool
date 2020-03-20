@@ -1,7 +1,7 @@
 package New.Controllers;
 
 
-import New.Execptions.TimeLineTagException;
+import New.Execptions.SegmentationNameException;
 import New.Model.Entities.Topic;
 import New.Model.Entities.SuperSet;
 import New.Observables.ObservablePage;
@@ -89,9 +89,9 @@ public class SegmentationContainerController {
     /**
      * Checks if the given name is valid (is not blank and not used by another super set)
      * @param tag string name to be checked
-     * @throws TimeLineTagException if tag is not valid
+     * @throws SegmentationNameException if tag is not valid
      */
-    public void checkIfSuperSetNameIsValid(String tag) throws TimeLineTagException{
+    public void checkIfSuperSetNameIsValid(String tag) throws SegmentationNameException {
         project.checkIfTagIsValid(tag);
     }
 

@@ -1,8 +1,7 @@
 package New.Controllers;
 
-import New.CustomControls.Annotation.MutableSegmentRectangle;
-import New.CustomControls.TimeLine.CustomSegmentationPane;
-import New.Model.Entities.Segment;
+import New.CustomControls.SegmentRectangles.MutableSegmentRectangle;
+import New.CustomControls.SegmentationPanes.CustomSegmentationPane;
 import New.Observables.ObservableSegment;
 import javafx.scene.shape.Rectangle;
 

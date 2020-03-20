@@ -48,7 +48,6 @@ public class PageDataReader implements Loader {
     }
 
     private static boolean IsFileValid(FileInputStream st) throws IOException{
-        //TODO Check other hints that might prove the validity of the file
         byte[] neoSignalWord = new byte[3];
         st.read(neoSignalWord, 0, 3);
         String signalWord = new String(neoSignalWord);

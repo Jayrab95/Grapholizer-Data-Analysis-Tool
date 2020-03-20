@@ -1,11 +1,11 @@
 package New.Observables;
 
-import New.CustomControls.Annotation.SegmentRectangle;
-import New.CustomControls.Annotation.MutableSegmentRectangle;
-import New.CustomControls.Annotation.SelectableSegmentRectangle;
-import New.CustomControls.TimeLine.CustomSegmentationPane;
-import New.CustomControls.TimeLine.SelectableSegmentationPane;
-import New.CustomControls.TimeLine.UnmodifiableSelectableSegmentationPane;
+import New.CustomControls.SegmentRectangles.SegmentRectangle;
+import New.CustomControls.SegmentRectangles.MutableSegmentRectangle;
+import New.CustomControls.SegmentRectangles.SelectableSegmentRectangle;
+import New.CustomControls.SegmentationPanes.CustomSegmentationPane;
+import New.CustomControls.SegmentationPanes.SelectableSegmentationPane;
+import New.CustomControls.SegmentationPanes.UnmodifiableSelectableSegmentationPane;
 import New.Execptions.NoSegmentationSelectedException;
 import New.Model.Entities.Segment;
 import New.Model.Entities.Topic;

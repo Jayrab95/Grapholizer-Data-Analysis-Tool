@@ -1,10 +1,10 @@
 package New.Controllers;
 
-import New.CustomControls.Annotation.MutableSegmentRectangle;
-import New.CustomControls.TimeLine.CustomSegmentationPane;
+import New.CustomControls.SegmentRectangles.MutableSegmentRectangle;
+import New.CustomControls.SegmentationPanes.CustomSegmentationPane;
 import New.CustomControls.Containers.SegmentationContainer;
-import New.CustomControls.Annotation.SegmentRectangle;
-import New.CustomControls.TimeLine.SelectableSegmentationPane;
+import New.CustomControls.SegmentRectangles.SegmentRectangle;
+import New.CustomControls.SegmentationPanes.SelectableSegmentationPane;
 import New.Execptions.NoDotsSelectedException;
 import New.Execptions.NoSegmentationSelectedException;
 import New.Model.Entities.Segment;

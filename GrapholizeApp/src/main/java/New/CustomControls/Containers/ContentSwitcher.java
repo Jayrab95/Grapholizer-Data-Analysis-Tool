@@ -1,7 +1,6 @@
 package New.CustomControls.Containers;
 
 import New.Controllers.ContentSwitcherController;
-import New.Interfaces.Observer.ProjectObserver;
 import New.Observables.ObservablePage;
 import New.Observables.ObservableParticipant;
 import New.Observables.ObservableProject;

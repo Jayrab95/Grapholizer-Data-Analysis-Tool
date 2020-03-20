@@ -1,6 +1,6 @@
 package New.Execptions;
 
-public class NoTopicsException extends TimeLineTagException {
+public class NoTopicsException extends SegmentationNameException {
 
     public NoTopicsException(String tag) {
         super(tag);

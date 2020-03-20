@@ -26,7 +26,6 @@ public class JsonLoader implements Loader {
         return turnToInternalDataStructur(partics);
     }
 
-    //TODO: Load the timeline tags
     private Project turnToInternalDataStructur(CompressedParticipant[] partics)
     {
         List<Participant> participants = new ArrayList<>();

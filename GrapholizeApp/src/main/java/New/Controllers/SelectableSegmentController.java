@@ -1,7 +1,7 @@
 package New.Controllers;
 
-import New.CustomControls.Annotation.SelectableSegmentRectangle;
-import New.CustomControls.TimeLine.SelectableSegmentationPane;
+import New.CustomControls.SegmentRectangles.SelectableSegmentRectangle;
+import New.CustomControls.SegmentationPanes.SelectableSegmentationPane;
 import New.Interfaces.Selector;
 
 public class SelectableSegmentController {
