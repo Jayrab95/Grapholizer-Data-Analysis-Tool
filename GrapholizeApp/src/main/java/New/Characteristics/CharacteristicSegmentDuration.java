@@ -14,8 +14,8 @@ public class CharacteristicSegmentDuration extends Characteristic<Long> {
     }
 
     @Override
-    public Long calculate(Segment seg, List<Stroke> strokes) {
-        return (long)seg.getDuration();
+    public Long calculate(Segment segment, List<Stroke> strokes) {
+        return (long) segment.getDuration();
     }
 
     //Make the compiler happy, workaroud to implement special case

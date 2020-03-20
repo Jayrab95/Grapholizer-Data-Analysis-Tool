@@ -2,7 +2,6 @@ package New.CustomControls.TimeLine;
 
 import New.Controllers.CustomTimeLineController;
 import New.CustomControls.Containers.SegmentationContainer;
-import New.CustomControls.Annotation.SegmentRectangle;
 import New.CustomControls.Annotation.MutableSegmentRectangle;
 import New.Dialogues.DialogControls.TopicTextControl;
 import New.Dialogues.FilterSelectDialog;
@@ -15,7 +14,6 @@ import New.Observables.ObservablePage;
 import New.Observables.ObservableSuperSet;
 import New.util.DialogGenerator;
 import javafx.beans.property.DoubleProperty;
-import javafx.scene.Node;
 import javafx.scene.control.*;
 import javafx.scene.input.MouseButton;
 import javafx.scene.input.MouseEvent;
@@ -92,7 +90,7 @@ public class CustomSegmentationPane extends SelectableSegmentationPane {
                     this,
                     observablePage,
                     observableSuperSet);
-            getChildren().addAll(mov, mov.getDisplayedText());
+            getChildren().addAll(mov, mov.getDisplayedTextLabel());
             this.observableSegments.add(oSegment);
         }
     }
@@ -115,7 +113,7 @@ public class CustomSegmentationPane extends SelectableSegmentationPane {
                 this,
                 observablePage,
                 observableSuperSet);
-        getChildren().addAll(mov, mov.getDisplayedText());
+        getChildren().addAll(mov, mov.getDisplayedTextLabel());
         this.observableSegments.add(oSegment);
     }
 
@@ -413,7 +411,7 @@ public class CustomSegmentationPane extends SelectableSegmentationPane {
     }
 
     public void deleteSegment(MutableSegmentRectangle a, ObservableSegment observableSegment){
-        getChildren().removeAll(a, a.getLeft(), a.getRight(), a.getDisplayedText());
+        getChildren().removeAll(a, a.getLeft(), a.getRight(), a.getDisplayedTextLabel());
         this.observableSegments.remove(observableSegment);
         customTimeLineController.removeAnnotation(observableSegment);
     }

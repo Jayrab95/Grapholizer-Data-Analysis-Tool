@@ -21,6 +21,10 @@ import javafx.scene.shape.Rectangle;
 import java.util.Map;
 import java.util.Optional;
 
+/**
+ * The MutableSegmentRectangle extends from the SelectableSegmentRectangle. It is responsible
+ * for handling the mutation logic (moving and adjusting size) of segments.
+ */
 public class MutableSegmentRectangle extends SelectableSegmentRectangle {
 
     private double[] dragBounds;
@@ -32,11 +36,20 @@ public class MutableSegmentRectangle extends SelectableSegmentRectangle {
     private DragRectangle left;
     private DragRectangle right;
 
+    /**
+     * Constructor for MutableSegmentRectangles. Note that the String properties for the display and too tip texts are
+     * directly taken from the given observableSegment
+     * @param colorProperty The color property which determines the color of this segment.
+     * @param scale the double property which determines the currently active scale
+     * @param observableSegment the observableSegment which wraps the segment object responsible for this graphical segment Rectangle
+     * @param parentCustomSegmentationPane the segmentation this segment belongs to
+     * @param observablePage the observable page this segment belongs to (or rather the segmentation this segment is currently in)
+     * @param set The super set which defines the topics for this segment
+     */
+    public MutableSegmentRectangle(ObjectProperty<Color> colorProperty, DoubleProperty scale, ObservableSegment observableSegment, CustomSegmentationPane parentCustomSegmentationPane, Selector observablePage, ObservableSuperSet set) {
+        super(colorProperty, observableSegment.getToolTipTextProperty(), observableSegment.getMainTopicAnnotationProperty() , scale, observableSegment.getDuration(), observableSegment.getTimeStart(), parentCustomSegmentationPane, observablePage, observableSegment);
 
-    public MutableSegmentRectangle(ObjectProperty<Color> c, DoubleProperty scale, ObservableSegment observableSegment, CustomSegmentationPane parent, Selector oPage, ObservableSuperSet set) {
-        super(c, observableSegment.getToolTipTextProperty(), observableSegment.getMainTopicAnnotationProperty() , scale, observableSegment.getDuration(), observableSegment.getTimeStart(), parent, oPage, observableSegment);
-
-        this.mutableSegmentController = new MutableSegmentController(observableSegment,parent);
+        this.mutableSegmentController = new MutableSegmentController(observableSegment,parentCustomSegmentationPane);
         this.observableSegment = observableSegment;
         this.observableSuperSet = set;
 
@@ -65,28 +78,47 @@ public class MutableSegmentRectangle extends SelectableSegmentRectangle {
 
     }
 
+    /**
+     *
+     * @return Returns the left DragRectangle
+     */
     public DragRectangle getLeft() {
         return left;
     }
 
+    /**
+     *
+     * @return Returns the right DragRectangle
+     */
     public DragRectangle getRight() {
         return right;
     }
 
+    /**
+     *
+     * @return Returns the observableSuperSet for this segment
+     */
     public ObservableSuperSet getObservableSuperSet() {
         return observableSuperSet;
     }
 
+    /**
+     *
+     * @return returns the observableSegment for this segment
+     */
     public ObservableSegment getObservableSegment() {
         return observableSegment;
     }
 
-    private void move(double newTimeStart){
-        double delta = (newTimeStart - getX()) / scaleProperty.get();
-        this.setX(newTimeStart);
-        //movableAnnotationController.moveElement(delta);
+    /**
+     * Adjusts the X position value for this segment
+     * @param newXPos the new X value for this rectangle (unscaled)
+     */
+    private void move(double newXPos){
+        this.setX(newXPos);
     }
 
+    //region ContextMenu
     /**
      * Generates a ContextMenu for a TimeLineElement on demand.
      * The ContextMenu currently has tow selectable MenuItems: "Edit element" and "delete element".
@@ -124,18 +156,6 @@ public class MutableSegmentRectangle extends SelectableSegmentRectangle {
             return null;
         });
         dialog.showAndWait();
-        /*
-        Optional<String> newAnnotationText = DialogGenerator.simpleTextInputDialog(
-                annotationText.get(),
-                "Edit annotation",
-                "Edit the text of your annotation, then click on OK to apply the changes.",
-                annotationText.get()
-        );
-        if(newAnnotationText.isPresent()){
-            movableAnnotationController.editElement(newAnnotationText.get());
-        }
-
-         */
     }
 
     private void handleEditTimeLineElementClick(){
@@ -155,8 +175,9 @@ public class MutableSegmentRectangle extends SelectableSegmentRectangle {
     public void deleteSegment(){
         mutableSegmentController.removeElement(this);
     }
+    //endregion
 
-    //region TimeLineElement handlers
+    //region mouse event handlers
 
     @Override
     protected void handleMousePress(MouseEvent event){
@@ -219,6 +240,11 @@ public class MutableSegmentRectangle extends SelectableSegmentRectangle {
     }
     //endregion
 
+    /**
+     * Checks if the annotations adhere to the filter options
+     * @param filter filter options map (key = topic ID, value = filter text)
+     * @return true if the segment fits the filter criteria
+     */
     public boolean fitsCriteria(Map<String, String> filter){
         return mutableSegmentController.fitsFilterCriteria(filter);
     }
@@ -330,29 +356,21 @@ public class MutableSegmentRectangle extends SelectableSegmentRectangle {
                 //traveldirection: left (travelDistance is positive)
                 if(((parent.getX() + parent.getWidth()) - traveledDistance) > dragBounds[0]){
                     parent.setWidth(parent.getWidth() - traveledDistance);
-                    //movableAnnotationController.adjustTimeStop(getTimeStart() - (traveledDistance / scale.get()));
                 }
                 else{
                     parent.setWidth(5);
-                    //movableAnnotationController.adjustTimeStop((dragBounds[0]/scale.get()) + 0.5);
                 }
             }
             else{
                 //traveldirection: right, travelDistance is negative
-                if((parent.getX() + parent.getWidth() + traveledDistance) < dragBounds[1]){
+                if((parent.getX() + parent.getWidth() + traveledDistance) < dragBounds[1]) {
                     parent.setWidth(parent.getWidth() - traveledDistance);
-                    //movableAnnotationController.adjustTimeStop(getTimeStop() - traveledDistance);
                 }
-                else{
+                else {
                     parent.setWidth(dragBounds[1] - parent.getX());
-                    //movableAnnotationController.adjustTimeStop((dragBounds[1] / scale.get()) - 0.5);
                 }
-
-
             }
             startX = e.getSceneX();
-            //setX(e.getSceneX());
-
         }
 
         @Override
@@ -360,7 +378,6 @@ public class MutableSegmentRectangle extends SelectableSegmentRectangle {
             adjustStartAndDurationProperty();
             selectableSegmentController.selectOnlyDotsWithinTimeFrame(parent.getTimeStart(), parent.getTimeStop());
             e.consume();
-            //movableAnnotationController.adjustTimeStart();
         }
     }
     //endregion

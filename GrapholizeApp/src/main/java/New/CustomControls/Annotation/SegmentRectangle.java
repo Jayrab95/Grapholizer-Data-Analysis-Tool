@@ -1,14 +1,17 @@
 package New.CustomControls.Annotation;
 
 import javafx.beans.property.*;
-import javafx.beans.value.ChangeListener;
-import javafx.beans.value.WeakChangeListener;
 import javafx.scene.control.Label;
 import javafx.scene.control.Tooltip;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
 
-
+/**
+ * The SegmentRectangle class is a base class for visual segment components.
+ * The SegmentRectangle class is responsible for displaying the text of the main topic annotation,
+ * displaying the tooltip of the segment and adjusting the size of the segment if the scale of the segment container
+ * changes.
+ */
 public class SegmentRectangle extends Rectangle implements Comparable<SegmentRectangle> {
 
     protected ObjectProperty<Color> segmentColorProperty;
@@ -19,16 +22,22 @@ public class SegmentRectangle extends Rectangle implements Comparable<SegmentRec
     protected DoubleProperty startProperty;
     protected DoubleProperty durationProperty;
 
-    protected Label displayedText;
+    protected Label label_DisplayedText;
     protected Tooltip tooltip;
 
-    //protected String defaultStyle = "-fx-border-style: solid inside; -fx-border-width: 2; -fx-background-color: rgb(%f, %f, %f)";
-    //protected String defaultStyle = "-fx-padding: 10; -fx-border-style: solid inside; -fx-border-width: 2; -fx-border-insets: 5; -fx-border-radius: 5; -fx-background-color: palegreen";
-    //protected String selectedStyle = "-fx-border-style: solid inside; -fx-border-width: 2; -fx-border-color: green -fx-background-color: rgb(%f, %f, %f)";
-
-    public SegmentRectangle(ObjectProperty<Color> c, StringProperty toolTipTextProperty, StringProperty labelTextProperty, DoubleProperty scaleProperty, double width, double height, double start){
-        this.segmentColorProperty = new SimpleObjectProperty<>(c.get());
-        this.segmentColorProperty.bind(c);
+    /**
+     *
+     * @param colorProperty The color property which determines the color of this segment.
+     * @param toolTipTextProperty The string property which determines the toopTipText of this segment.
+     * @param labelTextProperty the string property which determines the display text of this segment
+     * @param scaleProperty the double property which determines the currently active scale
+     * @param width the initial width of this segment
+     * @param height the initial height of this segment
+     * @param start the initial timeStart value of this segment (unscaled)
+     */
+    public SegmentRectangle(ObjectProperty<Color> colorProperty, StringProperty toolTipTextProperty, StringProperty labelTextProperty, DoubleProperty scaleProperty, double width, double height, double start){
+        this.segmentColorProperty = new SimpleObjectProperty<>(colorProperty.get());
+        this.segmentColorProperty.bind(colorProperty);
         this.segmentColorProperty.addListener((observable, oldValue, newValue) -> onColorChange());
 
         this.segmentTextProperty = new SimpleStringProperty(labelTextProperty.get());
@@ -43,15 +52,12 @@ public class SegmentRectangle extends Rectangle implements Comparable<SegmentRec
         this.durationProperty = new SimpleDoubleProperty(width);
         this.startProperty = new SimpleDoubleProperty(start);
 
-        //this.durationProperty.bind(this.widthProperty().divide(this.scale));
-        //this.startProperty.bind(this.xProperty().divide(this.scale));
-
-        this.displayedText = new Label(segmentTextProperty.get());
-        this.displayedText.textProperty().bind(segmentTextProperty);
-        this.displayedText.setLabelFor(this);
-        this.displayedText.translateXProperty().bind((this.xProperty().add((this.widthProperty()).divide(2))).subtract(this.displayedText.widthProperty().divide(2)));
-        this.displayedText.setTranslateY((getHeight()/2) + (this.displayedText.getHeight()/2));
-        this.displayedText.visibleProperty().bind(widthProperty().greaterThanOrEqualTo(this.displayedText.widthProperty()));
+        this.label_DisplayedText = new Label(segmentTextProperty.get());
+        this.label_DisplayedText.textProperty().bind(segmentTextProperty);
+        this.label_DisplayedText.setLabelFor(this);
+        this.label_DisplayedText.translateXProperty().bind((this.xProperty().add((this.widthProperty()).divide(2))).subtract(this.label_DisplayedText.widthProperty().divide(2)));
+        this.label_DisplayedText.setTranslateY((getHeight()/2) + (this.label_DisplayedText.getHeight()/2));
+        this.label_DisplayedText.visibleProperty().bind(widthProperty().greaterThanOrEqualTo(this.label_DisplayedText.widthProperty()));
 
         this.tooltip = new Tooltip(this.toolTipTextProperty.get());
         this.tooltip.textProperty().bind(this.toolTipTextProperty);
@@ -63,48 +69,79 @@ public class SegmentRectangle extends Rectangle implements Comparable<SegmentRec
         setY(0);
 
         if(this.getWidth() > 0) {
-            setFill(c.get());
+            setFill(colorProperty.get());
             setStroke(Color.BLACK);
         }
     }
 
+    /**
+     * Changes the color of the segment. This method is called when the color property is notified by a change event
+     */
     private void onColorChange(){
-        System.out.println("Color change has been called");
         setFill(segmentColorProperty.get());
     }
 
 
-    protected void rescaleElement(){
+    /**
+     * Rescales the segment by adjusting its X position and width according to the scale.
+     */
+    protected void rescaleSegment(){
 
         setX(startProperty.get() * scaleProperty.get());
         setWidth(durationProperty.get() * scaleProperty.get());
     }
 
+    /**
+     * Rescales the element. This method is called when the scale property is notified by a change event.
+     */
     protected void onScaleChange(){
-        rescaleElement();
+        rescaleSegment();
     }
 
+    /**
+     * Returns the timeStart value of this segment by dividing the current X position by the scale.
+     * @return the timeStart value of the segment
+     */
     public double getTimeStart(){
         return this.getX() / scaleProperty.get();
     }
 
+    /**
+     * Returns the timeStop value of this segment by adding the current X position and the width of this
+     * rectangle and dividing that value by the scale.
+     * @return the timeStop value of the segment
+     */
     public double getTimeStop(){
         return (this.getX() + this.getWidth()) / scaleProperty.get();
     }
 
+    /**
+     * @return the text that is currently displayed.
+     */
     public String getText(){
         return segmentTextProperty.get();
     }
 
-    public Label getDisplayedText() {
-        return displayedText;
+    /**
+     * @return the label responsible for the display text of this segment
+     */
+    public Label getDisplayedTextLabel() {
+        return label_DisplayedText;
     }
 
+    /**
+     * Overwrites the startProperty and duration property with the current values of the Rectangle (divided by the scale)
+     */
     protected void adjustStartAndDurationProperty(){
         startProperty.set(getTimeStart());
         durationProperty.set(getTimeStop() - getTimeStart());
     }
 
+    /**
+     * Compares this SegmentRectangle to another one by comparing their timeStart values.
+     * @param o Other segment rectangle which needs to be compared.
+     * @return 1, if this Rectangle has a larger timeStart value, -1 if it has a smaller timeStart value, 0 if they're the same.
+     */
     @Override
     public int compareTo(SegmentRectangle o) {
         return Double.compare(this.getTimeStart(), o.getTimeStart());

@@ -8,6 +8,11 @@ import javafx.beans.property.*;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.paint.Color;
 
+/**
+ * The SelectableSegmentRectangle extends from the SegmentRectangle and is responsible for
+ * handling the selection logic of the segments. Note that selecting a SelectableSegmentRectangle
+ * will also select the parent segmentation to become the active segmentation.
+ */
 public class SelectableSegmentRectangle extends SegmentRectangle {
     protected BooleanProperty selected;
     protected SelectableSegmentController selectableSegmentController;
@@ -16,28 +21,57 @@ public class SelectableSegmentRectangle extends SegmentRectangle {
     private double temporaryPreviousStop;
 
 
-    public SelectableSegmentRectangle(ObjectProperty<Color> c, StringProperty toolTipTextProperty, StringProperty segmentLabelTextProperty, DoubleProperty scale, double width, double start, SelectableSegmentationPane parent, Selector s, ObservableSegment oSegment) {
-        super(c, toolTipTextProperty, segmentLabelTextProperty, scale, width, parent.getHeight(), start);
+    /**
+     *
+     * @param colorProperty The color property which determines the color of this segment.
+     * @param toolTipTextProperty The string property which determines the toopTipText of this segment.
+     * @param segmentLabelTextProperty the string property which determines the display text of this segment
+     * @param scale the double property which determines the currently active scale
+     * @param width the initial width of this segment
+     * @param start the initial timeStart value of this segment (unscaled)
+     * @param parent the segmentation this segment belongs to
+     * @param selector the selector component (page) which contains selectable dots
+     * @param oSegment the observableSegment which wraps the segment object responsible for this graphical segment Rectangle
+     */
+    public SelectableSegmentRectangle(ObjectProperty<Color> colorProperty, StringProperty toolTipTextProperty, StringProperty segmentLabelTextProperty, DoubleProperty scale, double width, double start, SelectableSegmentationPane parent, Selector selector, ObservableSegment oSegment) {
+        super(colorProperty, toolTipTextProperty, segmentLabelTextProperty, scale, width, parent.getHeight(), start);
 
         this.selected = new SimpleBooleanProperty(false);
         this.selected.bindBidirectional(oSegment.getSelectedProperty());
         this.selected.addListener((observable, oldValue, newValue) -> onSelectionChange());
 
-        this.selectableSegmentController = new SelectableSegmentController(parent, s);
+        this.selectableSegmentController = new SelectableSegmentController(parent, selector);
 
         setOnMousePressed(this::handleMousePress);
         setOnMouseMoved(e -> e.consume());
         setOnMouseReleased(this::handleMouseRelease);
     }
 
+    /**
+     * Returns the BooleanProperty responsible for the selection state of this SelectableSegmentRectangle
+     * @return the boolean property
+     */
     public BooleanProperty getSelectedBooleanProperty(){return this.selected;}
+
+    /**
+     *
+     * @return the boolean value denoting the current selection state
+     */
     public boolean isSelected(){
         return selected.get();
     }
+
+    /**
+     * Sets the current selection state to the given boolean value
+     * @param selected value to which the selected status will be set to.
+     */
     public void setSelected(boolean selected){
         this.selected.set(selected);
     }
 
+    /**
+     * Toggles the current selected value (true if currently false and false if currently true)
+     */
     public void toggleSelected(){
         this.selected.set(!selected.get());
     }
@@ -56,8 +90,6 @@ public class SelectableSegmentRectangle extends SegmentRectangle {
         temporaryPreviousStop = getTimeStop();
     }
 
-    //TODO: Selection state is inconsistent at the moment
-    //
     protected void handleMouseRelease(MouseEvent e){
         if(getTimeStart() == temporaryPreviousStart && getTimeStop() == temporaryPreviousStop){
             toggleSelected();
@@ -67,12 +99,8 @@ public class SelectableSegmentRectangle extends SegmentRectangle {
         }
     }
 
-
-
     private void onSelectionChange(){
         if (selected.get()) {
-            System.out.println("SelChange");
-            System.out.println(getStrokeWidth());
             setStroke(Color.GREEN);
             setStrokeWidth(5);
             selectableSegmentController.selectDots(getTimeStart(), getTimeStop());
@@ -80,7 +108,6 @@ public class SelectableSegmentRectangle extends SegmentRectangle {
         else {
             setStroke(Color.BLACK);
             setStrokeWidth(1);
-
             selectableSegmentController.deselectDots(getTimeStart(), getTimeStop());
         }
     }
