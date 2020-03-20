@@ -500,8 +500,6 @@ public class SegmentationContainer extends VBox {
         private Button btn_editTimeLine;
         private Label lbl_timeLineName;
 
-        private List<Observer> observers;
-
 
         public SegmentationInformation(SegmentationPane tl){
             this.tl = tl;
