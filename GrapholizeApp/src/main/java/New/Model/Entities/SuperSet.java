@@ -3,34 +3,38 @@ package New.Model.Entities;
 import java.util.*;
 import java.util.stream.Collectors;
 
+/**
+ * A superset represents a collection of topics that can be examined in the same segment.
+ * the topics are stored in a map where the key is the topicID and the value is the topic object.
+ */
 public class SuperSet {
-    private final String tagID;
-    private String tag;
+    private final String superSetID;
+    private String superSetName;
     private SimpleColor simpleColor;
     private String mainTopicID;
     private final Map<String, Topic> topicsMap;
 
-    public SuperSet(String tag, SimpleColor simpleColor, List<Topic> topicsMap, String maintopicID, String tagID){
-        this.tag = tag;
+    public SuperSet(String superSetName, SimpleColor simpleColor, List<Topic> topicsMap, String maintopicID, String superSetID){
+        this.superSetName = superSetName;
         this.simpleColor = simpleColor;
         this.topicsMap = new HashMap<>();
         for(Topic t : topicsMap){
             this.topicsMap.put(t.getTopicID(), t);
         }
         this.mainTopicID = maintopicID;
-        this.tagID = tagID;
+        this.superSetID = superSetID;
     }
 
-    public String getTagID() {
-        return tagID;
+    public String getSuperSetID() {
+        return superSetID;
     }
 
-    public String getTag() {
-        return tag;
+    public String getSuperSetName() {
+        return superSetName;
     }
 
-    public void setTag(String tag) {
-        this.tag = tag;
+    public void setSuperSetName(String superSetName) {
+        this.superSetName = superSetName;
     }
 
     public SimpleColor getSimpleColor() {
@@ -49,6 +53,9 @@ public class SuperSet {
         this.mainTopicID = mainTopic;
     }
 
+    /**
+     * @return an unmodifiable Collection of topics
+     */
     public Collection<Topic> getTopics() {
         return Collections.unmodifiableCollection(topicsMap.values()).stream().sorted(Comparator.comparing(Topic::getTopicName)).collect(Collectors.toList());
     }
@@ -85,20 +92,13 @@ public class SuperSet {
         this.topicsMap.remove(t.getTopicID());
     }
 
-    //Very simple way of creating new topic id.
+    /**
+     * Generates and returns an ID string for the given topic.
+     * This id has the format of [topicName]_[UUID].
+     * @param topicName topic name out of which an ID is created
+     * @return a topic id.
+     */
     public String generateTopicID(String topicName){
-        /*
-        String topicID = topicName;
-        int i = 0;
-        boolean loop = true;
-        while(loop){
-            //Stream requires a temp variable otherwise compiler complains. (Also avoids potential concurrency issues)
-            int finalI = i;
-            loop = getTopics().stream().anyMatch(t -> t.getTopicID().equals(String.format("%s_%d", topicID, finalI)));
-            if(loop){i++;}
-        }
-        return String.format("%s_%d", topicID, i);
-         */
         return String.format("%s_%s", topicName, UUID.randomUUID().toString());
     }
 
@@ -106,8 +106,11 @@ public class SuperSet {
         return Collections.unmodifiableCollection(topicsMap.keySet());
     }
 
+    /**
+     * @return the name of this super set
+     */
     @Override
     public String toString() {
-        return tag;
+        return superSetName;
     }
 }

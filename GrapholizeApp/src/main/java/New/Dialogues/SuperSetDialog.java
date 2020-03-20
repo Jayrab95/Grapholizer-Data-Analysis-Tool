@@ -40,7 +40,7 @@ public class SuperSetDialog extends Dialog<SuperSet> {
         TextField textField_topicSetName = new TextField();
         ColorPicker colorPicker = new ColorPicker();
         if(topicSetOptional.isPresent()){
-            textField_topicSetName.setText(topicSetOptional.get().getTag());
+            textField_topicSetName.setText(topicSetOptional.get().getSuperSetName());
             colorPicker.setValue(ColorConverter.convertModelColorToJavaFXColor(topicSetOptional.get().getSimpleColor()));
         }
         else{

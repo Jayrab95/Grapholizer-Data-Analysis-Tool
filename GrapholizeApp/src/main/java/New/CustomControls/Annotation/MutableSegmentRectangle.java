@@ -148,7 +148,6 @@ public class MutableSegmentRectangle extends SelectableSegmentRectangle {
                 );
         dialog.setResultConverter(b -> {
             if (b == dialog.getButtonTypeOK()) {
-                //TODO: Move this to controller??
                 for(TopicTextControl ttc : dialog.getControls()){
                     observableSegment.putAnnotation(ttc.getTopicID(), ttc.getTextFieldText());
                 }
@@ -183,7 +182,6 @@ public class MutableSegmentRectangle extends SelectableSegmentRectangle {
     protected void handleMousePress(MouseEvent event){
         if(!event.isShiftDown()){
             super.handleMousePress(event);
-            //Todo: Can this if/else stucture be improved somehow?
             if(event.getClickCount() == 2 && event.getButton().equals(MouseButton.PRIMARY)){
                 openEditDialog();
             }

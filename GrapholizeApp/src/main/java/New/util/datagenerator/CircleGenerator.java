@@ -92,10 +92,7 @@ public class CircleGenerator extends DataGenerator{
             }
         }
         debugBuilderX.append("};");debugBuilderY.append("};");
-        System.out.println("Float[] xs = " + debugBuilderX.toString());
-        System.out.println("Float[] ys = " + debugBuilderY.toString());
 
-        //other stuff
         StringBuilder debugBuilderTime1 = new StringBuilder();
         debugBuilderTime1.append("{");
         strokeCounter ++;
@@ -109,6 +106,5 @@ public class CircleGenerator extends DataGenerator{
             incrementer += 5;
         }
         debugBuilderTime1.append("};");
-        System.out.println("Long[] timeStamps = " + debugBuilderTime1.toString());
     }
 }

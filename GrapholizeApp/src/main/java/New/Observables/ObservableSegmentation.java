@@ -6,6 +6,7 @@ import New.CustomControls.Annotation.SelectableSegmentRectangle;
 import New.CustomControls.TimeLine.CustomSegmentationPane;
 import New.CustomControls.TimeLine.SelectableSegmentationPane;
 import New.CustomControls.TimeLine.UnmodifiableSelectableSegmentationPane;
+import New.Execptions.NoSegmentationSelectedException;
 import New.Model.Entities.Segment;
 import New.Model.Entities.Topic;
 import javafx.beans.property.ObjectProperty;
@@ -14,39 +15,67 @@ import javafx.beans.property.SimpleObjectProperty;
 import java.util.*;
 import java.util.stream.Collectors;
 
+/**
+ * The ObservableSegmentation is an observable singleton object that holds a reference to a
+ * SelectableSegmentationPane. This denotes the currently active segmentation.
+ * The listeners (other SelectableSegmentationPanes) are notified if a new segmentation
+ * becomes the active segmentation and deselect all currently selected segments on their pane.
+ * The ObservableSegmentation also contains logic for retrieving selected segments.
+ * note that the reference can also be null, which means that no segmentation is currently selected.
+ * This can be checked by using the "selectedSegmentationAvailable()" method.
+ */
 public class ObservableSegmentation {
 
     private ObjectProperty<SelectableSegmentationPane> innerSegmentation;
 
+    /**
+     * Constructor which instantiates a new empty objectProperty wrapper
+     */
     public ObservableSegmentation(){
         this.innerSegmentation = new SimpleObjectProperty<>();
     }
 
-    public ObservableSegmentation(SelectableSegmentationPane timeLine){
-        this.innerSegmentation = new SimpleObjectProperty<>(timeLine);
+    /**
+     * Constructor which instantiates the ObjectProperty with the given reference
+     * @param selectableSegmentationPane initial selectableSegmentationPane value for this wrapper
+     */
+    public ObservableSegmentation(SelectableSegmentationPane selectableSegmentationPane){
+        this.innerSegmentation = new SimpleObjectProperty<>(selectableSegmentationPane);
     }
 
-    public ObjectProperty<SelectableSegmentationPane> getSelectedTimeLineProperty(){
+    /**
+     * Returns the ObjectProperty wrapper
+     * @return
+     */
+    public ObjectProperty<SelectableSegmentationPane> getSelectedSegmentationProperty(){
         return this.innerSegmentation;
     }
 
-    public SelectableSegmentationPane getSelectedTimeLine() {
+    /**
+     * Returns the SelectableSegmentationPane that is currently stored in this Observable.
+     * @return
+     */
+    public SelectableSegmentationPane getSelectedSegmentationPane() {
         return innerSegmentation.get();
     }
 
-    public boolean timeLineSelected(){
+    /**
+     * Checks if there is currently a selected segmentation available (inner reference is not null)
+     * @return true if there is a selected segmentation available, false if the reference is currently null
+     */
+    public boolean selectedSegmentationAvailable(){
         return innerSegmentation.isNotNull().get();
     }
 
-    //TODO: Perhaps this mechanism needs to be reworked a bit
-    // Could be optimized by making the selection dependant on the observableSegment, rather than the children.
-    // The rectangle's selectedProperty binds itself to the OSegment's selected property.
-    // This way, you can just search through the list of selectable segments on the page, rather than the children.
+    /**
+     * @return Set of selected SegmentRectangles on the currently active segmentation or an empty set
+     * if no segmentation is selected.
+     */
     public Set<SegmentRectangle> getSelectedSegmentRectangles() {
         //The children first need to be filtered to see whether or not they're actually rectangles (Can also be drag rect or label)
         //Then the nodes acquire the correct cast
         //finally, they're filtered for selection
-        if(timeLineSelected()){
+        if(selectedSegmentationAvailable()){
             return innerSegmentation.get().getChildren().stream()
                     .filter(node -> node instanceof SelectableSegmentRectangle)
                     .map(node -> (SelectableSegmentRectangle)node)
@@ -56,30 +85,46 @@ public class ObservableSegmentation {
         return Set.of();
     }
 
-    public TreeSet<ObservableSegment> getSelectedSegments() {
-        //TODO: This is somewhat of an expensive solution
-        // when filtering through a set via streams and returning a new Set,
-        if(timeLineSelected()){
+    /**
+     * @return the set of selected ObservableSegments of the selected segmentation
+     * @throws NoSegmentationSelectedException if no segmentation is currently selected
+     */
+    public TreeSet<ObservableSegment> getSelectedSegments() throws NoSegmentationSelectedException {
+        if(selectedSegmentationAvailable()){
             return new TreeSet(innerSegmentation.get().getObservableSegments().stream()
                     .filter(observableSegment -> observableSegment.isSelected())
                     .collect(Collectors.toSet()));
         }
-        return new TreeSet<>();
+        throw new NoSegmentationSelectedException();
     }
 
-    public void setSelectedTimeLine(SelectableSegmentationPane timeLine){
-        if(this.innerSegmentation.get() != timeLine){
-            this.innerSegmentation.set(timeLine);
+    /**
+     * Sets the active SegmentationPane to a different reference.
+     * Note that this causes a notification round to all listeners, if the given reference does not
+     * equal the reference that is currently already stores in the property
+     * @param newActiveSegmentation new SegmentationPane reference
+     */
+    public void setSelectedTimeLine(SelectableSegmentationPane newActiveSegmentation){
+        if(this.innerSegmentation.get() != newActiveSegmentation){
+            this.innerSegmentation.set(newActiveSegmentation);
         }
     }
 
+    /**
+     * Returns the super set name of the active segmentation
+     * @return see above
+     */
     public String getSegmentationName(){
         return innerSegmentation.get().getTimeLineName();
     }
 
+    /**
+     * Returns an Optional which either contains the observableSuperSet of the selected segmentation,
+     * if said segmentation is an instance of either CustomSegmentationPane or UnmodifiableSelectableSegmentationPane
+     * or an empty Optional otherwise
+     * @return see above
+     */
     public Optional<ObservableSuperSet> getSelectedSegmentationTopicSet(){
-        //TODO: Unclean solution. Perhaps there needs to be some other class or interface that defines that the segmentationPane has a topic set
-        // (Which is currently not a given if it is a selecteableSegmentationPane)
         if(innerSegmentation.get() instanceof CustomSegmentationPane){
             return Optional.of(((CustomSegmentationPane) innerSegmentation.get()).getObservableSuperSet());
         }
@@ -89,10 +134,21 @@ public class ObservableSegmentation {
         return Optional.empty();
     }
 
-    public boolean equals(SelectableSegmentationPane timeLinePane){
-        return innerSegmentation.get() == timeLinePane;
+    /**
+     * Compares the reference of the SelectableSegmentationPane with the one that is currently
+     * stored in the property
+     * @param selectableSegmentationPane SelectableSegmentationPane that is to be compared
+     * @return true if they're the same reference or false otherwise
+     */
+    public boolean equals(SelectableSegmentationPane selectableSegmentationPane){
+        return innerSegmentation.get() == selectableSegmentationPane;
     }
 
+    /**
+     * Returns a list of topics new topics that are copies of topics which are missing from the given topic set
+     * @param targetTopicSet the set which will receive thew missing sets
+     * @return list of missing topic copies
+     */
     public List<Topic> getMissingTopics(ObservableSuperSet targetTopicSet){
         Optional<ObservableSuperSet> optional = getSelectedSegmentationTopicSet();
         if(optional.isPresent()){
@@ -107,6 +163,12 @@ public class ObservableSegmentation {
         return List.of();
     }
 
+    /**
+     * Generates the missing segments and fills them with annotations. If the target segmentation already contains topics
+     * with the same name, the annotations are migrated over.
+     * @param targetTopics topics available in the target segmentation
+     * @return set of missing segments
+     */
     public Set<Segment> generateMissingSegments(List<Topic> targetTopics){
         Set<SegmentRectangle> selectedAnnotations = getSelectedSegmentRectangles();
         Set<Segment> res = new TreeSet<>();
@@ -127,10 +189,17 @@ public class ObservableSegmentation {
         return res;
     }
 
+    /**
+     * Checks if the stored reference is an instance of CustomSegmentationPane
+     * @return true if the stored reference is an instance of CustomSegmentationPane, false otherwise.
+     */
     public boolean selectedSegmentationIsCustom(){
         return innerSegmentation.get() instanceof CustomSegmentationPane;
     }
 
+    /**
+     * Deletes all selected segments in the actve segmentation
+     */
     public void deleteSelectedSegments(){
         if(selectedSegmentationIsCustom()){
             for(SegmentRectangle sr : getSelectedSegmentRectangles()){

@@ -8,6 +8,11 @@ import javafx.collections.ObservableList;
 
 import java.util.Map;
 
+/**
+ * The ObservableSegment is an Observable Model Object which wraps a superSet and exposes some of its
+ * attributes as Object properties.
+ * Any changes made to the properties are also made to the underlying wrapped object
+ */
 public class ObservableSegment implements Comparable<ObservableSegment> {
     private Segment innerSegment;
 
@@ -122,19 +127,30 @@ public class ObservableSegment implements Comparable<ObservableSegment> {
         return this.selectedProperty;
     }
 
+    /**
+     * Checks if this segment lies within the given timeframe
+     * @param start start of timeframe
+     * @param stop stop of timeFrame
+     * @return true if this segment lies within timeframe, false otherwise
+     */
     public boolean isWithinTimeRange(double start, double stop){
         return this.getTimeStart() >= start && this.getTimeStop() <= stop;
     }
 
+    /**
+     * Puts the given annotation into the annotation map. (This will also add it to the
+     * underlying model object)
+     * @param topicID id of the topic for the annotation (key)
+     * @param annotation annotation for the given topic (value)
+     */
     public void putAnnotation(String topicID, String annotation){
-        /*if(mainTopicIDProperty.get().equals(topicID)){
-            mainTopicAnnotationProperty.set(annotation);
-        }
-         */
         observableAnnotationMap.put(topicID, annotation);
-        //segment.putAnnotation(topicID, annotation);
     }
 
+    /**
+     * Removes the annotation with the given id from the map
+     * @param topicID topic id of the annotation which will be removed
+     */
     public void removeAnnotation(String topicID){
         observableAnnotationMap.remove(topicID);
     }
@@ -143,6 +159,11 @@ public class ObservableSegment implements Comparable<ObservableSegment> {
         return observableAnnotationMap.get(topicID);
     }
 
+    /**
+     * Generates the tooltipText.
+     * The tool tip displays all annotations of the segment, as well as its duration.
+     * @return String which contains the generated toolTiptext
+     */
     public String generateToolTipText(){
         StringBuilder builder = new StringBuilder();
         for(Topic t : observableList){
@@ -154,10 +175,19 @@ public class ObservableSegment implements Comparable<ObservableSegment> {
 
     //endregion
 
+    /**
+     * Returns the duration of the segment
+     * @return
+     */
     public double getDuration(){
         return innerSegment.getDuration();
     }
 
+    /**
+     * Checks if the segment fits the given filter criteria
+     * @param topicFilters map containing filter criteria where the key is the topic id and the value is the filter value
+     * @return true if the segment fits all filter criteria, false if it does not fit all criteria.
+     */
     public boolean fitsFilterCriteria(Map<String, String> topicFilters){
         for(String key : topicFilters.keySet()){
             if(!getInnerSegment().getAnnotation(key).equals(topicFilters.get(key))){
@@ -167,6 +197,11 @@ public class ObservableSegment implements Comparable<ObservableSegment> {
         return true;
     }
 
+    /**
+     * Compares this segment to another segment by comparing their timeStart attribute
+     * @param o the other ObservableSegment
+     * @return 1 if this Segment's timestart is larger than the other's timeStart, -1 if it is smaller, 0 if they are equal.
+     */
     @Override
     public int compareTo(ObservableSegment o) {
         return Double.compare(getTimeStart(), o.getTimeStart());

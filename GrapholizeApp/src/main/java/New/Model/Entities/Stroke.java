@@ -13,6 +13,7 @@ import java.util.stream.Collectors;
  * timeStart: The first instance of a dot with the PEN_DOWN DotType since the last occurence of a dot with the PEN_UP DotType
  * timeStop: The end of the stroke, marked by a dot of the PEN_UP DotType.
  * Stroke also contains the list of Dots representing the stroke.
+ * The stroke is immutable after creation
  */
 public class Stroke {
 
@@ -61,17 +62,29 @@ public class Stroke {
 
     public long getDuration(){ return timeEnd - timeStart;}
 
-    //Todo: Perhaps return a clone of dots. Dots should not be modifiable. Depending on the size of the list, this could hurt the performance however.
     public List<Dot> getDots() {
         return dots;
     }
 
+    /**
+     * Returns a list of dots whose timestamp lie within the given time raneg
+     * @param start start of timeframe
+     * @param end end of timeframe
+     * @return list of dots within timeframe
+     */
     public List<Dot> getDotsWithinTimeRange(double start, double end){
         return dots.stream()
                 .filter(dot -> dot.getTimeStamp() >= start && dot.getTimeStamp() <= end)
                 .collect(Collectors.toList());
     }
 
+    /**
+     * Checks if this stroke is within the given timeframe.
+     * (timeStart >= start && timeEnd <= end)
+     * @param start start of timeframe
+     * @param end end of timeframe
+     * @return true if stroke is within given timeframe, false if not.
+     */
     public boolean isWithinTimeRange(double start, double end){
         return this.timeStart >= start && this.timeEnd <= end;
     }

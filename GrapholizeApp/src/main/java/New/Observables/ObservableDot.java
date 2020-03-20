@@ -8,9 +8,13 @@ import New.util.Import.model.CompressedDot;
 import javafx.beans.property.SimpleObjectProperty;
 import javafx.scene.paint.Color;
 
+/**
+ * The ObservableDot is an observable model object.
+ * The ObservableDot has a BooleanProperty, containing the current selection state, and
+ * An ObjectProperty containining the color of the dot.
+ */
 public class ObservableDot extends Dot implements Comparable<Dot>{
 
-    //TODO: Scrap this class and make an observable object that has the same structure as the other observables
     private BooleanProperty selected = new SimpleBooleanProperty(false);
     private ObjectProperty<Color>  color = new SimpleObjectProperty(Color.BLACK);
 

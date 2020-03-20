@@ -5,7 +5,7 @@ import New.CustomControls.TimeLine.*;
 
 import New.Dialogues.FilterForSegmentsDialog;
 import New.Dialogues.SuperSetDialog;
-import New.Execptions.NoTimeLineSelectedException;
+import New.Execptions.NoSegmentationSelectedException;
 import New.Execptions.TimeLineTagException;
 import New.Interfaces.Observer.Observer;
 import New.Model.Entities.Segment;
@@ -23,7 +23,6 @@ import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
-import javafx.scene.paint.Color;
 import javafx.stage.Stage;
 
 import java.util.*;
@@ -90,7 +89,6 @@ public class SegmentationContainer extends VBox {
         this.p = page;
 
         page.getPageProperty().addListener((observable, oldValue, newValue) -> {
-            System.out.println("TimeLineContainer has detected a page change");
             InitializeContainer(project, page);
         });
 
@@ -129,10 +127,7 @@ public class SegmentationContainer extends VBox {
 
     }
 
-    //TODO: Potential memory leak
-    // Children are cleared but might still be listening to certain properties.
     private void InitializeContainer(ObservableProject project, ObservablePage page){
-        System.out.println("initialize timeline_container called");
         getSelectedSegmentation().setSelectedTimeLine(null);
         //Step 1: Create the stroke timeline
         //Step 2: For each tag, create a new timeline and pass over the observble Tag and the page. Then create the annotations.
@@ -143,7 +138,6 @@ public class SegmentationContainer extends VBox {
         segmentationVBox.getChildren().clear();
         segmentationInfoVBox.getChildren().clear();
         segmentationVBox.getChildren().add(unitPane);
-        //TODO: POtential memory leak: Do generated segments still listen to external proprty?
         UnmodifiableSelectableSegmentationPane strokePane = new UnmodifiableSelectableSegmentationPane(
                 totalWidth.get(),
                 TIMELINES_HEIGHT,
@@ -203,6 +197,10 @@ public class SegmentationContainer extends VBox {
         return slider;
     }
 
+    /**
+     * Retrieves the ObservableSegmentation singleton object
+     * @return the observableSegmentation
+     */
     public ObservableSegmentation getSelectedSegmentation() {
         if(selectedSegmentation == null){
             selectedSegmentation = new ObservableSegmentation();
@@ -231,44 +229,32 @@ public class SegmentationContainer extends VBox {
         }
     }
 
+
+    /**
+     * This method calls the Creation dialog. If resolved successfully, a new , empty segmentation will be added.
+     */
     public void createNewSegmentation(){
         Optional<SuperSet> tag = createTopicSetDialog();
         Optional<FilterForSegmentsDialog.FilterDialogResult> filtered = Optional.empty();
-        //TODO: Until filter has been reworked, this functionality is offline
-        /*
-        if(timeLineContainerController.getTopicSetIDs().size() > 0){
-            filtered = filterForAnnotationsDialog(
-                    TXT_TL_FILTER_TITLE,
-                    TXT_TL_FILTER_HEADER,
-                    TXT_TL_FILTER_TEXT);
-        }
-         */
+
         if(tag.isPresent()){
 
-            if(filtered.isPresent()){
-                /*
-                FilterForSegmentsDialog.FilterDialogResult res = filtered.get();
+            ObservableSuperSet newTag = segmentationContainerController.createNewTimeLineTag(tag.get());
 
-                ObservableTopicSet newTag = timeLineContainerController.createNewTimeLineTag(tag.get());
-                TimeLinePane timeLinePane = createNewTimeLinePaneOutOfAnnotations(newTag, timeLineContainerController.getPage(), filtered.get().getFilteredAnnotations());
-                addTimeLinePane(timeLinePane);
+            SegmentationPane segmentationPane = createNewSegmentationPane(newTag, segmentationContainerController.getPage(),false);
 
-                 */
-            }
-            else{
+            addSegmentationPane(segmentationPane);
 
-                ObservableSuperSet newTag = segmentationContainerController.createNewTimeLineTag(tag.get());
-
-                SegmentationPane segmentationPane = createNewSegmentationPane(newTag, segmentationContainerController.getPage(),false);
-
-                addSegmentationPane(segmentationPane);
-            }
         }
     }
 
-    public void createNewSegmentationOutOfSelectedElements() throws NoTimeLineSelectedException {
-        if(!selectedSegmentation.timeLineSelected()){
-            throw new NoTimeLineSelectedException();
+    /**
+     * This method calls the Creation dialog. If resolved successfully, a new segmentation containing copies of selected segments will be added.
+     * @throws NoSegmentationSelectedException if no segmentation is currently selected
+     */
+    public void createNewSegmentationOutOfSelectedElements() throws NoSegmentationSelectedException {
+        if(!selectedSegmentation.selectedSegmentationAvailable()){
+            throw new NoSegmentationSelectedException();
         }
         Optional<SuperSet> tag =createTopicSetDialog();
         if(tag.isPresent()){
@@ -297,9 +283,8 @@ public class SegmentationContainer extends VBox {
 
     /**
      * Creates a a segmentation from the selected canvas dots (Observable dots with Property selected = true)
-     * @throws NoTimeLineSelectedException
      */
-    public void createNewSegmentationOutOfSelectedDots() throws NoTimeLineSelectedException {
+    public void createNewSegmentationOutOfSelectedDots() {
         Optional<SuperSet> tag = createTopicSetDialog();
                 if(tag.isPresent()){
                     ObservableSuperSet newTag = segmentationContainerController.createNewTimeLineTag(tag.get());
@@ -308,17 +293,11 @@ public class SegmentationContainer extends VBox {
         }
     }
 
-    /*public void createNewTimeLineOutOfFilteredAnnotations(){
-        Optional<AnnotationFilterDialogResult> filter;
-        Optional<SuperSet> tag = createTopicSetDialog();
-        if(tag.isPresent()){
-            ObservableSuperSet newTag = timeLineContainerController.createNewTimeLineTag(tag.get());
-            SegmentationPane segmentationPane = createNewTimeLinePaneOutOfSelectedDots(newTag, timeLineContainerController.getPage());
-            addTimeLinePane(segmentationPane);
-        }
-    }*/
 
-
+    /**
+     * This method calls the Creation dialog. If resolved successfully, a segmentation containing the given set of segments will be added.
+     * @param a
+     */
     public void createNewSegmentationOutOfSet(Set<Segment> a){
             Optional<SuperSet> tag = createTopicSetDialog();
 
@@ -368,11 +347,14 @@ public class SegmentationContainer extends VBox {
         return new CustomSegmentationPane(segmentationContainerController.getPage().getDuration(), TIMELINES_HEIGHT, scale, tag, page, this, segments);
     }
 
-
-    public void editSegmentation(ObservableSuperSet oldTag){
-        Optional<SuperSet> tag = editDialog(oldTag);
+    /**
+     * Calls the edit dialog applies changes if the dialog is resolved successfully
+     * @param oldSuperSet the old ObservableSuperSet which needs to be edited
+     */
+    public void editSegmentation(ObservableSuperSet oldSuperSet){
+        Optional<SuperSet> tag = editDialog(oldSuperSet);
         if (tag.isPresent()){
-            segmentationContainerController.editTimeLineTag(oldTag, tag.get());
+            segmentationContainerController.editSuperSet(oldSuperSet, tag.get());
         }
     }
 
@@ -396,15 +378,21 @@ public class SegmentationContainer extends VBox {
                 true);
     }
 
-    public boolean removeSegmentation(CustomSegmentationPane timeLine){
+    /**
+     * Removes the given custom segmentation pane from the container. Note that this implicitly also
+     * removes the super set and consequently all segmentations defined under this super set from the project.
+     * @param customSegmentationPane segmentation pane that is to be deleted
+     * @return true if the segentation and superset were successfully deleted, false otherwise.
+     */
+    public boolean removeSegmentation(CustomSegmentationPane customSegmentationPane){
         if(DialogGenerator.confirmationDialogue(
                 TXT_TL_DELETE_TITLE,
                 TXT_TL_DELETE_HEADER,
-                String.format(TXT_TL_DELETE_TEXT, timeLine.getTimeLineName())
+                String.format(TXT_TL_DELETE_TEXT, customSegmentationPane.getTimeLineName())
         )){
-            segmentationContainerController.removeTimeLine(timeLine.getTopicSetID());
-            segmentationVBox.getChildren().remove(timeLine);
-            segmentationInfoVBox.getChildren().remove(segmentationWidgetLink.get(timeLine));
+            segmentationContainerController.removeSuperSet(customSegmentationPane.getTopicSetID());
+            segmentationVBox.getChildren().remove(customSegmentationPane);
+            segmentationInfoVBox.getChildren().remove(segmentationWidgetLink.get(customSegmentationPane));
             return true;
         }
         return false;
@@ -414,7 +402,7 @@ public class SegmentationContainer extends VBox {
         try{
             createNewSegmentationOutOfSelectedElements();
         }
-        catch(NoTimeLineSelectedException ex){
+        catch(NoSegmentationSelectedException ex){
             DialogGenerator.simpleErrorDialog(TXT_TL_CREATION_ERROR_TITLE, TXT_TL_CREATION_ERROR_HEADER, ex.toString());
         }
     }
@@ -464,7 +452,7 @@ public class SegmentationContainer extends VBox {
         SuperSetDialog dialog = new SuperSetDialog(dialogTitle, dialogHeader, dialogText, optional);
 
         //defaultValue is only evaluated if editCall is true, in which case the optional is also present.
-        String defaultValue = optional.isPresent() ? optional.get().getTag() : "";
+        String defaultValue = optional.isPresent() ? optional.get().getSuperSetName() : "";
 
         dialog.okButton().addEventFilter(ActionEvent.ACTION, ae -> {
             String newTimeLineName = dialog.getTopicSetText();
@@ -473,7 +461,7 @@ public class SegmentationContainer extends VBox {
             //If neither is true, it's an edit call where only the color of the timeline is edited and no name check is required.
             if(!editCall || !defaultValue.equals(newTimeLineName)) {
                 try {
-                    segmentationContainerController.checkIfTagIsValid(newTimeLineName);
+                    segmentationContainerController.checkIfSuperSetNameIsValid(newTimeLineName);
                     dialog.topicsDefined();
                 } catch (TimeLineTagException ex) {
                     DialogGenerator.simpleErrorDialog(
@@ -554,7 +542,7 @@ public class SegmentationContainer extends VBox {
 
         void showDetailView(){
             Stage stage = new Stage();
-            stage.setTitle("My New Stage Title");
+            stage.setTitle("Detail segmentation view for" + tl.getTimeLineName());
             stage.setScene(new Scene(new SegmentationDetailContainer(tl, segmentationContainerController.getPage()), 450, 450));
             stage.show();
         }

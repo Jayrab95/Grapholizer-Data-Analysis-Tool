@@ -123,7 +123,7 @@ public class CSVExportDialog {
             cancelAction();
             callback_reference.exportWindowCallback(new CSVExporter(),
                     new ExportConfig(selection_participantsID.getItems()
-                            , selection_timelineTopics.getItems().stream().map(t -> t.getTagID()).collect(Collectors.toList())
+                            , selection_timelineTopics.getItems().stream().map(t -> t.getSuperSetID()).collect(Collectors.toList())
                             , selection_characteristics.getItems())
             );
         } else {

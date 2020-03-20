@@ -13,7 +13,7 @@ public class Grapholizer extends Application {
     @Override
     public void start(Stage stage) throws Exception{
         FXMLLoader root = new FXMLLoader(this.getClass().getClassLoader().getResource("fxml/views/MainScene.fxml"));
-        Scene scene = new Scene(root.load(), 300, 275); //TODO choose sensible size for initial window
+        Scene scene = new Scene(root.load(), 300, 275);
         MainSceneController controller = root.getController();
         stage.setTitle("Grapholizer");
         initializeCleanUpSteps(stage, controller);
@@ -29,7 +29,6 @@ public class Grapholizer extends Application {
     private void initializeCleanUpSteps(Stage stage, MainSceneController controller) {
         stage.setOnHidden( e -> {
                 if(controller != null && controller._session != null) {
-                    System.out.println("is not null");
                     try {
                         if (controller._session.getZ_Helper() != null)
                             controller._session.getZ_Helper().cleanUp(); //Delete the temporary files if they exist
@@ -39,7 +38,6 @@ public class Grapholizer extends Application {
                                 , "while removing tempory data an Read Write error occured");
                     }
                 }else {
-                    System.out.println("is null");
                 }
         });
     }

@@ -16,11 +16,6 @@ public class FilterContainer extends HBox {
             f.getFilterActiveProperty().bind(b.selectedProperty());
             b.setToggleGroup(group);
             getChildren().add(b);
-            /*
-            CheckBox r = new CheckBox(f.getFilterName());
-            f.getFilterActiveProperty().bind(r.selectedProperty());
-             */
-            //getChildren().add(r);
         }
     }
 }

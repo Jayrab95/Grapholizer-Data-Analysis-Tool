@@ -9,6 +9,10 @@ import New.util.ZipHelper;
 
 import java.io.IOException;
 
+/**
+ * The session object stores a reference to the observable singleton objects. it is created the
+ * first time a project or input file is loaded.
+ */
 public class Session {
 
     private final ObservableProject activeProject;
@@ -17,12 +21,17 @@ public class Session {
     private ZipHelper z_Helper;
 
     public Session(Project p){
-        System.out.println("Session constructor called");
         this.activeProject = new ObservableProject(p);
         this.activeParticipant = new ObservableParticipant(p.getParticipant(p.getParticipantIDs().iterator().next()));
         this.activePage = new ObservablePage(activeParticipant.getPage(0));
     }
 
+    /**
+     * Retrieves the active project. Additionally can also cause a cleanup, if the save function
+     * calls this method.
+     * @param cleanUp boolean which denotes whether a clean up needs to be performed.
+     * @return the active project
+     */
     public ObservableProject getActiveProject(boolean cleanUp) {
         if(cleanUp){this.cleanUp();}
         return activeProject;
@@ -38,10 +47,18 @@ public class Session {
         return activePage;
     }
 
+    /**
+     * Sets a new active project. Note that this implicitly also causes a participant and page change.
+     * @param p the new project
+     */
     public void setProject(Project p){
         activeProject.setInnerProject(p);
     }
 
+    /**
+     * Cleans up the project by removing any loose ids from the page's segmentation map and the
+     * segment's annotation maps.
+     */
     public void cleanUp(){
         activeProject.cleanUp();
     }

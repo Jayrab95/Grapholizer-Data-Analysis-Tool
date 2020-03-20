@@ -11,6 +11,13 @@ import javafx.beans.property.DoubleProperty;
 import java.util.Optional;
 import java.util.Set;
 
+/**
+ * The UnmodifiabeSegmentationPane is similar to the DetailSegmentation, in that the segments are
+ * added upon creation and cannot be edited or removed afterwards. Because it inherits logic from
+ * the SelectableSegmentationPane, the segmentation can still be selected. This class is mainly
+ * used for the “Stroke duration” segmentation, which each page receives per default, since the
+ * segments on this segmentation are not to be moved or modified.
+ */
 public class UnmodifiableSelectableSegmentationPane extends SelectableSegmentationPane {
 
     private ObservableSuperSet observableSuperSet;
@@ -42,6 +49,10 @@ public class UnmodifiableSelectableSegmentationPane extends SelectableSegmentati
         }
     }
 
+    /**
+     * Returns the ObservableSuperSet this Segmentation has been defined under
+     * @return the object described above
+     */
     public ObservableSuperSet getObservableSuperSet() {
         return observableSuperSet;
     }

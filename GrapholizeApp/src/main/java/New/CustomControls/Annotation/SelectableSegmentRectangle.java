@@ -78,7 +78,6 @@ public class SelectableSegmentRectangle extends SegmentRectangle {
 
 
     protected void handleMouseClick(MouseEvent e){
-        System.out.println("HandleMouseClick in SelectionAnnotationRectangle has been called");
         selectableSegmentController.selectTimeLine(e.isControlDown(), this);
         selectableSegmentController.selectOnlyDotsWithinTimeFrame(getTimeStart(), getTimeStop());
         toggleSelected();

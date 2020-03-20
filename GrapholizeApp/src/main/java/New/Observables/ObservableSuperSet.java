@@ -16,6 +16,11 @@ import java.util.Collection;
 import java.util.List;
 import java.util.stream.Collectors;
 
+/**
+ * The ObservableSuperSet is an Observable Model Object which wraps a superSet and exposes some of its
+ * attributes as Object properties.
+ * Any changes made to the properties are also made to the underlying wrapped object
+ */
 public class ObservableSuperSet {
     private SuperSet innerSuperSet;
 
@@ -26,8 +31,8 @@ public class ObservableSuperSet {
 
     public ObservableSuperSet(SuperSet inner){
         this.innerSuperSet = inner;
-        this.tagProperty = new SimpleStringProperty(inner.getTag());
-        this.tagProperty.addListener((observable, oldValue, newValue) -> inner.setTag(newValue));
+        this.tagProperty = new SimpleStringProperty(inner.getSuperSetName());
+        this.tagProperty.addListener((observable, oldValue, newValue) -> inner.setSuperSetName(newValue));
         this.colorProperty = new SimpleObjectProperty<>(ColorConverter.convertModelColorToJavaFXColor(inner.getSimpleColor()));
         this.colorProperty.addListener((observable, oldValue, newValue) -> inner.setSimpleColor(
                 ColorConverter.convertJavaFXColorToModelColor(newValue)));
@@ -50,7 +55,7 @@ public class ObservableSuperSet {
     }
 
     public String getTopicSetID(){
-        return innerSuperSet.getTagID();
+        return innerSuperSet.getSuperSetID();
     }
 
     public String getTag() {
@@ -95,12 +100,10 @@ public class ObservableSuperSet {
 
     public void addTopic(Topic t){
         topicsObservableList.add(t);
-        //inner.addTopic(t);
     }
 
     public void removeTopic(Topic t){
         topicsObservableList.remove(t);
-        //inner.removeTopic(t);
     }
 
     public String generateTopicId(String topicName){

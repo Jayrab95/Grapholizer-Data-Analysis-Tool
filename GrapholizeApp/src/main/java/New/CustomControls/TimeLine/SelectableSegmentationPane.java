@@ -50,8 +50,8 @@ public abstract class SelectableSegmentationPane extends SegmentationPane {
             }
         });
         */
-        this.selectedTimeLine = new SimpleObjectProperty<>(parent.getSelectedSegmentation().getSelectedTimeLineProperty().get());
-        this.selectedTimeLine.bind(parent.getSelectedSegmentation().getSelectedTimeLineProperty());
+        this.selectedTimeLine = new SimpleObjectProperty<>(parent.getSelectedSegmentation().getSelectedSegmentationProperty().get());
+        this.selectedTimeLine.bind(parent.getSelectedSegmentation().getSelectedSegmentationProperty());
         this.selectedTimeLine.addListener((observable, oldValue, newValue) ->{
             if(newValue != this){
                 deselectSegmentation();
@@ -104,7 +104,7 @@ public abstract class SelectableSegmentationPane extends SegmentationPane {
     public void setTimeLineSelected(boolean selected) {
         this.timeLineSelectedProperty.set(selected);
         if(selected){
-            selectableTimeLineController.selectTimeLine(this);
+            selectableTimeLineController.selectSegmentation(this);
         }
     }
 

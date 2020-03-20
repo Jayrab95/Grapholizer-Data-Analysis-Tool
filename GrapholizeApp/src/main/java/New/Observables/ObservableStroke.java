@@ -11,12 +11,9 @@ import javafx.scene.paint.Color;
 import java.util.ArrayList;
 import java.util.List;
 
-//TODO: What makes more sense here? Have ObservableStroke be a Wrapper or an extension of the StrokeClass.
-//Argument for extension: ObservableStrokes can be passed over as strokes, if only the base functionality of the stroke is required.
-//Since all the fields are final anyway, the extension doesn't "hurt" the structure, as data cannot be changed anyway.
 
 /**
- * ObservableStroke is a wrapper fo the Stroke class that implements the Observable interface and can be assigned observers.
+ * ObservableStroke is a wrapper of the Stroke class that implements the Observable interface and can be assigned observers.
  * Additionally, the ObservableStroke is used for drawing and therefore manages the stroke color.
  * The Observers become notified if the selected property is changed or a filter is applied.
  *
@@ -55,7 +52,6 @@ public class ObservableStroke{
     //endregion
 
     //region Stroke Attribute getters
-    //Todo: Perhaps return a clone of dots. Dots should not be modifiable. Depending on the size of the list, this could hurt the performance however.
     public List<Dot> getDots() {
         return innerStroke.getDots();
     }

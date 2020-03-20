@@ -8,7 +8,6 @@ public interface Selector {
 
     void deselectAll();
 
-    //TODO: Consider moving these into a different interface (perhaps "Canvas selector"?)
     void selectRect(double x, double y, double width, double height);
     void selectOnlyRect(double x, double y, double width, double height);
     void selectRectUnscaled(double x, double y, double width, double height, double scale);

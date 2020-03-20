@@ -33,7 +33,7 @@ public class FilterSelectDialog extends Dialog<Map<String, String>> {
 
         setTitle(TITLE);
         setHeaderText(HEADER);
-        setContentText(String.format(TEXT, set.getTag()));
+        setContentText(String.format(TEXT, set.getSuperSetName()));
 
         GridPane grid = new GridPane();
 

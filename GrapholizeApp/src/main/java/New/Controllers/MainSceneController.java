@@ -201,26 +201,23 @@ public class MainSceneController {
         return false;
     }
 
-    void initializeProject(){
-        //_session = new Session(new JsonLoader().load("src\\main\\resources\\data\\lukas_test_1.json"));
+    private void initializeProject(){
         PageMetaData pmd = _session.getActivePage().getPageMetaData();
-        //_session.setZ_Helper(loader.getZipHelper());
+        //These components only need to be initialized once.
+        //If they are already present, they already handle the logic for updating their
+        //content upon a project change
         if(optionalContentSwitcher.isEmpty()){
-            System.out.println("new switcher");
             optionalContentSwitcher = Optional.of(new ContentSwitcher(_session.getActiveProject(false),_session.getActiveParticipant(), _session.getActivePage()));
             anchorPane_canvasContainer.getChildren().add(optionalContentSwitcher.get());
         }
 
-
         if(optionalSegmentationContainer.isEmpty()){
-            System.out.println("new container");
             optionalSegmentationContainer = Optional.of(new SegmentationContainer(_session.getActiveProject(false), _session.getActivePage(), 0.2));
             scrollPane_TimeLines.getChildren().add(optionalSegmentationContainer.get());
         }
 
 
         if(optionalCanvas.isEmpty()){
-            System.out.println("new canvas");
             optionalCanvas = Optional.of(new MainCanvas(pmd.getPageWidth(), pmd.getPageHeight(), 5, _session.getActivePage(), optionalSegmentationContainer.get().getSelectedSegmentation()));
             anchorPane_canvasContainer.getChildren().add(optionalCanvas.get());
         }

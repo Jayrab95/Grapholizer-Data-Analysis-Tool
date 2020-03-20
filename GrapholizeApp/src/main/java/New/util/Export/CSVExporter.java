@@ -23,11 +23,20 @@ public class CSVExporter implements IExporter {
         csvBuilders = new HashMap<>();
     }
 
+    /**
+     * Exports the given project using the given filepath and the given export config
+     * @param filePath path to the desired output file
+     * @param proj the project with all the data to be exported
+     * @param config the selection subset of data that should be exported
+     * @return
+     * @throws IOException
+     * @throws ExportException
+     */
     @Override
     public boolean export(String filePath, Project proj, ExportConfig config) throws IOException, ExportException {
         config.topicSetIDs.forEach(ID -> csvBuilders.put(ID, new CSVTableBuilder()));
         csvBuilders.forEach((k, csvBuilder) -> {
-            csvBuilder.addColumnHeader(proj.getTopicSet(k).getTag());
+            csvBuilder.addColumnHeader(proj.getTopicSet(k).getSuperSetName());
         });
         project = proj;
         this.config = config;
@@ -59,7 +68,6 @@ public class CSVExporter implements IExporter {
     }
 
     private void processParticipant(Participant part) {
-        System.out.println("process Participant");
         part.getPages().forEach(page -> processPage(part,page));
     }
 

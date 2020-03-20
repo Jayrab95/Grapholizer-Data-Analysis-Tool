@@ -1,12 +1,13 @@
 package New.CustomControls.TimeLine;
 
-import New.Controllers.CustomTimeLineController;
+import New.Controllers.CustomSegmentationController;
 import New.CustomControls.Containers.SegmentationContainer;
 import New.CustomControls.Annotation.MutableSegmentRectangle;
 import New.Dialogues.DialogControls.TopicTextControl;
 import New.Dialogues.FilterSelectDialog;
 import New.Dialogues.SegmentDialog;
-import New.Execptions.NoTimeLineSelectedException;
+import New.Execptions.NoDotsSelectedException;
+import New.Execptions.NoSegmentationSelectedException;
 import New.Model.Entities.Segment;
 import New.Observables.ObservableSegment;
 import New.Observables.ObservableDot;
@@ -25,6 +26,13 @@ import java.util.Optional;
 import java.util.Set;
 import java.util.stream.Collectors;
 
+/**
+ * The customSegmentationPane extends the SelectableSegmentationPane and contains logic
+ * for creating new segments with the drag rectangle and handling context menu actions for
+ * copying segments and dot sections into the current segmentation.
+ * CustomSegmentations are created for each super set and can be edited and removed.
+ * The Segments on it can be moved and edited as well.
+ */
 public class CustomSegmentationPane extends SelectableSegmentationPane {
 
     public static final String TXT_COPYANNOTATION_TITLE = "Copy selected segments";
@@ -52,13 +60,13 @@ public class CustomSegmentationPane extends SelectableSegmentationPane {
 
     private ObservableSuperSet observableSuperSet;
     private ObservablePage observablePage;
-    private CustomTimeLineController customTimeLineController;
+    private CustomSegmentationController customTimeLineController;
     private ContextMenu contextMenu;
 
     public CustomSegmentationPane(double width, double height, DoubleProperty scaleProp, ObservableSuperSet tag, ObservablePage observablePage, SegmentationContainer parent) {
         super(width, height, scaleProp, tag.getNameProperty(), parent, tag.getTopicSetID());
         this.observableSuperSet = tag;
-        customTimeLineController = new CustomTimeLineController(tag, observablePage, parent);
+        customTimeLineController = new CustomSegmentationController(tag, observablePage, parent);
 
         dragBounds = new double[2];
         this.observablePage = observablePage;
@@ -66,18 +74,11 @@ public class CustomSegmentationPane extends SelectableSegmentationPane {
         this.contextMenu = generateContextMenu();
         generateSegmentRectangles();
 
-
-
     }
 
     public CustomSegmentationPane(double width, double height, DoubleProperty scaleProp, ObservableSuperSet tag, ObservablePage observablePage, SegmentationContainer parent, Set<Segment> segments) {
         this(width, height, scaleProp, tag, observablePage, parent);
         addAnnotations(segments);
-    }
-
-    public CustomSegmentationPane(double width, double height, DoubleProperty scaleProp, ObservableSuperSet tag, ObservablePage observablePage, SegmentationContainer parent, Segment a) {
-        this(width, height, scaleProp, tag, observablePage, parent);
-        addAnnotation(a);
     }
 
     private void generateSegmentRectangles(){
@@ -130,32 +131,9 @@ public class CustomSegmentationPane extends SelectableSegmentationPane {
     public double[] getBounds(double xPosition){
         double[] unscaledBounds = customTimeLineController.getDragBounds(xPosition / scale.get());
         return new double[]{unscaledBounds[0] * scale.get(), unscaledBounds[1] * scale.get()};
-        /*
-        //TODO: Move into controller
-        double lowerBounds = 0;
-        double upperBounds = getWidth();
-        //The children list is not sorted and can also include handles of annotations
-        for(Node n : getChildren()){
-            if(n instanceof SegmentRectangle){
-                SegmentRectangle rect = (SegmentRectangle)n;
-                double nTimeStart = rect.getX();
-                double nTimeStop = rect.getX() + rect.getWidth();
-                if(nTimeStop < xPosition && nTimeStop > lowerBounds) {
-                    lowerBounds = nTimeStop;
-                }
-                if(nTimeStart > xPosition && nTimeStart < upperBounds) {
-                    upperBounds = nTimeStart;
-                }
-            }
-
-        }
-        return new double[]{lowerBounds, upperBounds};
-
-         */
     }
 
     private ContextMenu generateContextMenu(){
-        //TODO: Find better way to extend context menu functionality
         MenuItem item_filterSelect = new MenuItem("Filter select");
         item_filterSelect.setOnAction(event -> handleFilterSelectClick());
         MenuItem item_createNegativeTimeLine = new MenuItem("Create negative segmentation out of this segmentation");
@@ -196,37 +174,15 @@ public class CustomSegmentationPane extends SelectableSegmentationPane {
         createCopyAnnotationDialogue();
     }
 
-    //Source: https://coderanch.com/t/689100/java/rectangle-dragging-image
-
+    //Source for drag rectangle: https://coderanch.com/t/689100/java/rectangle-dragging-image
     @Override
-    public void handleTimelineMousePress(MouseEvent event){
+    protected void handleTimelineMousePress(MouseEvent event){
         if(event.getButton() == MouseButton.SECONDARY){
             contextMenu.show(this, event.getScreenX(), event.getScreenY());
             event.consume();
         }
         else{
             super.handleTimelineMousePress(event);
-            /*
-            this.setTimeLineSelected(true);
-
-
-            //Prepare selection
-            getChildren().add(selection);
-            selection.setWidth(0);
-            selection.setHeight(getHeight());
-
-            anchor.setX(event.getX());
-            anchor.setY(0);
-
-            selection.setX(event.getX());
-            selection.setY(0);
-
-            if(event.isControlDown()){
-                selectMode = true;
-                selection.setFill(new Color(0,0,1,0.5)); //transparent blue
-            }
-
-             */
             if(!selectMode){
                 dragBounds = getBounds(event.getX());
                 selection.setFill(null); // transparent
@@ -296,7 +252,7 @@ public class CustomSegmentationPane extends SelectableSegmentationPane {
             selectMode = false;
     }
 
-    public void copyNegativeSegmentsIntoSegmentation(){
+    private void copyNegativeSegmentsIntoSegmentation(){
         Set<Segment> negativeSegments = customTimeLineController.getNegativeSegmentsFromSelectedSegmentation();
         if(customTimeLineController.setCollidesWithOtherAnnotations(negativeSegments)){
             if(DialogGenerator.confirmationDialogue(TXT_COLLIDEHANDLER_TITLE, TXT_COLLIDEHANDLER_HEADER, TXT_COLLIDEHANDLER_MSG)){
@@ -308,53 +264,50 @@ public class CustomSegmentationPane extends SelectableSegmentationPane {
         }
     }
 
-    public void createCopyAnnotationDialogue()  {
+    private void createCopyAnnotationDialogue()  {
 
         SegmentDialog dialog = new SegmentDialog(TXT_DOTANNOTATION_TITLE, TXT_DOTANNOTATION_HEADER, TXT_DOTANNOTATION_TEXT, observableSuperSet.getTopicsObservableList(), Optional.empty(), true);
 
         dialog.setResultConverter(b -> {
             if (b == dialog.getButtonTypeOK()) {
-                //If the cbox is selected, a new optional containing the boundaries of the new combined annotation is created.
-                Optional<double[]> boundaries = dialog.isCombined() ?
-                        Optional.of(customTimeLineController.getCombinedAnnotationBoundaries()) :
-                        Optional.empty();
-                //collidesWithOtherElements is executed with the boundaries if they are available or with all selected elements otherwise.
-                //If a collision was detected, a dialog is prompted which asks the user if they want to create a new timeline.
-                //should they decline, the entire procees is aborted.
-                if(customTimeLineController.copiedAnnotationsCollideWithOtherAnnotations(boundaries)){
-                    if(DialogGenerator.confirmationDialogue(TXT_COLLIDEHANDLER_TITLE, TXT_COLLIDEHANDLER_HEADER, TXT_COLLIDEHANDLER_MSG)){
-                        Optional<Segment> optional;
-                        if(dialog.isCombined()){
-                            Segment s = new Segment(boundaries.get()[0], boundaries.get()[1]);
-                            for(TopicTextControl ttc : dialog.getControls()){
-                                s.putAnnotation(ttc.getTopicID(), ttc.getTextFieldText());
+                if(dialog.isCombined()){
+                    try{
+                        double[] boundaries = customTimeLineController.getCombinedAnnotationBoundaries();
+                        Segment s = new Segment(boundaries[0], boundaries[1]);
+                        for (TopicTextControl ttc : dialog.getControls()) {
+                            s.putAnnotation(ttc.getTopicID(), ttc.getTextFieldText());
+                        }
+                        if(customTimeLineController.timeRangeCollidesWithOtherAnnotations(boundaries[0], boundaries[1])) {
+                            if (DialogGenerator.confirmationDialogue(TXT_COLLIDEHANDLER_TITLE, TXT_COLLIDEHANDLER_HEADER, TXT_COLLIDEHANDLER_MSG)) {
+                                customTimeLineController.createSegmentationOutOfSegment(s);
                             }
-                            optional = Optional.of(s);
                         }
                         else{
-                            optional = Optional.empty();
+                            //NO collision, segment can be directly added.
+                            addAnnotation(s);
                         }
-                        try {
-                            customTimeLineController.createNewTimeLine(optional, true);
-                        } catch (NoTimeLineSelectedException ex) {
-                            DialogGenerator.simpleErrorDialog("Creation Error","Error while creating timeline", ex.toString());
-                        }
+                    } catch (NoSegmentationSelectedException e) {
+                        DialogGenerator.simpleErrorDialog("Creation error", "Error creating segmentation", e.getMessage());
                     }
+
                 }
                 else{
-                    //If no collisions were detected, copy the annotations into this timeline.
-                    if (dialog.isCombined()) {
-                        Segment s = new Segment(boundaries.get()[0], boundaries.get()[1]);
-                        for(TopicTextControl ttc : dialog.getControls()){
-                            s.putAnnotation(ttc.getTopicID(), ttc.getTextFieldText());
+                    //Copy segments individually
+                        if(customTimeLineController.selectedAnnotationsCollideWithOtherAnnotations()){
+                            if (DialogGenerator.confirmationDialogue(TXT_COLLIDEHANDLER_TITLE, TXT_COLLIDEHANDLER_HEADER, TXT_COLLIDEHANDLER_MSG)) {
+                                try{
+                                    customTimeLineController.createNewSegmentationOutOfSelectedSegments();
+                                }
+                                catch (NoSegmentationSelectedException ex) {
+                                    DialogGenerator.simpleErrorDialog("Creation Error", "Error while creating segmentation", ex.toString());
+                                }
+                            }
                         }
-                        addAnnotation(s);
-                    }
-                    else {
-                        //Add missing topics into this timeline
-                        customTimeLineController.addMissingTopics(dialog.getControls().stream().map(TopicTextControl::getTopic).collect(Collectors.toList()));
-                        addAnnotations(customTimeLineController.generateMissingSegments());
-                    }
+                        else{
+                            //Add missing topics and copy segments directly
+                            customTimeLineController.addMissingTopics(dialog.getControls().stream().map(TopicTextControl::getTopic).collect(Collectors.toList()));
+                            addAnnotations(customTimeLineController.generateMissingSegments());
+                        }
                 }
             }
 
@@ -364,41 +317,44 @@ public class CustomSegmentationPane extends SelectableSegmentationPane {
         dialog.showAndWait();
     }
 
-    public void createAnnotationFromDotsDialogue()  {
+    private void createAnnotationFromDotsDialogue()  {
         SegmentDialog dialog = new SegmentDialog(TXT_DOTANNOTATION_TITLE, TXT_DOTANNOTATION_HEADER, TXT_DOTANNOTATION_TEXT, observableSuperSet.getTopicsObservableList(), Optional.empty(), true);
         dialog.setResultConverter(b -> {
             if (b == dialog.getButtonTypeOK()) {
-                //If the cbox is selected, a new optional containing the boundaries of the new combined annotation is created.
-                Optional<double[]> boundaries = dialog.isCombined() ?
-                        Optional.of(customTimeLineController.getCombinedDotAnnotationBoundaries()) :
-                        Optional.empty();
-                //collidesWithOtherElements is executed with the boundaries if they are available or with all selected elements otherwise.
-                //If a collision was detected, a dialog is prompted which asks the user if they want to create a new timeline.
-                //should they decline, the entire procees is aborted.
-                if(customTimeLineController.dotSegmentsCollideWithOtherAnnotations(boundaries) && DialogGenerator.confirmationDialogue(TXT_COLLIDEHANDLER_TITLE, TXT_COLLIDEHANDLER_HEADER, TXT_COLLIDEHANDLER_MSG)){
-                    Optional<Segment> annotation = dialog.isCombined() ?
-                            Optional.of(new Segment(boundaries.get()[0], boundaries.get()[1])) :
-                            Optional.empty();
-                    try {
-                        customTimeLineController.createNewTimeLine(annotation, false);
-                    } catch (NoTimeLineSelectedException ex) {
-                        DialogGenerator.simpleErrorDialog("Creation Error","Error while creating timeline", ex.toString());
-                    }
-                }
-                else{
-                    //If no collisions were detected, copy the annotations into this timeline.
-                    if (dialog.isCombined()) {
-                        Segment s = new Segment(boundaries.get()[0], boundaries.get()[1]);
+
+                if(dialog.isCombined()){
+                    try{
+                        double[] bounds = customTimeLineController.getCombinedDotAnnotationBoundaries();
+                        Segment s = new Segment(bounds[0], bounds[1]);
                         for(TopicTextControl ttc : dialog.getControls()){
                             s.putAnnotation(ttc.getTopicID(), ttc.getTextFieldText());
                         }
-                        addAnnotation(s);
+                        if(customTimeLineController.timeRangeCollidesWithOtherAnnotations(bounds[0], bounds[1])){
+                            if(DialogGenerator.confirmationDialogue(TXT_COLLIDEHANDLER_TITLE, TXT_COLLIDEHANDLER_HEADER, TXT_COLLIDEHANDLER_MSG)){
+                                customTimeLineController.createSegmentationOutOfSegment(s);
+                            }
+                        }
+                        else{
+                            addAnnotation(s);
+                        }
+                    } catch (NoDotsSelectedException e) {
+                        DialogGenerator.simpleErrorDialog("No dots selected", "No dots selected", e.toString());
                     }
-                    else {
+                }
+                else{
+                    if(customTimeLineController.selectedDotsCollideWithOtherAnnotations()){
+                        if(DialogGenerator.confirmationDialogue(TXT_COLLIDEHANDLER_TITLE, TXT_COLLIDEHANDLER_HEADER, TXT_COLLIDEHANDLER_MSG)){
+                            customTimeLineController.createNewSegmentationOutOfDots();
+                        }
+                    }
+                    else{
                         for(List<ObservableDot> segment : observablePage.getSelectedDotSections()){
-                            addAnnotation(new Segment(
-                                    segment.get(0).getTimeStamp(),
-                                    segment.get(segment.size()-1).getTimeStamp()));
+                            if(segment.size() >1){
+                                addAnnotation(new Segment(
+                                        segment.get(0).getTimeStamp(),
+                                        segment.get(segment.size()-1).getTimeStamp()));
+                            }
+
                         }
                     }
                 }
@@ -410,8 +366,13 @@ public class CustomSegmentationPane extends SelectableSegmentationPane {
         dialog.showAndWait();
     }
 
-    public void deleteSegment(MutableSegmentRectangle a, ObservableSegment observableSegment){
-        getChildren().removeAll(a, a.getLeft(), a.getRight(), a.getDisplayedTextLabel());
+    /**
+     * Deletes the given segment rectangle from this segmentation and subsequently also removes it from the page
+     * @param mutableSegmentRectangle segment rectangle that needs to be removed
+     * @param observableSegment observableSegment that needs tobe removed from page
+     */
+    public void deleteSegment(MutableSegmentRectangle mutableSegmentRectangle, ObservableSegment observableSegment){
+        getChildren().removeAll(mutableSegmentRectangle, mutableSegmentRectangle.getLeft(), mutableSegmentRectangle.getRight(), mutableSegmentRectangle.getDisplayedTextLabel());
         this.observableSegments.remove(observableSegment);
         customTimeLineController.removeAnnotation(observableSegment);
     }

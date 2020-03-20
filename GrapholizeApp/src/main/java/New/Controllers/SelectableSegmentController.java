@@ -27,13 +27,28 @@ public class SelectableSegmentController {
         }
     }
 
+    /**
+     * Selects the dots within the given timeframe. this does NOT deselect other dots.
+     * @param timeStart beginning of the timeframe
+     * @param timeEnd end of the timeframe
+     */
     public void selectDots(double timeStart, double timeEnd){
         selector.select(timeStart, timeEnd);
     }
 
+    /**
+     * Selects only dots within the timeframe and deselects all dots outside of the timeframe
+     * @param timeStart beginning of the timeframe
+     * @param timeEnd end of the timeframe
+     */
     public void selectOnlyDotsWithinTimeFrame(double timeStart, double timeEnd){
         selector.selectOnlyTimeFrame(timeStart, timeEnd);
     }
 
+    /**
+     * Deselects all dots in timeframe
+     * @param timeStart beginning of timeframe
+     * @param timeEnd end of timeframe
+     */
     public void deselectDots(double timeStart, double timeEnd){selector.deselect(timeStart, timeEnd);}
 }

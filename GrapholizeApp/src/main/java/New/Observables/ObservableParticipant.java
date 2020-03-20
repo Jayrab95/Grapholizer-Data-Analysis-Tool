@@ -2,38 +2,45 @@ package New.Observables;
 
 import New.Interfaces.Observer.ParticipantObserver;
 import New.Model.Entities.Participant;
+import javafx.beans.property.ObjectProperty;
+import javafx.beans.property.SimpleObjectProperty;
 
 import java.util.LinkedList;
 import java.util.List;
 
+/**
+ * The ObservableParticipant is an Observable Singleton object that holds a reference to a participant.
+ * It notifies its observers if a reference change on the object property happens.
+ *
+ */
 public class ObservableParticipant {
 
-    private Participant innerParticipant;
-    private List<ParticipantObserver>observers;
+    private ObjectProperty<Participant> inner;
 
     public ObservableParticipant(Participant innerParticipant){
-        this.innerParticipant = innerParticipant;
-        this.observers = new LinkedList<>();
+        this.inner = new SimpleObjectProperty<>(innerParticipant);
     }
 
     public void setParticipant(Participant p){
-        this.innerParticipant = p;
-        notifyObservers();
+        this.inner.set(p);
     }
 
     public void setParticipant(ObservableParticipant p){
-        this.setParticipant(p.innerParticipant);
+        this.setParticipant(p.getActiveParticipant());
     }
 
-    public int getNumberOfPages(){return innerParticipant.getPages().size();}
+    public int getNumberOfPages(){return inner.get().getPages().size();}
+
+    public ObjectProperty<Participant> getInner(){
+        return inner;
+    }
+
+    public Participant getActiveParticipant(){
+        return inner.get();
+    }
 
     public ObservablePage getPage(int index) throws IndexOutOfBoundsException{
-        return new ObservablePage(innerParticipant.getPage(index));
+        return new ObservablePage(inner.get().getPage(index));
     }
 
-    public void notifyObservers() {
-        for(ParticipantObserver obs : observers){
-            obs.update(this);
-        }
-    }
 }

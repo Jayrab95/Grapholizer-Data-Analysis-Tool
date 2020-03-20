@@ -7,7 +7,6 @@ import javafx.scene.layout.GridPane;
 public class CustomTimeLineAnnotationDialog {
     private static final String TXT_COPYANNOTATION_DEFAULTVAL = "New combined annotation";
 
-    //TODO: Perhaps the logic required by this dialog could be put behind an interface.
     private ObservablePage op;
 
     private Dialog annotationCopyDialog(String title, String header, String text){

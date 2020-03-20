@@ -9,6 +9,11 @@ import javafx.scene.layout.HBox;
 
 import java.util.Optional;
 
+/**
+ * The TopicTextControl is an HBox which contains a label for the topic name and a textbox
+ * which the user can fill out for the annotation.
+ * The class contains accessors to retrieve the annotation value and the individual graphical components.
+ */
 public class TopicTextControl extends HBox {
     private Label label_topic;
     private TextField textField_topicText;

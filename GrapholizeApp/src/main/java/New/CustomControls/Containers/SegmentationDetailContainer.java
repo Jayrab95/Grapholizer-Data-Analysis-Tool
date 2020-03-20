@@ -22,7 +22,7 @@ import java.util.List;
 
 public class SegmentationDetailContainer extends ScrollPane {
 
-    private SelectableSegmentationPane inspectedTimeLine;
+    private SelectableSegmentationPane inspectedSegmentation;
     private ScrollPane timelineScrollPane;
     private VBox subTimelines;
     private GridPane subTimelineTags;
@@ -32,8 +32,8 @@ public class SegmentationDetailContainer extends ScrollPane {
     ObservablePage activePage;
     DoubleProperty detailScale;
 
-    public SegmentationDetailContainer(SegmentationPane inspectedTimeLine, ObservablePage activePage){
-        this.inspectedTimeLine = (SelectableSegmentationPane)inspectedTimeLine;
+    public SegmentationDetailContainer(SegmentationPane inspectedSegmentation, ObservablePage activePage){
+        this.inspectedSegmentation = (SelectableSegmentationPane) inspectedSegmentation;
         this.activePage = activePage;
         this.setHbarPolicy(ScrollBarPolicy.NEVER);
         //Initialize Scaler;
@@ -44,7 +44,7 @@ public class SegmentationDetailContainer extends ScrollPane {
         subTimelines = new VBox();
         timelineScrollPane = new ScrollPane();
         subTimelineTags = new GridPane();
-        unitPane = new TimeUnitPane(detailScale,20, inspectedTimeLine.totalLengthProperty());
+        unitPane = new TimeUnitPane(detailScale,20, inspectedSegmentation.totalLengthProperty());
 
         generateDetailContainer();
     }
@@ -62,7 +62,7 @@ public class SegmentationDetailContainer extends ScrollPane {
         initializeStrokeDetailTimeLine(1);
         initializePressureTimeline(2);
         initializeVelocityTimeline(3);
-        initializecharacteristicTimeLines(CharacteristicList.characteristics(),5);
+        initializeCharacteristicTimeLines(CharacteristicList.characteristics(),5);
 
         timelineScrollPane.setContent(subTimelines);
         HBox timelinecontainer = new HBox(subTimelineTags, timelineScrollPane);
@@ -86,29 +86,29 @@ public class SegmentationDetailContainer extends ScrollPane {
     private void initializeSegmentTimeLine(int rowIndex){
         subTimelineTags.add(new Label("Segments"),0, rowIndex);
         subTimelineTags.add(new Label("Maintopic"),1, rowIndex);
-        subTimelineTags.getRowConstraints().add(new RowConstraints(inspectedTimeLine.getHeight()));
+        subTimelineTags.getRowConstraints().add(new RowConstraints(inspectedSegmentation.getHeight()));
         subTimelines.getChildren().add(new DetailSegmentSegmentation(
                 getLength(),
-                inspectedTimeLine.getHeight()
+                inspectedSegmentation.getHeight()
                 , detailScale,
                 new SimpleStringProperty("Segments"),
                 activePage,
-                inspectedTimeLine.getTopicSetID(),
-                inspectedTimeLine instanceof CustomSegmentationPane ? ((CustomSegmentationPane)inspectedTimeLine).getObservableSuperSet().getMainTopicID() : ""
+                inspectedSegmentation.getTopicSetID(),
+                inspectedSegmentation instanceof CustomSegmentationPane ? ((CustomSegmentationPane) inspectedSegmentation).getObservableSuperSet().getMainTopicID() : ""
         ));
     }
 
     private void initializeStrokeDetailTimeLine(int rowIndex){
         subTimelineTags.add(new Label("Strokes"),0, rowIndex);
         subTimelineTags.add(new Label("Milliseconds"),1, rowIndex);
-        subTimelineTags.getRowConstraints().add(new RowConstraints(inspectedTimeLine.getHeight()));
+        subTimelineTags.getRowConstraints().add(new RowConstraints(inspectedSegmentation.getHeight()));
         subTimelines.getChildren().add(new DetailStrokesSegmentation(
                 getLength(),
-                inspectedTimeLine.getHeight()
+                inspectedSegmentation.getHeight()
                 , detailScale,
                 new SimpleStringProperty("Segments"),
                 activePage,
-                inspectedTimeLine.getTopicSetID()
+                inspectedSegmentation.getTopicSetID()
         ));
     }
 
@@ -116,58 +116,58 @@ public class SegmentationDetailContainer extends ScrollPane {
     private void initializePressureTimeline(int rowIndex){
         subTimelineTags.add(new Label("Pressure"),0, rowIndex);
         subTimelineTags.add(new Label("some Unit"),1, rowIndex);
-        subTimelineTags.getRowConstraints().add(new RowConstraints(inspectedTimeLine.getHeight()));
+        subTimelineTags.getRowConstraints().add(new RowConstraints(inspectedSegmentation.getHeight()));
         subTimelines.getChildren().add(new PressureSegmentation(
                 getLength(),
-                inspectedTimeLine.getHeight(),
+                inspectedSegmentation.getHeight(),
                 detailScale,
                 new SimpleStringProperty("Pressure"),
                 activePage,
-                inspectedTimeLine,
-                inspectedTimeLine.getTopicSetID()
+                inspectedSegmentation,
+                inspectedSegmentation.getTopicSetID()
         ));
     }
 
     private void initializeVelocityTimeline(int rowIndex){
          subTimelineTags.add(new Label("Velocity"),0, rowIndex);
          subTimelineTags.add(new Label("mm/ms"),1, rowIndex);
-         subTimelineTags.getRowConstraints().add(new RowConstraints(inspectedTimeLine.getHeight()));
+         subTimelineTags.getRowConstraints().add(new RowConstraints(inspectedSegmentation.getHeight()));
          subTimelines.getChildren().add(new VelocitySegmentation(
                 getLength(),
-                inspectedTimeLine.getHeight(),
+                inspectedSegmentation.getHeight(),
                 detailScale,
                 new SimpleStringProperty("Velocity"),
                 activePage,
-                inspectedTimeLine.getTopicSetID()
+                inspectedSegmentation.getTopicSetID()
         ));
 
         subTimelineTags.add(new Label("Velocity Buttered"),0, rowIndex + 1);
         subTimelineTags.add(new Label("mm/ms"),1, rowIndex + 1);
-        subTimelineTags.getRowConstraints().add(new RowConstraints(inspectedTimeLine.getHeight()));
+        subTimelineTags.getRowConstraints().add(new RowConstraints(inspectedSegmentation.getHeight()));
         subTimelines.getChildren().add(new VelocityButteredSegmentation(
                 getLength(),
-                inspectedTimeLine.getHeight(),
+                inspectedSegmentation.getHeight(),
                 detailScale,
                 new SimpleStringProperty("Velocity"),
                 activePage,
-                inspectedTimeLine.getTopicSetID()
+                inspectedSegmentation.getTopicSetID()
         ));
     }
 
-    private void initializecharacteristicTimeLines(List<Characteristic> characteristics, int rowIndex){
+    private void initializeCharacteristicTimeLines(List<Characteristic> characteristics, int rowIndex){
         for (int i = 0; i < characteristics.size() ; i++) {
             Characteristic characteristic = characteristics.get(i);
             int rowPosition = rowIndex + i;
             subTimelineTags.add(new Label(characteristic.getName()),0, rowPosition);
             subTimelineTags.add(new Label(characteristic.getUnitName()),1, rowPosition);
-            subTimelineTags.getRowConstraints().add(new RowConstraints(inspectedTimeLine.getHeight()));
+            subTimelineTags.getRowConstraints().add(new RowConstraints(inspectedSegmentation.getHeight()));
             subTimelines.getChildren().add(new DetailCharacteristicSegmentation(
                     getLength(),
-                    inspectedTimeLine.getHeight(),
+                    inspectedSegmentation.getHeight(),
                     detailScale,
                     new SimpleStringProperty(characteristic.getName()),
                     activePage,
-                    inspectedTimeLine.getTopicSetID(),
+                    inspectedSegmentation.getTopicSetID(),
                     characteristics.get(i)
             ));
         }
@@ -175,7 +175,7 @@ public class SegmentationDetailContainer extends ScrollPane {
 
     private double getLength(){
         double end = 0;
-        for(SegmentRectangle r : inspectedTimeLine.getSegmentRectangles()){
+        for(SegmentRectangle r : inspectedSegmentation.getSegmentRectangles()){
             if(end < r.getTimeStop()){end = r.getTimeStop();}
         }
         return end;

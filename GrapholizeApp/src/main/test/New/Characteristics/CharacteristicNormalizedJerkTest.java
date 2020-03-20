@@ -39,7 +39,6 @@ public class CharacteristicNormalizedJerkTest {
         }
 
         double result = new CharacteristicNormalizedJerk("Jerk", "unit").calculateImplementation(dotLists);
-        System.out.println("Result Normalized Jerk " + result);
         assertEquals(10.96, result, 0.01);
     }
 }

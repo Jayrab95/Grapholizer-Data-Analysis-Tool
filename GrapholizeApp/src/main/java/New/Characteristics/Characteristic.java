@@ -46,19 +46,36 @@ public abstract class Characteristic<T extends Number> {
     protected abstract T calculateImplementation(List<List<Dot>> data);
 
 
+    /**
+     * Returns the name of this characteristic
+     * @return name of this characteristic
+     */
     public String getName(){
         return name;
     }
 
+    /**
+     * Returns the unit description of this characteristic
+     * @return unit description of this characteristic
+     */
     public String getUnitName() {
         return unitName;
     }
 
+    /**
+     * Returns the name of this characteristic
+     * @return name of this characterictic
+     */
     @Override
     public String toString() {
         return name;
     }
 
+    /**
+     * Compares to a given object and returns true if both are characteristics and both have the same name.
+     * @param obj object to compare
+     * @return true if obj is a Characteristic and has the same name as this Characteristic, false otherwise.
+     */
     @Override
     public boolean equals(Object obj) {
         if(obj instanceof Characteristic){

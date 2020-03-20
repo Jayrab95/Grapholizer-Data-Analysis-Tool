@@ -6,16 +6,25 @@ import javafx.beans.binding.BooleanBinding;
 
 public class SelectableSegmentationController {
 
-    ObservableSegmentation timeLine;
+    ObservableSegmentation observableSegmentation;
 
-    public SelectableSegmentationController(ObservableSegmentation timeLine){ this.timeLine = timeLine; }
+    public SelectableSegmentationController(ObservableSegmentation observableSegmentation){ this.observableSegmentation = observableSegmentation; }
 
-    public void selectTimeLine(SelectableSegmentationPane timeLinePane){
-        timeLine.setSelectedTimeLine(timeLinePane);
+    /**
+     * Sets the given SelectableSegmentationPane as the selected and active segmentation
+     * @param segmentationPane segmentationPane which should become the active segmentation
+     */
+    public void selectSegmentation(SelectableSegmentationPane segmentationPane){
+        observableSegmentation.setSelectedTimeLine(segmentationPane);
     }
 
+    /**
+     * Returns a booleanBinding which says whether or not the selectedTimeLineProperty of the
+     * ObservableSegmentation is null (no segmentation selected)
+     * @return the BooleanBinding described above
+     */
     public BooleanBinding getSegmentationIsNullProperty(){
-        return timeLine.getSelectedTimeLineProperty().isNull();
+        return observableSegmentation.getSelectedSegmentationProperty().isNull();
     }
 
 }

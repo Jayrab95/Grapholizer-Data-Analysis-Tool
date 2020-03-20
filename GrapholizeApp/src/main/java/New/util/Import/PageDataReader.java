@@ -18,9 +18,11 @@ public class PageDataReader implements Loader {
                 PageMetaData pmd = ReadMetaData(stream);
                 List<Stroke> strokes = ParseContentBody(pmd.getNumberOfStrokes(), stream);
                 ReadTrailingData(stream);
-                Participant newPart = new Participant(PREFIX_PARTICIPANT_ID + "_"
-                        + (pmd.getCreateTimeStamp()));
-                newPart.addPage(new Page(pmd, strokes, "ID"));
+                Participant newPart = new Participant(
+                        PREFIX_PARTICIPANT_ID + "_" + (pmd.getCreateTimeStamp()),
+                        List.of(new Page(pmd, strokes, "ID"))
+                );
+                //newPart.addPage(new Page(pmd, strokes, "ID"));
                 return new Project(List.of(newPart), List.of());
             }else {
                 throw new IOException();

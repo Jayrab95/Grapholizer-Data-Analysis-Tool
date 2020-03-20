@@ -9,6 +9,10 @@ import javafx.beans.property.SimpleObjectProperty;
 
 import java.util.*;
 
+/**
+ * The ObservableProject is an observable Singleton object that wraps a Project object
+ * and notifies listeners about a project change.
+ */
 public class ObservableProject {
     private static final String strokeSetID = "Stroke duration";
     private static final String durationTopicID = "Duration";
@@ -23,8 +27,6 @@ public class ObservableProject {
         }
     }
 
-    //TODO: Potential memory leak?
-    // Are certain topic set properties still referenced?
     private void generateObservableTopicSets(Project p){
         observableSuperSets = new LinkedList<>();
         for(String s : p.getTopicSetIDs()){
@@ -41,7 +43,7 @@ public class ObservableProject {
                 "",
                 strokeSetID
         );
-        p.putTopicSet(strokeSet);
+        p.putSuperSet(strokeSet);
         observableSuperSets.add(new ObservableSuperSet(strokeSet));
         for(Participant participant : p.getAllParticipants()){
             for(Page page : participant.getPages()){
@@ -89,6 +91,12 @@ public class ObservableProject {
         return new ObservableSuperSet(innerProjectProperty.get().getTopicSet(tag));
     }
 
+    /**
+     * Changes the project reference of the inner project property.
+     * this leads to a notification round. Note that this implicitly also changes the active
+     * participant and active page.
+     * @param p new Project reference
+     */
     public void setInnerProject(Project p){
 
         generateObservableTopicSets(p);
@@ -99,17 +107,27 @@ public class ObservableProject {
 
     }
 
-    public void putTopicSet(SuperSet t) {
-        innerProjectProperty.get().putTopicSet(t);
+    /**
+     * Puts the given superSet into the projects superset by using the superset id as the key and the superset
+     * as the value.
+     * @param superSet
+     */
+    public void putTopicSet(SuperSet superSet) {
+        innerProjectProperty.get().putSuperSet(superSet);
     }
 
-    public void checkIfTagIsValid(String key) throws TimeLineTagException {
-        timeLineTagExists(key);
-        timeLineTagIsNotEmpty(key);
+    /**
+     * Checks if the given superset name is valid (Name is not empty and name does not already exist)
+     * @param superSetName
+     * @throws TimeLineTagException
+     */
+    public void checkIfTagIsValid(String superSetName) throws TimeLineTagException {
+        timeLineTagExists(superSetName);
+        timeLineTagIsNotEmpty(superSetName);
     }
 
     private void timeLineTagExists(String tag) throws TimeLineTagException{
-        if(getTopicSets().stream().anyMatch(topicSet -> topicSet.getTag().equals(tag))){
+        if(getTopicSets().stream().anyMatch(topicSet -> topicSet.getSuperSetName().equals(tag))){
             throw new TimelineTagNotUniqueException(tag);
         }
     }
@@ -120,10 +138,13 @@ public class ObservableProject {
         }
     }
 
-    public SuperSet removeTimeLineTag(String key){
+    public SuperSet removeSuperSet(String key){
         return innerProjectProperty.get().removeTopicSet(key);
     }
 
+    /**
+     * Cleans up the pages and segmentations by removing loose map entries.
+     */
     public void cleanUp(){
         for(Participant participant : innerProjectProperty.get().getAllParticipants()){
             for(Page page : participant.getPages()){
@@ -133,7 +154,6 @@ public class ObservableProject {
         }
     }
 
-    //TODO: Consider moving these to OPage;
     private void removeLooseSegmentations(Page page){
         Map<String, Set<Segment>> pageSegmentations = page.getSegmentationsMap();
         List<String> looseSetIDs = new LinkedList<>();
