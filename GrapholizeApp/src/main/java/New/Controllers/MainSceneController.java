@@ -41,7 +41,7 @@ public class MainSceneController {
     /** Internal State Of Application */
     public Session _session;
 
-    Path raw_data_file; //TODO Lukas there should be a better way than keeping it here
+    Path raw_data_file;
 
     final Set<Characteristic> characteristicList;
 
