@@ -41,7 +41,7 @@ public class MainSceneController {
     /** Internal State Of Application */
     public Session _session;
 
-    Path raw_data_file; //TODO Lukas there should be a better way than keeping it here
+    Path raw_data_file;
 
     final Set<Characteristic> characteristicList;
 
@@ -155,13 +155,14 @@ public class MainSceneController {
      *
      * @param exporter The exporter that implements the export algorithm
      * @param config The subset that is going to be exported
+     * @param fileFilters the file endings allowed for this kind of export.
      */
-    private void export(IExporter exporter, ExportConfig config, String ... filefilters) {
+    private void export(IExporter exporter, ExportConfig config, String ... fileFilters) {
         try {
             File sFile = JavaFxUtil.openFileDialog("Export Data"
                     , "Export"
                     , true
-                    , filefilters);
+                    , fileFilters);
             exporter.export(sFile.getAbsolutePath(), _session.getActiveProject(true).getInner(), config);
         }catch(IOException ex) {
             new DialogGenerator().simpleErrorDialog("Failed to Export"

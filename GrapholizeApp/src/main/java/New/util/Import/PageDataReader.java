@@ -20,7 +20,6 @@ public class PageDataReader implements Loader {
                 ReadTrailingData(stream);
                 Participant newPart = new Participant(PREFIX_PARTICIPANT_ID + "_"
                         + (pmd.getCreateTimeStamp()));
-                //TODO: Replace ID with actual ID
                 newPart.addPage(new Page(pmd, strokes, "ID"));
                 return new Project(List.of(newPart), List.of());
             }else {
