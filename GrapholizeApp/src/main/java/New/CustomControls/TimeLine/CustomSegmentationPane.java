@@ -29,25 +29,25 @@ import java.util.stream.Collectors;
 
 public class CustomSegmentationPane extends SelectableSegmentationPane {
 
-    public static final String TXT_COPYANNOTATION_TITLE = "Copy selected annotations";
-    public static final String TXT_COPYANNOTATION_HEADER = "Copy selected annotations into this segmentation";
+    public static final String TXT_COPYANNOTATION_TITLE = "Copy selected segments";
+    public static final String TXT_COPYANNOTATION_HEADER = "Copy selected segments into this segmentation";
     public static final String TXT_COPYANNOTATION_TEXT =
             "The selected annotations will be copied into this segmentation. \n"
-            + "You may choose to combine the selected annotations into a single annotations. If so, you may enter a new Annotation text.";
-    public static final String TXT_DOTANNOTATION_TITLE = "Create annotations out of selected dots";
-    public static final String TXT_DOTANNOTATION_HEADER = "Create annotations out of selected dots";
-    public static final String TXT_DOTANNOTATION_TEXT = "This dialog will create new annotations out of the currently selected dots on the canvas and put them into this segmentation.\n"
-            + "Per default, these annotations are separated according to the strokes that the selected dots belong to. "
-            + "You may choose to combine the selected annotations into a single annotations. If so, you may enter a new Annotation text.";
+            + "You may choose to combine the selected segments into a single annotations. If so, you may enter a new Annotation text.";
+    public static final String TXT_DOTANNOTATION_TITLE = "Create segment(s) out of selected dots";
+    public static final String TXT_DOTANNOTATION_HEADER = "Create segment(s) out of selected dots";
+    public static final String TXT_DOTANNOTATION_TEXT = "This dialog will create new segments out of the currently selected dots on the canvas and put them into this segmentation.\n"
+            + "Per default, these segments are separated according to the strokes that the selected dots belong to. "
+            + "You may choose to combine the selected annotations into a single segment. If so, you may enter a new Annotation text.";
     public static final String TXT_COPYANNOTATION_DEFAULTVAL = "New combined annotation";
     public static final String TXT_COLLIDEHANDLER_TITLE = "Annotation copy error";
     public static final String TXT_COLLIDEHANDLER_HEADER = "Annotation copy error";
     public static final String TXT_COLLIDEHANDLER_MSG =
             "One or more annotations that you are attempting to copy would collide with other existing annotations. \n"
             +"Would you like to create a new timeline for these new annotations?";
-    public static final String TXT_DELETEALLSELECTED_TITLE = "Delete all selected annotations";
-    public static final String TXT_DELETEALLSELECTED_HEADER = "Delete all selected annotations";
-    public static final String TXT_DELETEALLSELECTED_TEXT = "Are you sure you want to delete all selected annotations? This action cannot be undone.";
+    public static final String TXT_DELETEALLSELECTED_TITLE = "Delete all selected segments";
+    public static final String TXT_DELETEALLSELECTED_HEADER = "Delete all selected segments";
+    public static final String TXT_DELETEALLSELECTED_TEXT = "Are you sure you want to delete all selected segments? This action cannot be undone.";
 
 
     private double[] dragBounds;
