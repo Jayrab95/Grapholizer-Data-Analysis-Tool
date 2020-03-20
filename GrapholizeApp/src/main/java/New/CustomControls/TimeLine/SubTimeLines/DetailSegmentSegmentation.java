@@ -28,7 +28,7 @@ public class DetailSegmentSegmentation extends DetailSegmentation {
                     50,
                     s.getTimeStart()
             );
-            getChildren().addAll(rect, rect.getDisplayedText());
+            getChildren().addAll(rect, rect.getDisplayedTextLabel());
         }
     }
 }

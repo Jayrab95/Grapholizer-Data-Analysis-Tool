@@ -4,8 +4,8 @@ import java.util.LinkedList;
 import java.util.List;
 
 public class CSVTableBuilder {
-    private final String ELEMENT_SEPERATOR = ";"; //TODO maybe make this choosable by user
-    private final String ROW_SEPERATOR = "\n"; //TODO Windows Excel uses the semicolon instead of comma (csv (comma seperated values^^ it's right there in the name))
+    private final String ELEMENT_SEPERATOR = ";";
+    private final String ROW_SEPERATOR = "\n"; //Windows Excel uses the semicolon instead of comma (csv (comma seperated values^^ it's right there in the name))
     private List<String> columnHeaders;
     private List<List<String>> rows;
 

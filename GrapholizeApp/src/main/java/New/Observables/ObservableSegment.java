@@ -8,8 +8,13 @@ import javafx.collections.ObservableList;
 
 import java.util.Map;
 
+/**
+ * The ObservableSegment is an Observable Model Object which wraps a superSet and exposes some of its
+ * attributes as Object properties.
+ * Any changes made to the properties are also made to the underlying wrapped object
+ */
 public class ObservableSegment implements Comparable<ObservableSegment> {
-    private Segment segment;
+    private Segment innerSegment;
 
     private DoubleProperty timeStartProperty;
     private DoubleProperty timeStopProperty;
@@ -21,24 +26,24 @@ public class ObservableSegment implements Comparable<ObservableSegment> {
 
     private ObservableList<Topic> observableList;
 
-    public ObservableSegment(Segment original, ObservableTopicSet observableTopicSet){
-        this.segment = original;
-        this.timeStartProperty = new SimpleDoubleProperty(segment.getTimeStart());
+    public ObservableSegment(Segment original, ObservableSuperSet observableSuperSet){
+        this.innerSegment = original;
+        this.timeStartProperty = new SimpleDoubleProperty(innerSegment.getTimeStart());
         this.timeStartProperty.addListener((observable, oldValue, newValue) -> {
-            segment.setTimeStart(newValue.doubleValue());
+            innerSegment.setTimeStart(newValue.doubleValue());
         });
-        this.timeStopProperty = new SimpleDoubleProperty(segment.getTimeStop());
-        this.timeStopProperty.addListener((observable, oldValue, newValue) -> segment.setTimeStop(newValue.doubleValue()));
-        this.mainTopicIDProperty = new SimpleStringProperty(observableTopicSet.getMainTopicID());
-        this.mainTopicIDProperty.bind(observableTopicSet.getMainTopicIDProperty());
+        this.timeStopProperty = new SimpleDoubleProperty(innerSegment.getTimeStop());
+        this.timeStopProperty.addListener((observable, oldValue, newValue) -> innerSegment.setTimeStop(newValue.doubleValue()));
+        this.mainTopicIDProperty = new SimpleStringProperty(observableSuperSet.getMainTopicID());
+        this.mainTopicIDProperty.bind(observableSuperSet.getMainTopicIDProperty());
 
-        this.mainTopicAnnotationProperty = new SimpleStringProperty(segment.getAnnotation(observableTopicSet.getMainTopicID()));
+        this.mainTopicAnnotationProperty = new SimpleStringProperty(innerSegment.getAnnotation(observableSuperSet.getMainTopicID()));
 
         this.mainTopicIDProperty.addListener( observable->
-                mainTopicAnnotationProperty.set(segment.getAnnotation(mainTopicIDProperty.get()))
+                mainTopicAnnotationProperty.set(innerSegment.getAnnotation(mainTopicIDProperty.get()))
         );
 
-        this.observableList = FXCollections.unmodifiableObservableList(observableTopicSet.getTopicsObservableList());
+        this.observableList = FXCollections.unmodifiableObservableList(observableSuperSet.getTopicsObservableList());
         /*
         Eager removal of topics.
         observableTopicSet.getTopicsObservableList().addListener((ListChangeListener<Topic>) c -> {
@@ -52,11 +57,11 @@ public class ObservableSegment implements Comparable<ObservableSegment> {
          */
 
         this.toolTipTextProperty = new SimpleStringProperty();
-        this.observableAnnotationMap = FXCollections.observableMap(segment.getAnnotationsMap());
+        this.observableAnnotationMap = FXCollections.observableMap(innerSegment.getAnnotationsMap());
 
         this.observableAnnotationMap.addListener((MapChangeListener<String, String>) change -> {
             if(change.getKey().equals(mainTopicIDProperty.get())){
-                mainTopicAnnotationProperty.set(segment.getAnnotation(mainTopicIDProperty.get()));
+                mainTopicAnnotationProperty.set(innerSegment.getAnnotation(mainTopicIDProperty.get()));
             }
             this.toolTipTextProperty.set(generateToolTipText());
         });
@@ -67,7 +72,7 @@ public class ObservableSegment implements Comparable<ObservableSegment> {
 
     //region Getters and Setters
     public Segment getSegment() {
-        return segment;
+        return innerSegment;
     }
 
     public double getTimeStart() {
@@ -95,7 +100,7 @@ public class ObservableSegment implements Comparable<ObservableSegment> {
     }
 
     public Segment getInnerSegment(){
-        return segment;
+        return innerSegment;
     }
 
     public StringProperty getMainTopicAnnotationProperty(){
@@ -122,19 +127,30 @@ public class ObservableSegment implements Comparable<ObservableSegment> {
         return this.selectedProperty;
     }
 
+    /**
+     * Checks if this segment lies within the given timeframe
+     * @param start start of timeframe
+     * @param stop stop of timeFrame
+     * @return true if this segment lies within timeframe, false otherwise
+     */
     public boolean isWithinTimeRange(double start, double stop){
         return this.getTimeStart() >= start && this.getTimeStop() <= stop;
     }
 
+    /**
+     * Puts the given annotation into the annotation map. (This will also add it to the
+     * underlying model object)
+     * @param topicID id of the topic for the annotation (key)
+     * @param annotation annotation for the given topic (value)
+     */
     public void putAnnotation(String topicID, String annotation){
-        /*if(mainTopicIDProperty.get().equals(topicID)){
-            mainTopicAnnotationProperty.set(annotation);
-        }
-         */
         observableAnnotationMap.put(topicID, annotation);
-        //segment.putAnnotation(topicID, annotation);
     }
 
+    /**
+     * Removes the annotation with the given id from the map
+     * @param topicID topic id of the annotation which will be removed
+     */
     public void removeAnnotation(String topicID){
         observableAnnotationMap.remove(topicID);
     }
@@ -143,10 +159,15 @@ public class ObservableSegment implements Comparable<ObservableSegment> {
         return observableAnnotationMap.get(topicID);
     }
 
+    /**
+     * Generates the tooltipText.
+     * The tool tip displays all annotations of the segment, as well as its duration.
+     * @return String which contains the generated toolTiptext
+     */
     public String generateToolTipText(){
         StringBuilder builder = new StringBuilder();
         for(Topic t : observableList){
-            builder.append(String.format("%s: %s\n", t.getTopicName(), segment.getAnnotation(t.getTopicID())));
+            builder.append(String.format("%s: %s\n", t.getTopicName(), innerSegment.getAnnotation(t.getTopicID())));
         }
         builder.append(String.format("%s: %s%s", "Duration:", String.valueOf((long)getDuration()), " ms"));
         return builder.toString();
@@ -154,10 +175,19 @@ public class ObservableSegment implements Comparable<ObservableSegment> {
 
     //endregion
 
+    /**
+     * Returns the duration of the segment
+     * @return
+     */
     public double getDuration(){
-        return segment.getDuration();
+        return innerSegment.getDuration();
     }
 
+    /**
+     * Checks if the segment fits the given filter criteria
+     * @param topicFilters map containing filter criteria where the key is the topic id and the value is the filter value
+     * @return true if the segment fits all filter criteria, false if it does not fit all criteria.
+     */
     public boolean fitsFilterCriteria(Map<String, String> topicFilters){
         for(String key : topicFilters.keySet()){
             if(!getInnerSegment().getAnnotation(key).equals(topicFilters.get(key))){
@@ -167,6 +197,11 @@ public class ObservableSegment implements Comparable<ObservableSegment> {
         return true;
     }
 
+    /**
+     * Compares this segment to another segment by comparing their timeStart attribute
+     * @param o the other ObservableSegment
+     * @return 1 if this Segment's timestart is larger than the other's timeStart, -1 if it is smaller, 0 if they are equal.
+     */
     @Override
     public int compareTo(ObservableSegment o) {
         return Double.compare(getTimeStart(), o.getTimeStart());

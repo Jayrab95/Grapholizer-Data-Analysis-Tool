@@ -7,8 +7,7 @@ import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.property.StringProperty;
 import javafx.scene.layout.Pane;
 
-//Idea: make Timeline an interface? This way timeline operations can be called without referencing the actual control.
-//TODO: Separate TimeLinePane into view and controller.
+
 public abstract class SegmentationPane extends Pane {
 
     protected DoubleProperty scale;
@@ -16,8 +15,7 @@ public abstract class SegmentationPane extends Pane {
     protected StringProperty timeLineName;
     protected final String topicSetID;
 
-    //Todo: perhaps reference style from a style sheet.
-    protected String defaultStyle = "-fx-padding: 10; -fx-border-style: solid inside; -fx-border-width: 2; -fx-border-insets: 5; -fx-border-radius: 5; -fx-background-color: grey";
+    protected String defaultStyle = "-fx-background-color: grey";
 
     protected SegmentationPane(double totalLength, double height, DoubleProperty scaleProp, StringProperty name, String id){
         this.totalLength = new SimpleDoubleProperty(totalLength);
@@ -67,6 +65,9 @@ public abstract class SegmentationPane extends Pane {
         setStyle(defaultStyle);
     }
 
+    /**
+     * Unbinds all properties. Call before object is removed.
+     */
     public void cleanUp(){
         scale.unbind();
         totalLength.unbind();

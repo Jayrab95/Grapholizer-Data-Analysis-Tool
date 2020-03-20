@@ -27,15 +27,6 @@ public class DotLine  extends Line {
         this.lineSelected = new SimpleBooleanProperty(false);
         this.lineColor = new SimpleObjectProperty<>(dot1.getColorProperty().get());
 
-
-        //Problem: At this point, the data is invalidated. For some reason, it does not get validated
-        //until a page change happens.
-        //eventhough the binding happens, it could be that the dotLine does not take note of that change
-        //Current Solution: ContentSwitcher needs to be initialized before Canvas
-        //Reason: ContentSwitcher sets the active page when it becomes initialized.
-        //If Canvas is initialized first, the dotlines may lose their reference to their dots
-        //Only after a page change will they function correctly.
-        //Perhaps the content switcher should not set the page on initialization
         this.lineSelected.bind(dot1.getSelectedProperty());
         this.lineColor.bind(dot1.getColorProperty());
 
@@ -78,6 +69,9 @@ public class DotLine  extends Line {
         setEndY(dot2.getY() * scale);
     }
 
+    /**
+     * Unbinds all bindings
+     */
     public void unlink(){
         lineSelected.unbind();
         lineColor.unbind();

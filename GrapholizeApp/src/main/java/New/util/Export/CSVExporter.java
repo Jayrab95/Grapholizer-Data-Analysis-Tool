@@ -23,11 +23,20 @@ public class CSVExporter implements IExporter {
         csvBuilders = new HashMap<>();
     }
 
+    /**
+     * Exports the given project using the given filepath and the given export config
+     * @param filePath path to the desired output file
+     * @param proj the project with all the data to be exported
+     * @param config the selection subset of data that should be exported
+     * @return
+     * @throws IOException
+     * @throws ExportException
+     */
     @Override
     public boolean export(String filePath, Project proj, ExportConfig config) throws IOException, ExportException {
-        proj.getTopicSetIDs().forEach(ID -> csvBuilders.put(ID, new CSVTableBuilder()));
+        config.topicSetIDs.forEach(ID -> csvBuilders.put(ID, new CSVTableBuilder()));
         csvBuilders.forEach((k, csvBuilder) -> {
-            csvBuilder.addColumnHeader(proj.getTopicSet(k).getTag());
+            csvBuilder.addColumnHeader(proj.getTopicSet(k).getSuperSetName());
         });
         project = proj;
         this.config = config;
@@ -59,12 +68,10 @@ public class CSVExporter implements IExporter {
     }
 
     private void processParticipant(Participant part) {
-        System.out.println("process Participant");
         part.getPages().forEach(page -> processPage(part,page));
     }
 
     private void processPage(Participant part, Page page) {
-        System.out.println("process Page");
         page.getSegmentationsMap().forEach((topicSetID, segmentations) -> {
             if(config.topicSetIDs.contains(topicSetID))
             processSegmentation(part.getID(), topicSetID, segmentations, csvBuilders.get(topicSetID), page);
@@ -73,7 +80,6 @@ public class CSVExporter implements IExporter {
 
     private void processSegmentation(String partID, String topicSetID
             , Set<Segment> segmentations, CSVTableBuilder tableBuilder, Page page){
-        System.out.println("process Segmentation");
         segmentations.forEach(segment -> {
             int index = tableBuilder.addRow(partID);
             addSegmentToCSV(segment, tableBuilder, index, topicSetID, page);
@@ -82,7 +88,6 @@ public class CSVExporter implements IExporter {
     }
 
     private void addSegmentToCSV(Segment seg, CSVTableBuilder builder, int rowIndex, String topicSetId, Page page) {
-        System.out.println("add Segment To CSV");
         initializeHeadersIfNotPresent(builder, topicSetId);
 
         AddAnnotations(seg, builder, rowIndex, topicSetId);
@@ -91,10 +96,10 @@ public class CSVExporter implements IExporter {
     }
 
     private void AddAnnotations(Segment seg, CSVTableBuilder builder, int rowIndex, String topicSetId) {
-        TopicSet topicSet = project.getTopicSet(topicSetId);
-        String mainTopicID = topicSet.getMainTopicID();
+        SuperSet superSet = project.getTopicSet(topicSetId);
+        String mainTopicID = superSet.getMainTopicID();
         builder.addDataToRow(rowIndex,seg.getAnnotation(mainTopicID));
-        topicSet.getTopics().forEach(topic -> {
+        superSet.getTopics().forEach(topic -> {
             if(topic.getTopicID() != mainTopicID){
                 builder.addDataToRow(rowIndex, seg.getAnnotation(topic.getTopicID()));
             }
@@ -111,14 +116,24 @@ public class CSVExporter implements IExporter {
     private void initializeHeadersIfNotPresent(CSVTableBuilder builder, String topicSetID) {
         if(!builder.hasInitializedHeaders()) {
             //Get Topics
-            TopicSet topicSet = project.getTopicSet(topicSetID);
-            //Add the maintopic always first
-            builder.addColumnHeader(topicSet.getMainTopicID());
-            topicSet.getTopics().forEach(topic -> {
-                if(topicSet.getMainTopicID() != topic.getTopicID()) builder.addColumnHeader(topic.getTopicName());
+            SuperSet superSet = project.getTopicSet(topicSetID);
+            //Add the maintopic always first if there is one defined otherwise leaf it empty
+            if(superSet.getMainTopic() == null){
+                builder.addColumnHeader(" ");
+            }else {
+                builder.addColumnHeader(superSet.getMainTopic().getTopicName());
+            }
+            //Fill all remaining topics into the columns
+            superSet.getTopics().forEach(topic -> {
+                if(superSet.getMainTopicID() != topic.getTopicID()) builder.addColumnHeader(topic.getTopicName());
             });
             //add all Characteristics
-            config.characteristicList.forEach(characteristic -> builder.addColumnHeader(characteristic.getName()));
+            config.characteristicList.forEach(characteristic -> {
+                StringBuilder sBuilder = new StringBuilder(characteristic.getName());
+                sBuilder.append(" ");
+                sBuilder.append(characteristic.getUnitName());
+                builder.addColumnHeader(sBuilder.toString());
+            });
         }
     }
 }

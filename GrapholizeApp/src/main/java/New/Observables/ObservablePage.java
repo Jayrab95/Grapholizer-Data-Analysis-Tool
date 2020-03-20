@@ -9,6 +9,7 @@ import javafx.beans.property.SimpleObjectProperty;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.collections.ObservableMap;
+import javafx.scene.Node;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
 
@@ -17,16 +18,17 @@ import java.util.stream.Collectors;
 
 /**
  * The ObservablePage class is a Observable Singleton object. The goal is to only have one active ObservablePage during the runtime.
- * The ObservablePage class holds
+ * The ObservablePage class holds a reference to a page object as an ObjectProperty
+ * The listeners of this property are notified if the reference changes.
  */
 public class ObservablePage implements Selector {
 
-    private ObservableList<ObservableStroke> strokes;
+    private List<ObservableStroke> strokes;
 
     private final ObjectProperty<Page> inner;
 
     public ObservablePage(Page inner){
-        strokes = FXCollections.observableList(generateStrokes(inner));
+        strokes = new ArrayList(generateStrokes(inner));
         this.inner = new SimpleObjectProperty();
         this.inner.set(inner);
 
@@ -37,21 +39,29 @@ public class ObservablePage implements Selector {
     }
 
 
-
+    /**
+     * Returns the object property which wrapps the inner page
+     * @return
+     */
     public ObjectProperty<Page> getPageProperty(){
         return inner;
     }
 
-    //TODO: Potential memory leak?
-    // Are strokes/dots still in memory somehow after page switch??
+    /**
+     * Sets the new active page. This will notify all listeners of the Object property.
+     * @param newPage new page object
+     */
     public void setPage(Page newPage){
-        System.out.println("setPage in ObservabelPage called");
         strokes = FXCollections.observableList(generateStrokes(newPage));
         this.inner.set(newPage);
     }
 
+    /**
+     * Returns the dot sections of the segments for the given superset id.
+     * @param topicSetID super set id of the segmentation
+     * @return all corresponding dot sections.
+     */
     public List<List<Dot>> getAllDotSectionsForTopicSet(String topicSetID){
-        //TODO: DEfine a static string for this timeline.
         if(topicSetID.equals("Stroke duration"))
         {
             return inner.get().getStrokes().stream()
@@ -77,26 +87,47 @@ public class ObservablePage implements Selector {
         inner.get().removeSegmentFromSegmentation(topicSetKey, a);
     }
 
+    /**
+     * Checks if the segmentation map contains an entry for the given ID.
+     * @param setID id that needs to be checked
+     * @return true if the map contains the key, false if not.
+     */
     public boolean containsSetID(String setID){
         return inner.get().getSegmentationsMap().containsKey(setID);
     }
 
-    public Optional<Set<Segment>> getAnnotationSet(String topicSetID){
-        if(containsSetID(topicSetID)){
-            return Optional.of(inner.get().getSegmentation(topicSetID));
+    /**
+     * Returns an optional segmentation (Set of segments) that is stored under the given ID.
+     * If no segmentation is stored under the given id, the optional is empty.
+     * @param superSetID superSetID of the segmentation
+     * @return Optional of a set of segments if a segmentation is present under the given key, or an empty optional if no segmentation is present.
+     */
+    public Optional<Set<Segment>> getAnnotationSet(String superSetID){
+        if(containsSetID(superSetID)){
+            return Optional.of(inner.get().getSegmentation(superSetID));
         }
         return Optional.empty();
     }
 
+    /**
+     * Checks if the given timeframe collides with any segments in the given segmentation.
+     * @param timeLineKey supersetID of the segmentation
+     * @param timeStart start of the timeframe
+     * @param timeStop end of the timeFrame
+     * @return true if a collision has been detected and false if no collision was detected.
+     */
     public boolean collidesWithOtherElements(String timeLineKey, double timeStart, double timeStop){
-        List debug = inner.get().getSegmentation(timeLineKey).stream()
-                .filter(annotation -> annotation.collidesWith(timeStart, timeStop))
-                .collect(Collectors.toList());
         return inner.get().getSegmentation(timeLineKey).stream()
                 .filter(annotation -> annotation.collidesWith(timeStart, timeStop))
                 .count() > 0;
     }
 
+    /**
+     * Checks if the given set of Segments collides with any other segments in the given super set
+     * @param key superSet id of the segmentation
+     * @param annotations set of annotationRectangles that need to be checked for collision
+     * @return true if collision was detected, false if not.
+     */
     public boolean collectionCollidesWithOtherElements(String key, Collection<SegmentRectangle> annotations){
         return annotations.stream()
                 .filter(a -> collidesWithOtherElements(key, a.getTimeStart(), a.getTimeStop()))
@@ -154,7 +185,7 @@ public class ObservablePage implements Selector {
         return observableStrokes;
     }
 
-    public ObservableList<ObservableStroke> getObservableStrokes(){
+    public List<ObservableStroke> getObservableStrokes(){
         return this.strokes;
     }
 
@@ -188,6 +219,32 @@ public class ObservablePage implements Selector {
             res.add(lastSeg);
         }
         return res;
+    }
+
+    /**
+     * Returns the bounds that a segment or selection rectangle is allowed to move in.
+     * The bounds are defined on the left side as the closes border or closest's segment's timeEnd,
+     * and on the right side as the closest border or closest segment's timeStart.
+     * @param xPosition current xPosition from which the bounds should be calculated
+     * @param id superSet id of the segmentation
+     * @return a double array containing 2 values. The first value is the left border and the second value is the right border
+     */
+    public double[] getBounds(double xPosition, String id){
+        double lowerBounds = 0;
+        double upperBounds = getDuration();
+        //The children list is not sorted and can also include handles of annotations
+
+        for(Segment s : inner.get().getSegmentation(id)) {
+            double nTimeStart = s.getTimeStart();
+            double nTimeStop = s.getTimeStop();
+            if(nTimeStop < xPosition && nTimeStop > lowerBounds) {
+                lowerBounds = nTimeStop;
+            }
+            if(nTimeStart > xPosition && nTimeStart < upperBounds) {
+                upperBounds = nTimeStart;
+            }
+        }
+        return new double[]{lowerBounds, upperBounds};
     }
 
     @Override

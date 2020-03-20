@@ -31,7 +31,7 @@ public class DetailStrokesSegmentation extends DetailSegmentation {
                         50,
                         dotSection.get(0).getTimeStamp()
                 );
-                getChildren().addAll(rect, rect.getDisplayedText());
+                getChildren().addAll(rect, rect.getDisplayedTextLabel());
             }
         }
     }

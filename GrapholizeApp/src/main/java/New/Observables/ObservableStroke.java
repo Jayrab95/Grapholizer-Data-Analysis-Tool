@@ -1,8 +1,5 @@
 package New.Observables;
 
-import New.Interfaces.Observable;
-import New.Interfaces.Observer.Observer;
-import New.Interfaces.Observer.StrokeObserver;
 import New.Model.Entities.Dot;
 import New.Model.Entities.Stroke;
 import javafx.beans.property.BooleanProperty;
@@ -14,12 +11,9 @@ import javafx.scene.paint.Color;
 import java.util.ArrayList;
 import java.util.List;
 
-//TODO: What makes more sense here? Have ObservableStroke be a Wrapper or an extension of the StrokeClass.
-//Argument for extension: ObservableStrokes can be passed over as strokes, if only the base functionality of the stroke is required.
-//Since all the fields are final anyway, the extension doesn't "hurt" the structure, as data cannot be changed anyway.
 
 /**
- * ObservableStroke is a wrapper fo the Stroke class that implements the Observable interface and can be assigned observers.
+ * ObservableStroke is a wrapper of the Stroke class that implements the Observable interface and can be assigned observers.
  * Additionally, the ObservableStroke is used for drawing and therefore manages the stroke color.
  * The Observers become notified if the selected property is changed or a filter is applied.
  *
@@ -31,7 +25,7 @@ public class ObservableStroke{
 
     //region Private fields
     private List<ObservableDot> observableDots;
-    private final Stroke stroke;
+    private final Stroke innerStroke;
     private BooleanProperty selected;
     private ObjectProperty<Color> color;
     //endregion
@@ -43,7 +37,7 @@ public class ObservableStroke{
      * @param s The stroke to be wrapped in this object
      */
     private ObservableStroke(Stroke s){
-        this.stroke = s;
+        this.innerStroke = s;
         this.color = new SimpleObjectProperty<>(Color.BLACK);
         this.selected = new SimpleBooleanProperty(false);
         this.observableDots = generateObservableDots();
@@ -58,14 +52,13 @@ public class ObservableStroke{
     //endregion
 
     //region Stroke Attribute getters
-    //Todo: Perhaps return a clone of dots. Dots should not be modifiable. Depending on the size of the list, this could hurt the performance however.
     public List<Dot> getDots() {
-        return stroke.getDots();
+        return innerStroke.getDots();
     }
 
     private List<ObservableDot> generateObservableDots(){
-        List<ObservableDot> res = new ArrayList<>(stroke.getDots().size());
-        for(Dot d : stroke.getDots()){
+        List<ObservableDot> res = new ArrayList<>(innerStroke.getDots().size());
+        for(Dot d : innerStroke.getDots()){
             res.add(new ObservableDot(d));
         }
         return res;
@@ -76,14 +69,14 @@ public class ObservableStroke{
     }
 
     public long getTimeStart() {
-        return stroke.getTimeStart();
+        return innerStroke.getTimeStart();
     }
 
     public long getTimeEnd() {
-        return stroke.getTimeEnd();
+        return innerStroke.getTimeEnd();
     }
 
-    public long getDuration(){ return stroke.getTimeEnd() - stroke.getTimeStart();}
+    public long getDuration(){ return innerStroke.getTimeEnd() - innerStroke.getTimeStart();}
     //endregion
 
     //region ObservableStroke specific getters and setters

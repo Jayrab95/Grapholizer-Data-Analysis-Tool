@@ -29,14 +29,8 @@ public class VelocityFilter extends Filter{
             for (int i = 0; i < strokes.size(); i++) {
                 List<ObservableDot> d = strokes.get(i).getObservableDots();
                 for (int j = 0; j < d.size(); j++) {
-                    if(i==35 && j == 10){
-                        System.out.println("gottem");
-                    }
                     double velocity = velocitySteps.get(i).get(j % velocitySteps.get(i).size());
                     double norm = velocity / maxVelocity.get();
-                    if(norm < 0){
-                        System.out.println("uh oh");
-                    }
                     Color c = new Color(0, norm, norm , 1);
                     d.get(j).setColor(c);
                 }

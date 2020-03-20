@@ -2,7 +2,7 @@ package New.Controllers;
 import New.Characteristics.*;
 import New.CustomControls.Containers.ContentSwitcher;
 import New.CustomControls.Containers.MainCanvas;
-import New.CustomControls.Containers.TimeLineContainer;
+import New.CustomControls.Containers.SegmentationContainer;
 import New.Dialogues.CSVExportDialog;
 import New.Interfaces.*;
 import New.Model.Entities.*;
@@ -23,19 +23,11 @@ import javafx.scene.layout.VBox;
 
 import java.io.File;
 import java.io.IOException;
-import java.net.URL;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.util.*;
 
 public class MainSceneController {
-
-    @FXML
-    private URL location;
-
-    @FXML
-    private ResourceBundle resources;
-
     @FXML
     private AnchorPane scrollPane_TimeLines;
 
@@ -44,19 +36,19 @@ public class MainSceneController {
 
     private Optional<MainCanvas> optionalCanvas;
     private Optional<ContentSwitcher> optionalContentSwitcher;
-    private Optional<TimeLineContainer> optionalTimeLineContainer;
+    private Optional<SegmentationContainer> optionalSegmentationContainer;
 
     /** Internal State Of Application */
     public Session _session;
 
-    Path raw_data_file; //TODO Lukas there should be a better way than keeping it here
+    Path raw_data_file;
 
     final Set<Characteristic> characteristicList;
 
     public MainSceneController(){
         optionalCanvas = Optional.empty();
         optionalContentSwitcher = Optional.empty();
-        optionalTimeLineContainer = Optional.empty();
+        optionalSegmentationContainer = Optional.empty();
         characteristicList = new HashSet<>();
         characteristicList.addAll(CharacteristicList.characteristicsExport());
     }
@@ -163,13 +155,14 @@ public class MainSceneController {
      *
      * @param exporter The exporter that implements the export algorithm
      * @param config The subset that is going to be exported
+     * @param fileFilters the file endings allowed for this kind of export.
      */
-    private void export(IExporter exporter, ExportConfig config, String ... filefilters) {
+    private void export(IExporter exporter, ExportConfig config, String ... fileFilters) {
         try {
             File sFile = JavaFxUtil.openFileDialog("Export Data"
                     , "Export"
                     , true
-                    , filefilters);
+                    , fileFilters);
             exporter.export(sFile.getAbsolutePath(), _session.getActiveProject(true).getInner(), config);
         }catch(IOException ex) {
             new DialogGenerator().simpleErrorDialog("Failed to Export"
@@ -208,27 +201,24 @@ public class MainSceneController {
         return false;
     }
 
-    void initializeProject(){
-        //_session = new Session(new JsonLoader().load("src\\main\\resources\\data\\lukas_test_1.json"));
+    private void initializeProject(){
         PageMetaData pmd = _session.getActivePage().getPageMetaData();
-        //_session.setZ_Helper(loader.getZipHelper());
+        //These components only need to be initialized once.
+        //If they are already present, they already handle the logic for updating their
+        //content upon a project change
         if(optionalContentSwitcher.isEmpty()){
-            System.out.println("new switcher");
             optionalContentSwitcher = Optional.of(new ContentSwitcher(_session.getActiveProject(false),_session.getActiveParticipant(), _session.getActivePage()));
             anchorPane_canvasContainer.getChildren().add(optionalContentSwitcher.get());
         }
 
-
-        if(optionalTimeLineContainer.isEmpty()){
-            System.out.println("new container");
-            optionalTimeLineContainer = Optional.of(new TimeLineContainer(_session.getActiveProject(false), _session.getActivePage(), 0.2));
-            scrollPane_TimeLines.getChildren().add(optionalTimeLineContainer.get());
+        if(optionalSegmentationContainer.isEmpty()){
+            optionalSegmentationContainer = Optional.of(new SegmentationContainer(_session.getActiveProject(false), _session.getActivePage(), 0.2));
+            scrollPane_TimeLines.getChildren().add(optionalSegmentationContainer.get());
         }
 
 
         if(optionalCanvas.isEmpty()){
-            System.out.println("new canvas");
-            optionalCanvas = Optional.of(new MainCanvas(pmd.getPageWidth(), pmd.getPageHeight(), 5, _session.getActivePage(), optionalTimeLineContainer.get().getSelectedTimeLine()));
+            optionalCanvas = Optional.of(new MainCanvas(pmd.getPageWidth(), pmd.getPageHeight(), 5, _session.getActivePage(), optionalSegmentationContainer.get().getSelectedSegmentation()));
             anchorPane_canvasContainer.getChildren().add(optionalCanvas.get());
         }
     }

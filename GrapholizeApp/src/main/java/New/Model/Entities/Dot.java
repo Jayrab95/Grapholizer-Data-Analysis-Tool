@@ -2,6 +2,10 @@ package New.Model.Entities;
 
 import New.util.Import.model.CompressedDot;
 
+/**
+ * The dot class represents a single dot captured by the Neo Smartpen.
+ * The dot objects are immutable after creation.
+ */
 public class Dot {
 
     public enum DotType
@@ -86,7 +90,7 @@ public class Dot {
                 this.dotType = DotType.PEN_ERROR;
                 break;
             default:
-                this.dotType = DotType.PEN_ERROR; //Maybe another default is ne
+                this.dotType = DotType.PEN_ERROR;
         }
         this.x = cd.X + cd.Fx * 0.01f;
         this.y = cd.Y + cd.Fy * 0.01f;
@@ -105,7 +109,6 @@ public class Dot {
         return twist;
     }
 
-
     public float getForce() {
         return force;
     }
@@ -121,7 +124,6 @@ public class Dot {
     public long getTimeStamp(){
         return timeStamp;
     }
-
 
     public DotType getDotType() {
         return dotType;

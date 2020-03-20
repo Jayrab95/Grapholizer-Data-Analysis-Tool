@@ -25,9 +25,6 @@ public class VelocityMathUtil {
         );
         //calculate the velocity
         double res = velocityMMPerMS(vecLenghtMm, timeDifference);
-        if(res < 0){
-            System.out.println("oops");
-        }
         return res;
     }
 

@@ -6,23 +6,27 @@ import java.util.Map;
 import java.util.Set;
 import java.util.stream.Collectors;
 
+/**
+ * The Project class holds the information of the input file by holding a reference to each participant
+ * as well as a reference to each super set that was defined for the project.
+ */
 public class Project {
     private Map<String, Participant> participants;
-    private Map<String, TopicSet> projectTags;
+    private Map<String, SuperSet> superSets;
 
-    public Project(List<Participant> participants, List<TopicSet> topicSets){
+    public Project(List<Participant> participants, List<SuperSet> superSets){
         this.participants = participants.stream()
                 .collect(Collectors.toMap(p -> p.getID(), p -> p));
-        this.projectTags = topicSets.stream()
-                .collect(Collectors.toMap(t -> t.getTagID(), t -> t));
+        this.superSets = superSets.stream()
+                .collect(Collectors.toMap(t -> t.getSuperSetID(), t -> t));
     }
 
     public Map<String, Participant> getParticipantsMap(){
         return participants;
     }
 
-    public Map<String, TopicSet> getProjectTagsMap(){
-        return projectTags;
+    public Map<String, SuperSet> getProjectTagsMap(){
+        return superSets;
     }
 
     public Participant getParticipant(String participantKey){
@@ -33,30 +37,30 @@ public class Project {
         return participants.keySet();
     }
 
-    public TopicSet getTopicSet(String topicSetID){
-        return projectTags.get(topicSetID);
+    public SuperSet getTopicSet(String topicSetID){
+        return superSets.get(topicSetID);
     }
 
-    public Set<String> getTopicSetIDs(){return projectTags.keySet();}
+    public Set<String> getTopicSetIDs(){return superSets.keySet();}
 
     public Collection<Participant> getAllParticipants(){
         return participants.values();
     }
 
-    public Collection<TopicSet> getAllTopicSets(){
-        return projectTags.values();
+    public Collection<SuperSet> getAllTopicSets(){
+        return superSets.values();
     }
 
-    public void putTopicSet(TopicSet ts){
-        projectTags.put(ts.getTagID(),ts);
+    public void putSuperSet(SuperSet ts){
+        superSets.put(ts.getSuperSetID(),ts);
     }
 
-    public void putAllTopicSets(Map<String, TopicSet> map){
-        projectTags.putAll(map);
+    public void putAllTopicSets(Map<String, SuperSet> map){
+        superSets.putAll(map);
     }
 
-    public TopicSet removeTopicSet(String id){
-        return projectTags.remove(id);
+    public SuperSet removeTopicSet(String id){
+        return superSets.remove(id);
     }
 
 }

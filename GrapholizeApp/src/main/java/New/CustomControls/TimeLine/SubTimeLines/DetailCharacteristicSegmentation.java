@@ -35,7 +35,7 @@ public class DetailCharacteristicSegmentation extends DetailSegmentation {
                     s.getDuration(),
                     50,
                     s.getTimeStart());
-            getChildren().addAll(rect, rect.getDisplayedText());
+            getChildren().addAll(rect, rect.getDisplayedTextLabel());
         }
     }
 }

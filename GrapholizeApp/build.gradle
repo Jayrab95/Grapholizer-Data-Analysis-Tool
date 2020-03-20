@@ -27,6 +27,13 @@ javafx {
     modules = [ 'javafx.controls' , 'javafx.base', 'javafx.fxml', 'javafx.graphics']
 }
 
+apply plugin: 'java'
+test {
+    useJUnit()
+    testLogging.showStandardStreams(true)
+    maxHeapSize = '1G'
+}
+
 jar {
     manifest {
         attributes 'Main-Class': 'New.Scenes.Grapholizer'
