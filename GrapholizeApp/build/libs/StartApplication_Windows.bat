@@ -1,0 +1,2 @@
+java --module-path ".\application_data\javafx-sdk-11.0.2\lib" --add-modules=javafx.controls --add-modules=javafx.base --add-modules=javafx.fxml --add-modules=javafx.graphics -jar "GrapholizerApp.jar"
+pause
