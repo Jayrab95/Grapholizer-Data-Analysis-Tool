@@ -49,6 +49,13 @@
       </state>
     </system>
   </component>
+  <component name="FileTemplateManagerImpl">
+    <option name="RECENT_TEMPLATES">
+      <list>
+        <option value="Enum" />
+      </list>
+    </option>
+  </component>
   <component name="Git.Settings">
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$/.." />
   </component>
@@ -65,9 +72,16 @@
     <property name="RunOnceActivity.ShowReadmeOnStart" value="true" />
     <property name="WebServerToolWindowFactoryState" value="false" />
     <property name="aspect.path.notification.shown" value="true" />
+    <property name="last_opened_file_path" value="$USER_HOME$/Desktop/vesys 4la 5.1C52/Materialien/09_GraphQL/09_GraphQL" />
+    <property name="node.js.detected.package.eslint" value="true" />
+    <property name="node.js.detected.package.tslint" value="true" />
+    <property name="node.js.path.for.package.eslint" value="project" />
+    <property name="node.js.path.for.package.tslint" value="project" />
+    <property name="node.js.selected.package.eslint" value="(autodetect)" />
+    <property name="node.js.selected.package.tslint" value="(autodetect)" />
     <property name="settings.editor.selected.configurable" value="project.propVCSSupport.Mappings" />
   </component>
-  <component name="RunManager" selected="Gradle.GrapholizeApp [jar]">
+  <component name="RunManager" selected="Application.Grapholizer">
     <configuration name="Grapholizer" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
       <option name="MAIN_CLASS_NAME" value="New.Scenes.Grapholizer" />
       <module name="GrapholizeAppAID.main" />
@@ -126,9 +140,9 @@
     </list>
     <recent_temporary>
       <list>
+        <item itemvalue="Application.Grapholizer" />
         <item itemvalue="Gradle.GrapholizeApp [jar]" />
         <item itemvalue="Gradle.GrapholizeApp [run]" />
-        <item itemvalue="Application.Grapholizer" />
       </list>
     </recent_temporary>
   </component>
@@ -143,6 +157,16 @@
       <option name="presentableId" value="Default" />
       <updated>1584745804388</updated>
       <workItem from="1584745811317" duration="808000" />
+      <workItem from="1585495566410" duration="102000" />
+      <workItem from="1586022811168" duration="152000" />
+      <workItem from="1586117570161" duration="381000" />
+      <workItem from="1586330893183" duration="203000" />
+      <workItem from="1587136218581" duration="667000" />
+      <workItem from="1587493132223" duration="41000" />
+      <workItem from="1587541873997" duration="49000" />
+      <workItem from="1587580462803" duration="762000" />
+      <workItem from="1587734674580" duration="748000" />
+      <workItem from="1588021041702" duration="3066000" />
     </task>
     <servers />
   </component>
@@ -168,25 +192,37 @@
       <screen x="0" y="0" width="1368" height="872" />
     </state>
     <state x="415" y="186" key="#com.intellij.refactoring.safeDelete.UnsafeUsagesDialog/0.0.1368.872@0.0.1368.872" timestamp="1584743596799" />
-    <state width="1493" height="210" key="GridCell.Tab.0.bottom" timestamp="1584746624403">
+    <state x="549" y="167" key="FileChooserDialogImpl" timestamp="1587541917881">
+      <screen x="0" y="0" width="1536" height="824" />
+    </state>
+    <state x="549" y="167" key="FileChooserDialogImpl/0.0.1536.824/1920.16.1680.1010@0.0.1536.824" timestamp="1587541917881" />
+    <state width="1493" height="209" key="GridCell.Tab.0.bottom" timestamp="1587584448115">
       <screen x="0" y="0" width="1536" height="824" />
     </state>
     <state width="1326" height="260" key="GridCell.Tab.0.bottom/0.0.1368.872@0.0.1368.872" timestamp="1584744922405" />
+    <state width="1493" height="209" key="GridCell.Tab.0.bottom/0.0.1536.824/1920.16.1680.1010@0.0.1536.824" timestamp="1587584448115" />
+    <state width="1637" height="271" key="GridCell.Tab.0.bottom/0.0.1536.824/1920.16.1680.1010@1920.16.1680.1010" timestamp="1587139545394" />
     <state width="1493" height="210" key="GridCell.Tab.0.bottom/0.0.1536.824@0.0.1536.824" timestamp="1584746624403" />
-    <state width="1493" height="210" key="GridCell.Tab.0.center" timestamp="1584746624402">
+    <state width="1493" height="209" key="GridCell.Tab.0.center" timestamp="1587584448115">
       <screen x="0" y="0" width="1536" height="824" />
     </state>
     <state width="1326" height="260" key="GridCell.Tab.0.center/0.0.1368.872@0.0.1368.872" timestamp="1584744922405" />
+    <state width="1493" height="209" key="GridCell.Tab.0.center/0.0.1536.824/1920.16.1680.1010@0.0.1536.824" timestamp="1587584448115" />
+    <state width="1637" height="271" key="GridCell.Tab.0.center/0.0.1536.824/1920.16.1680.1010@1920.16.1680.1010" timestamp="1587139545393" />
     <state width="1493" height="210" key="GridCell.Tab.0.center/0.0.1536.824@0.0.1536.824" timestamp="1584746624402" />
-    <state width="1493" height="210" key="GridCell.Tab.0.left" timestamp="1584746624402">
+    <state width="1493" height="209" key="GridCell.Tab.0.left" timestamp="1587584448114">
       <screen x="0" y="0" width="1536" height="824" />
     </state>
     <state width="1326" height="260" key="GridCell.Tab.0.left/0.0.1368.872@0.0.1368.872" timestamp="1584744922405" />
+    <state width="1493" height="209" key="GridCell.Tab.0.left/0.0.1536.824/1920.16.1680.1010@0.0.1536.824" timestamp="1587584448114" />
+    <state width="1637" height="271" key="GridCell.Tab.0.left/0.0.1536.824/1920.16.1680.1010@1920.16.1680.1010" timestamp="1587139545392" />
     <state width="1493" height="210" key="GridCell.Tab.0.left/0.0.1536.824@0.0.1536.824" timestamp="1584746624402" />
-    <state width="1493" height="210" key="GridCell.Tab.0.right" timestamp="1584746624402">
+    <state width="1493" height="209" key="GridCell.Tab.0.right" timestamp="1587584448115">
       <screen x="0" y="0" width="1536" height="824" />
     </state>
     <state width="1326" height="260" key="GridCell.Tab.0.right/0.0.1368.872@0.0.1368.872" timestamp="1584744922405" />
+    <state width="1493" height="209" key="GridCell.Tab.0.right/0.0.1536.824/1920.16.1680.1010@0.0.1536.824" timestamp="1587584448115" />
+    <state width="1637" height="271" key="GridCell.Tab.0.right/0.0.1536.824/1920.16.1680.1010@1920.16.1680.1010" timestamp="1587139545393" />
     <state width="1493" height="210" key="GridCell.Tab.0.right/0.0.1536.824@0.0.1536.824" timestamp="1584746624402" />
     <state width="1326" height="260" key="GridCell.Tab.1.bottom" timestamp="1584744922405">
       <screen x="0" y="0" width="1368" height="872" />
@@ -212,6 +248,10 @@
       <screen x="0" y="0" width="1368" height="872" />
     </state>
     <state x="387" y="191" width="592" height="488" key="find.popup/0.0.1368.872@0.0.1368.872" timestamp="1584743798920" />
+    <state x="2142" y="133" key="new project wizard" timestamp="1585495666584">
+      <screen x="1920" y="16" width="1680" height="1010" />
+    </state>
+    <state x="2142" y="133" key="new project wizard/0.0.1536.824/1920.16.1680.1010@1920.16.1680.1010" timestamp="1585495666584" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>

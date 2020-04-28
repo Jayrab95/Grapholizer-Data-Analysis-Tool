@@ -1,4 +1,5 @@
 package New.Controllers;
+
 import New.Characteristics.*;
 import New.CustomControls.Containers.ContentSwitcher;
 import New.CustomControls.Containers.MainCanvas;
@@ -7,6 +8,7 @@ import New.Dialogues.CSVExportDialog;
 import New.Interfaces.*;
 import New.Model.Entities.*;
 import New.Model.Session;
+
 import New.util.*;
 import New.util.Export.ExportConfig;
 import New.util.Export.ProjectSerializer;
@@ -14,8 +16,10 @@ import New.util.Import.JsonLoader;
 import New.util.Import.PageDataReader;
 import New.util.Import.ProjectLoader;
 import New.util.CharacteristicList;
-
 import New.util.javafx.JavaFxUtil;
+import New.Enums.DataRessourceType;
+
+
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.layout.AnchorPane;
@@ -33,17 +37,16 @@ public class MainSceneController {
 
     @FXML
     private VBox anchorPane_canvasContainer;
-
     private Optional<MainCanvas> optionalCanvas;
     private Optional<ContentSwitcher> optionalContentSwitcher;
     private Optional<SegmentationContainer> optionalSegmentationContainer;
 
     /** Internal State Of Application */
     public Session _session;
+    private Path raw_data_file;
+    private DataRessourceType ressourceType = DataRessourceType.UNDEF;
+    private final Set<Characteristic> characteristicList;
 
-    Path raw_data_file;
-
-    final Set<Characteristic> characteristicList;
 
     public MainSceneController(){
         optionalCanvas = Optional.empty();
@@ -110,26 +113,32 @@ public class MainSceneController {
 
     @FXML
     private void saveProjectTo() {
-        try {
+        try{
             File sFile = JavaFxUtil.openFileDialog("Save Dialog"
                     , "Save Project"
                     , true
                     , "*.zip", "*.grapholizer");
-            if (sFile != null && raw_data_file != null) {
-                String path = sFile.getCanonicalPath();
-                _session.setZ_Helper(new ZipHelper(path, false));
-
-                StringBuilder sBuilder = new StringBuilder();
-                Files.newBufferedReader(raw_data_file).lines().forEach(l -> sBuilder.append(l));
-                _session.getZ_Helper().writeRawData(sBuilder.toString());
-                _session.getZ_Helper().replaceData();
-                save();
-            } else {
-                throw new IOException("No directory or file has been entered");
+            if(sFile.canWrite() && sFile != null ) {
+                switch (ressourceType) {
+                    case JSON:
+                        turnJsonToProject(sFile);
+                        break;
+                    case NEONOTES:
+                        turnNeoNotesFileToProject(sFile);
+                        break;
+                    case PROJECT:
+                        copyProjectToAnotherLocation(sFile);
+                        break;
+                    default:
+                        throw new IOException("No directory or file has been entered");
+                }
+            }else {
+                throw new IOException("The chosen file/directory can not be read or none has been chosen");
             }
-        }catch(IOException ex) {
-            new DialogGenerator().simpleErrorDialog("Input Error"
-                    , "Directory could not be loaded"
+
+        } catch( IOException ex ){
+            new DialogGenerator().simpleErrorDialog("Saving Error"
+                    , "There has been an IO-Error during saving"
                     , ex.getMessage());
         }
     }
@@ -216,10 +225,27 @@ public class MainSceneController {
             scrollPane_TimeLines.getChildren().add(optionalSegmentationContainer.get());
         }
 
-
         if(optionalCanvas.isEmpty()){
             optionalCanvas = Optional.of(new MainCanvas(pmd.getPageWidth(), pmd.getPageHeight(), 5, _session.getActivePage(), optionalSegmentationContainer.get().getSelectedSegmentation()));
             anchorPane_canvasContainer.getChildren().add(optionalCanvas.get());
         }
+    }
+
+    private void turnJsonToProject(File sFile) throws IOException {
+        String path = sFile.getCanonicalPath();
+        _session.setZ_Helper(new ZipHelper(path, false));
+
+        StringBuilder sBuilder = new StringBuilder();
+        Files.newBufferedReader(raw_data_file).lines().forEach(l -> sBuilder.append(l));
+        _session.getZ_Helper().writeRawData(sBuilder.toString());
+        _session.getZ_Helper().replaceData();
+        save();
+    }
+
+    private void turnNeoNotesFileToProject(File sFile) throws IOException {
+
+    }
+
+    private void copyProjectToAnotherLocation(File sFile) throws IOException{
     }
 }
