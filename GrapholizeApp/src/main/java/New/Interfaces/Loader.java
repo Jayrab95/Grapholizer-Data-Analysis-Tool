@@ -1,10 +1,10 @@
 package New.Interfaces;
+import New.Enums.DataRessourceType;
 import New.Model.Entities.Project;
 
 import java.io.IOException;
 import java.util.HashMap;
 
-@FunctionalInterface
 public interface Loader
 {
     /**
@@ -14,5 +14,7 @@ public interface Loader
      * @throws IOException If something with the file io goes wrong
      */
     Project load(String path) throws IOException;
+
+    DataRessourceType getRessourceType();
 }
 

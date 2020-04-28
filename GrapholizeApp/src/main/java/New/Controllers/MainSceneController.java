@@ -17,7 +17,6 @@ import New.util.Import.JsonLoader;
 import New.util.Import.PageDataReader;
 import New.util.Import.ProjectLoader;
 import New.util.CharacteristicList;
-import New.util.Import.model.CompressedPage;
 import New.util.Import.model.CompressedParticipant;
 import New.util.javafx.JavaFxUtil;
 import New.Enums.DataRessourceType;
@@ -61,8 +60,7 @@ public class MainSceneController {
     @FXML
     private void exportDataToCSV(){
         try {
-            if(raw_data_file == null) {throw new NullPointerException();}
-            else {
+            if(ressourceType != DataRessourceType.UNDEF) {
                 FXMLLoader loader = JavaFxUtil.openWindowReturnController(this.getClass(), "fxml/views/ExportDialog.fxml"
                         , "CSV-Export"
                         , 900, 450);
@@ -101,7 +99,7 @@ public class MainSceneController {
             }
         }catch(IOException ex) {
             new DialogGenerator().simpleErrorDialog("Load Error"
-                    , "While temp-file cleanup an error occured."
+                    , "While Loading Project File there was an IOError"
                     , ex.getMessage());
         }
     }
@@ -116,7 +114,7 @@ public class MainSceneController {
                 case JSON:
                 case NEONOTES:
                     throw new IOException("There is no Project defined yet. " +
-                            "Create a new file");
+                            "Create a Project to save your progress to");
                 case PROJECT:
                     saveProjectData();
                     break;
@@ -141,7 +139,7 @@ public class MainSceneController {
                         turnJsonToProject(sFile);
                         break;
                     case NEONOTES:
-                        turnNeoNotesFileToProject(sFile);
+                        turnNeoNotesToProject(sFile);
                         break;
                     case PROJECT:
                         copyProjectToAnotherLocation(sFile);
@@ -153,7 +151,6 @@ public class MainSceneController {
                 throw new IOException("The chosen file/directory " +
                         "can not be read or none has been chosen");
             }
-
         } catch( IOException ex ){
             new DialogGenerator().simpleErrorDialog("Saving Error"
                     , "There has been an IO-Error during saving"
@@ -205,6 +202,9 @@ public class MainSceneController {
                     , false
                     , fileExtensions);
             if (sFile != null) {
+                //Clean old project before loading the new one
+                if(ressourceType == DataRessourceType.PROJECT) _session.getZ_Helper().cleanUp();
+
                 String absFilePath = sFile.getAbsolutePath();
                 if(_session == null){
                     _session = new Session(loader.load(absFilePath));
@@ -214,16 +214,10 @@ public class MainSceneController {
 
                 if( loader instanceof ProjectLoader){
                     raw_data_file = ((ProjectLoader) loader).getZipHelper().getPathTempData();
-                    ressourceType = DataRessourceType.PROJECT;
+                }else {
+                    raw_data_file = sFile.toPath();
                 }
-                if( loader instanceof JsonLoader){
-                    raw_data_file = Path.of(absFilePath);
-                    ressourceType = DataRessourceType.JSON;
-                }
-                if( loader instanceof PageDataReader){
-                    raw_data_file = Path.of(absFilePath);
-                    ressourceType = DataRessourceType.NEONOTES;
-                }
+                ressourceType = loader.getRessourceType();
                 initializeProject();
                 return true;
             }
@@ -259,34 +253,66 @@ public class MainSceneController {
     private void turnJsonToProject(File sFile) throws IOException {
         String path = sFile.getCanonicalPath();
         _session.setZ_Helper(new ZipHelper(path, false));
-        StringBuilder sBuilder = new StringBuilder();
-        Files.newBufferedReader(raw_data_file).lines().forEach(l -> sBuilder.append(l));
-        _session.getZ_Helper().writeRawData(sBuilder.toString());
+
+        //copy json
+        String json = copyJsonFile(raw_data_file);
+
+        //write the json and replace the old one
+        _session.getZ_Helper().writeRawData(json);
         _session.getZ_Helper().replaceData();
         saveProjectData();
+
         //Define the used ressource type as a project
         ressourceType = DataRessourceType.PROJECT;
     }
 
-    private void turnNeoNotesFileToProject(File sFile) throws IOException {
-        //Create a json string out of neonotes
+    private void turnNeoNotesToProject(File sFile) throws IOException {
+        String path = sFile.getCanonicalPath();
+
+        //Create a json string out of neonotes data
         Collection<Participant> participants = _session.getActiveProject(true).getInner().getAllParticipants();
         LinkedList<CompressedParticipant> cParts = new LinkedList<>();
         for (Participant participant : participants) {
             cParts.add(new CompressedParticipant(participant));
         }
         String json = new JsonSerializer().serialize(cParts);
-        System.out.println(json);
+
         //Write data to temp file
-        String path = sFile.getCanonicalPath();
         _session.setZ_Helper(new ZipHelper(path, false));
         _session.getZ_Helper().writeRawData(json);
         _session.getZ_Helper().replaceData();
         saveProjectData();
+
+        //Set ressource type
         ressourceType = DataRessourceType.PROJECT;
     }
 
     private void copyProjectToAnotherLocation(File sFile) throws IOException{
-        Files.copy(raw_data_file, sFile.toPath());
+        //Initialisierung
+        String newFilePath = sFile.getCanonicalPath();
+        Path pathTempData = _session.getZ_Helper().getPathTempData();
+        Path pathTempTimelines = _session.getZ_Helper().getPathTempTimelines();
+        //copy timelines json
+        String dataJson = copyJsonFile(pathTempData);
+        //copy data.json
+        String timelineJson = copyJsonFile(pathTempTimelines);
+
+        //clean up old archive & create new archive
+        _session.getZ_Helper().cleanUp();
+        _session.setZ_Helper(new ZipHelper(newFilePath, false));
+        //Write the data to the new Zipfolder and replace it
+        _session.getZ_Helper().writeRawData(dataJson);
+        _session.getZ_Helper().replaceData();
+        //Write the timelines to the new Zipfolder and replace it
+        _session.getZ_Helper().writeTimelines(timelineJson);
+        _session.getZ_Helper().replaceTimelines();
+        //save project
+        saveProject();
+    }
+
+    private String copyJsonFile(Path path) throws IOException {
+        StringBuilder sBuilder = new StringBuilder();
+        Files.newBufferedReader(path).lines().forEach(l -> sBuilder.append(l));
+        return sBuilder.toString();
     }
 }

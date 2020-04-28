@@ -69,12 +69,9 @@ public class Session {
     }
 
     public void setZ_Helper(ZipHelper z_Helper) throws IOException {
-        if(this.z_Helper!=null){
+       /*if(this.z_Helper!=null){
             this.z_Helper.cleanUp();
-        }
+        }*/
         this.z_Helper = z_Helper;
     }
-
-
-
 }

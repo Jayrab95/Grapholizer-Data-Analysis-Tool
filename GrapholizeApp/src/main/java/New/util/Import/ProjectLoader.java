@@ -1,5 +1,6 @@
 package New.util.Import;
 
+import New.Enums.DataRessourceType;
 import New.Interfaces.Loader;
 import New.Model.Entities.Page;
 import New.Model.Entities.Participant;
@@ -32,6 +33,11 @@ public class ProjectLoader implements Loader {
         } catch(ZipException exp) {
             throw new IOException();
         }
+    }
+
+    @Override
+    public DataRessourceType getRessourceType() {
+        return DataRessourceType.PROJECT;
     }
 
     private Project mergeDataAndTimelinesJson(Project projData, Project projTimelines) {

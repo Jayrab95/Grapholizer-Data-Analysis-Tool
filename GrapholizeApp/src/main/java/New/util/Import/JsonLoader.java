@@ -1,5 +1,6 @@
 package New.util.Import;
 
+import New.Enums.DataRessourceType;
 import New.Interfaces.Loader;
 import New.Model.Entities.Participant;
 import New.Model.Entities.Project;
@@ -24,6 +25,11 @@ public class JsonLoader implements Loader {
             partics = gson.fromJson(sBuilder.toString(), CompressedParticipant[].class);
         }
         return turnToInternalDataStructur(partics);
+    }
+
+    @Override
+    public DataRessourceType getRessourceType() {
+        return DataRessourceType.JSON;
     }
 
     private Project turnToInternalDataStructur(CompressedParticipant[] partics)

@@ -1,5 +1,6 @@
 package New.util.Import;
 
+import New.Enums.DataRessourceType;
 import New.Interfaces.Loader;
 import New.Model.Entities.*;
 
@@ -27,6 +28,11 @@ public class PageDataReader implements Loader {
                 throw new IOException();
             }
         }
+    }
+
+    @Override
+    public DataRessourceType getRessourceType() {
+        return DataRessourceType.NEONOTES;
     }
 
     /**
