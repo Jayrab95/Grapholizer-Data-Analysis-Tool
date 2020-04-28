@@ -135,7 +135,7 @@ public class MainSceneController {
                     , "Save Project"
                     , true
                     , "*.zip", "*.grapholizer");
-            if(sFile.canWrite() && sFile != null ) {
+            if(sFile != null ) {
                 switch (ressourceType) {
                     case JSON:
                         turnJsonToProject(sFile);
@@ -288,9 +288,5 @@ public class MainSceneController {
 
     private void copyProjectToAnotherLocation(File sFile) throws IOException{
         Files.copy(raw_data_file, sFile.toPath());
-        ProjectLoader loader = new ProjectLoader();
-        if(loadDataFromFiles(loader, "*.zip", "*.grapholizer")) {
-            _session.setZ_Helper(loader.getZipHelper());
-        }
     }
 }

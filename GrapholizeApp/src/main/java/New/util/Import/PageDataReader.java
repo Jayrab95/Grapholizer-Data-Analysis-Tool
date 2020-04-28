@@ -22,7 +22,6 @@ public class PageDataReader implements Loader {
                         PREFIX_PARTICIPANT_ID + "_" + (pmd.getCreateTimeStamp()),
                         List.of(new Page(pmd, strokes, "ID"))
                 );
-                //newPart.addPage(new Page(pmd, strokes, "ID"));
                 return new Project(List.of(newPart), List.of());
             }else {
                 throw new IOException();

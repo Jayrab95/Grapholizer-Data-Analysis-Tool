@@ -1,8 +1,9 @@
 [
   {
-    "Id": "lukas",
+    "Id": "kenny2",
     "Pages": [
       {
+        "PageID": "kenny2151",
         "Section": 3,
         "Owner": 27,
         "Book": 603,
@@ -17,8 +18,8 @@
         "MarginB": 0.0,
         "Strokes": [
           {
-            "TimeStart": 1575470518511,
-            "TimeEnd": 1575470519172,
+            "TimeStart": 0,
+            "TimeEnd": 661,
             "CompressedDots": [
               {
                 "X": 19,
@@ -443,8 +444,8 @@
             ]
           },
           {
-            "TimeStart": 1575470519526,
-            "TimeEnd": 1575470519931,
+            "TimeStart": 0,
+            "TimeEnd": 405,
             "CompressedDots": [
               {
                 "X": 20,
@@ -478,7 +479,7 @@
                 "TiltX": 0,
                 "TiltY": 0,
                 "Twist": 0,
-                "Force": 0.271126747,
+                "Force": 0.268779337,
                 "DotType": 1,
                 "TimeDiff": 8
               },
@@ -845,8 +846,8 @@
             ]
           },
           {
-            "TimeStart": 1575470520226,
-            "TimeEnd": 1575470520632,
+            "TimeStart": 0,
+            "TimeEnd": 406,
             "CompressedDots": [
               {
                 "X": 21,
@@ -1237,6 +1238,7 @@
         ]
       },
       {
+        "PageID": "kenny2152",
         "Section": 3,
         "Owner": 27,
         "Book": 603,
@@ -1251,8 +1253,8 @@
         "MarginB": 0.0,
         "Strokes": [
           {
-            "TimeStart": 1575470528045,
-            "TimeEnd": 1575470528383,
+            "TimeStart": 0,
+            "TimeEnd": 338,
             "CompressedDots": [
               {
                 "X": 39,
@@ -1430,7 +1432,7 @@
                 "TiltX": 0,
                 "TiltY": 0,
                 "Twist": 0,
-                "Force": 0.5586854,
+                "Force": 0.557511747,
                 "DotType": 1,
                 "TimeDiff": 8
               },
@@ -1641,8 +1643,8 @@
             ]
           },
           {
-            "TimeStart": 1575470528548,
-            "TimeEnd": 1575470528684,
+            "TimeStart": 0,
+            "TimeEnd": 136,
             "CompressedDots": [
               {
                 "X": 41,
@@ -1779,8 +1781,8 @@
             ]
           },
           {
-            "TimeStart": 1575470528891,
-            "TimeEnd": 1575470529214,
+            "TimeStart": 0,
+            "TimeEnd": 323,
             "CompressedDots": [
               {
                 "X": 42,
@@ -1886,7 +1888,7 @@
                 "TiltX": 0,
                 "TiltY": 0,
                 "Twist": 0,
-                "Force": 0.2535211,
+                "Force": 0.2523474,
                 "DotType": 1,
                 "TimeDiff": 8
               },
@@ -1898,7 +1900,7 @@
                 "TiltX": 0,
                 "TiltY": 0,
                 "Twist": 0,
-                "Force": 0.2793427,
+                "Force": 0.278169,
                 "DotType": 1,
                 "TimeDiff": 15
               },
@@ -2140,6 +2142,7 @@
     "Id": "kenny",
     "Pages": [
       {
+        "PageID": "kenny150",
         "Section": 3,
         "Owner": 27,
         "Book": 603,
@@ -2154,8 +2157,8 @@
         "MarginB": 0.0,
         "Strokes": [
           {
-            "TimeStart": 1575470543295,
-            "TimeEnd": 1575470543603,
+            "TimeStart": 0,
+            "TimeEnd": 308,
             "CompressedDots": [
               {
                 "X": 23,
@@ -2448,8 +2451,8 @@
             ]
           },
           {
-            "TimeStart": 1575470543753,
-            "TimeEnd": 1575470543866,
+            "TimeStart": 0,
+            "TimeEnd": 113,
             "CompressedDots": [
               {
                 "X": 25,
@@ -2459,7 +2462,7 @@
                 "TiltX": 0,
                 "TiltY": 0,
                 "Twist": 0,
-                "Force": 0.07394366,
+                "Force": 0.0727699548,
                 "DotType": 0,
                 "TimeDiff": 0
               },
@@ -2615,7 +2618,7 @@
                 "TiltX": 0,
                 "TiltY": 0,
                 "Twist": 0,
-                "Force": 0.2535211,
+                "Force": 0.2523474,
                 "DotType": 1,
                 "TimeDiff": 8
               },
@@ -2627,15 +2630,15 @@
                 "TiltX": 0,
                 "TiltY": 0,
                 "Twist": 0,
-                "Force": 0.2793427,
+                "Force": 0.278169,
                 "DotType": 2,
                 "TimeDiff": 0
               }
             ]
           },
           {
-            "TimeStart": 1575470543997,
-            "TimeEnd": 1575470544245,
+            "TimeStart": 0,
+            "TimeEnd": 248,
             "CompressedDots": [
               {
                 "X": 25,
@@ -2789,7 +2792,7 @@
                 "TiltX": 0,
                 "TiltY": 0,
                 "Twist": 0,
-                "Force": 0.5856807,
+                "Force": 0.584507048,
                 "DotType": 1,
                 "TimeDiff": 15
               },
@@ -2882,6 +2885,7 @@
         ]
       },
       {
+        "PageID": "kenny151",
         "Section": 3,
         "Owner": 27,
         "Book": 603,
@@ -2896,8 +2900,8 @@
         "MarginB": 0.0,
         "Strokes": [
           {
-            "TimeStart": 1575470546509,
-            "TimeEnd": 1575470546779,
+            "TimeStart": 0,
+            "TimeEnd": 270,
             "CompressedDots": [
               {
                 "X": 34,
@@ -3087,7 +3091,7 @@
                 "TiltX": 0,
                 "TiltY": 0,
                 "Twist": 0,
-                "Force": 0.295774639,
+                "Force": 0.294600934,
                 "DotType": 1,
                 "TimeDiff": 8
               },
@@ -3159,7 +3163,7 @@
                 "TiltX": 0,
                 "TiltY": 0,
                 "Twist": 0,
-                "Force": 0.525821567,
+                "Force": 0.5246479,
                 "DotType": 1,
                 "TimeDiff": 15
               },
@@ -3298,8 +3302,8 @@
             ]
           },
           {
-            "TimeStart": 1575470546992,
-            "TimeEnd": 1575470547142,
+            "TimeStart": 0,
+            "TimeEnd": 150,
             "CompressedDots": [
               {
                 "X": 36,
@@ -3544,8 +3548,8 @@
             ]
           },
           {
-            "TimeStart": 1575470547390,
-            "TimeEnd": 1575470547675,
+            "TimeStart": 0,
+            "TimeEnd": 285,
             "CompressedDots": [
               {
                 "X": 37,

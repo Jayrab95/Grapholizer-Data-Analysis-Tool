@@ -22,7 +22,7 @@ public class Participant {
      */
     public Participant(String ID, List<Page> pages) {
         this.ID = ID;
-        pages = new LinkedList<>(pages);
+        this.pages = new LinkedList<>(pages);
     }
 
     /**
