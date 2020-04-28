@@ -11,14 +11,16 @@ import New.Model.Session;
 
 import New.util.*;
 import New.util.Export.ExportConfig;
+import New.util.Export.JsonSerializer;
 import New.util.Export.ProjectSerializer;
 import New.util.Import.JsonLoader;
 import New.util.Import.PageDataReader;
 import New.util.Import.ProjectLoader;
 import New.util.CharacteristicList;
+import New.util.Import.model.CompressedPage;
+import New.util.Import.model.CompressedParticipant;
 import New.util.javafx.JavaFxUtil;
 import New.Enums.DataRessourceType;
-
 
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -95,7 +97,6 @@ public class MainSceneController {
         try {
             ProjectLoader pLoader = new ProjectLoader();
             if(loadDataFromFiles(pLoader, "*.zip", "*.grapholizer")) {
-                pLoader.getZipHelper().getPathTempData();
                 _session.setZ_Helper(pLoader.getZipHelper());
             }
         }catch(IOException ex) {
@@ -109,7 +110,23 @@ public class MainSceneController {
     private void loadNeoNotesFile() { loadDataFromFiles(new PageDataReader(), "*.data");}
 
     @FXML
-    private void saveProject() { save();}
+    private void saveProject() {
+        try{
+            switch (ressourceType) {
+                case JSON:
+                case NEONOTES:
+                    throw new IOException("There is no Project defined yet. " +
+                            "Create a new file");
+                case PROJECT:
+                    saveProjectData();
+                    break;
+            }
+        } catch(IOException ex) {
+            new DialogGenerator().simpleErrorDialog("Saving Error"
+                    , "There has been an IO-Error during saving"
+                    , ex.getMessage());
+        }
+    }
 
     @FXML
     private void saveProjectTo() {
@@ -133,7 +150,8 @@ public class MainSceneController {
                         throw new IOException("No directory or file has been entered");
                 }
             }else {
-                throw new IOException("The chosen file/directory can not be read or none has been chosen");
+                throw new IOException("The chosen file/directory " +
+                        "can not be read or none has been chosen");
             }
 
         } catch( IOException ex ){
@@ -143,7 +161,7 @@ public class MainSceneController {
         }
     }
 
-    private void save() {
+    private void saveProjectData() {
         try {
             ZipHelper zHelper = _session.getZ_Helper();
             if (zHelper != null) {
@@ -196,8 +214,15 @@ public class MainSceneController {
 
                 if( loader instanceof ProjectLoader){
                     raw_data_file = ((ProjectLoader) loader).getZipHelper().getPathTempData();
-                }else {
+                    ressourceType = DataRessourceType.PROJECT;
+                }
+                if( loader instanceof JsonLoader){
                     raw_data_file = Path.of(absFilePath);
+                    ressourceType = DataRessourceType.JSON;
+                }
+                if( loader instanceof PageDataReader){
+                    raw_data_file = Path.of(absFilePath);
+                    ressourceType = DataRessourceType.NEONOTES;
                 }
                 initializeProject();
                 return true;
@@ -234,18 +259,38 @@ public class MainSceneController {
     private void turnJsonToProject(File sFile) throws IOException {
         String path = sFile.getCanonicalPath();
         _session.setZ_Helper(new ZipHelper(path, false));
-
         StringBuilder sBuilder = new StringBuilder();
         Files.newBufferedReader(raw_data_file).lines().forEach(l -> sBuilder.append(l));
         _session.getZ_Helper().writeRawData(sBuilder.toString());
         _session.getZ_Helper().replaceData();
-        save();
+        saveProjectData();
+        //Define the used ressource type as a project
+        ressourceType = DataRessourceType.PROJECT;
     }
 
     private void turnNeoNotesFileToProject(File sFile) throws IOException {
-
+        //Create a json string out of neonotes
+        Collection<Participant> participants = _session.getActiveProject(true).getInner().getAllParticipants();
+        LinkedList<CompressedParticipant> cParts = new LinkedList<>();
+        for (Participant participant : participants) {
+            cParts.add(new CompressedParticipant(participant));
+        }
+        String json = new JsonSerializer().serialize(cParts);
+        System.out.println(json);
+        //Write data to temp file
+        String path = sFile.getCanonicalPath();
+        _session.setZ_Helper(new ZipHelper(path, false));
+        _session.getZ_Helper().writeRawData(json);
+        _session.getZ_Helper().replaceData();
+        saveProjectData();
+        ressourceType = DataRessourceType.PROJECT;
     }
 
     private void copyProjectToAnotherLocation(File sFile) throws IOException{
+        Files.copy(raw_data_file, sFile.toPath());
+        ProjectLoader loader = new ProjectLoader();
+        if(loadDataFromFiles(loader, "*.zip", "*.grapholizer")) {
+            _session.setZ_Helper(loader.getZipHelper());
+        }
     }
 }
