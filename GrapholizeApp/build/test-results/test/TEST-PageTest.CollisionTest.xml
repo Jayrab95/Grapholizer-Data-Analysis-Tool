@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuite name="PageTest.CollisionTest" tests="4" skipped="0" failures="0" errors="0" timestamp="2020-04-28T23:02:11" hostname="DESKTOP-I14CMCJ" time="0.05">
+  <properties/>
+  <testcase name="collisionTest_segmentFits" classname="PageTest.CollisionTest" time="0.048"/>
+  <testcase name="collisionTest_endTimeCollidesWithOtherSegment" classname="PageTest.CollisionTest" time="0.0"/>
+  <testcase name="collisionTest_startTimeCollidesWithOtherSegment" classname="PageTest.CollisionTest" time="0.0"/>
+  <testcase name="collisionTest_segmentContainsOtherSegment" classname="PageTest.CollisionTest" time="0.0"/>
+  <system-out><![CDATA[]]></system-out>
+  <system-err><![CDATA[]]></system-err>
+</testsuite>

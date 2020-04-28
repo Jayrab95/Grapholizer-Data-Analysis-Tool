@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuite name="PageTest.DragBoundsTest" tests="3" skipped="0" failures="0" errors="0" timestamp="2020-04-28T23:02:11" hostname="DESKTOP-I14CMCJ" time="0.12">
+  <properties/>
+  <testcase name="test1" classname="PageTest.DragBoundsTest" time="0.118"/>
+  <testcase name="test2" classname="PageTest.DragBoundsTest" time="0.001"/>
+  <testcase name="test3" classname="PageTest.DragBoundsTest" time="0.001"/>
+  <system-out><![CDATA[]]></system-out>
+  <system-err><![CDATA[]]></system-err>
+</testsuite>

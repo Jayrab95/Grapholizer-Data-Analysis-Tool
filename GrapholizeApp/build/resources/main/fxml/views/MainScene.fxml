@@ -18,8 +18,8 @@
                     <MenuItem mnemonicParsing="false" onAction="#loadRawJson" text="Load Json" />
                         <MenuItem mnemonicParsing="false" onAction="#loadProjectZip" text="Load Project" />
                         <MenuItem mnemonicParsing="false" onAction="#loadNeoNotesFile" text="Load NeoNotes Data" />
-                        <MenuItem mnemonicParsing="false" onAction="#saveProjectTo" text="Save to ...." />
-                        <MenuItem mnemonicParsing="false" onAction="#saveProject" text="Save" />
+                        <MenuItem mnemonicParsing="false" onAction="#saveProjectTo" text="Save/Create To Project" />
+                        <MenuItem mnemonicParsing="false" onAction="#saveProject" text="Save Project" />
                   </items>
                 </Menu>
                 <Menu mnemonicParsing="false" text="Export">
